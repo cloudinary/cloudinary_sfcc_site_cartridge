@@ -1,0 +1,2 @@
+# cloudinary_sfcc_site_cartridge
+Salesforce Commerce Cloud integration

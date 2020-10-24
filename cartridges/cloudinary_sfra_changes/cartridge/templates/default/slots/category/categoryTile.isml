@@ -1,0 +1,54 @@
+<isif condition="${slotcontent}">
+
+    <iscomment> Render a tile of the category Name and the Category Landing Slot Image field </iscomment>
+
+    <iscomment>Custom Start: Cloudinary includes </iscomment>
+    <isset name="cloudinaryConstants" value="${require('*/cartridge/scripts/util/cloudinaryConstants')}" scope="PAGE" />
+    <isset name="cloudinaryAPI" value="${require('*/cartridge/scripts/api/cloudinaryApi')}" scope="PAGE" />
+    <iscomment>Custom END: Cloudinary includes </iscomment>
+
+    <div class="category-slot">
+        <isif condition="${slotcontent && slotcontent.calloutMsg}">
+            <h2>
+                <isprint value="${slotcontent.calloutMsg}" encoding="off"/>
+            </h2>
+        </isif>
+
+        <div class="row">
+            <isloop items="${slotcontent.content}" var="category">
+            
+            <iscomment>Custom Start: Cloudinary image customizations </iscomment>
+            <isset name="catBGImageUrl" value="${category.custom.slotBannerImage.getURL()}" scope="PAGE" />
+
+            <isif condition="${cloudinaryConstants.CLD_ENABLED && !empty(catBGImageUrl)}" >
+                <isset name="cldBannerImage" value="${cloudinaryAPI.getCatalogImageAbsURLFromRelURL(catBGImageUrl.toString(), category.ID, cloudinaryConstants.PAGE_TYPES.CATEGORY_BANNER)}" scope="PAGE" />
+                <isset name="catBGImageUrl" value="${empty(cldBannerImage) ? catBGImageUrl : cldBannerImage.url}" scope="PAGE" />
+            </isif>
+
+                <isif condition="${!empty(catBGImageUrl)}">
+                    <div class="col-sm-6 col-md-4 category-item">
+                        <a href="${URLUtils.url('Search-Show', 'cgid', category.ID)}" title="${category.displayName}">
+                            <div class="category-tile">
+                                <img class="img-fluid cld-responsive"
+                                    src="${catBGImageUrl}"
+                                    data-src="${catBGImageUrl}"
+                                    <isif condition="${typeof(catBGImageUrl.isResponsive) != 'undefined' && !empty(catBGImageUrl.isResponsive) && !catBGImageUrl.isResponsive}">
+                                        <isif condition="${catBGImageUrl.srcset}">
+                                            srcset="${catBGImageUrl.srcset}"
+                                        </isif>
+                                    </isif>
+                                    alt="${category.displayName}"
+                                />
+                                <h1>
+                                    <isprint value="${category.displayName}" encoding="htmlcontent"/>
+                                </h1>
+                            </div>
+                        </a>
+                    </div>
+                </isif>
+                <iscomment>Custom End: Cloudinary image customizations </iscomment>
+            </isloop>
+        </div>
+    </div>
+
+</isif>

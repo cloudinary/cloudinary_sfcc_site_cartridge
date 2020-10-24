@@ -1,0 +1,33 @@
+<isdecorate template="test/layout">
+<h1>Images Search Test Harness</h1>
+
+<isif condition="${!empty(pdict.cloudinary)}">
+    <div class="alert alert-success">
+        <h2>Response</h2>
+        <pre>
+<iscomment>Intentionally not indented for formatting</iscomment>
+<isprint value="${JSON.stringify(pdict.cloudinary, null, 2)}" encoding="htmlsinglequote">
+        </pre>
+    </div>
+    <hr>
+</isif>
+
+<div class="row">
+    <div class="col-sm-6 col-md-4 col-lg-3">
+        <form action="${URLUtils.https('Test-ImageSubmit')}" method="post">
+            <div class="form-group">
+                <label for="orderID">Product ID</label>
+                <input class="form-control" id="productID" name="productID" type="text">
+            </div>
+            <div class="form-group">
+                <label for="email">Page Type</label>
+                <input class="form-control" id="pageType" name="pageType" type="text">
+            </div>
+            <div class="form-group">
+                <button class="btn btn-primary" type="submit" name="getImage">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+</isdecorate>

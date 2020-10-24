@@ -1,0 +1,83 @@
+<isdecorate template="application/MenuFrame"> <iscontent
+	type="text/html" charset="UTF-8"> <isinclude
+	template="inc/Modules"> <!-- Page Navigator --> <isset
+	name="TOP_URL"
+	value="${URLUtils.url('SiteNavigationBar-ShowMenuitemOverview', 'CurrentMenuItemId', pdict.CurrentMenuItemId)}"
+	scope="PAGE"> <!-- table list view -->
+
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+	<form action="${URLUtils.url('CustomReports-Generate')}" method="post"
+		name="generateReport">
+
+		<tr>
+			<td width="100%" class="w e s table_title"><isprint
+					value="${Resource.msg('report.product', 'locale', null)}" /></td>
+		</tr>
+		<tr>
+			<td width="100%" class="w e s">&nbsp;</td>
+		</tr>
+		<tr>
+			<td class="table_title_description w e s">
+				<h2>Use the selections to create custom product report. If no
+					category ID is given, all products from root category will be
+					exported.</h2>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<table border="0" cellpadding="0" cellspacing="0">
+
+					<tr>
+						<td class="table_detail w e s"><isprint
+								value="${dw.web.Resource.msg('report.id', 'locale', null)}" /></td>
+						<td><input type="checkbox" name="productID" checked></td>
+					</tr>
+					<tr>
+						<td class="table_detail w e s"><isprint
+								value="${dw.web.Resource.msg('report.name', 'locale', null)}" /></td>
+						<td><input type="checkbox" name="productName" checked></td>
+					</tr>
+					<tr>
+						<td class="table_detail w e s"><isprint
+								value="${dw.web.Resource.msg('report.availabity', 'locale', null)}" /></td>
+						<td><input type="checkbox" name="availability" checked></td>
+					</tr>
+					<tr>
+						<td class="table_detail w e s"><isprint
+								value="${dw.web.Resource.msg('report.stockLevel', 'locale', null)}" /></td>
+						<td><input type="checkbox" name="stockLevel" checked></td>
+					</tr>
+					<tr>
+						<td class="table_detail w e s"><isprint
+								value="${dw.web.Resource.msg('report.price', 'locale', null)}" /></td>
+						<td><input type="checkbox" name="price" checked></td>
+					</tr>
+					<tr>
+						<td class="table_detail w e s"><isprint
+								value="${dw.web.Resource.msg('report.category', 'locale', null)}" /></td>
+						<td><input type="text" name="categoryID" size="40"></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td width="100%" class="w e s">&nbsp;</td>
+		</tr>
+
+		<tr>
+			<td align="left" class="w e s">
+				<table border="0" cellspacing="4" cellpadding="0">
+					<tbody>
+						<tr>
+							<td class="button"><input type="submit" id="generate"
+								class="button"
+								value="${dw.web.Resource.msg('report.generate', 'locale', null)}"
+								name="generate"></td>
+						</tr>
+					</tbody>
+				</table>
+			</td>
+		</tr>
+	</form>
+</table></isdecorate>

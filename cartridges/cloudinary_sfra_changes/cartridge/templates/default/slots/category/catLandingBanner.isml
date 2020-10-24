@@ -1,0 +1,32 @@
+<isif condition="${slotcontent}">
+    <iscomment> Render a tile of the category Name and the Category Landing Slot Image field </iscomment>
+    
+    <iscomment>Custom Start: Cloudinary includes </iscomment>
+    <isset name="cloudinaryConstants" value="${require('*/cartridge/scripts/util/cloudinaryConstants')}" scope="PAGE" />
+    <isset name="cloudinaryAPI" value="${require('*/cartridge/scripts/api/cloudinaryApi')}" scope="PAGE" />
+    <iscomment>Custom END: Cloudinary includes </iscomment>
+
+    <isloop items="${slotcontent.content}" var="category">
+
+    <iscomment>Custom Start: Cloudinary image customizations </iscomment>
+    <isset name="catBGImageUrl" value="${category.custom.slotBannerImage.getURL()}" scope="PAGE" />
+    <isif condition="${cloudinaryConstants.CLD_ENABLED && !empty(catBGImageUrl)}" >
+        <isset name="cldBannerImage" value="${cloudinaryAPI.getCatalogImageAbsURLFromRelURL(catBGImageUrl.toString(), category.ID, cloudinaryConstants.PAGE_TYPES.CATEGORY_BANNER)}" scope="PAGE" />
+        <isset name="catBGImageUrl" value="${empty(cldBannerImage) ? catBGImageUrl : cldBannerImage.url}" scope="PAGE" />
+    </isif>
+
+        <div class="hero slant-down"
+            <isif condition="${catBGImageUrl}">
+                style="background-image: url(${catBGImageUrl})"
+            </isif>
+        >
+        <iscomment>Custom End: Cloudinary image customizations </iscomment>
+
+            <a href="${URLUtils.url('Search-Show', 'cgid', category.ID)}" title="${category.displayName}">
+                <h1 class="page-title">
+                    <isprint value="${category.displayName}" encoding="htmlcontent"/>
+                </h1>
+            </a>
+        </div>
+    </isloop>
+</isif>

@@ -1,0 +1,193 @@
+<iscontent type="text/html" charset="UTF-8" compact="true"/>
+<iscache type="relative" hour="24" varyby="price_promotion"/>
+
+<isif condition="${pdict.ProductPagingModel != null && !pdict.ProductPagingModel.empty}">
+	<isscript>
+		// local function to create a product link along with any refinements and color variation value
+		var removeParameter = function(queryString, parameter) {
+
+			var prefix = encodeURIComponent(parameter)+'=';
+			var parameters = queryString.split(/[&;]/g);
+			for (var i= parameters.length; i-->0;) {
+				if (parameters[i].lastIndexOf(prefix, 0)!==-1) {
+					parameters.splice(i, 1);
+				}
+			}
+			return parameters.join('&');
+		}
+
+
+		var createLink = function(product, productHit, start) {
+			var varAttrColor = null;
+			var selectableColor = null;
+
+			if ( product != null && product.master ) {
+				var varModel : dw.catalog.ProductVariationModel = product.variationModel;
+				varAttrColor = varModel.getProductVariationAttribute("color");
+
+				if( varAttrColor != null )
+				{
+					// always take the first color value in the refinements!
+					var repVarVals = productHit.getRepresentedVariationValues( varAttrColor );
+
+					if (repVarVals && repVarVals.size() > 0) {
+						selectableColor = repVarVals.get(0);
+					}
+				}
+			}
+
+			var productUrl = "";
+			var imgUrl = "";
+			var imgFile;
+
+			var hashAppend = removeParameter(pdict.CurrentRequest.httpQueryString, 'start');
+			hashAppend = removeParameter(hashAppend, 'pid') + '&start=' + start;;
+
+			if (!empty(product)) {
+				productUrl = pdict.ProductSearchResult.url(URLUtils.url('Product-Show', 'pid', product.ID));
+				if (!empty(product) && !empty(selectableColor) && !empty(varAttrColor)) {
+					// we have a variation product
+					// build variation selection url first and grab its query string
+					/*
+						This is the right way but since ProductSearchResult.url takes either an action name or URL and urlSelectVariationValue return url in a String thus
+						have to append variation attr value manually.
+
+						var variationUrl = product.variationModel.urlSelectVariationValue('Product-Show', varAttrColor, selectableColor);
+					*/
+
+					// append the variation url query string with the search url (search url could have refinements)
+					productUrl = URLUtils.url('Product-Show', 'pid', product.ID, product.variationModel.getHtmlName(varAttrColor), selectableColor.value);
+					imgFile = selectableColor.getImage('small');
+				}
+				else {
+					imgFile = product.getImage('small');
+				}
+			}
+			else {
+				return {pUrl: "", imgUrl: URLUtils.staticURL('/images/noimagesmall.png'), imgAlt: "", imgTitle: ""};
+			}
+
+			// Custom Start: Add Cloudianry primary image //
+			if (dw.system.Site.current.preferences.getCustom().CLDEnabled) {
+				var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
+				var cloudinaryModel = require('*/cartridge/scripts/model/cloudinaryModel');
+				var cldImg = cloudinaryModel.getProductPrimaryImage(product.ID, cloudinaryConstants.CLD_HIGH_RES_IMAGES_VIEW_TYPE, {
+					pageType: cloudinaryConstants.PAGE_TYPES.CLD_PRODUCT_NAV
+				});
+
+				if (cldImg) {
+					return {
+						pUrl: productUrl + '#' + hashAppend,
+						imgUrl: (cldImg.url != null) ? cldImg.url : URLUtils.staticURL('/images/noimagesmall.png'),
+						srcset: (cldImg.srcset != null) ? cldImg.srcset : null,
+						sizes: (cldImg.sizes != null) ? cldImg.sizes : null,
+						isResponsive: (cldImg.isResponsive != null) ? cldImg.isResponsive : null,
+						imgAlt: (imgFile != null) ? imgFile.alt : product.name,
+						imgTitle: (imgFile != null) ? imgFile.title : product.name
+					};
+					}
+			}
+			// Custom End: Add Cloudianry primary image //
+
+			return {pUrl: productUrl + '#' + hashAppend
+			, imgUrl: (imgFile != null) ? imgFile.getURL(): URLUtils.staticURL('/images/noimagesmall.png'), imgAlt: (imgFile != null) ? imgFile.alt: product.name, imgTitle: (imgFile != null) ? imgFile.title: product.name};
+		};
+
+		var rList 		= pdict.ProductPagingModel.pageElements.asList();
+		var listSize 	= rList.size();
+		var start 		= pdict.CurrentHttpParameterMap.start.intValue;
+
+		var totalCount = pdict.ProductPagingModel.count;
+		var prevProd = null, prevProdHit = null;
+		var nextProd = null, nextProdHit = null;
+		var currentProd = null, currentProdHit = null;
+		var currentProdInd = 0;
+
+		if (listSize > 0 && (start > 1) && (totalCount > 1)) {
+			prevProdHit = rList.get(0);
+			prevProd = prevProdHit.product;
+			currentProdInd = 1; // if we have prev then the current product is the prev+one
+		}
+
+		if (listSize > 0 && start < totalCount) {
+			var i = 1;
+			if (start == 1 && listSize > 2) i = 2;
+			nextProdHit = rList.get(listSize-i);
+			nextProd = nextProdHit.product;
+			currentProdInd = listSize-i-1; // if we have next then the current product is the next-one
+		}
+
+		start = parseInt(start);
+
+		currentProdHit = rList.get(currentProdInd);
+		currentProd = currentProdHit.product;
+
+		var prevProdUrls 	= createLink(prevProd, prevProdHit, start-1);
+		var nextProdUrls 	= createLink(nextProd, nextProdHit, start+1);
+
+	</isscript>
+	<isif condition="${!empty(pdict.ProductSearchResult) && pdict.ProductSearchResult.count > 0 }">
+		<isset name="backLinkText" value="${Resource.msgf('productnav.back','search',null, (!empty(pdict.ProductSearchResult.categoryID) ? pdict.ProductSearchResult.category.displayName: pdict.CurrentHttpParameterMap.q.stringValue))}" scope="page"/>
+
+		<isif condition="${prevProd != null}">
+			<div class="product-previous <isif condition="${nextProd != null}">divided</isif>">
+				<a href="${prevProdUrls.pUrl}" title="${prevProdUrls.imgTitle}">
+					<span>
+						<iscomment>Custom Start: Add cloudinary image and attributes</iscomment>
+						<img alt="${prevProdUrls.imgAlt}"
+							title="${prevProdUrls.imgTitle}"
+							src="${prevProdUrls.imgUrl}"
+							class="cld-responsive"
+							data-src="${prevProdUrls.imgUrl}"
+							<isif condition="${!('isResponsive' in prevProdUrls && prevProdUrls.isResponsive)}">
+								<isif condition="${'srcset' in prevProdUrls && !empty(prevProdUrls.srcset)}">
+								    srcset="${prevProdUrls.srcset}"
+								</isif>
+								<isif condition="${'sizes' in prevProdUrls && !empty(prevProdUrls.sizes)}">
+								    sizes="${prevProdUrls.sizes}"
+								</isif>
+							</isif>
+						/>
+						<iscomment>Custom End: Add cloudinary image and attributes</iscomment>
+					</span>
+					&laquo; ${Resource.msgf('global.previous.abbr','locale',null)}
+				</a>
+			</div>
+		</isif>
+
+		<isif condition="${nextProd != null}">
+			<div class="product-next">
+				<a href="${nextProdUrls.pUrl}" title="${nextProdUrls.imgTitle}">
+					<span>
+						<iscomment>Custom Start: Add cloudinary image and attributes</iscomment>
+						<img alt="${nextProdUrls.imgAlt}"
+							title="${nextProdUrls.imgTitle}"
+							src="${nextProdUrls.imgUrl}"
+							class="cld-responsive"
+							data-src="${nextProdUrls.imgUrl}"
+							<isif condition="${!('isResponsive' in nextProdUrls && nextProdUrls.isResponsive)}">
+								<isif condition="${'srcset' in nextProdUrls && !empty(nextProdUrls.srcset)}">
+								    srcset="${nextProdUrls.srcset}"
+								</isif>
+								<isif condition="${'sizes' in nextProdUrls && !empty(nextProdUrls.sizes)}">
+								    sizes="${nextProdUrls.sizes}"
+								</isif>
+							</isif>
+						/>
+						<iscomment>Custom End: Add cloudinary image and attributes</iscomment>
+					</span>
+					${Resource.msgf('global.next','locale',null)} &raquo;
+				</a>
+			</div>
+		</isif>
+
+	</isif>
+</isif>
+
+
+
+
+
+
+
+

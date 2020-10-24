@@ -1,0 +1,37 @@
+<div class="color-swatches">
+    <div class="swatches">
+        <isif condition="${product.variationAttributes && product.variationAttributes.length > 0}">
+            <isloop items="${product.variationAttributes[0].values}" var="swatch" status="loopState">
+                    <a href="${swatch.url}">
+                        <span>
+                            <iscomment> Custom Start: Use cloudinary swatch images if it's enabled</iscomment>
+                            <isif condition="${product.CLDEnabled && swatch.images && swatch.images.cloudinaryProductSwatchImg}">
+                                <isset name="isResponsive" value="${swatch.images.cloudinaryProductSwatchImg.isResponsive}" scope="page" />
+                                <img class="swatch swatch-circle cld-responsive"
+                                    data-index="${loopState.count-1}"
+                                    style="background-image: url(${swatch.images.cloudinaryProductSwatchImg.url})"
+                                    src="${swatch.images.cloudinaryProductSwatchImg.url}"
+                                    alt="${swatch.images.swatch && !empty(swatch.images.swatch[0].alt) ? swatch.images.swatch[0].alt : product.productName}"
+                                    data-src="${swatch.images.cloudinaryProductSwatchImg.url}"
+                                    <isif condition="${!isResponsive}">
+                                        <isif condition="${swatch.images.cloudinaryProductSwatchImg.srcset}">
+                                            srcset="${swatch.images.cloudinaryProductSwatchImg.srcset}"
+                                        </isif>
+                                        <isif condition="${swatch.images.cloudinaryProductSwatchImg.sizes}">
+                                            sizes="${swatch.images.cloudinaryProductSwatchImg.sizes}"
+                                        </isif>
+                                    </isif>
+                            <iselse/>
+                                <img class="swatch swatch-circle"
+                                    data-index="${loopState.count-1}"
+                                    style="background-image: url(${swatch.images.swatch[0].url})"
+                                    src="${swatch.images.swatch[0].url}"
+                                    alt="${swatch.images.swatch[0].alt}"/>
+                            </isif>
+                            <iscomment> Custom End: Use cloudinary swatch images if it's enabled</iscomment>
+                        </span>
+                    </a>
+            </isloop>
+        </isif>
+    </div>
+</div>

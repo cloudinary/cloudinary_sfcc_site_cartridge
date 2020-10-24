@@ -1,0 +1,15 @@
+<iscomment>
+    A general template to render image tag along with srcset and sizes attributes
+    for content assets and other static pages.
+</iscomment>
+<isset name="imageJSON" value="${pdict.imgURL}" scope="page"/>
+<isif condition="${!empty(imageJSON.url)}">
+    <img
+        alt="${imageJSON.url}"
+        src="${imageJSON.url}"
+        <isif condition="${!empty(imageJSON.srcset) && !empty(imageJSON.srcset)}">
+            srcset= "${imageJSON.srcset}"
+            sizes= "${imageJSON.sizes}"
+        </isif>
+    />
+</isif>

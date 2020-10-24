@@ -1,0 +1,30 @@
+<isset name="decorator" value="" scope="page" />
+<isif condition="${pdict.cartridgeVersion === 'sfra'}">
+    <isset name="decorator" value="common/layout/page" scope="page" />
+<iselseif condition="${pdict.cartridgeVersion === 'sitegenesis'}" />
+        <isset name="decorator" value="content/home/pt_storefront" scope="page" />
+</isif>
+
+<link rel="stylesheet" href="${URLUtils.staticURL('/css/cloudinary-test-harness.css')}" />
+
+<isif condition="${!empty(decorator)}">
+    <isdecorate template="${decorator}">
+        <div class="container my-5">
+            <isif condition="${!pdict.isIndex}">
+                <div>
+                    <a href="${URLUtils.https('Test-Start')}">Back to index</a>
+                </div>
+            </isif>
+            <isreplace/>
+        </div>
+    </isdecorate>
+<iselse/>
+    <div class="container my-5">
+        <isif condition="${!pdict.isIndex}">
+            <div>
+                <a href="${URLUtils.https('Test-Start')}">Back to index</a>
+            </div>
+        </isif>
+        <isreplace/>
+    </div>
+</isif>

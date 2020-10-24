@@ -1,0 +1,9 @@
+<isif condition="${pdict.cloudinary.isEnabled && pdict.cloudinary.videoEnabled && pdict.cloudinary.videoPlayerEnabled &&
+    pdict.cloudinary.video && pdict.cloudinary.video.videoURL && pdict.cloudinary.video.videoURL !== 'null' &&
+    pdict.cloudinary.video.videoURL !== ''}">
+    <div class="primary-videos col-12 col-sm-6">
+        <div id='pdp-video-<isprint value="${cldProductID}">'>
+            <video id="cld-video-player" class="cld-video-player"></video>
+        </div>
+    </div>
+</isif>

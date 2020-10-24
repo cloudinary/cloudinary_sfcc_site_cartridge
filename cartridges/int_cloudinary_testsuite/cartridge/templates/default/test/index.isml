@@ -1,0 +1,35 @@
+<isdecorate template="test/layout">
+    <h1>Cloudinary Test Harnesses</h1>
+    <ul>
+        <li>
+            <a href="${URLUtils.https('Test-Image')}">Images</a>
+        </li>
+        <li>
+            <a href="${URLUtils.https('Test-Video')}">Video</a>
+        </li>
+        <li>
+            <a href="${URLUtils.https('Test-Raw')}">Raw Data</a>
+        </li>
+        <li>
+            <a href="${URLUtils.https('Test-ContentImageRel')}">Content Image By Relative URL</a>
+        </li>
+        <li>
+            <a href="${URLUtils.https('Test-ContentImageAbs')}">Content Image By Absolute URL</a>
+        </li>
+        <li>
+            <a href="${URLUtils.https('Test-ContentVideoRel')}">Content Video By Relative URL</a>
+        </li>
+        <li>
+            <a href="${URLUtils.https('Test-ContentVideoAbs')}">Content Video By Absolute URL</a>
+        </li>
+        <li>
+            <a href="${URLUtils.https('Test-ProductPrimaryImage')}">Product PLP Primary Image</a>
+        </li>
+         <li>
+            <a href="${URLUtils.https('Test-CatalogImage')}">Catalog Image</a>
+        </li>
+        <li>
+            <a href="${URLUtils.https('Test-CatalogVideo')}">Catalog Video</a>
+        </li>
+    </ul>
+</isdecorate>

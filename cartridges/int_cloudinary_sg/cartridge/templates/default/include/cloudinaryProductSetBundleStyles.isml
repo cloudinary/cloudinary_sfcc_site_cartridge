@@ -1,0 +1,84 @@
+<style>
+    .pdp-main .product-set .product-set-list .product-set-details {
+        width: 40%;
+        padding: 50px;
+    }
+
+    .pdp-main .product-set .product-add-to-cart {
+        float: right;
+        border-bottom: none;
+    }
+
+    .pdp-main .product-set .product-set-list .product-set-item {
+        height:100%;
+        border-bottom:1px solid #ccc;
+        padding-bottom: 10px;
+    }
+
+    .js .ui-dialog-content .pdp-main .product-set-list {
+        width: 800px;
+    }
+
+    .js .ui-dialog-content .pdp-main .product-set-list .product-set-details {
+        padding: 0px;
+        margin-left: 2%;
+    }
+
+    .js .ui-dialog-content .pdp-main .product-set .product-set-list .product-set-item {
+        height: auto;
+    }
+
+    @media screen and (min-width: 480px) {
+        .pdp-main .product-col-1 {
+            width: none;
+            float: none;
+        }
+
+        .pdp-main .product-col-2 {
+            width: 100%;
+            float: none;
+        }
+
+        .cloudinary-gallery-container {
+            width: 40%;
+            height: 50%;
+            float: left;
+            min-width: 40%;
+        }
+
+        .pdp-main .product-set .product-set-list .product-set-item {
+            display: flex;
+        }
+
+        .pdp-main .product-set .product-add-to-cart {
+            width: 33%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end
+        }
+    }
+
+    @media screen and (max-width: 480px) {
+        .cloudinary-gallery-container {
+            width: auto;
+            height: auto;
+            float: none;
+        }
+
+        .pdp-main .product-set .product-set-list .product-set-details {
+            width: auto;
+            padding: none;
+        }
+
+        .pdp-main .product-set .product-add-to-cart {
+            float: none;
+            width: 100%
+        }
+    }
+
+    @media only screen and (min-device-width: 767px) and (max-device-width: 960px) {
+        .pdp-main .product-add-to-cart .inventory {
+            margin-bottom: 10px;
+        }
+    }
+</style>

@@ -1,0 +1,193 @@
+{
+    "step-types": {
+        "script-module-step": [
+            {
+                "@type-id": "custom.cloudinary.UploadProductAssets",
+                "@supports-parallel-execution": "false",
+                "@supports-site-context": "true",
+                "@supports-organization-context": "false",
+                "description": "Step used to upload product images/videos on Cloudinary",
+                "module": "int_cloudinary/cartridge/scripts/jobs/steps/cldUploadProductAssets.js",
+                "function": "Start",
+                "transactional": "false",
+                "parameters": {
+                    "parameter": [{
+                        "@name": "CLDAssetRenameReportEmail",
+                        "description": "Cloudinary Asset Rename Report Email",
+                        "@type": "string",
+                        "@required": "false",
+                        "@trim": "true"
+                    },
+                    {
+                        "@name": "CLDNumberOfAssets",
+                        "description": "Cloudinary Number Of Assets",
+                        "@type": "long",
+                        "@required": "false",
+                        "@trim": "true"
+                    },
+                    {
+                        "@name": "CLDJobExecutionMode",
+                        "description": "Cloudinary Job Execution Mode",
+                        "@type": "string",
+                        "@required": "false",
+                        "enum-values": {
+                            "value": [
+                                "Debug",
+                                "Prod"
+                            ]
+                        },
+                        "default-value": "Debug"
+                    },
+                    {
+                        "@name": "CLDSyncMode",
+                        "description": "Cloudinary Job Sync Mode",
+                        "@type": "string",
+                        "@required": "true",
+                        "enum-values": {
+                            "value": [
+                                "FULL"
+                            ]
+                        },
+                        "default-value": "FULL"
+                    },
+                    {
+                        "@name": "CLDCatalogIds",
+                        "description": "Catalog IDs to process (Optional and pipe separated)",
+                        "@type": "string",
+                        "@required": false,
+                        "@trim": true
+                    },
+                    {
+                        "@name": "CLDViewType",
+                        "description": "Cloudinary View Type",
+                        "@type": "string",
+                        "@required": "true",
+                        "@trim": "true"
+                    },
+                    {
+                        "@name": "Disabled",
+                        "description": "Mark the step as disabled. This will skip the step and returns a OK status",
+                        "@type": "boolean",
+                        "@required": false
+                    }]
+                }
+            },
+            {
+                "@type-id": "custom.cloudinary.UploadContentLibraryAssets",
+                "@supports-parallel-execution": "false",
+                "@supports-site-context": "true",
+                "@supports-organization-context": "false",
+                "description": "Step used to upload content library images/videos on Cloudinary",
+                "module": "int_cloudinary/cartridge/scripts/jobs/steps/cldUploadContentLibraryAssets.js",
+                "function": "Start",
+                "transactional": "fasle",
+                "parameters": {
+                    "parameter": [{
+                        "@name": "CLDAssetRenameReportEmail",
+                        "description": "Cloudinary Asset Rename Report Email",
+                        "@type": "string",
+                        "@required": "false",
+                        "@trim": "true"
+                    },
+                    {
+                        "@name": "CLDNumberOfAssets",
+                        "description": "Cloudinary Number Of Assets",
+                        "@type": "long",
+                        "@required": "false",
+                        "@trim": "true"
+                    },
+                    {
+                        "@name": "CLDJobExecutionMode",
+                        "description": "Cloudinary Job Execution Mode",
+                        "@type": "string",
+                        "@required": "false",
+                        "enum-values": {
+                            "value": [
+                                "Debug",
+                                "Prod"
+                            ]
+                        },
+                        "default-value": "Debug"
+                    },
+                    {
+                        "@name": "CLDSyncMode",
+                        "description": "Cloudinary Job Sync Mode",
+                        "@type": "string",
+                        "@required": "true",
+                        "enum-values": {
+                            "value": [
+                                "FULL",
+                                "DELTA"
+                            ]
+                        },
+                        "default-value": "FULL"
+                    },
+                    {
+                        "@name": "Disabled",
+                        "description": "Mark the step as disabled. This will skip the step and returns a OK status",
+                        "@type": "boolean",
+                        "@required": false
+                    }]
+                }
+            },
+            {
+                "@type-id": "custom.cloudinary.UploadCatalogAssets",
+                "@supports-parallel-execution": "false",
+                "@supports-site-context": "true",
+                "@supports-organization-context": "false",
+                "description": "Step used to upload catalog images/videos on Cloudinary",
+                "module": "int_cloudinary/cartridge/scripts/jobs/steps/cldUploadCatalogAssets.js",
+                "function": "Start",
+                "transactional": "false",
+                "parameters": {
+                    "parameter": [{
+                        "@name": "CLDAssetRenameReportEmail",
+                        "description": "Cloudinary Asset Rename Report Email",
+                        "@type": "string",
+                        "@required": "false",
+                        "@trim": "true"
+                    },
+                    {
+                        "@name": "CLDNumberOfAssets",
+                        "description": "Cloudinary Number Of Assets",
+                        "@type": "long",
+                        "@required": "false",
+                        "@trim": "true"
+                    },
+                    {
+                        "@name": "CLDJobExecutionMode",
+                        "description": "Cloudinary Job Execution Mode",
+                        "@type": "string",
+                        "@required": "false",
+                        "enum-values": {
+                            "value": [
+                                "Debug",
+                                "Prod"
+                            ]
+                        },
+                        "default-value": "Debug"
+                    },
+                    {
+                        "@name": "CLDSyncMode",
+                        "description": "Cloudinary Job Sync Mode",
+                        "@type": "string",
+                        "@required": "true",
+                        "enum-values": {
+                            "value": [
+                                "FULL",
+                                "DELTA"
+                            ]
+                        },
+                        "default-value": "FULL"
+                    },
+                    {
+                        "@name": "Disabled",
+                        "description": "Mark the step as disabled. This will skip the step and returns a OK status",
+                        "@type": "boolean",
+                        "@required": false
+                    }]
+                }
+            }
+        ]
+    }
+}

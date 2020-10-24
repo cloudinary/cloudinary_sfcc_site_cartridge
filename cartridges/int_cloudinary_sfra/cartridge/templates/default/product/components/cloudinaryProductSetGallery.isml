@@ -1,0 +1,15 @@
+<div class="primary-images col-12 col-sm-6">
+    <isif condition="${product.raw && product.raw.variant}">
+        <div id="cld-gallery-${productItem.raw.masterProduct.ID}"
+            class="cloudinary-set-data-container"
+            data-cloudinary="<isprint value="${JSON.stringify(pdict.cloudinary)}" encoding="htmlunquote" />"
+            data-cloudinary-set-images="<isprint value="${JSON.stringify(productItem.images.cloudinaryProductImages)}" encoding="htmlunquote" />"
+            ></div>
+    <iselse/>
+        <div id="cld-gallery-${productItem.id}"
+            class="cloudinary-set-data-container"
+            data-cloudinary="<isprint value="${JSON.stringify(pdict.cloudinary)}" encoding="htmlunquote" />"
+            data-cloudinary-set-images="<isprint value="${JSON.stringify(productItem.images.cloudinaryProductImages)}" encoding="htmlunquote" />"
+            ></div>
+    </isif>
+</div>

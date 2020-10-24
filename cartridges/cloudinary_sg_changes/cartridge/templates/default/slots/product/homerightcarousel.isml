@@ -1,0 +1,51 @@
+<iscontent type="text/html" charset="UTF-8" compact="true"/>
+<iscache type="relative" minute="30" varyby="price_promotion"/>
+
+<isinclude template="util/modules"/>
+
+<div class="home-bottom-right-header">
+	<isprint value="${slotcontent.calloutMsg}" encoding="off"/>	
+</div>
+
+<div id="vertical-carousel">
+	<ul>
+		<iscomment>Custom Start: Build cloudinary object to pass in producttile template</iscomment>
+		<isset name="isCloudinaryEnabled" value="${dw.system.Site.current.preferences.getCustom().CLDEnabled}" scope="page" />
+		<isif condition="${isCloudinaryEnabled}">
+			<style>
+				.home-bottom-right .product-tile img {
+					max-width: 75%;
+				}
+			</style>
+			<isscript>
+				var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
+				var cloudinary = {
+					isEnabled: isCloudinaryEnabled,
+					isSwachesEnabled: false,
+					pageType: cloudinaryConstants.PAGE_TYPES.CLD_HOME_PAGE_TILE
+				}
+			</isscript>
+		</isif>
+		<iscomment>Custom End: Build cloudinary object to pass in producttile template</iscomment>
+		<isloop items="${slotcontent.content}" var="product">
+			<li>
+				<div class="analytics capture-product-id"><isprint value="${product.getID()}"/></div>
+				<isproducttile product="${product}" showpricing="${true}" cloudinary="${isCloudinaryEnabled ? cloudinary : null}"/>
+			</li>
+		</isloop>
+	</ul>
+	<a class="jcarousel-nav jcarousel-prev" title="${Resource.msg('global.previous', 'locale', null)}">
+		<span class="visually-hidden">${Resource.msg('global.goprevious', 'locale', null)}</span>
+		<span class="fa-stack fa-lg">
+  			<i class="fa fa-square fa-stack-2x"></i>
+  			<i class="fa fa-angle-up fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+	<a class="jcarousel-nav jcarousel-next" title="${Resource.msg('global.next', 'locale', null)}">
+		<span class="visually-hidden">${Resource.msg('global.gonext', 'locale', null)}</span>	
+		<span class="fa-stack fa-lg">
+  			<i class="fa fa-square fa-stack-2x"></i>
+  			<i class="fa fa-angle-down fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+</div>

@@ -1,0 +1,40 @@
+<iscontent type="text/html" charset="UTF-8" compact="true"/>
+<iscache type="relative" hour="24"/>
+
+<isif condition="${slotcontent != null}">
+	<div class="category-slot">
+		<isloop items="${slotcontent.content}" var="category" status="loopstate">
+			<div class="cat-banner">
+				<a href="${URLUtils.http('Search-Show', 'cgid', category.ID)}" title="${Resource.msgf('global.categoryrefinement.label', 'locale', null, category.displayName)}">
+					<isif condition="${category.image != null}">
+						<iscomment>Custom start: Add cloudinary product image</iscomment>
+						<isif condition="${dw.system.Site.current.preferences.getCustom().CLDEnabled}">
+						    <isset name="cloudinaryAPI" value="${require('*/cartridge/scripts/api/cloudinaryApi')}" scope="page" />
+							<isset name="cloudinaryConstants" value="${require('*/cartridge/scripts/util/cloudinaryConstants')}" scope="page" />
+							<isset name="cldProductImage" value="${cloudinaryAPI.getCatalogImageAbsURLFromRelURL(category.image.URL.toString(), category.ID, cloudinaryConstants.PAGE_TYPES.CATEGORY_BANNER);}" scope="page" />
+							<isif condition="${cldProductImage && 'url' in cldProductImage}">
+							    <img src="${cldProductImage.url}"
+									alt="${category.displayName}"
+									class="cld-responsive"
+									data-src="${cldProductImage.url}"
+									<isif condition="${!('isResponsive' in cldProductImage && cldProductImage.isResponsive)}">
+										<isif condition="${'srcset' in cldProductImage && cldProductImage.srcset}">
+											srcset="${cldProductImage.srcset}"
+										</isif>
+										<isif condition="${'sizes' in cldProductImage && cldProductImage.sizes}">
+											sizes="${cldProductImage.sizes}"
+										</isif>
+									</isif>
+								/>
+							</isif>
+						<iselse/>
+							<img src="${category.image.httpURL}" alt="${category.displayName}" />
+						</isif>
+						<iscomment>Custom end: Add cloudinary product image</iscomment>
+						<h1><isprint value="${category.displayName}" encoding="off"/></h1>
+					</isif>
+				</a>
+			</div>
+		</isloop>
+	</div>
+</isif>

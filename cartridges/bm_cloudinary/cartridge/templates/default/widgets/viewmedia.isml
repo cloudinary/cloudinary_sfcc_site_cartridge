@@ -1,0 +1,11 @@
+<!--- TEMPLATENAME: viewmedia.isml --->
+<iscontent type="text/html" charset="UTF-8" compact="true" />
+<isinclude template="custom/modules" />
+<isdecorate template="application/MenuFrame">
+    <link rel="stylesheet" href="${URLUtils.staticURL('/css/cloudinaryMediaLibrary.css')}" />
+    <script src="https://media-library.cloudinary.com/global/all.js"></script>
+    <script src="${URLUtils.staticURL('/js/cloudinaryMediaLibrary.js')}"></script>
+    <div class="clodinary-media-library"
+        data-cloudinaryml="<isprint value="${JSON.stringify(pdict.mlOptions)}" encoding="htmlunquote" />">
+    </div>
+</isdecorate>

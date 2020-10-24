@@ -1,0 +1,20 @@
+<iscomment>
+    A general template to render cloudinary video player
+    for content assets and other static pages.
+</iscomment>
+<isset name="cloudinaryStaticContent" value="${pdict.cloudinaryStaticContent}" scope="page"/>
+<isif condition="${cloudinaryStaticContent.isEnabled && cloudinaryStaticContent.video.videoURL && cloudinaryStaticContent.video.videoURL !== '' && cloudinaryStaticContent.video.videoURL !== 'null'}">
+    <isif condition="${cloudinaryStaticContent.videoEnabled && cloudinaryStaticContent.videoPlayerEnabled}">
+        <isset name="preferences" value="${dw.system.Site.current.preferences.custom}" scope="page"/>
+        <link href="${preferences.CLDVideoPlayerCSSURL}" rel="stylesheet"/>
+        <script src="${preferences.CLDVideoPlayerJSURL}"></script>
+
+        <isset name="randomNumber" value="${cloudinaryStaticContent.randomNumber}" scope="page" />
+        <video id="cld-video-player-${randomNumber}" class="cld-video-player cloudinary-data-container"
+            data-cloudinary="<isprint value="${JSON.stringify(cloudinaryStaticContent)}" encoding="htmlunquote" />"
+            data-cloudinary-video-player-id="${randomNumber}">
+        </video>
+    <iselse>
+        <isprint value="${cloudinaryStaticContent.video.videoURL}" encoding="htmldoublequote" />
+    </isif>
+</isif>

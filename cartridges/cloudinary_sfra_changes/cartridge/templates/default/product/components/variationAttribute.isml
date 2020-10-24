@@ -1,0 +1,77 @@
+<iscomment>
+
+Template Notes:
+
+- This template is intended to be referenced from an <isinclude> tag within an <isloop> in another
+  source template.  The <isloop> is expected to have a "status" attribute, named "attributeStatus".
+- ${attributeStatus.last} is checked to see whether a particular attribute row should include the
+  Quantity drop-down menu
+
+</iscomment>
+
+<div class="attribute">
+    <isif condition="${attr.swatchable}">
+
+        <!-- Select <Attribute> Label -->
+        <span class="${attr.id} non-input-label">
+            ${Resource.msg('label.select', 'common', null)} ${attr.displayName}
+        </span>
+
+        <!-- Circular Swatch Image Attribute Values -->
+        <isloop items="${attr.values}" var="attrValue">
+            <isif condition="${!(isBundle && product.productType === 'variant' && !attrValue.selected) }">
+                <iscomment> Custom Start: Use cloudinary swatch images if it's enabled</iscomment>
+                <isset name="cldPageTypeQueryParam" value="" scope="page" />
+                <isif condition="${pdict.cloudinary.isEnabled}">
+                    <isset name="swatchImageURL" value="${attrValue.images.cloudinaryProductSwatchImg ? attrValue.images.cloudinaryProductSwatchImg.url : ''}" scope="page" />
+                    <isset name="cldPageTypeQueryParam" value="${'&isBundleOrSet=' + isBundleOrSet}" scope="page" />
+                <iselse/>
+                    <isset name="swatchImageURL" value="${attrValue.images['swatch'].length > 0 ? attrValue.images['swatch'][0].url : ''}" scope="page" />
+                </isif>
+                <iscomment> Custom Start: Use cloudinary swatch images if it's enabled</iscomment>
+                <button class="color-attribute"
+                        aria-label="${Resource.msg('label.select', 'common', null)} ${attr.displayName} ${attrValue.displayValue}"
+                        aria-describedby="${attrValue.id}"
+                        data-url="${attrValue.url + (!empty(cldPageTypeQueryParam) ? cldPageTypeQueryParam : '')}" ${ product.productType === "variant" && isBundle ? "disabled" : "" }
+                >
+                    <span data-attr-value="${attrValue.value}"
+                          class="
+                              ${attr.id}-value
+                              swatch-circle
+                              swatch-value
+                              ${attrValue.selected ? 'selected' : ''}
+                              ${attrValue.selectable ? 'selectable' : 'unselectable'}
+                          "
+                          style="background-image: url(${swatchImageURL})"
+                    >
+                    </span>
+                    <span id="${attrValue.id}" class="sr-only selected-assistive-text">
+                        ${attrValue.selected ? Resource.msg('msg.assistive.selected.text', 'common', null) : ''}
+                    </span>
+                </button>
+            </isif>
+        </isloop>
+
+    <iselse>
+        <!-- Select <Attribute> Label -->
+        <label class="${attr.id}" for="${attr.id}-${loopState && loopState.count ? loopState.count : '1' }">
+            ${Resource.msg('label.select', 'common', null)} ${attr.displayName}
+        </label>
+
+        <!-- Attribute Values Drop Down Menu -->
+        <select class="custom-select form-control select-${attr.id}" id="${attr.id}-${loopState && loopState.count ? loopState.count : '1' }" ${ product.productType === "variant" && isBundle ? "disabled" : "" }>
+            <option value="${attr.resetUrl}">
+                ${Resource.msg('label.select', 'common', null)} ${attr.displayName}
+            </option>
+            <isloop items="${attr.values}" var="attrValue">
+                <option value="${cldPageTypeQueryParam ? attrValue.url + cldPageTypeQueryParam : attrValue.url}" data-attr-value="${attrValue.value}"
+                    ${!attrValue.selectable ? 'disabled' : ''}
+                    ${attrValue.selected ? 'selected' : ''}
+                >
+                    ${attrValue.displayValue}
+                </option>
+            </isloop>
+        </select>
+
+    </isif>
+</div>

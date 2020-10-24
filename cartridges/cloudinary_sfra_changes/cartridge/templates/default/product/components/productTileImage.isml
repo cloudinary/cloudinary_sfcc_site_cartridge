@@ -1,0 +1,43 @@
+<div class="image-container">
+    <a href="${pdict.urls.product}">
+        <iscomment>Custom start: add cloudinary product image</iscomment>
+        <isif condition="${product.CLDEnabled && product.images && product.images.cloudinaryProductImage}">
+            <isset name="isResponsive" value="${product.images.cloudinaryProductImage.isResponsive}" scope="page" />
+            <img class="tile-image cld-responsive"
+                src="${product.images.cloudinaryProductImage.url}"
+                alt="${product.productName}"
+                title="${product.productName}"
+                data-src="${product.images.cloudinaryProductImage.url}"
+                <isif condition="${!isResponsive}">
+                    <isif condition="${!empty(product.images.cloudinaryProductImage.srcset)}">
+                         srcset="${product.images.cloudinaryProductImage.srcset}"
+                    </isif>
+                    <isif condition="${!empty(product.images.cloudinaryProductImage.sizes)}">
+                        sizes="${product.images.cloudinaryProductImage.sizes}"
+                    </isif>
+                </isif>
+            />
+        <iselse/>
+             <img class="tile-image"
+                src="${product.images.medium[0].url}"
+                alt="${product.productName}"
+                title="${product.images.medium[0].title}"
+            />
+        </isif>
+        <iscomment>Custom end: add cloudinary product image</iscomment>
+    </a>
+
+    <isif condition="${pdict.display.showQuickView !== false}">
+        <a class="quickview hidden-sm-down" href="${pdict.urls.quickView}"
+           data-toggle="modal"
+           data-target="#quickViewModal"
+           title="${Resource.msgf('button.quickview', 'common', null, product.productName)}"
+           aria-label="${Resource.msgf('button.quickview', 'common', null, product.productName)}"
+        >
+            <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-inverse fa-stack-2x"></i>
+                <i class="fa fa-expand fa-stack-1x"></i>
+            </span>
+        </a>
+    </isif>
+</div>

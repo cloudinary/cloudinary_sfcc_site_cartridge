@@ -1,0 +1,36 @@
+<iscontent type="text/html" charset="UTF-8" compact="true"/>
+<iscache type="relative" minute="30" varyby="price_promotion"/>
+
+<isinclude template="util/modules"/>
+<iscomment>Custom Start: Build cloudinary object to pass in producttile template</iscomment>
+<isset name="isCloudinaryEnabled" value="${dw.system.Site.current.preferences.getCustom().CLDEnabled}" scope="page" />
+<isif condition="${isCloudinaryEnabled}">
+	<isscript>
+		var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
+		var cloudinary = {
+			isEnabled: isCloudinaryEnabled,
+			isSwachesEnabled: false,
+			pageType: cloudinaryConstants.PAGE_TYPES.CLD_CART_PRODUCT_TILE
+		}
+	</isscript>
+</isif>
+<iscomment>Custom End: Build cloudinary object to pass in producttile template</iscomment>
+<div class="product-slot product-listing">
+	<h2><isprint value="${slotcontent.calloutMsg}"/></h2>
+	<ul class="search-result-items tiles-container">
+		<isloop items="${slotcontent.content}" var="product">
+			<isobject object="${product}" view="recommendation">
+				<li class="grid-tile">
+					<iscomment>Custom Start: Pass cloudinary object to product tile</iscomment>
+					<isproducttile product="${product}"
+						showswatches="${true}"
+						showpricing="${true}"
+						showpromotion="${true}"
+						showrating="${true}"
+						cloudinary="${isCloudinaryEnabled ? cloudinary : null}"/>
+					<iscomment>Custom End: Pass cloudinary object to product tile</iscomment>
+					</li>
+			</isobject>
+		</isloop>
+	</ul>
+</div>

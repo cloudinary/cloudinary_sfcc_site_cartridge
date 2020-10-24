@@ -1,0 +1,22 @@
+<isdecorate template="application/MenuFrame"> <iscontent
+	type="text/html" charset="UTF-8"> <isinclude
+	template="inc/Modules"> <!-- Page Navigator --> <isset
+	name="TOP_URL"
+	value="${URLUtils.url('SiteNavigationBar-ShowMenuitemOverview', 'CurrentMenuItemId', pdict.CurrentMenuItemId)}"
+	scope="PAGE"> <isbreadcrumb name1="${pdict.mainmenuname}"
+	url1="${TOP_URL}" name2="Product Report"></isbreadcrumb> <!-- EO Page Navigator -->
+
+<!-- table list view -->
+
+
+<table border="0" cellspacing="0" cellpadding="4" width="100%"
+	class="error_box n s e w">
+	<tr valign="top">
+		<td class="error_icon top e"><img
+			src="${URLUtils.webRoot()}/images/error.gif" width="16" height="15"
+			alt="" border="0" /></td>
+		<td class="error top" width="100%">
+			<p>Custom Error ...: . Cannot generate report</p>
+		</td>
+	</tr>
+</table></isdecorate>

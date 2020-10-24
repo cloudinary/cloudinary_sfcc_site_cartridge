@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<extensions xmlns="http://www.demandware.com/xml/bmmodules/2007-12-11"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.demandware.com/xml/bmmodules/2007-12-11 bmext.xsd">
+	<menuitem id="cloudinary-medialibrary-item" site="true" position="1">
+		<name xml:lang="x-default">Cloudinary Admin</name>
+		<short_description xml:lang="x-default">
+			Cloudinary Administration
+		</short_description>
+		<icon>icons/cloudinary-logo.png</icon>
+	</menuitem>
+
+	<menuaction id="cloudinary-medialibrary-action" menupath="cloudinary-medialibrary-item"
+		site="true" position="1">
+		<name xml:lang="x-default">Media Library</name>
+		<short_description xml:lang="x-default">Media Library</short_description>
+		<description xml:lang="x-default">Media Library</description>
+		<exec pipeline="CloudinaryMedia" node="Start" />
+		<sub-pipelines>
+			<pipeline name="CloudinaryMedia-Start" />
+		</sub-pipelines>
+		<icon>icons/cloudinary-logo.png</icon>
+	</menuaction>
+</extensions>

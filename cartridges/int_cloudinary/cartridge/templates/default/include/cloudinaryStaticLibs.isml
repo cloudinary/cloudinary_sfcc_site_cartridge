@@ -1,0 +1,17 @@
+<isset name="preferences" value="${dw.system.Site.current.preferences.custom}" scope="page"/>
+<isif condition="${preferences.CLDEnabled}">
+    <iscomment>Placeholder to hold cloudinary data sent from controllers and being used in client side js
+        to render cloudinary widgets.</iscomment>
+    <isif condition="${pdict.cloudinary}">
+        <div class="cloudinary-data-container d-none visually-hidden" data-cloudinary="<isprint value="${JSON.stringify(pdict.cloudinary)}" encoding="htmlunquote" />"></div>
+    </isif>
+    <script src="${URLUtils.staticURL('/js/cloudinaryWidgets.js')}"></script>
+    <script src="${preferences.CLDCoreShrinkwrapJSURL}"></script>
+    <isif condition="${pdict.cloudinary && pdict.cloudinary.videoEnabled && pdict.cloudinary.videoPlayerEnabled}">
+        <link href="${preferences.CLDVideoPlayerCSSURL}" rel="stylesheet"/>
+        <script src="${preferences.CLDVideoPlayerJSURL}"></script>
+    </isif>
+    <isif condition="${preferences.CLDGalleryEnabled}">
+        <script src="${preferences.CLDGalleryJSURL}"></script>
+    </isif>
+</isif>

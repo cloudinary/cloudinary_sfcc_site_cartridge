@@ -1,0 +1,25 @@
+<isscript>
+    var cloudinaryModel = require('*/cartridge/scripts/model/cloudinaryModel');
+    var cloudinaryHelper = require('*/cartridge/scripts/helpers/cloudinaryHelpers');
+    var variationAttrValueID;
+    if (pdict.Product.variant) {
+        variationAttrValueID = cloudinaryHelper.fetchVariationAttrValueId(pdict.Product.ID, 'color');
+    }
+    var cloudinarySetImages = cloudinaryModel.getCloudinaryImages(pdict.Product.ID, {
+        pageType: pdict.cloudinary.pageType, variationAttrValueID: variationAttrValueID});
+    var productID = pdict.Product.variant ? pdict.Product.masterProduct.ID : pdict.Product.ID;
+    if (cloudinarySetImages && cloudinarySetImages.galleryWidget && cloudinarySetImages.galleryWidget.options &&
+        cloudinarySetImages.galleryWidget.options.container) {
+        var container = cloudinarySetImages.galleryWidget.options.container;
+        container = container + '-' + productID;
+        cloudinarySetImages.galleryWidget.options.container = container;
+    }
+</isscript>
+
+<div class="primary-images col-12 col-sm-6">
+    <div id="cld-gallery-${productID}"
+        class="cloudinary-set-data-container"
+        data-cloudinary="<isprint value="${JSON.stringify(pdict.cloudinary)}" encoding="htmlunquote" />"
+        data-cloudinary-set-images="<isprint value="${JSON.stringify(cloudinarySetImages)}" encoding="htmlunquote" />">
+    </div>
+</div>

@@ -1,0 +1,7 @@
+<iscomment>
+    A general template to render image URL only without <img> tag.
+</iscomment>
+<isset name="imageJSON" value="${pdict.imgURL}" scope="page"/>
+<isif condition="${imageJSON && !empty(imageJSON.url)}">
+   <isprint value="${imageJSON.url}" encoding="on" />
+</isif>

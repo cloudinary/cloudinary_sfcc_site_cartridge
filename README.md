@@ -40,7 +40,7 @@ Additional resources are available at:
 
 ## Support
 
-You can [open an issue through Cloudinary's GitHub](https://github.com/cloudinary/cloudinary_sfcc_pagedesigner/issues).
+You can [open an issue through Cloudinary's GitHub](https://github.com/cloudinary/cloudinary_sfcc_site_cartridge/issues).
 
 Contact us [https://cloudinary.com/contact](https://cloudinary.com/contact).
 

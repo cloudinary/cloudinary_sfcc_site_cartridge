@@ -17,10 +17,27 @@ Get your cloudname, api_key and api_secret from your Cloudinary account [as desc
 
 ### Configuring the site cartridges
 
-Cloudinary offers a site cartridge for each of SFCC's reference architectures: SiteGenesis, and Storefront Reference Architecture (SFRA). Both have the same functionality, but are configured in different ways.  See:
+Cloudinary offers a site cartridge for each of SFCC's reference architectures: SiteGenesis, and Storefront Reference Architecture (SFRA). Both have the same functionality, but are configured in different ways.  
 
-* [Cloudinary SFRA LINK Documentation](documentation/Cloudinary%20SFRA%20LINK%20Documentation%201.0.0.docx)
-* [Cloudinary SiteGenesis LINK Documentation](documentation/Cloudinary%20SiteGenesis%20LINK%20Documentation%201.0.0.docx)
+#### SiteGenesis site cartridge
+
+If you already have a storefront on SiteGenesis and you do not want to migrate to SFRA, then this is the cartridge for you. 
+
+##### SiteGenesis site cartridge installation
+
+You can download the certified SiteGenesis site cartridge from the [Cloudinary page](https://www.salesforce.com/products/commerce-cloud/partner-marketplace/partners/cloudinary/) on the SFCC Link Marketplace (requires SFCC login). Installation and basic usage instructions are provided in the download - see **Cloudinary SiteGenesis LINK Documentation** in the documentation folder. 
+
+You can also get [the most recent release](https://github.com/cloudinary/cloudinary_sfcc_site_cartridge/releases), and download the [Cloudinary SiteGenesis LINK Documentation](documentation/Cloudinary%20SiteGenesis%20LINK%20Documentation%201.0.0.docx) from this repo.
+
+#### SFRA site cartridge
+
+This is the recommended cartridge if you already have a storefront on SFRA, or are new to Salesforce Commerce Cloud (SFRA is the more recent architecture).
+
+##### SFRA site cartridge installation
+
+You can download the certified SFRA site cartridge from the [Cloudinary page](https://www.salesforce.com/products/commerce-cloud/partner-marketplace/partners/cloudinary/) on the SFCC Link Marketplace (requires SFCC login).  Installation and basic usage instructions are provided in the download - see **Cloudinary SFRA LINK Documentation** in the documentation folder. 
+
+You can also get [the most recent release](https://github.com/cloudinary/cloudinary_sfcc_site_cartridge/releases), and download the [Cloudinary SFRA LINK Documentation](documentation/Cloudinary%20SFRA%20LINK%20Documentation%201.0.0.docx) from this repo.
 
 
 ## Using the site cartridge ######################################################################

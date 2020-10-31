@@ -1,9 +1,7 @@
 Cloudinary
 ==========
 
-Cloudinary is a cloud service that offers a solution to any application's entire media management pipeline. 
-
-Easily upload images and videos to the cloud.  Automatically perform smart media resizing, cropping and conversion without installing any complex software.  Collaborate with Marketing and other teams on the same physical asset that gets displayed on your website or the app, so there’s no mistakes due to copying or emailing content around.  Media is seamlessly delivered through a fast CDN, and much much more. 
+Cloudinary is a cloud-based service that provides solutions for image and video management, including server or client-side upload, on-the-fly image and video transformations, quick CDN delivery, and a variety of asset management options.
 
 Salesforce Commerce Cloud (formerly Demandware), is one of the industry's most agile and scalable e-commerce platforms. Cloudinary offers a certified Salesforce Commerce Cloud (SFCC) cartridge that enables you to simplify and automate the process of transforming, optimizing, finding and delivering metadata-enriched images and videos throughout your entire Commerce Cloud store, including product images and videos, category assets, and site catalogs.
 

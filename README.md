@@ -1,11 +1,9 @@
 Cloudinary
 ==========
 
-Cloudinary is a cloud service that offers a solution to any application's entire media management pipeline. 
+Cloudinary is a cloud-based service that provides solutions for image and video management, including server or client-side upload, on-the-fly image and video transformations, quick CDN delivery, and a variety of asset management options.
 
-Easily upload images and videos to the cloud.  Automatically perform smart media resizing, cropping and conversion without installing any complex software.  Collaborate with Marketing and other teams on the same physical asset that gets displayed on your website or the app, so there’s no mistakes due to copying or emailing content around.  Media is seamlessly delivered through a fast CDN, and much much more. 
-
-Cloudinary offers a video component for the Salesforce B2C Commerce Page Designer.  Using this component and an accompanying Cloudinary account, you can add videos to your website pages with the click of a mouse.  Common operations such as changing video sizes, adding overlays, adapting to mobile devices are easily done through the cartridge using Cloudinary’s AI based media transformation capabilities.  Such videos are automatically transcoded to work on all popular browsers and mobile devices.  Cloudinary will optimize the videos to deliver the best quality with the least amount of bandwidth and time consumed, for a great user experience. Our comprehensive APIs and administration capabilities makes it easy to extend the cartridge functionality.
+Salesforce Commerce Cloud (formerly Demandware), is one of the industry's most agile and scalable e-commerce platforms. Cloudinary offers a certified Salesforce Commerce Cloud (SFCC) cartridge that enables you to simplify and automate the process of transforming, optimizing, finding and delivering metadata-enriched images and videos throughout your entire Commerce Cloud store, including product images and videos, category assets, and site catalogs.
 
 ## Setup ######################################################################
 
@@ -13,46 +11,53 @@ Cloudinary offers a video component for the Salesforce B2C Commerce Page Designe
 
 If you don’t have a Cloudinary account, sign up for a [free account](https://cloudinary.com/users/register/free) so you can try out image and video transformations and seamless delivery through CDN.
 
-Get your cloudname, api_key and api_secret from your Cloudinary account [as described here](https://cloudinary.com/documentation/solution_overview#access_identifiers) 
+Get your cloudname, api_key and api_secret from your Cloudinary account [as described here](https://cloudinary.com/documentation/how_to_integrate_cloudinary#account_details).
 
-### Configuring the cartridges
+### Configuring the site cartridges
 
-Follow the [integration guides available in this repository](documentation). There are distinct integration guides for the LINK cartridge (integrating content libraries with Cloudinary) and for Page Designer. 
+Cloudinary offers a site cartridge for each of SFCC's reference architectures: SiteGenesis, and Storefront Reference Architecture (SFRA). Both have the same functionality, but are configured in different ways.  
 
-## Using the Page Designer cartridge ######################################################################
+#### SiteGenesis site cartridge
 
-### Tagging content in Cloudinary
-* Login to your cloudinary account and upload some videos and images to use as overlay logos.
-* Make sure you add a tag called "SFCCPageDesigner" to these videos and images.  
-  - This tag is used by default, but you can use any tag you want to.  But make sure you use this tag in the custom site preferences. 
-* Any assets with this tag will now be available inside the page designer interface.
+If you already have a storefront on SiteGenesis and you do not want to migrate to SFRA, then this is the cartridge for you. 
 
-### Using the Cloudinary Video component
-* In the page designer, browse the availalbe components, pick the Cloudinary Video component and place it on the page. 
-* Open up the properties pane for the component.  
-  - Pick the video you want to use.
-  - Pick any presentation options you want to use.
-  - For overlays, choose to insert overlays and then select the image you want to overlay.
-  - Finally, chose options for the video player.
-* Save the settings and preview the page with gorgeous video
+##### SiteGenesis site cartridge installation
+
+You can download the certified SiteGenesis site cartridge from the [Cloudinary page](https://www.salesforce.com/products/commerce-cloud/partner-marketplace/partners/cloudinary/) on the SFCC Link Marketplace (requires SFCC login). Installation and basic usage instructions are provided in the download - see **Cloudinary SiteGenesis LINK Documentation** in the documentation folder. 
+
+You can also get [the most recent release](https://github.com/cloudinary/cloudinary_sfcc_site_cartridge/releases), and download the [Cloudinary SiteGenesis LINK Documentation](documentation/Cloudinary%20SiteGenesis%20LINK%20Documentation%201.0.0.docx) from this repo.
+
+#### SFRA site cartridge
+
+This is the recommended cartridge if you already have a storefront on SFRA, or are new to Salesforce Commerce Cloud (SFRA is the more recent architecture).
+
+##### SFRA site cartridge installation
+
+You can download the certified SFRA site cartridge from the [Cloudinary page](https://www.salesforce.com/products/commerce-cloud/partner-marketplace/partners/cloudinary/) on the SFCC Link Marketplace (requires SFCC login).  Installation and basic usage instructions are provided in the download - see **Cloudinary SFRA LINK Documentation** in the documentation folder. 
+
+You can also get [the most recent release](https://github.com/cloudinary/cloudinary_sfcc_site_cartridge/releases), and download the [Cloudinary SFRA LINK Documentation](documentation/Cloudinary%20SFRA%20LINK%20Documentation%201.0.0.docx) from this repo.
+
+
+## Using the site cartridge ######################################################################
+
+Find out more about using the site cartridge in the [documentation](https://cloudinary.com/documentation/salesforce_commerce_cloud_cartridge_integration).
 
 
 ## Additional resources ##########################################################
 
 Additional resources are available at:
 
-* [Website](https://cloudinary.com)
-* [Interactive demo](https://demo.cloudinary.com/default)
-* [Documentation](https://cloudinary.com/documentation)
+* [Cloudinary Website](https://cloudinary.com)
+* [Cloudinary Documentation](https://cloudinary.com/documentation)
 * [Knowledge Base](https://support.cloudinary.com/hc/en-us)
 * [Video transformations documentation](https://cloudinary.com/documentation/video_manipulation_and_delivery)
 * [Image transformations documentation](https://cloudinary.com/documentation/image_transformations)
 
 ## Support
 
-You can [open an issue through Cloudinary's GitHub](https://github.com/cloudinary/cloudinary_sfcc_pagedesigner/issues).
+You can [open an issue through Cloudinary's GitHub](https://github.com/cloudinary/cloudinary_sfcc_site_cartridge/issues).
 
-Contact us [https://cloudinary.com/contact](https://cloudinary.com/contact)
+Contact us [https://cloudinary.com/contact](https://cloudinary.com/contact).
 
 Stay tuned for updates, tips and tutorials: [Blog](https://cloudinary.com/blog), [Twitter](https://twitter.com/cloudinary), [Facebook](https://www.facebook.com/Cloudinary).
 

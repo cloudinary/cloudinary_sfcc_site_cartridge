@@ -180,7 +180,7 @@
 													});
 												</isscript>
 												<isif condition="${cldProductImage && 'url' in cldProductImage}">
-													<img src="${cldProductImage.url}"
+													<img
 														style="max-width:100%"
 														alt="${lineItem.product.getImage('small',0).alt}"
 														title="${lineItem.product.getImage('small',0).title}"

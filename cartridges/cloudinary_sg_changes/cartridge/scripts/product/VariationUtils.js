@@ -268,11 +268,13 @@ function _setAttrValuesWithSwatch (params) {
     // Custom Start: Add cloudinary swatch image //
     var linkUrl;
     if (cloudinaryConstants.CLD_ENABLED) {
-        linkUrl = variationMaster.urlSelectVariationValue('Product-Variation', attr, attrValue);
-        processedValue.cldSwatchImg = cloudinaryModel.getCloudinaryProductSwatchImage(variationMaster.master.ID, {
-            pageType: cloudinaryConstants.PAGE_TYPES.CLD_PDP_SWATCH,
-            variationAttrValueID: attrValue.ID
-        });
+        if (cloudinaryConstants.CLD_IMAGE_PAGE_TYPE_SETTINGS_OBJECT.cldPdpSwatch.enabled) {
+            linkUrl = variationMaster.urlSelectVariationValue('Product-Variation', attr, attrValue);
+            processedValue.cldSwatchImg = cloudinaryModel.getCloudinaryProductSwatchImage(variationMaster.master.ID, {
+                pageType: cloudinaryConstants.PAGE_TYPES.CLD_PDP_SWATCH,
+                variationAttrValueID: attrValue.ID
+            });
+        }
     } else {
         linkUrl = isSelected
             ? variationMaster.urlUnselectVariationValue('Product-Variation', attr)

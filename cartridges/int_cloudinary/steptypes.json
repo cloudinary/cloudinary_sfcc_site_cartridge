@@ -73,6 +73,81 @@
                 }
             },
             {
+                "@type-id": "custom.cloudinary.UpdateProductImagesForFeeds",
+                "@supports-parallel-execution": "false",
+                "@supports-site-context": "true",
+                "@supports-organization-context": "false",
+                "description": "Step used to upload product images/videos on Cloudinary",
+                "module": "int_cloudinary/cartridge/scripts/jobs/steps/cldUpdateProductImagesForFeeds.js",
+                "function": "Start",
+                "transactional": "false",
+                "parameters": {
+                    "parameter": [{
+                        "@name": "CLDNumberOfAssets",
+                        "description": "Cloudinary Number Of Assets",
+                        "@type": "long",
+                        "@required": "false",
+                        "@trim": "true"
+                    },
+                    {
+                        "@name": "CLDJobExecutionMode",
+                        "description": "Cloudinary Job Execution Mode",
+                        "@type": "string",
+                        "@required": "false",
+                        "enum-values": {
+                            "value": [
+                                "Debug",
+                                "Prod"
+                            ]
+                        },
+                        "default-value": "Debug"
+                    },
+                    {
+                        "@name": "CLDViewType",
+                        "description": "Cloudinary View Type",
+                        "@type": "string",
+                        "@required": "false",
+                        "@trim": "true"
+                    },
+                    {
+                        "@name": "CLDCatalogId",
+                        "description": "Master Catalog ID to process. The catalog ID should always be the master or id of your catalog to which products belong.",
+                        "@type": "string",
+                        "@required": true,
+                        "@trim": true
+                    },
+                    {
+                        "@name": "CLDCatalogFilePath",
+                        "description": "Catalog Files Path",
+                        "@type": "string",
+                        "@required": true,
+                        "@trim": true
+                    },
+                    {
+                        "@name": "CLDEnableAltText",
+                        "description": "Cloudinary ALT Text",
+                        "@type": "boolean",
+                        "@required": "false",
+                        "@trim": "true",
+                        "default-value": "true"
+                    },
+                    {
+                        "@name": "CLDEnableURLOverride",
+                        "description": "Cloudinary URL Override",
+                        "@type": "boolean",
+                        "@required": "false",
+                        "@trim": "true",
+                        "default-value": "true"
+                    },
+                    {
+                        "@name": "Disabled",
+                        "description": "Mark the step as disabled. This will skip the step and returns a OK status",
+                        "@type": "boolean",
+                        "@required": false
+                    }]
+                }
+            },
+            {
                 "@type-id": "custom.cloudinary.UploadContentLibraryAssets",
                 "@supports-parallel-execution": "false",
                 "@supports-site-context": "true",

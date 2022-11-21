@@ -10,22 +10,26 @@
 						<iscomment>Custom start: Add cloudinary product image</iscomment>
 						<isif condition="${dw.system.Site.current.preferences.getCustom().CLDEnabled}">
 						    <isset name="cloudinaryAPI" value="${require('*/cartridge/scripts/api/cloudinaryApi')}" scope="page" />
-							<isset name="cloudinaryConstants" value="${require('*/cartridge/scripts/util/cloudinaryConstants')}" scope="page" />
+						    <isset name="cloudinaryConstants" value="${require('*/cartridge/scripts/util/cloudinaryConstants')}" scope="page" />
 							<isset name="cldProductImage" value="${cloudinaryAPI.getCatalogImageAbsURLFromRelURL(category.image.URL.toString(), category.ID, cloudinaryConstants.PAGE_TYPES.CATEGORY_BANNER);}" scope="page" />
-							<isif condition="${cldProductImage && 'url' in cldProductImage}">
-							    <img src="${cldProductImage.url}"
-									alt="${category.displayName}"
-									class="cld-responsive"
-									data-src="${cldProductImage.url}"
-									<isif condition="${!('isResponsive' in cldProductImage && cldProductImage.isResponsive)}">
-										<isif condition="${'srcset' in cldProductImage && cldProductImage.srcset}">
-											srcset="${cldProductImage.srcset}"
+	
+							<isif condition="${(cldProductImage && 'url' in cldProductImage) && cloudinaryConstants.CLD_IMAGE_PAGE_TYPE_SETTINGS_OBJECT.categoryBanner.enabled} ">
+									<img
+										alt="${category.displayName}"
+										src="${category.image.httpURL}"
+										class="cld-responsive"
+										data-src="${cldProductImage.url}"
+										<isif condition="${!('isResponsive' in cldProductImage && cldProductImage.isResponsive)}">
+											<isif condition="${'srcset' in cldProductImage && cldProductImage.srcset}">
+												srcset="${cldProductImage.srcset}"
+											</isif>
+											<isif condition="${'sizes' in cldProductImage && cldProductImage.sizes}">
+												sizes="${cldProductImage.sizes}"
+											</isif>
 										</isif>
-										<isif condition="${'sizes' in cldProductImage && cldProductImage.sizes}">
-											sizes="${cldProductImage.sizes}"
-										</isif>
-									</isif>
-								/>
+									/>
+							<iselse/>
+								<img src="${category.image.httpURL}" alt="${category.displayName}" />
 							</isif>
 						<iselse/>
 							<img src="${category.image.httpURL}" alt="${category.displayName}" />

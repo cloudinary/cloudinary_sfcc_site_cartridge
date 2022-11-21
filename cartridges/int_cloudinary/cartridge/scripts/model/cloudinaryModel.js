@@ -26,14 +26,13 @@ var cldTransformationAPI = require('*/cartridge/scripts/api/cloudinaryTranformat
  * @param {string} productID - product ID
  * @param {Object} params - object holding optional params
  *
- * @returns {string} JSON string holding image assets URLs and widegt options
+ * @returns {string} JSON string holding image assets URLs and widget options
  */
 var getCloudinaryImages = function (productID, params) {
     var assets = {};
     var assetPublicID;
     var cldTag = '';
     var colorAttrValueID;
-//    var cldSpinTag = '';
     var cldAssetURLs = [];
     var galleryOptions = {};
     var imageURL;
@@ -59,7 +58,7 @@ var getCloudinaryImages = function (productID, params) {
                 galleryOptions = cloudinaryHelper.getCloudinaryGalleryStyles(product);
             }
             // check if product is variant then fetch it's master product
-            if (product && product.variant) {
+            if (product && (product.variant || product.variationGroup)) {
                 product = product.getMasterProduct();
             }
 
@@ -72,9 +71,16 @@ var getCloudinaryImages = function (productID, params) {
                     if (!empty(colorAttrValueID)) {
                         cldTag += cloudinaryConstants.HYPHEN + colorAttrValueID;
                     }
-
                     mediaAssets.push({ tag: cldTag, mediaType: cloudinaryConstants.CLD_IMAGE_RESOURCE_TYPE });
                     mediaAssets.push({ tag: cldTag, mediaType: cloudinaryConstants.CLD_VIDEO_RESOURCE_TYPE });
+
+                    if (cloudinaryConstants.CLD_360_SPINSETS_ENABLED) {
+                        mediaAssets.push({ tag: cldTag + cloudinaryConstants.CLD_360_SPIN_SET_TAG_SUFFIX, mediaType: cloudinaryConstants.CLD_SPIN_SET_RESOURCE_TYPE });
+                    }
+
+                    if (cloudinaryConstants.CLD_3D_OBJECTS_ENABLED) {
+                        mediaAssets.push({ tag: cldTag + cloudinaryConstants.CLD_3D_OBJECT_TAG_SUFFIX_SLASH, mediaType: cloudinaryConstants.CLD_3D_OBJECT_TAG_SUFFIX });
+                    }
                 } else if (cloudinaryConstants.CLD_CARTRIDGE_OPERATION_MODE === cloudinaryConstants.CLD_GET_ASSETS_BY_VIEW_TYPE_MODE) {
                     if (!empty(colorAttrValueID)) {
                         variantID = cloudinaryHelper.getVariantProductIDByColor(prodID, colorAttrValueID);
@@ -112,10 +118,23 @@ var getCloudinaryImages = function (productID, params) {
                 }
 
                 if (cloudinaryConstants.CLD_CARTRIDGE_OPERATION_MODE === cloudinaryConstants.CLD_GET_ASSETS_BY_TAG_NAME_MODE) {
+                    var cld3DEnabled = false;
+                    if (cloudinaryConstants.CLD_3D_OBJECTS_ENABLED) {
+                        cld3DEnabled = true;
+                    }
+
+                    var cld360Enabled = false;
+                    if (cloudinaryConstants.CLD_360_SPINSETS_ENABLED) {
+                        cld360Enabled = true;
+                    }
+
                     assets.imageURLs = cloudinaryAPI.getProductImagesByTagName(prodID, {
                         pageType: pageType,
                         isSwatch: isSwatch,
-                        variationAttrValueID: colorAttrValueID
+                        variationAttrValueID: colorAttrValueID,
+                        cld360Tag: cld360Enabled,
+                        cld3DTag: cld3DEnabled,
+                        setAndBundleImages: params.setAndBundleImages
                     });
                 } else if (cloudinaryConstants.CLD_CARTRIDGE_OPERATION_MODE === cloudinaryConstants.CLD_GET_ASSETS_BY_VIEW_TYPE_MODE) {
                     assets.imageURLs = cloudinaryAPI.getProductImagesByViewType(prodID, cloudinaryConstants.CLD_HIGH_RES_IMAGES_VIEW_TYPE, pageType);
@@ -380,6 +399,9 @@ var getProductPrimaryImage = function (productID, viewType, params) {
                     isSwatch: isSwatch,
                     variationAttrValueID: variationAttrValueID
                 });
+                if (!empty(product.custom.CLDAltTextForImages)) {
+                    productPrimaryImg.altText = product.custom.CLDAltTextForImages;
+                }
             } else if (cloudinaryConstants.CLD_CARTRIDGE_OPERATION_MODE === cloudinaryConstants.CLD_GET_ASSETS_BY_VIEW_TYPE_MODE) {
                 productImgs = cloudinaryAPI.getProductImagesByViewType(pid, viewType, pageType);
                 productPrimaryImg = productImgs.length > 0 ? productImgs[0] : productPrimaryImg;
@@ -417,6 +439,49 @@ var getPLPCustomImage = function (productID, position) {
     return plpImg;
 };
 
+/**
+ * This method used to fetch resources based on tag names of individual products
+ * @param {Object} product - the product object
+ * @param {List} withFields - fields which will be returned with assets
+ *
+ * @returns {Object} images - object holding array of resources
+ */
+var searchProductSetAndBundleImagesByTags = function (product, withFields) {
+    var images = [];
+
+    if (!empty(product) && cloudinaryConstants.CLD_ENABLED && !cloudinaryConstants.CLD_GALLERY_ENABLED
+            && cloudinaryConstants.CLD_CARTRIDGE_OPERATION_MODE === cloudinaryConstants.CLD_GET_ASSETS_BY_TAG_NAME_MODE) {
+        var subProducts = [];
+        if (product.productSet) {
+            subProducts = product.productSetProducts;
+        } else if (product.bundle) {
+            subProducts = product.bundledProducts;
+        }
+        var tagsSearchQuery = cloudinaryHelper.generateTagsQuery(subProducts);
+
+        images = cloudinaryAPI.searchCLDResourcesByTags(tagsSearchQuery, withFields);
+    }
+
+    return images;
+};
+
+/**
+* This method used to fetch product from product_id
+* @param {string} productID - the product id
+* @param {Object} currentLocale - Current locale
+* @param {string} viewType - the view type
+*
+* @returns {Object} images - object holding array of resources
+*/
+var getProductImageByIDAndViewType = function (productID, currentLocale, viewType) {
+    var productFetch;
+    var productImages;
+
+    productFetch = ProductMgr.getProduct(productID);
+    productImages = productFetch.getImages(viewType);
+    return productImages;
+};
+
 module.exports = {
     getCloudinaryImages: getCloudinaryImages,
     getCloudinaryVideo: getCloudinaryVideo,
@@ -425,5 +490,7 @@ module.exports = {
     geContentVideoByName: geContentVideoByName,
     geContentVideoByURL: geContentVideoByURL,
     getProductPrimaryImage: getProductPrimaryImage,
-    getPLPCustomImage: getPLPCustomImage
+    getPLPCustomImage: getPLPCustomImage,
+    searchProductSetAndBundleImagesByTags: searchProductSetAndBundleImagesByTags,
+    getProductImageByIDAndViewType: getProductImageByIDAndViewType
 };

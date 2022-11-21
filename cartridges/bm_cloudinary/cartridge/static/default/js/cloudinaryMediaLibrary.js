@@ -5,7 +5,14 @@ document.addEventListener("DOMContentLoaded", function(event) {
     mloptions.insert_caption = '';
 
     if (typeof cloudinary !== 'undefined') {
-        window.ml = cloudinary.createMediaLibrary(mloptions, {});
+        window.ml = cloudinary.createMediaLibrary(mloptions, {
+            integration: {
+               type: mloptions.integration.type,
+               platform: mloptions.integration.platform,
+               version: mloptions.integration.version,
+               environment: mloptions.integration.environment
+            }    
+        });
         window.ml.show();
     }
 });

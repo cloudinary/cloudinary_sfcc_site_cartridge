@@ -17,26 +17,34 @@ server.append('Show', cache.applyPromotionSensitiveCache, function (req, res, ne
     var productPrimaryImg;
 
     if (cloudinaryConstants.CLD_ENABLED && product) {
-        productPrimaryImg = cloudinaryModel.getProductPrimaryImage(product.id, cloudinaryConstants.CLD_HIGH_RES_IMAGES_VIEW_TYPE, {
-            pageType: pageType
-        });
+        if (cloudinaryConstants.CLD_IMAGE_PAGE_TYPE_SETTINGS_OBJECT.plp.enabled) {
+            productPrimaryImg = cloudinaryModel.getProductPrimaryImage(product.id, cloudinaryConstants.CLD_HIGH_RES_IMAGES_VIEW_TYPE, {
+                pageType: pageType
+            });
 
-        if (!empty(productPrimaryImg)) {
-            cloudinaryModel.addCloudinaryProductImage(product, productPrimaryImg);
+            if (!empty(productPrimaryImg)) {
+                cloudinaryModel.addCloudinaryProductImage(product, productPrimaryImg);
+            }
+
+            if (!empty(productPrimaryImg.altText)) {
+                cloudinary.altText = productPrimaryImg.altText;
+            }
+            cloudinary.isEnabled = cloudinaryConstants.CLD_ENABLED;
+            cloudinary.galleryEnabled = cloudinaryConstants.CLD_GALLERY_ENABLED;
+            cloudinary.cloudName = cloudinaryConstants.CLD_CLOUDNAME;
+            cloudinary.videoEnabled = product.CLDVideoEnabled;
+            cloudinary.videoPlayerEnabled = product.CLDVideoPlayerEnabled;
+            res.setViewData({ cloudinary: cloudinary });
         }
+
         // add cloudinary swatch images
-        if (cloudinaryConstants.CLD_ENABLE_SWATCH_ON_PLP) {
+        if (cloudinaryConstants.CLD_ENABLE_SWATCH_ON_PLP && cloudinaryConstants.CLD_IMAGE_PAGE_TYPE_SETTINGS_OBJECT.cldPlpSwatch.enabled) {
             cloudinaryModel.addCloudinaryProductSwatchImage(product, pageTypeSwatches);
+            cloudinary.isEnabled = cloudinaryConstants.CLD_ENABLED;
+            cloudinary.cloudName = cloudinaryConstants.CLD_CLOUDNAME;
+            res.setViewData({ cloudinary: cloudinary });
         }
     }
-
-    cloudinary.isEnabled = cloudinaryConstants.CLD_ENABLED;
-    cloudinary.galleryEnabled = cloudinaryConstants.CLD_GALLERY_ENABLED;
-    cloudinary.cloudName = cloudinaryConstants.CLD_CLOUDNAME;
-    cloudinary.videoEnabled = product.CLDVideoEnabled;
-    cloudinary.videoPlayerEnabled = product.CLDVideoPlayerEnabled;
-
-    res.setViewData({ cloudinary: cloudinary });
 
     next();
 });

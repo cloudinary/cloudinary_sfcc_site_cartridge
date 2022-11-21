@@ -4,7 +4,7 @@
 var LocalServiceRegistry = require('dw/svc/LocalServiceRegistry');
 /* Script Includes */
 var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
-
+var cloudinaryConstant = require('*/cartridge/scripts/util/cloudinaryConstant');
 /**
 * Create and configure service.
 *
@@ -27,12 +27,8 @@ function getService(serviceID, serviceConfig) {
 function getServiceConfigs(args) {
     var serviceConfig = {
         createRequest: function (svc, requestPayload) {
-            var cldTrackingToken = '';
             var credential = svc.getConfiguration().getCredential();
-            var cldTrackingParam = cloudinaryConstants.CLD_TRACKING_PARAM.split(cloudinaryConstants.EQUAL);
-            if (!empty(cldTrackingParam) && cldTrackingParam.length > 1) {
-                cldTrackingToken = cldTrackingParam[1];
-            }
+            var cldTrackingParam = cloudinaryConstants.API_TRACKING_PARAM.replace(cloudinaryConstants.CLD_TRACKING_PARAM_PLATFORM_PLACEHOLDER, cloudinaryConstant.CLD_SFCC_PLATFORM_ARCHITECTURE);
             var url = credential.getURL();
 
             if (url.lastIndexOf(cloudinaryConstants.FORWARD_SLASH) !== (url.length - 1)) {
@@ -44,14 +40,26 @@ function getServiceConfigs(args) {
                 url = url.replace(cloudinaryConstants.CLD_LIST_SERVICE_CLOUDNAME_PLACEHOLDER, cloudinaryConstants.CLD_CLOUDNAME);
             }
 
-            url += args.endPoint;
+            // add api key if placeholder [apikey] is present
+            if (url.indexOf(cloudinaryConstants.CLD_LIST_SERVICE_API_KEY_PLACEHOLDER) > -1) {
+                url = url.replace(cloudinaryConstants.CLD_LIST_SERVICE_API_KEY_PLACEHOLDER, cloudinaryConstants.CLD_APIKEY);
+            }
+
+            // add api secret if placeholder [apisecret] is present
+            if (url.indexOf(cloudinaryConstants.CLD_LIST_SERVICE_API_SECRET_PLACEHOLDER) > -1) {
+                url = url.replace(cloudinaryConstants.CLD_LIST_SERVICE_API_SECRET_PLACEHOLDER, cloudinaryConstants.CLD_APISECRET);
+            }
+
+            if (!empty(args.endPoint)) {
+                url += args.endPoint;
+            }
 
             svc.setURL(url);
             svc.setRequestMethod(args.method);
             svc.setAuthentication('BASIC');
             svc.setEncoding('UTF-8');
             svc.addHeader('Content-Type', 'application/json');
-            svc.addHeader('User-Agent', cldTrackingToken);
+            svc.addHeader('User-Agent', cldTrackingParam);
             return JSON.stringify(requestPayload);
         },
 

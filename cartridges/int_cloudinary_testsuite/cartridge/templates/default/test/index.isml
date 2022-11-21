@@ -31,5 +31,11 @@
         <li>
             <a href="${URLUtils.https('Test-CatalogVideo')}">Catalog Video</a>
         </li>
+        <li>
+            <a href="${URLUtils.https('Test-ProductImageForFeeds')}">View Product Image For Feeds</a>
+        </li>
+        <li>
+            <a href="${URLUtils.https('Test-ProductCustomPositionImage')}">View Product Custom Position Image</a>
+        </li>
     </ul>
 </isdecorate>

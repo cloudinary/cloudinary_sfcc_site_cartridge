@@ -49,9 +49,13 @@ function show() {
     var cloudinary = {};
     cloudinary.isEnabled = cloudinaryConstants.CLD_ENABLED;
     if (cloudinaryConstants) {
-        cloudinary.highResImgViewType = cloudinaryConstants.CLD_HIGH_RES_IMAGES_VIEW_TYPE;
-        cloudinary.pageType = cloudinaryConstants.PAGE_TYPES.CART;
-    }
+        if (cloudinaryConstants.CLD_IMAGE_PAGE_TYPE_SETTINGS_OBJECT.cart.enabled) {
+            cloudinary.highResImgViewType = cloudinaryConstants.CLD_HIGH_RES_IMAGES_VIEW_TYPE;
+            cloudinary.pageType = cloudinaryConstants.PAGE_TYPES.CART;
+        } else {
+            cloudinary = {};
+    } 
+}
 
     app.getView('Cart', {
         cart: app.getModel('Cart').get(),
@@ -315,8 +319,13 @@ function miniCart() {
     var cloudinary = {};
     cloudinary.isEnabled = cloudinaryConstants.CLD_ENABLED;
     if (cloudinaryConstants.CLD_ENABLED) {
-        cloudinary.highResImgViewType = cloudinaryConstants.CLD_HIGH_RES_IMAGES_VIEW_TYPE;
-        cloudinary.pageType = cloudinaryConstants.PAGE_TYPES.MINI_CART;
+        if (cloudinaryConstants.CLD_IMAGE_PAGE_TYPE_SETTINGS_OBJECT.miniCart.enabled) {    
+             cloudinary.highResImgViewType = cloudinaryConstants.CLD_HIGH_RES_IMAGES_VIEW_TYPE;
+             cloudinary.pageType = cloudinaryConstants.PAGE_TYPES.MINI_CART;
+             cloudinary.isMiniCart = cloudinaryConstants.CLD_IMAGE_PAGE_TYPE_SETTINGS_OBJECT.miniCart.enabled;
+        } else {
+            cloudinary = {};
+        }
     }
     // Custom End: Add cloudinary object //
 

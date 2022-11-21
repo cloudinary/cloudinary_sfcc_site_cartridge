@@ -67,8 +67,10 @@ function ProductSuggestions(suggestions, maxItems) {
     if (cloudinaryConstants.CLD_ENABLED) {
         // calling this method again since base model doesn't return product id
         // and it's mandatory to load cloudinary product primary image
-        var products = getProducts(suggestions.productSuggestions.suggestedProducts, maxItems);
-        this.products = products;
+        if (cloudinaryConstants.CLD_IMAGE_PAGE_TYPE_SETTINGS_OBJECT.searchSuggestions.enabled) {   // added logic for pageType settings cloudinary
+            var products = getProducts(suggestions.productSuggestions.suggestedProducts, maxItems);
+            this.products = products;
+        }
     }
 }
 

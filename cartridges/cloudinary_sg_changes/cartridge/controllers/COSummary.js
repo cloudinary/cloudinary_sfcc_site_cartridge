@@ -51,8 +51,12 @@ function start(context) {
 
         cloudinary.isEnabled = cloudinaryConstants.CLD_ENABLED;
         if (cloudinaryConstants) {
-            cloudinary.highResImgViewType = cloudinaryConstants.CLD_HIGH_RES_IMAGES_VIEW_TYPE;
-            cloudinary.pageType = cloudinaryConstants.PAGE_TYPES.CHECKOUT;
+            if (cloudinaryConstants.CLD_IMAGE_PAGE_TYPE_SETTINGS_OBJECT.checkout.enabled) {
+                cloudinary.highResImgViewType = cloudinaryConstants.CLD_HIGH_RES_IMAGES_VIEW_TYPE;
+                cloudinary.pageType = cloudinaryConstants.PAGE_TYPES.CHECKOUT;
+            } else {
+                cloudinary = {};
+            }
         }
         // Custom End: Add cloudinary object //
 

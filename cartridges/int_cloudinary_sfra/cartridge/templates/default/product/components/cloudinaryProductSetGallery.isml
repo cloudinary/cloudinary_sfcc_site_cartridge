@@ -1,15 +1,10 @@
+<isset name="cloudinaryPGWContainerSuffix" value="${empty(pdict.cloudinary.cloudinaryPGWContainerSuffix) ? (productItem.raw.variant ? (productItem.raw.masterProduct.ID + '-' + productItem.raw.ID) : productItem.raw.ID) : pdict.cloudinary.cloudinaryPGWContainerSuffix}" scope="page" />
+
 <div class="primary-images col-12 col-sm-6">
-    <isif condition="${product.raw && product.raw.variant}">
-        <div id="cld-gallery-${productItem.raw.masterProduct.ID}"
+        <div id="cld-gallery-${cloudinaryPGWContainerSuffix}"
             class="cloudinary-set-data-container"
             data-cloudinary="<isprint value="${JSON.stringify(pdict.cloudinary)}" encoding="htmlunquote" />"
             data-cloudinary-set-images="<isprint value="${JSON.stringify(productItem.images.cloudinaryProductImages)}" encoding="htmlunquote" />"
             ></div>
-    <iselse/>
-        <div id="cld-gallery-${productItem.id}"
-            class="cloudinary-set-data-container"
-            data-cloudinary="<isprint value="${JSON.stringify(pdict.cloudinary)}" encoding="htmlunquote" />"
-            data-cloudinary-set-images="<isprint value="${JSON.stringify(productItem.images.cloudinaryProductImages)}" encoding="htmlunquote" />"
-            ></div>
-    </isif>
+    
 </div>

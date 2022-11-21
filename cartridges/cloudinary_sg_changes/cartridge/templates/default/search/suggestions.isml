@@ -94,7 +94,7 @@
                 <div class="product-image">
                     <isif condition="${productImage != null}">
                         <iscomment>Custom Start: Add cloudinary image </iscomment>
-                        <isif condition="${isCloudinaryEnabled && cldProductImage && 'url' in cldProductImage}">
+                        <isif condition="${(isCloudinaryEnabled && cldProductImage && 'url' in cldProductImage) && cloudinaryConstants.CLD_IMAGE_PAGE_TYPE_SETTINGS_OBJECT.searchSuggestions.enabled}">
                             <img src="${cldProductImage.url}"
                                 alt="${productImage.alt}"
                                 title="${productImage.title}"

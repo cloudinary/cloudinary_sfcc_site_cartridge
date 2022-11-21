@@ -16,7 +16,15 @@ var cloudinaryConstants = {
     PAGE_TYPES: {
         SEARCH_SUGGESTIONS: 'searchSuggestions'
     },
-    CLD_HIGH_RES_IMAGES_VIEW_TYPE: 'someViewType'
+    CLD_HIGH_RES_IMAGES_VIEW_TYPE: 'someViewType',
+    CLD_IMAGE_PAGE_TYPE_SETTINGS_OBJECT: {
+        categoryBanner: {
+            enabled: true
+        },
+        searchSuggestions: {
+            enabled: true
+        }
+    }
 };
 
 module.exports = cloudinaryConstants;

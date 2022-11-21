@@ -20,7 +20,7 @@
 
                 <div class="row">
                     <iscomment>Custom start: add cloudinary PGW</iscomment>
-                    <isif condition="${pdict.cloudinary && pdict.cloudinary.isEnabled}">
+                    <isif condition="${pdict.cloudinary && pdict.cloudinary.isEnabled && pdict.cloudinary.galleryEnabled}">
                         <isinclude template="product/components/cloudinaryProductSetGallery"/>
                     <iselse/>
                          <!-- Product Images Carousel -->

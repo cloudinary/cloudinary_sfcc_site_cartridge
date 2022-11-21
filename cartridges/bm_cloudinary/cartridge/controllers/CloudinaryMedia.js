@@ -12,7 +12,13 @@ function start() {
     var context = {
         mlOptions: {
             cloud_name: cloudName,
-            api_key: apiKey
+            api_key: apiKey,
+            integration: {
+                type: cloudinaryConstants.CLD_SFCC_INTEGRATION,
+                platform: cloudinaryConstants.CLD_SFCC_PLATFORM,
+                version: cloudinaryConstants.CLD_SFCC_VERSION,
+                environment: cloudinaryConstants.CLD_SFCC_ENVIRONMENT
+            }
         }
     };
     ISML.renderTemplate('widgets/viewmedia', context);

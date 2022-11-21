@@ -1,7 +1,7 @@
 {
     "name": "int_cloudinary_sfra",
-    "version": "20.1.0",
-    "description": "New overlay cartridge",
+    "version": "22.1.0",
+    "description": "Cloudinary Cartridge For Images",
     "main": "index.js",
     "scripts": {
         "lint": "sgmf-scripts --lint js",

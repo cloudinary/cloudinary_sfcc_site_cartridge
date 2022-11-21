@@ -37,25 +37,30 @@ function show() {
     var cloudinary = {};
     cloudinary.isEnabled = cloudinaryConstants.CLD_ENABLED;
     if (cloudinaryConstants.CLD_ENABLED) {
-        var colorAttrValueID = params.get('dwvar_' + params.pid.stringValue + '_color').stringValue;
-        cloudinary.galleryEnabled = cloudinaryConstants.CLD_GALLERY_ENABLED;
-        cloudinary.images = cloudinaryModel.getCloudinaryImages(product.object.ID, {
-            pageType: cloudinaryConstants.PAGE_TYPES.PDP,
-            variationAttrValueID: colorAttrValueID
-        });
+        if (cloudinaryConstants.CLD_IMAGE_PAGE_TYPE_SETTINGS_OBJECT.pdp.enabled) {   //     Pdp Json Enable Disable  //
+            var colorAttrValueID = params.get('dwvar_' + params.pid.stringValue + '_color').stringValue;
+            cloudinary.galleryEnabled = cloudinaryConstants.CLD_GALLERY_ENABLED;
+            cloudinary.images = cloudinaryModel.getCloudinaryImages(product.object.ID, {
+                pageType: cloudinaryConstants.PAGE_TYPES.PDP,
+                variationAttrValueID: colorAttrValueID
+            });
+        
+            var isVideoEnabled = cloudinaryHelper.isVideoEnabled(product.object);
+            var isVideoPlayerEnabled = cloudinaryHelper.isVideoPlayerEnabled(product.object);
 
-        var isVideoEnabled = cloudinaryHelper.isVideoEnabled(product.object);
-        var isVideoPlayerEnabled = cloudinaryHelper.isVideoPlayerEnabled(product.object)
-
-        cloudinary.videoEnabled = isVideoEnabled;
-        cloudinary.videoPlayerEnabled = isVideoPlayerEnabled;
-        cloudinary.cloudName = cloudinaryConstants.CLD_CLOUDNAME;
-        if (isVideoEnabled) {
-            cloudinary.video = cloudinaryModel.getCloudinaryVideo(product.object.ID, request.locale);
-        }
+            cloudinary.videoEnabled = isVideoEnabled;
+            cloudinary.videoPlayerEnabled = isVideoPlayerEnabled;
+            cloudinary.cloudName = cloudinaryConstants.CLD_CLOUDNAME;
+            if (isVideoEnabled) {
+                cloudinary.video = cloudinaryModel.getCloudinaryVideo(product.object.ID, request.locale);
+            }
+        } else {
+        cloudinary = {};
+       }
     }
     // Custom End: Build cloudinary object //
 
+    cloudinary.cldImageSettings = cloudinaryConstants.CLD_IMAGE_PAGE_TYPE_SETTINGS_OBJECT.recommendationTile.enabled;
     if (product.isVisible()) {
         meta.update(product);
         meta.updatePageMetaTags(product);
@@ -64,15 +69,15 @@ function show() {
             DefaultVariant: product.getVariationModel().getDefaultVariant(),
             CurrentOptionModel: product.updateOptionSelection(params),
             CurrentVariationModel: currentVariationModel,
-            cloudinary: cloudinary
+            cloudinary: cloudinary ? cloudinary : null
         }).render(product.getTemplate() || 'product/product');
+      
     } else {
         // @FIXME Correct would be to set a 404 status code but that breaks the page as it utilizes
         // remote includes which the Web Adapter won't resolve.
         response.setStatus(410);
         app.getView().render('error/notfound');
     }
-
 }
 
 /**
@@ -92,22 +97,28 @@ function detail() {
     cloudinary.isEnabled = cloudinaryConstants.CLD_ENABLED;
 
     if (cloudinaryConstants.CLD_ENABLED) {
-        var colorAttrValueID = params.get('dwvar_' + params.pid.stringValue + '_color').stringValue;
-        cloudinary.galleryEnabled = cloudinaryConstants.CLD_GALLERY_ENABLED;
-        cloudinary.images = cloudinaryModel.getCloudinaryImages(product.object.ID, {
-            pageType: cloudinaryConstants.PAGE_TYPES.PDP,
-            variationAttrValueID: colorAttrValueID
-        });
+        if (cloudinaryConstants.CLD_IMAGE_PAGE_TYPE_SETTINGS_OBJECT.pdp.enabled) {
+            var colorAttrValueID = params.get('dwvar_' + params.pid.stringValue + '_color').stringValue;
+            cloudinary.galleryEnabled = cloudinaryConstants.CLD_GALLERY_ENABLED;
+            cloudinary.images = cloudinaryModel.getCloudinaryImages(product.object.ID, {
+                pageType: cloudinaryConstants.PAGE_TYPES.PDP,
+                variationAttrValueID: colorAttrValueID
+            });
 
-        var isVideoEnabled = cloudinaryHelper.isVideoEnabled(product.object);
-        var isVideoPlayerEnabled = cloudinaryHelper.isVideoPlayerEnabled(product.object)
+            cloudinary.productSetAndBundleImages = cloudinaryModel.searchProductSetAndBundleImagesByTags(product.object);
 
-        cloudinary.videoEnabled = isVideoEnabled;
-        cloudinary.videoPlayerEnabled = isVideoPlayerEnabled;
-        cloudinary.cloudName = cloudinaryConstants.CLD_CLOUDNAME;
-        cloudinary.isQuickView = params.source && params.source.stringValue === 'quickview' ? true : false;
-        if (isVideoEnabled) {
-            cloudinary.video = cloudinaryModel.getCloudinaryVideo(product.object.ID, request.locale);
+            var isVideoEnabled = cloudinaryHelper.isVideoEnabled(product.object);
+            var isVideoPlayerEnabled = cloudinaryHelper.isVideoPlayerEnabled(product.object)
+
+            cloudinary.videoEnabled = isVideoEnabled;
+            cloudinary.videoPlayerEnabled = isVideoPlayerEnabled;
+            cloudinary.cloudName = cloudinaryConstants.CLD_CLOUDNAME;
+            cloudinary.isQuickView = params.source && params.source.stringValue === 'quickview' ? true : false;
+            if (isVideoEnabled) {
+                cloudinary.video = cloudinaryModel.getCloudinaryVideo(product.object.ID, request.locale);
+            }
+        } else {
+            cloudinary = {};
         }
     }
     // Custom End: Load cloudinary assets //
@@ -170,14 +181,27 @@ function hitTile() {
     cloudinary.isEnabled = cloudinaryConstants.CLD_ENABLED;
 
     if (cloudinaryConstants.CLD_ENABLED) {
-        cloudinary.isSwachesEnabled = cloudinaryConstants.CLD_ENABLE_SWATCH_ON_PLP;
-        cloudinary.pageType = params.pageType ? params.pageType.stringValue : null;
-        cloudinary.swatchesPageType = params.swatchesPageType ? params.swatchesPageType.stringValue : null;
-    }
-    // Custom End: Add cloudinary object //
+        if (cloudinaryConstants.CLD_IMAGE_PAGE_TYPE_SETTINGS_OBJECT.cldPlpSwatch.enabled) {  //     Plp swatch Json Enable Disable  //
+            cloudinary.isSwachesEnabled = cloudinaryConstants.CLD_ENABLE_SWATCH_ON_PLP;
+            cloudinary.swatchesPageType = params.swatchesPageType ? params.swatchesPageType.stringValue : null;
+        }
 
+        if (cloudinaryConstants.CLD_IMAGE_PAGE_TYPE_SETTINGS_OBJECT.plp.enabled) {
+            cloudinary.pageType = params.pageType ? params.pageType.stringValue : null;
+        } else {
+            cloudinary = {};
+        }
+
+    }
+    if(!empty(product.object.custom.CLDAltTextForImages)) {
+        var cldAltText = product.object.custom.CLDAltTextForImages;
+        }
+    var enabledRecommendation = cloudinaryConstants.CLD_IMAGE_PAGE_TYPE_SETTINGS_OBJECT.recommendationTile.enabled;    
+    // Custom End: Add cloudinary object //
     if (product.isVisible()) {
         var productView = app.getView('Product', {
+            cldAltText: cldAltText,
+            CLDImagePageTypeSettings: enabledRecommendation,
             product: product,
             showswatches: true,
             showpricing: true,
@@ -242,7 +266,9 @@ function productNavigation() {
         productPagingModel.setPageSize(3);
         productPagingModel.setStart(params.start.intValue - 2);
 
+        var enabledRecommendation = cloudinaryConstants.CLD_IMAGE_PAGE_TYPE_SETTINGS_OBJECT.recommendationTile.enabled;
         app.getView({
+            CLDImagePageTypeSettings: enabledRecommendation,
             ProductPagingModel: productPagingModel,
             ProductSearchResult: productSearchModel
         }).render('search/productnav');
@@ -298,18 +324,23 @@ function variation() {
             cloudinary.isEnabled = cloudinaryConstants.CLD_ENABLED;
 
             if (cloudinaryConstants.CLD_ENABLED) {
-                var colorAttrValueID = params.get('dwvar_' + params.pid.stringValue + '_color').stringValue;
-                var cldAssets = cloudinaryModel.getCloudinaryImages(product.object.ID, {
-                    pageType: cloudinaryConstants.PAGE_TYPES.PDP,
-                    variationAttrValueID: colorAttrValueID
-                });
+                if (cloudinaryConstants.CLD_IMAGE_PAGE_TYPE_SETTINGS_OBJECT.cldPdpSwatch.enabled) {
+                    var colorAttrValueID = params.get('dwvar_' + params.pid.stringValue + '_color').stringValue;
+                    var cldAssets = cloudinaryModel.getCloudinaryImages(product.object.ID, {
+                        pageType: cloudinaryConstants.PAGE_TYPES.PDP,
+                        variationAttrValueID: colorAttrValueID
+                    });
 
-                if (cldAssets && cldAssets.galleryWidget && cldAssets.galleryWidget.options &&
-                    cldAssets.galleryWidget.options.mediaAssets) {
-                    cloudinary.galleryWidgetOptions = cldAssets.galleryWidget.options;
+                    cloudinary.isGalleryEnabled = cloudinaryConstants.CLD_GALLERY_ENABLED;
+                    if (cldAssets && cldAssets.galleryWidget && cldAssets.galleryWidget.options &&
+                        cldAssets.galleryWidget.options.mediaAssets) {
+                        cloudinary.galleryWidgetOptions = cldAssets.galleryWidget.options;
+                    }
+                    cloudinary.images = {};
+                    cloudinary.images.imageURLs = cldAssets.imageURLs;
+                } else {
+                    cloudinary = {};
                 }
-
-                cloudinary.isGalleryEnabled = cloudinaryConstants.CLD_GALLERY_ENABLED;
             }
             // Custom End: Load cloudinary assets //
 
@@ -431,21 +462,31 @@ function getSetItem() {
     // Custom Start: Load cloudinary assets //
     var cloudinary = {};
     cloudinary.isEnabled = cloudinaryConstants.CLD_ENABLED;
+    
 
     if (cloudinaryConstants.CLD_ENABLED) {
-        var colorAttrValueID = params.get('dwvar_' + params.pid.stringValue + '_color').stringValue;
-        var cldAssets = cloudinaryModel.getCloudinaryImages(product.object.ID, {
-            pageType: cloudinaryConstants.PAGE_TYPES.PDP,
-            variationAttrValueID: colorAttrValueID
-        });
+        if (cloudinaryConstants.CLD_IMAGE_PAGE_TYPE_SETTINGS_OBJECT.pdp.enabled) {
+            var colorAttrValueID = params.get('dwvar_' + params.pid.stringValue + '_color').stringValue;
+            var cldAssets = cloudinaryModel.getCloudinaryImages(product.object.ID, {
+                pageType: cloudinaryConstants.PAGE_TYPES.PDP,
+                variationAttrValueID: colorAttrValueID
+            });
 
-        if (cldAssets && cldAssets.galleryWidget && cldAssets.galleryWidget.options &&
-            cldAssets.galleryWidget.options.mediaAssets) {
-            cloudinary.mediaAssets =  cldAssets.galleryWidget.options.mediaAssets;
-            cloudinary.container = cldAssets.galleryWidget.options.container + '-' + (product.object.variant ? product.object.masterProduct.ID : product.object.ID);
+            var cloudinaryPGWContainerSuffix = params.cloudinaryPGWContainerSuffix;
+            var containerSuffix = product.object.variant ? (product.object.masterProduct.ID + '-' + product.object.ID) : product.object.ID;
+            cloudinaryPGWContainerSuffix = !empty(cloudinaryPGWContainerSuffix) && !empty(cloudinaryPGWContainerSuffix.value) ? cloudinaryPGWContainerSuffix : containerSuffix;
+            cloudinary.cloudinaryPGWContainerSuffix = cloudinaryPGWContainerSuffix;
+
+            if (cldAssets && cldAssets.galleryWidget && cldAssets.galleryWidget.options &&
+                cldAssets.galleryWidget.options.mediaAssets) {
+                cloudinary.galleryWidgetOptions = cldAssets.galleryWidget.options;
+                cloudinary.galleryWidgetOptions.container = cldAssets.galleryWidget.options.container + '-' + cloudinaryPGWContainerSuffix;
+            }
+
+            cloudinary.isGalleryEnabled = cloudinaryConstants.CLD_GALLERY_ENABLED;
+        } else {
+            cloudinary = {};
         }
-
-        cloudinary.isGalleryEnabled = cloudinaryConstants.CLD_GALLERY_ENABLED;
     }
     // Custom End: Load cloudinary assets //
 

@@ -10,7 +10,6 @@
                                 <img class="swatch swatch-circle cld-responsive"
                                     data-index="${loopState.count-1}"
                                     style="background-image: url(${swatch.images.cloudinaryProductSwatchImg.url})"
-                                    src="${swatch.images.cloudinaryProductSwatchImg.url}"
                                     alt="${swatch.images.swatch && !empty(swatch.images.swatch[0].alt) ? swatch.images.swatch[0].alt : product.productName}"
                                     data-src="${swatch.images.cloudinaryProductSwatchImg.url}"
                                     <isif condition="${!isResponsive}">

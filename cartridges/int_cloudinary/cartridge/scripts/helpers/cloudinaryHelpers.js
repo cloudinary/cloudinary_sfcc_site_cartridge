@@ -223,7 +223,7 @@ cloudinary.findObjectByExternalId = function (objArray, key) {
 
 /**
  * Sort cloudinary resources in ascending order based on the
- * value present in metada field called SFCC_gallery_position
+ * value present in metadata field called SFCC_gallery_position
  *
  * @param {array} resources - resources returned by cloudinary api
  *
@@ -239,8 +239,8 @@ cloudinary.sortResourcesByAssetPosition = function (resources) {
             resources.sort(function (resource1, resource2) {
                 comparison = 0;
                 if (!empty(resource1.metadata) && !empty(resource2.metadata)) {
-                    metadataObj1 = cloudinary.findObjectByExternalId(resource1.metadata, prefs.CLD_METADATA_GALLERY_POSITION_KEY);
-                    metadataObj2 = cloudinary.findObjectByExternalId(resource2.metadata, prefs.CLD_METADATA_GALLERY_POSITION_KEY);
+                    metadataObj1 = cloudinary.findObjectByExternalId(resource1.metadata, prefs.CLD_SMD_GALLERY_POSITION_KEY);
+                    metadataObj2 = cloudinary.findObjectByExternalId(resource2.metadata, prefs.CLD_SMD_GALLERY_POSITION_KEY);
                     if (!empty(metadataObj1) && !empty(metadataObj2)) {
                         if (metadataObj1.value > metadataObj2.value) {
                             comparison = 1;
@@ -321,17 +321,17 @@ cloudinary.getImgGlobalDropdownValues = function () {
 
     try {
         var globalImgTranformFormat = prefs.CLD_GLOBAL_IMAGE_TRANSFORM_FORMAT;
-        if (!empty(globalImgTranformFormat) && globalImgTranformFormat !== 'null') {
+        if (!empty(globalImgTranformFormat) && globalImgTranformFormat !== 'null' && globalImgTranformFormat.value !== 'null') {
             globalDropdownValues.push(prefs.FORMAT_PREFIX + globalImgTranformFormat);
         }
 
         var globalImgQuality = prefs.CLD_GLOBAL_IMAGE_QUALITY;
-        if (!empty(globalImgQuality) && globalImgQuality !== 'null') {
+        if (!empty(globalImgQuality) && globalImgQuality !== 'null' && globalImgQuality.value !== 'null') {
             globalDropdownValues.push(prefs.QUALITY_PREFIX + globalImgQuality);
         }
 
         var globalImgDpr = prefs.CLD_GLOBAL_IMAGE_DPR;
-        if (!empty(globalImgDpr) && globalImgDpr !== 'null') {
+        if (!empty(globalImgDpr) && globalImgDpr !== 'null' && globalImgDpr.value !== 'null') {
             globalDropdownValues.push(prefs.DPR_PREFIX + globalImgDpr);
         }
 
@@ -357,12 +357,12 @@ cloudinary.getVideoGlobalDropdownValues = function () {
 
     try {
         var globalVideoTranformFormat = prefs.CLD_GLOBAL_VIDEO_TRANSFORM_FORMAT;
-        if (!empty(globalVideoTranformFormat) && globalVideoTranformFormat !== 'null') {
+        if (!empty(globalVideoTranformFormat) && globalVideoTranformFormat !== 'null' && globalVideoTranformFormat.value !== 'null') {
             globalDropdownValues.push(prefs.FORMAT_PREFIX + globalVideoTranformFormat);
         }
 
         var globalVideoQuality = prefs.CLD_GLOBAL_VIDEO_QUALITY;
-        if (!empty(globalVideoQuality) && globalVideoQuality !== 'null') {
+        if (!empty(globalVideoQuality) && globalVideoQuality !== 'null' && globalVideoQuality.value !== 'null') {
             globalDropdownValues.push(prefs.QUALITY_PREFIX + globalVideoQuality);
         }
 
@@ -645,6 +645,33 @@ cloudinary.removeLeadingAndTrailingSlashes = function (url) {
     }
 
     return assetURL;
+};
+
+cloudinary.generateTagsQuery = function (productsList) {
+    var query = '';
+    for (var i = 0; i < productsList.length; i++) {
+        var product = productsList[i];
+        var variationAttrValueID = '';
+        if (product.variant) {
+            variationAttrValueID = cloudinary.fetchVariationAttrValueId(product.ID, prefs.COLOR_ATTR);
+        }
+
+        if (product.variant || product.variationGroup) {
+            product = product.getMasterProduct();
+        }
+
+        var tagName = cloudinary.getCloudinaryTagName(product);
+
+        tagName = !empty(variationAttrValueID)
+            ? (tagName + prefs.HYPHEN + variationAttrValueID)
+            : tagName;
+
+        if (i !== 0) {
+            query += ' OR ';
+        }
+        query = query + 'tags=' + tagName;
+    }
+    return query;
 };
 
 module.exports = cloudinary;

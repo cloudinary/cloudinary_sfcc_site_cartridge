@@ -3,9 +3,8 @@
         <iscomment>Custom start: add cloudinary product image</iscomment>
         <isif condition="${product.CLDEnabled && product.images && product.images.cloudinaryProductImage}">
             <isset name="isResponsive" value="${product.images.cloudinaryProductImage.isResponsive}" scope="page" />
-            <img class="tile-image cld-responsive"
-                src="${product.images.cloudinaryProductImage.url}"
-                alt="${product.productName}"
+            <img class="tile-image cld-responsive" 
+                alt="${!empty(pdict.cloudinary.altText) ? pdict.cloudinary.altText : product.productName}"
                 title="${product.productName}"
                 data-src="${product.images.cloudinaryProductImage.url}"
                 <isif condition="${!isResponsive}">

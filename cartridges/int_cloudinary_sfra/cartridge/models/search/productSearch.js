@@ -20,10 +20,12 @@ function ProductSearch(productSearch, httpParams, sortingRule, sortingOptions, r
     productSearchBase.call(this, productSearch, httpParams, sortingRule, sortingOptions, rootCategory);
 
     if (cloudinaryConstants.CLD_ENABLED && !empty(this.bannerImageUrl)) {
-        var cldBannerImage = cloudinaryAPI.getCatalogImageAbsURLFromRelURL(this.bannerImageUrl.toString(), this.category.id,
+        if (cloudinaryConstants.CLD_IMAGE_PAGE_TYPE_SETTINGS_OBJECT.categoryBanner.enabled) {
+            var cldBannerImage = cloudinaryAPI.getCatalogImageAbsURLFromRelURL(this.bannerImageUrl.toString(), this.category.id,
             cloudinaryConstants.PAGE_TYPES.CATEGORY_BANNER);
-        if (!empty(cldBannerImage)) {
-            this.cldBannerImage = cldBannerImage;
+            if (!empty(cldBannerImage)) {
+                this.cldBannerImage = cldBannerImage;
+            }
         }
     }
 }

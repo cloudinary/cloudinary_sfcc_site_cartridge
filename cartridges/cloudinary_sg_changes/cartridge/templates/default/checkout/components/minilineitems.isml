@@ -83,7 +83,7 @@
 				<span class="mini-cart-toggle fa"></span>
 				<div class="mini-cart-image">
 					<iscomment>Custom Start: Fetch cloudinary image </iscomment>
-					<isif condition="${pdict.cloudinary && pdict.cloudinary.isEnabled}">
+					<isif condition="${pdict.cloudinary && pdict.cloudinary.isEnabled && ((!pdict.cloudinary.isCheckoutPage && pdict.cloudinary.isMiniCart) || (pdict.cloudinary.isCheckoutPage && pdict.cloudinary.isCheckoutTrue))}">
 						<isscript>
 							cldProductImage = cloudinaryModel.getProductPrimaryImage(productLineItem.product.ID, pdict.cloudinary.highResImgViewType, {
 								pageType: pdict.cloudinary.pageType

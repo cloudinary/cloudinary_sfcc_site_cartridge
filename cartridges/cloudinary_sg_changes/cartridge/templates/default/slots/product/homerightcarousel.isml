@@ -30,7 +30,7 @@
 		<isloop items="${slotcontent.content}" var="product">
 			<li>
 				<div class="analytics capture-product-id"><isprint value="${product.getID()}"/></div>
-				<isproducttile product="${product}" showpricing="${true}" cloudinary="${isCloudinaryEnabled ? cloudinary : null}"/>
+				<isproducttile product="${product}" showpricing="${true}" cloudinary="${isCloudinaryEnabled && cloudinaryConstants.CLD_IMAGE_PAGE_TYPE_SETTINGS_OBJECT.cldhomePageProductTile.enabled ? cloudinary : null}"/>
 			</li>
 		</isloop>
 	</ul>

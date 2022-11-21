@@ -10,7 +10,7 @@
 
     <iscomment>Custom Start: Cloudinary image customizations </iscomment>
     <isset name="catBGImageUrl" value="${category.custom.slotBannerImage.getURL()}" scope="PAGE" />
-    <isif condition="${cloudinaryConstants.CLD_ENABLED && !empty(catBGImageUrl)}" >
+    <isif condition="${cloudinaryConstants.CLD_ENABLED && !empty(catBGImageUrl) && cloudinaryConstants.CLD_IMAGE_PAGE_TYPE_SETTINGS_OBJECT.categoryBanner.enabled}">
         <isset name="cldBannerImage" value="${cloudinaryAPI.getCatalogImageAbsURLFromRelURL(catBGImageUrl.toString(), category.ID, cloudinaryConstants.PAGE_TYPES.CATEGORY_BANNER)}" scope="PAGE" />
         <isset name="catBGImageUrl" value="${empty(cldBannerImage) ? catBGImageUrl : cldBannerImage.url}" scope="PAGE" />
     </isif>

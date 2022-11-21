@@ -41,9 +41,23 @@
 									<li class="${attrValue.swatchClass}">
 										<isif condition="${attrValue.isSelectable}">
 											<a class="swatchanchor"
-												href="${attrValue.linkUrl}"
+											    <isif condition="${pdict.cloudinary && pdict.cloudinary.isEnabled}">
+											        <isset name="cloudinaryPGWContainerSuffix" value="${empty(pdict.cloudinary.cloudinaryPGWContainerSuffix) ? (pdict.Product.variant ? (pdict.Product.masterProduct.ID + '-' + pdict.Product.ID) : pdict.Product.ID) : pdict.cloudinary.cloudinaryPGWContainerSuffix}" scope="page" />
+											        <isset name="cldContainerParam"
+											        value="${attrValue.linkUrl.toString().indexOf('?') > 0 ? ('&cloudinaryPGWContainerSuffix=' + cloudinaryPGWContainerSuffix) : ('?cloudinaryPGWContainerSuffix=' + cloudinaryPGWContainerSuffix)}"
+											        scope="page" />
+											        href="${attrValue.linkUrl + cldContainerParam}"
+											    <iselse>
+											        href="${attrValue.linkUrl}"
+											    </isif>
 												title="${attrValue.resourceVariationsLabel}"
-												data-lgimg='<isif condition="${attrValue.largeImage}">${attrValue.largeImage}"}</isif>'>
+												data-lgimg='<isif condition="${attrValue.largeImage}">${attrValue.largeImage}"}</isif>'
+												<iscomment>Custom start: Add cloudinary data attributes</iscomment>
+												<isif condition="${pdict.cloudinary && pdict.cloudinary.isEnabled}">
+												data-cld-prodid="${pdict.Product.ID}"
+												data-cld-enabled="${pdict.cloudinary && pdict.cloudinary.isEnabled}">
+												</isif>
+												<iscomment>Custom End: Add cloudinary data attributes</iscomment>
 												<isif condition="${attrValue.isColorSwatch}">
 													<iscomment>Custom start: Add cloudinary swatch images</iscomment>
 													<isif condition="${'cldSwatchImg' in attrValue && !empty(attrValue.cldSwatchImg)}">

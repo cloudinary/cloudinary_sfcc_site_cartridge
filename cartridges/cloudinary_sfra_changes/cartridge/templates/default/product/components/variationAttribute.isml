@@ -22,18 +22,20 @@ Template Notes:
             <isif condition="${!(isBundle && product.productType === 'variant' && !attrValue.selected) }">
                 <iscomment> Custom Start: Use cloudinary swatch images if it's enabled</iscomment>
                 <isset name="cldPageTypeQueryParam" value="" scope="page" />
-                <isif condition="${pdict.cloudinary.isEnabled}">
+                <isif condition="${pdict.cloudinary.isEnabled && attrValue.images.cloudinaryProductSwatchImg}">
                     <isset name="swatchImageURL" value="${attrValue.images.cloudinaryProductSwatchImg ? attrValue.images.cloudinaryProductSwatchImg.url : ''}" scope="page" />
                     <isset name="cldPageTypeQueryParam" value="${'&isBundleOrSet=' + isBundleOrSet}" scope="page" />
                 <iselse/>
                     <isset name="swatchImageURL" value="${attrValue.images['swatch'].length > 0 ? attrValue.images['swatch'][0].url : ''}" scope="page" />
                 </isif>
-                <iscomment> Custom Start: Use cloudinary swatch images if it's enabled</iscomment>
+
+                <isset name="cloudinaryPGWContainerSuffix" value="${empty(pdict.cloudinary.cloudinaryPGWContainerSuffix) ? (product.raw.variant ? (product.raw.masterProduct.ID + '-' + product.raw.ID) : product.raw.ID) : pdict.cloudinary.cloudinaryPGWContainerSuffix}" scope="page" />
                 <button class="color-attribute"
                         aria-label="${Resource.msg('label.select', 'common', null)} ${attr.displayName} ${attrValue.displayValue}"
                         aria-describedby="${attrValue.id}"
-                        data-url="${attrValue.url + (!empty(cldPageTypeQueryParam) ? cldPageTypeQueryParam : '')}" ${ product.productType === "variant" && isBundle ? "disabled" : "" }
+                        data-url="${attrValue.url + (!empty(cldPageTypeQueryParam) ? cldPageTypeQueryParam : '') + '&cloudinaryPGWContainerSuffix=' + cloudinaryPGWContainerSuffix}" ${ product.productType === "variant" && isBundle ? "disabled" : "" }
                 >
+                <iscomment> Custom End: Use cloudinary swatch images if it's enabled</iscomment>
                     <span data-attr-value="${attrValue.value}"
                           class="
                               ${attr.id}-value
@@ -42,7 +44,7 @@ Template Notes:
                               ${attrValue.selected ? 'selected' : ''}
                               ${attrValue.selectable ? 'selectable' : 'unselectable'}
                           "
-                          style="background-image: url(${swatchImageURL})"
+                          style="background-image: url('${swatchImageURL}')"
                     >
                     </span>
                     <span id="${attrValue.id}" class="sr-only selected-assistive-text">

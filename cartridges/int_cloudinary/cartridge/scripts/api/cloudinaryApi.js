@@ -266,6 +266,25 @@ var applyTransformationOnProductVideoRelativeURL = function (productID, relURL) 
 };
 
 /**
+ * Filter image assets based on the product tag name.
+ *
+ * @param {List} assets - assets list
+ * @param {string} tagName - the tag name
+ *
+ * @returns {array} filteredAssets - filtered assets
+ */
+var filterAssetsByTagName = function (assets, tagName) {
+    var filteredAssets = [];
+    for (var idx = 0; idx < assets.length; idx++) {
+        var asset = assets[idx];
+        if (asset.resource_type === 'image' && asset.tags.indexOf(tagName) > -1) {
+            filteredAssets.push(asset);
+        }
+    }
+    return filteredAssets;
+};
+
+/**
  * Fetch image assets from Cloudinary based on the product tag name.
  * Sort them according to asset's position specified in metadata and build an
  * array of image assets URLs with transformations applied and also includes
@@ -284,7 +303,18 @@ var getProductImagesByTagName = function (productID, params) {
     var pageType;
     var tagName = '';
     var urlObj;
+    var urlObj360;
+    var urlObj3D;
     var variationAttrValueID;
+    var cld360Tag;
+    var cld3DTag;
+    var tagName360 = '';
+    var tagName3D = '';
+    var imgAssets360 = [];
+    var imgAssets3D = [];
+    var altText;
+    var altText360;
+    var altText3D;
 
     try {
         if (cloudinaryConstants.CLD_ENABLED) {
@@ -293,13 +323,15 @@ var getProductImagesByTagName = function (productID, params) {
                 isSwatch = params.isSwatch;
                 variationAttrValueID = params.variationAttrValueID;
                 pageType = params.pageType;
+                cld360Tag = params.cld360Tag;
+                cld3DTag = params.cld3DTag;
             }
 
             product = ProductMgr.getProduct(productID);
 
             if (product) {
                 // check if product is variant then fetch it's master product
-                if (product.variant) {
+                if (product.variant || product.variationGroup) {
                     product = product.getMasterProduct();
                 }
 
@@ -315,23 +347,109 @@ var getProductImagesByTagName = function (productID, params) {
                         : tagName;
                 }
 
-                imgAssets = cldFetchResourcesSvc.fetchResources(tagName, cloudinaryConstants.CLD_IMAGE_RESOURCE_TYPE);
+                if (!empty(params.setAndBundleImages) && params.setAndBundleImages.length > 0) {
+                    imgAssets = filterAssetsByTagName(params.setAndBundleImages, tagName);
+                } else {
+                    imgAssets = cldFetchResourcesSvc.fetchResources(tagName, cloudinaryConstants.CLD_IMAGE_RESOURCE_TYPE);
+                }
+
                 imgAssets = cloudinaryHelper.sortResourcesByAssetPosition(imgAssets);
 
                 if (!empty(imgAssets)) {
                     var asset = null;
-                    for (var idx = 0; idx < imgAssets.length; idx++) {
-                        asset = imgAssets[idx];
+                    for (var idxAssets = 0; idxAssets < imgAssets.length; idxAssets++) {
+                        asset = imgAssets[idxAssets];
+
+                        if (!empty(asset.metadata)) {
+                            for (var assetIndex = 0; assetIndex < asset.metadata.length; assetIndex++) {
+                                if (asset.metadata[assetIndex].label === cloudinaryConstants.CLD_SMD_ALT_TEXT_KEY) {
+                                    altText = asset.metadata[assetIndex].value;
+                                }
+                            }
+                        }
 
                         if (!empty(asset.public_id)) {
                             urlObj = applyTransformationOnProductImageRelativeURL(productID, asset.public_id, pageType);
+
+                            if (!empty(altText)) {
+                                urlObj.alt = altText;
+                            }
+
                             if (!empty(urlObj)) {
                                 imgAssetUrls.push(urlObj);
                             }
                         }
                     }
                 }
+
+                if (cld360Tag) {
+                    tagName360 = tagName + cloudinaryConstants.CLD_360_SPIN_SET_TAG_SUFFIX;
+                    imgAssets360 = cldFetchResourcesSvc.fetchResources(tagName360, cloudinaryConstants.CLD_IMAGE_RESOURCE_TYPE);
+                    imgAssets360 = cloudinaryHelper.sortResourcesByAssetPosition(imgAssets360);
+
+                    if (!empty(imgAssets360)) {
+                        var asset360 = null;
+                        for (var idx360 = 0; idx360 < imgAssets360.length; idx360++) {
+                            asset360 = imgAssets360[idx360];
+
+                            if (!empty(asset360.metadata)) {
+                                for (var iMeta = 0; iMeta < asset360.metadata.length; iMeta++) {
+                                    if (asset360.metadata[iMeta].label === cloudinaryConstants.CLD_SMD_ALT_TEXT_KEY) {
+                                        altText360 = asset360.metadata[iMeta].value;
+                                    }
+                                }
+                            }
+
+                            if (!empty(asset360.public_id)) {
+                                urlObj360 = applyTransformationOnProductImageRelativeURL(productID, asset360.public_id, pageType);
+
+                                if (!empty(altText360)) {
+                                    urlObj360.alt = altText360;
+                                }
+
+                                if (!empty(urlObj360)) {
+                                    imgAssetUrls.push(urlObj360);
+                                }
+                            }
+                        }
+                    }
+                }
+
+                if (cld3DTag) {
+                    tagName3D = tagName + cloudinaryConstants.CLD_3D_OBJECT_TAG_SUFFIX_SLASH;
+                    imgAssets3D = cldFetchResourcesSvc.fetchResources(tagName3D, cloudinaryConstants.CLD_IMAGE_RESOURCE_TYPE);
+                    imgAssets3D = cloudinaryHelper.sortResourcesByAssetPosition(imgAssets3D);
+
+                    if (!empty(imgAssets3D)) {
+                        var asset3D = null;
+                        for (var idx3D = 0; idx3D < imgAssets3D.length; idx3D++) {
+                            asset3D = imgAssets3D[idx3D];
+
+                            if (!empty(asset3D.metadata)) {
+                                for (var i3dMeta = 0; i3dMeta < asset3D.metadata.length; i3dMeta++) {
+                                    if (asset3D.metadata[i3dMeta].label === cloudinaryConstants.CLD_SMD_ALT_TEXT_KEY) {
+                                        altText3D = asset3D.metadata[i3dMeta].value;
+                                    }
+                                }
+                            }
+
+                            if (!empty(asset3D.public_id)) {
+                                urlObj3D = applyTransformationOnProductImageRelativeURL(productID, asset3D.public_id, pageType);
+
+                                if (!empty(altText3D)) {
+                                    urlObj3D.alt = altText3D;
+                                }
+
+                                if (!empty(urlObj3D)) {
+                                    imgAssetUrls.push(urlObj3D);
+                                }
+                            }
+                        }
+                    }
+                }
             }
+        } else {
+            logger.debug(cloudinaryConstants.CLD_DISABLED);
         }
     } catch (ex) {
         logger.error(cloudinaryConstants.CLD_GET_IMG_ASSETS_URLS_ERROR, productID, ex);
@@ -363,7 +481,7 @@ var getProductVideosByTagName = function (productID) {
             product = ProductMgr.getProduct(productID);
 
             if (product) {
-                if (product.variant) {
+                if (product.variant || product.variationGroup) {
                     product = product.getMasterProduct();
                 }
                 // fetch product tag name
@@ -399,47 +517,31 @@ var getProductVideosByTagName = function (productID) {
  * array of raw assets URLs.
  *
  * @param {string} productID - product ID
+ * @param {string} resourceType - raw or image
  *
  * @returns {array} raw assets URLs
  */
-var getProductRawDataByTagName = function (productID) {
-    var asset;
-    var assetURL;
+var getProductRawDataByTagName = function (productID, resourceType) {
     var product;
     var rawAssets = [];
-    var rawAssetUrls = [];
     var tagName;
 
     try {
         if (cloudinaryConstants.CLD_ENABLED) {
             product = ProductMgr.getProduct(productID);
-
             if (product) {
                 // fetch product tag name
                 tagName = cloudinaryHelper.getCloudinaryTagName(product);
 
-                rawAssets = cldFetchResourcesSvc.fetchResources(tagName, cloudinaryConstants.CLD_RAW_RESOURCE_TYPE);
+                rawAssets = cldFetchResourcesSvc.fetchResources(tagName, resourceType);
                 rawAssets = cloudinaryHelper.sortResourcesByAssetPosition(rawAssets);
-
-                if (!empty(rawAssets)) {
-                    for (var idx = 0; idx < rawAssets.length; idx++) {
-                        asset = rawAssets[idx];
-
-                        if (!empty(asset.public_id)) {
-                            assetURL = cloudinaryHelper.getCLDBasePath() + cloudinaryConstants.CLD_RAW_RESOURCE_TYPE + cloudinaryConstants.LIST_RESOURCE_TYPE +
-                                asset.public_id + cloudinaryConstants.JSON_EXTENSION;
-                            assetURL = cloudinaryHelper.addTrackingQueryParam(assetURL);
-                            rawAssetUrls.push(assetURL);
-                        }
-                    }
-                }
             }
         }
     } catch (ex) {
         logger.error(cloudinaryConstants.CLD_GET_RAW_ASSETS_URLS_ERROR, productID, ex);
     }
 
-    return rawAssetUrls;
+    return rawAssets;
 };
 
 /**
@@ -507,7 +609,7 @@ function applyTransformationOnContent(relURL, urlType, dimensionsStr) {
 
             if (cloudinaryConstants.CLD_CARTRIDGE_CONTENT_OPERATION_MODE === cloudinaryConstants.CLD_GET_ASSETS_BY_AUTO_UPLOAD_MODE) {
                 finalURL = cloudinaryHelper.getCLDBasePath() + uploadResourceType + globalTransformations + libraryTransformations +
-                dimensionsStrVal + cloudinaryConstants.CLD_AUTOUPLOAD_MAPPING + relURL;
+                    dimensionsStrVal + cloudinaryConstants.CLD_AUTOUPLOAD_MAPPING + relURL;
             } else if (cloudinaryConstants.CLD_CARTRIDGE_CONTENT_OPERATION_MODE === cloudinaryConstants.CLD_GET_ASSETS_BY_VIEW_TYPE_MODE) {
                 finalURL = cloudinaryHelper.getCLDBasePath() + uploadResourceType + globalTransformations +
                     libraryTransformations + dimensionsStrVal + contentImgPath + libraryID + relURL;
@@ -630,7 +732,7 @@ var applyTransformationOnContentImageAbsoluteURL = function (absURL, pageType) {
                     relURL = cloudinaryUtils.replaceSpecialChars(relURL);
                 }
 
-                 // get image setting for page types
+                // get image setting for page types
                 if (!empty(pageType)) {
                     imgPageTypeSettings = cldTransformationAPI.getImageDimensions(pageType);
 
@@ -839,16 +941,16 @@ var getProductVideosByAutoupload = function (productID) {
 };
 
 
- /**
- * Get product images using view types in catalog that reside in SFCC, build cld URLs with transformations applied
- * and srcset/sizes attributes for the HTML <img> tag.
- *
- * @param {string} productID - product ID
- * @param {string} viewType - view type to fetch images
- * @param {string} pageType - page type (optional)
- *
- * @returns {array} array of objects holding transformed image URLs and html attributes
- */
+/**
+* Get product images using view types in catalog that reside in SFCC, build cld URLs with transformations applied
+* and srcset/sizes attributes for the HTML <img> tag.
+*
+* @param {string} productID - product ID
+* @param {string} viewType - view type to fetch images
+* @param {string} pageType - page type (optional)
+*
+* @returns {array} array of objects holding transformed image URLs and html attributes
+*/
 var getProductImagesByViewType = function (productID, viewType, pageType) {
     var imgRelURL;
     var imgAssetUrls = [];
@@ -946,10 +1048,11 @@ function getProductImgURLUsingSMDAndTagName(smdKeyValue, productID, params) {
     var tagName;
     var urlObj = {};
     var variationAttrValueID;
+    var smdData = smdKeyValue.split(':');
 
     try {
         product = ProductMgr.getProduct(productID);
-        if (product && product.variant) {
+        if (product && (product.variant || product.variationGroup)) {
             product = product.getMasterProduct();
         }
 
@@ -984,10 +1087,17 @@ function getProductImgURLUsingSMDAndTagName(smdKeyValue, productID, params) {
             }
 
             // replace placehoders in endpoint
-            if (!empty(smdKeyValue)) {
-                cldSMDEndpoint = cldSMDEndpoint.replace(cloudinaryConstants.CLD_SMD_KEY_VALUE_PLACEHOLDER, smdKeyValue);
+            if (!empty(smdData[0])) {
+                cldSMDEndpoint = cldSMDEndpoint.replace(cloudinaryConstants.CLD_SMD_KEY_PLACEHOLDER, smdData[0]);
             } else {
                 cldSMDEndpoint = cldSMDEndpoint.replace(cloudinaryConstants.FORWARD_SLASH + cloudinaryConstants.CLD_SMD_KEY_VALUE_PLACEHOLDER,
+                    cloudinaryConstants.EMPTY_STRING);
+            }
+
+            if (!empty(smdData[1])) {
+                cldSMDEndpoint = cldSMDEndpoint.replace(cloudinaryConstants.CLD_SMD_VALUE_PLACEHOLDER, smdData[1]);
+            } else {
+                cldSMDEndpoint = cldSMDEndpoint.replace(cloudinaryConstants.FORWARD_SLASH + cloudinaryConstants.CLD_SMD_VALUE_PLACEHOLDER,
                     cloudinaryConstants.EMPTY_STRING);
             }
 
@@ -1030,13 +1140,13 @@ function getProductImgURLUsingSMDAndTagName(smdKeyValue, productID, params) {
                 cldSMDSrcsetEndpoint = !empty(imgPageTypeSettings) && imgPageTypeSettings.isResponsive ?
                     cldSMDSrcsetEndpoint.replace(cloudinaryConstants.CLD_DIMENSIONS_PLACEHOLDER, dimensionsStr) :
                     cldSMDSrcsetEndpoint.replace(cloudinaryConstants.FORWARD_SLASH + cloudinaryConstants.CLD_DIMENSIONS_PLACEHOLDER,
-                    cloudinaryConstants.EMPTY_STRING);
+                        cloudinaryConstants.EMPTY_STRING);
             } else {
                 cldSMDEndpoint = cldSMDEndpoint.replace(cloudinaryConstants.FORWARD_SLASH + cloudinaryConstants.CLD_DIMENSIONS_PLACEHOLDER,
                     cloudinaryConstants.EMPTY_STRING);
 
                 cldSMDSrcsetEndpoint = cldSMDSrcsetEndpoint.replace(cloudinaryConstants.FORWARD_SLASH + cloudinaryConstants.CLD_DIMENSIONS_PLACEHOLDER,
-                        cloudinaryConstants.EMPTY_STRING);
+                    cloudinaryConstants.EMPTY_STRING);
             }
 
             if (cldSMDEndpoint.indexOf(cloudinaryConstants.FORWARD_SLASH) === 0) {
@@ -1069,6 +1179,147 @@ function getProductImgURLUsingSMDAndTagName(smdKeyValue, productID, params) {
 
 
 /**
+* Private method used by other exported methods to process logic for building
+* product image URLs based on structured mata data and tag name.
+*
+* @param {string} smdKey - structured metadata key to add in the URL
+* @param {string} smdValue - structured metadata value to add in the URL
+* @param {string} productID - product ID
+* @param {Object} params - parameters
+* @param {string} params.pageType - plp page type
+*
+* @returns {Object} object holding URL and srcset/sizes attributes
+*/
+function getProductCustomImageUrlByPosition(smdKey, smdValue, productID, params) {
+    var breakpoints;
+    var cldSMDEndpoint;
+    var cldSMDSrcsetEndpoint = '';
+    var dimensionsStr = '';
+    var globalImgTransformations = '';
+    var imgPageTypeSettings;
+    var prodCatImgTransformations = '';
+    var pageType;
+    var product;
+    var srcsetUrl = '';
+    var tagName;
+    var urlObj = {};
+
+    try {
+        product = ProductMgr.getProduct(productID);
+        if (product && (product.variant || product.variationGroup)) {
+            product = product.getMasterProduct();
+        }
+
+        cldSMDEndpoint = cloudinaryConstants.CLD_SMD_ENDPOINT_GALLERY_POSITION;
+        cldSMDEndpoint = cloudinaryHelper.addTrackingQueryParam(cldSMDEndpoint);
+
+        // initialize optional params
+        if (!empty(params)) {
+            pageType = params.pageType;
+        }
+
+        if (!empty(cldSMDEndpoint)) {
+            // fetch transformations
+            globalImgTransformations = cldTransformationAPI.getGlobalImageTransformation();
+            prodCatImgTransformations = cldTransformationAPI.getProductCatalogImageTransformation(productID);
+
+            // get image setting for page types
+            if (!empty(pageType)) {
+                imgPageTypeSettings = cldTransformationAPI.getImageDimensions(pageType);
+                if (!empty(imgPageTypeSettings)) {
+                    urlObj.isResponsive = imgPageTypeSettings.isResponsive;
+                    if (cloudinaryConstants.DIMENSIONS_STRING_KEY in imgPageTypeSettings && !empty(imgPageTypeSettings[cloudinaryConstants.DIMENSIONS_STRING_KEY])) {
+                        dimensionsStr = imgPageTypeSettings[cloudinaryConstants.DIMENSIONS_STRING_KEY];
+                    }
+
+                    if (cloudinaryConstants.BREAKPOINTS_KEY in imgPageTypeSettings && !empty(imgPageTypeSettings[cloudinaryConstants.BREAKPOINTS_KEY])) {
+                        breakpoints = imgPageTypeSettings[cloudinaryConstants.BREAKPOINTS_KEY];
+                    }
+                }
+            }
+
+            // replace placehoders in endpoint
+            if (!empty(smdKey)) {
+                cldSMDEndpoint = cldSMDEndpoint.replace(cloudinaryConstants.CLD_SMD_KEY_PLACEHOLDER, smdKey);
+            } else {
+                cldSMDEndpoint = cldSMDEndpoint.replace(cloudinaryConstants.FORWARD_SLASH + cloudinaryConstants.CLD_SMD_KEY_VALUE_PLACEHOLDER,
+                    cloudinaryConstants.EMPTY_STRING);
+            }
+
+            if (!empty(smdValue)) {
+                cldSMDEndpoint = cldSMDEndpoint.replace(cloudinaryConstants.CLD_SMD_VALUE_PLACEHOLDER, smdValue);
+            } else {
+                cldSMDEndpoint = cldSMDEndpoint.replace(cloudinaryConstants.FORWARD_SLASH + cloudinaryConstants.CLD_SMD_VALUE_PLACEHOLDER,
+                    cloudinaryConstants.EMPTY_STRING);
+            }
+
+            if (!empty(globalImgTransformations)) {
+                cldSMDEndpoint = cldSMDEndpoint.replace(cloudinaryConstants.CLD_SITE_TRANSFORMS_PLACEHOLDER, globalImgTransformations);
+            } else {
+                cldSMDEndpoint = cldSMDEndpoint.replace(cloudinaryConstants.FORWARD_SLASH + cloudinaryConstants.CLD_SITE_TRANSFORMS_PLACEHOLDER,
+                    cloudinaryConstants.EMPTY_STRING);
+            }
+
+            if (!empty(prodCatImgTransformations)) {
+                cldSMDEndpoint = cldSMDEndpoint.replace(cloudinaryConstants.CLD_PRODCAT_TRANSFORMS_PLACEHOLDER, prodCatImgTransformations);
+            } else {
+                cldSMDEndpoint = cldSMDEndpoint.replace(cloudinaryConstants.FORWARD_SLASH + cloudinaryConstants.CLD_PRODCAT_TRANSFORMS_PLACEHOLDER,
+                    cloudinaryConstants.EMPTY_STRING);
+            }
+
+            if (!empty(product)) {
+                tagName = cloudinaryHelper.getCloudinaryTagName(product);
+                cldSMDEndpoint = cldSMDEndpoint.replace(cloudinaryConstants.CLD_TAG_PLACEHOLDER, tagName);
+            } else {
+                cldSMDEndpoint = cldSMDEndpoint.replace(cloudinaryConstants.FORWARD_SLASH + cloudinaryConstants.CLD_TAG_PLACEHOLDER,
+                    cloudinaryConstants.EMPTY_STRING);
+            }
+            cldSMDSrcsetEndpoint = cldSMDEndpoint;
+
+            if (!empty(dimensionsStr)) {
+                cldSMDEndpoint = cldSMDEndpoint.replace(cloudinaryConstants.CLD_DIMENSIONS_PLACEHOLDER, dimensionsStr);
+
+                cldSMDSrcsetEndpoint = !empty(imgPageTypeSettings) && imgPageTypeSettings.isResponsive ?
+                    cldSMDSrcsetEndpoint.replace(cloudinaryConstants.CLD_DIMENSIONS_PLACEHOLDER, dimensionsStr) :
+                    cldSMDSrcsetEndpoint.replace(cloudinaryConstants.FORWARD_SLASH + cloudinaryConstants.CLD_DIMENSIONS_PLACEHOLDER,
+                        cloudinaryConstants.EMPTY_STRING);
+            } else {
+                cldSMDEndpoint = cldSMDEndpoint.replace(cloudinaryConstants.FORWARD_SLASH + cloudinaryConstants.CLD_DIMENSIONS_PLACEHOLDER,
+                    cloudinaryConstants.EMPTY_STRING);
+
+                cldSMDSrcsetEndpoint = cldSMDSrcsetEndpoint.replace(cloudinaryConstants.FORWARD_SLASH + cloudinaryConstants.CLD_DIMENSIONS_PLACEHOLDER,
+                    cloudinaryConstants.EMPTY_STRING);
+            }
+
+            if (cldSMDEndpoint.indexOf(cloudinaryConstants.FORWARD_SLASH) === 0) {
+                cldSMDEndpoint = cldSMDEndpoint.substring(1);
+                cldSMDSrcsetEndpoint = cldSMDSrcsetEndpoint.substring(1);
+            }
+
+            urlObj.url = cloudinaryHelper.getCLDBasePath() + cldSMDEndpoint;
+            srcsetUrl = cloudinaryHelper.getCLDBasePath() + cldSMDSrcsetEndpoint;
+
+            // build srcset object
+            if (!empty(breakpoints)) {
+                var srcsetObj = cldTransformationAPI.getImageSrcset(srcsetUrl, breakpoints);
+                if (!empty(srcsetObj)) {
+                    if (!empty(srcsetObj.srcset)) {
+                        urlObj.srcset = srcsetObj.srcset;
+                    }
+                    if (!empty(srcsetObj.sizes)) {
+                        urlObj.sizes = srcsetObj.sizes;
+                    }
+                }
+            }
+        }
+    } catch (ex) {
+        logger.error(cloudinaryConstants.CLD_GET_SMD_URL_ERROR, productID, ex);
+    }
+
+    return urlObj;
+}
+
+/**
  * Get product primary image URL based on structured mata data and tag name with transformations
  * applied. It uses SMD endpoint configured in custom preferences and replace all place holders with
  * actual values. It also returns attributes for image responsiveness e.g srcset/sizes.
@@ -1092,9 +1343,8 @@ var getProductPrimaryImageURLUsingTagName = function (productID, params) {
     return urlObj;
 };
 
-
 /**
- * Get product image URL for specific position in SFCC based on structured mata data and tag name with transformations
+ * Get product image URL for specific position in SFCC based on structured meta data and tag name with transformations
  * applied. It uses SMD endpoint configured in custom preferences and replace all place holders with actual values. It
  * also returns attributes for image responsiveness e.g srcset/sizes.
  *
@@ -1105,12 +1355,14 @@ var getProductPrimaryImageURLUsingTagName = function (productID, params) {
  * @returns {Object} object holding URL and srcset attributes
  */
 var getProductCustomImageURLUsingTagName = function (position, productID, params) {
-    var smdKeyWithValue;
+    var smdKey;
+    var smdValue;
     var urlObj;
 
     try {
-        smdKeyWithValue = cloudinaryConstants.CLD_SMD_GALLERY_POSITION_KEY + cloudinaryConstants.COLON + position;
-        urlObj = getProductImgURLUsingSMDAndTagName(smdKeyWithValue, productID, params);
+        smdKey = cloudinaryConstants.CLD_SMD_GALLERY_POSITION_KEY;
+        smdValue = position;
+        urlObj = getProductCustomImageUrlByPosition(smdKey, smdValue, productID, params);
     } catch (ex) {
         logger.error(cloudinaryConstants.CLD_GET_PRODUCT_IMG_URL_BY_POSITION_ERROR, productID, ex);
     }
@@ -1260,7 +1512,7 @@ var getCatalogImageAbsURLFromRelURL = function (relURL, categoryId, pageType) {
                 finalURL = cloudinaryHelper.getCLDBasePath() + cloudinaryConstants.IMAGE_UPLOAD_URL_RESOURCE_TYPE + cloudinaryConstants.FORWARD_SLASH + imgGlobalTransformations +
                     imgCatalogTransformations + imgCategoryTransformations + dimensionsStr + cloudinaryConstants.CLD_AUTOUPLOAD_MAPPING + relativeURL;
                 srcsetUrl = cloudinaryHelper.getCLDBasePath() + cloudinaryConstants.IMAGE_UPLOAD_URL_RESOURCE_TYPE + cloudinaryConstants.FORWARD_SLASH + imgGlobalTransformations +
-                imgCatalogTransformations + imgCategoryTransformations + (isJsAutomateResponsivenessEnabled ? dimensionsStr : cloudinaryConstants.EMPTY_STRING) + cloudinaryConstants.CLD_AUTOUPLOAD_MAPPING + relativeURL;
+                    imgCatalogTransformations + imgCategoryTransformations + (isJsAutomateResponsivenessEnabled ? dimensionsStr : cloudinaryConstants.EMPTY_STRING) + cloudinaryConstants.CLD_AUTOUPLOAD_MAPPING + relativeURL;
             }
 
             finalURL = cloudinaryHelper.addTrackingQueryParam(finalURL);
@@ -1361,6 +1613,19 @@ var getCatalogVideoAbsURLFromRelURL = function (relURL, categoryId) {
     return { videoURL: finalURL, videoPoster: videoPoster };
 };
 
+/**
+ * This method is used to fetch resources based on tag names query
+ * @param {string} tagsSearchQuery - tags search query
+ * @param {List} withFields - fields which will be returned with assets
+ *
+ * @returns {Object} assets - object holding array of resources
+ */
+var searchCLDResourcesByTags = function (tagsSearchQuery, withFields) {
+    var cldSearchResources = require('*/cartridge/scripts/service/cldSearchResources');
+    var assets = cldSearchResources.searchResources(tagsSearchQuery, withFields);
+    return assets;
+};
+
 module.exports = {
     applyTransformationOnProductImageAbsoluteURL: applyTransformationOnProductImageAbsoluteURL,
     applyTransformationOnProductImageRelativeURL: applyTransformationOnProductImageRelativeURL,
@@ -1381,5 +1646,7 @@ module.exports = {
     getProductCustomImageURLUsingTagName: getProductCustomImageURLUsingTagName,
     getCatalogImageAbsURLFromRelURL: getCatalogImageAbsURLFromRelURL,
     getCatalogVideoAbsURLFromRelURL: getCatalogVideoAbsURLFromRelURL,
-    getProductVideoByCustomMapping: getProductVideoByCustomMapping
+    getProductVideoByCustomMapping: getProductVideoByCustomMapping,
+    searchCLDResourcesByTags: searchCLDResourcesByTags,
+    filterAssetsByTagName: filterAssetsByTagName
 };

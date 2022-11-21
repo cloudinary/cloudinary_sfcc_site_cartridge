@@ -1,0 +1,57 @@
+<div class="primary-images col-12 col-sm-6">
+    <div id="pdpCarousel-${product.id}" class="carousel slide" data-interval="0" data-prev="${Resource.msg('button.previous', 'common', null)}" data-next="${Resource.msg('button.next', 'common', null)}">
+        <isif condition="${product.images['large'].length > 1}">
+            <ol class="carousel-indicators" aria-hidden="true">
+                <isloop items="${product.images['large']}" var="image" status="loopStatus">
+                    <li data-target="${"#"}pdpCarousel-${product.id}" data-slide-to="${loopStatus.index}" class='<isif condition="${loopStatus.index == 0}">active</isif>'>
+                    </li>
+                </isloop>
+            </ol>
+        </isif>
+
+        <div class="carousel-inner" role="listbox">
+
+            <iscomment>Custom Start: Cloudinary images </iscomment>
+            <isif condition="${pdict.cloudinary && pdict.cloudinary.isEnabled && pdict.cloudinary.pdp}">
+                <isset name="cldImageURLsList" value="${product.images.cloudinaryProductImages ? product.images.cloudinaryProductImages.imageURLs : pdict.cloudinary.images.imageURLs}" scope="page" />
+                <isloop items="${cldImageURLsList}" var="image" status="loopStatus">
+                    <div class='carousel-item <isif condition="${loopStatus.index == 0}">active</isif>'>
+                        <img class="d-block img-fluid cld-responsive" data-src="${image.url}" alt="${image.alt}" itemprop="image" />
+                    </div>
+                </isloop>
+            <iselse>
+                <isloop items="${product.images['large']}" var="image" status="loopStatus">
+                    <div class='carousel-item <isif condition="${loopStatus.index == 0}">active</isif>'>
+                        <img src="${image.url}" class="d-block img-fluid" alt="${image.alt}" itemprop="image" />
+                    </div>
+                </isloop>
+            </isif>
+            <iscomment>Custom End: Cloudinary images </iscomment>
+
+        </div>
+
+        <iscomment>Custom Start: Cloudinary images </iscomment>
+        <isset name="imagesListLength" value="${0}" scope="page">
+        
+        <isif condition="${pdict.cloudinary && pdict.cloudinary.isEnabled && pdict.cloudinary.pdp}">
+            <isset name="imagesListLength" value="${cldImageURLsList ? cldImageURLsList.length : 0}" scope="page" >
+        <iselse>
+            <isset name="imagesListLength" value="${product.images['large'].length}" scope="page">
+        </isif>
+        
+        <isif condition="${imagesListLength > 1}">
+            <a class="carousel-control-prev" href="${"#"}pdpCarousel-${product.id}" role="button" data-slide="prev">
+                <span class="fa icon-prev" aria-hidden="true"></span>
+                <span class="sr-only">${Resource.msg('button.previous', 'common', null)}</span>
+            </a>
+            <a class="carousel-control-next" href="${"#"}pdpCarousel-${product.id}" role="button" data-slide="next">
+                <span class="fa icon-next" aria-hidden="true"></span>
+                <span class="sr-only">${Resource.msg('button.next', 'common', null)}</span>
+            </a>
+        </isif>
+        <iscomment>Custom End: Cloudinary images </iscomment>
+
+    </div>
+
+</div>
+

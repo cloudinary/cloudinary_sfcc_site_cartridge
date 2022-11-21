@@ -1,6 +1,7 @@
 'use strict';
 
 var logger = require('dw/system/Logger').getLogger('int_cloudinary', 'int_cloudinary');
+var ProductMgr = require('dw/catalog/ProductMgr');
 
 var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
 var cloudinaryAPI = require('*/cartridge/scripts/api/cloudinaryApi');
@@ -105,6 +106,8 @@ baseCloudinaryModel.addCloudinaryImagesToSetAndBundles = function (product) {
             subProducts = productModel.bundledProducts;
         }
 
+        var setAndBundleImages = baseCloudinaryModel.searchProductSetAndBundleImagesByTags(ProductMgr.getProduct(productModel.id));
+
         subProducts.forEach(function (subProduct, index) {
             if (subProduct.raw && subProduct.raw.variant) {
                 colorAttrValueID = cloudinaryHelper.fetchVariationAttrValueId(subProduct.id, cloudinaryConstants.COLOR_ATTR);
@@ -112,7 +115,8 @@ baseCloudinaryModel.addCloudinaryImagesToSetAndBundles = function (product) {
 
             subProductCldImgs = baseCloudinaryModel.getCloudinaryImages(subProduct.id, {
                 pageType: cloudinaryConstants.PAGE_TYPES.PDP,
-                variationAttrValueID: colorAttrValueID
+                variationAttrValueID: colorAttrValueID,
+                setAndBundleImages: setAndBundleImages
             });
 
             // overwrite cld PGW container id
@@ -120,7 +124,7 @@ baseCloudinaryModel.addCloudinaryImagesToSetAndBundles = function (product) {
                 subProductCldImgs.galleryWidget.options.container) {
                 if (subProduct.raw && subProduct.raw.variant) {
                     subProductCldImgs.galleryWidget.options.container = subProductCldImgs.galleryWidget.options.container +
-                    cloudinaryConstants.HYPHEN + subProduct.raw.masterProduct.ID;
+                    cloudinaryConstants.HYPHEN + subProduct.raw.masterProduct.ID + cloudinaryConstants.HYPHEN + subProduct.id;
                 } else {
                     subProductCldImgs.galleryWidget.options.container = subProductCldImgs.galleryWidget.options.container +
                     cloudinaryConstants.HYPHEN + subProduct.id;
@@ -156,10 +160,11 @@ baseCloudinaryModel.addCloudinaryImagesToSetAndBundles = function (product) {
  * Update product variation attributes to add query param in case of product set and bundle.
  *
  * @param {Object} product - product model
+ * @param {string} cloudinaryPGWContainerSuffix - PGW container suffix
  *
  * @returns {Object} product model
  */
-baseCloudinaryModel.updateProductVariationAttrUrl = function (product) {
+baseCloudinaryModel.updateProductVariationAttrUrl = function (product, cloudinaryPGWContainerSuffix) {
     var productVariationAttrs;
     var productVariationAttrValues;
     var productModel = product;
@@ -174,6 +179,7 @@ baseCloudinaryModel.updateProductVariationAttrUrl = function (product) {
                     var attributeVal = attrValue;
                     if (!empty(attributeVal.url)) {
                         attributeVal.url += cloudinaryConstants.CLD_QUERY_PARAM_FOR_SET_AND_BUNDLE;
+                        attributeVal.url += cloudinaryConstants.CLD_QURY_PARAM_FOR_PGW_CONTAINER_SUFFIX + cloudinaryPGWContainerSuffix;
                         productVariationAttrValues[idx] = attributeVal;
                     }
                 });
@@ -210,6 +216,19 @@ baseCloudinaryModel.addCloudinaryProductImage = function (product, cldProductIma
     }
 
     return product;
+};
+
+baseCloudinaryModel.updateProductCarouselImages = function (cldAssets, product) {
+    var productModel = product;
+    var cldImages = cldAssets.imageURLs;
+    for (var idx = 0; idx < cldImages.length; idx++) {
+        var asset = cldImages[idx];
+        productModel.images.large[idx].url = asset.url;
+        productModel.images.large[idx].absURL = asset.url;
+        productModel.images.small[idx].url = asset.url;
+        productModel.images.small[idx].absURL = asset.url;
+    }
+    return productModel;
 };
 
 module.exports = baseCloudinaryModel;

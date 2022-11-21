@@ -20,6 +20,10 @@
                 <input class="form-control" id="productID" name="productID" type="text">
             </div>
             <div class="form-group">
+                <label for="orderID">Resource Type (i.e. raw, image)</label>
+                <input class="form-control" id="resourceType" name="resourceType" type="text">
+            </div>
+            <div class="form-group">
                 <button class="btn btn-primary" type="submit" name="getRawData">Submit</button>
             </div>
         </form>

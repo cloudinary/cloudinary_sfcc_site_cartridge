@@ -7,9 +7,13 @@
 </isscript>
 	<iscomment>Custom Start: Add cloudinary PGW and skip thumbnail</iscomment>
 	<isif condition="${pdict.cloudinary && pdict.cloudinary.isEnabled}">
-		<div class="cloudinary-gallery-container">
-			<isinclude template="include/cloudinaryProductSetGallery"/>
-		</div>
+	    <isif condition="${pdict.cloudinary.galleryEnabled || pdict.cloudinary.isGalleryEnabled}" />
+	        <div class="cloudinary-gallery-container">
+                <isinclude template="include/cloudinaryProductSetGallery"/>
+            </div>
+	    <iselse>
+	        <isinclude template="include/cloudinaryProductSetImages"/>
+	    </isif>
 	<iselse>
 	    <div class="product-set-image">
 			<isset name="smImg" value="${pdict.Product.getImages('small')[0]}" scope="page" />
@@ -97,7 +101,7 @@
 		</div>
 
 		<iscomment>Custom Start: Add cloudinary data attribute to be accessed from js</iscomment>
-		<isif condition="${pdict.cloudinary && pdict.cloudinary.isEnabled && pdict.cloudinary.mediaAssets}">
+		<isif condition="${pdict.cloudinary && pdict.cloudinary.isEnabled && pdict.cloudinary.galleryWidgetOptions && pdict.cloudinary.galleryWidgetOptions.mediaAssets}">
 			<div id="update-images" style="display:none"
 				data-cld="${JSON.stringify(pdict.cloudinary)}">
 			</div>

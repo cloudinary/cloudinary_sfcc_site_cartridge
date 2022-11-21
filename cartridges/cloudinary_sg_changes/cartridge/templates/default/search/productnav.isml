@@ -66,16 +66,16 @@
 			else {
 				return {pUrl: "", imgUrl: URLUtils.staticURL('/images/noimagesmall.png'), imgAlt: "", imgTitle: ""};
 			}
-
+    
 			// Custom Start: Add Cloudianry primary image //
 			if (dw.system.Site.current.preferences.getCustom().CLDEnabled) {
-				var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
 				var cloudinaryModel = require('*/cartridge/scripts/model/cloudinaryModel');
+				var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
 				var cldImg = cloudinaryModel.getProductPrimaryImage(product.ID, cloudinaryConstants.CLD_HIGH_RES_IMAGES_VIEW_TYPE, {
 					pageType: cloudinaryConstants.PAGE_TYPES.CLD_PRODUCT_NAV
 				});
 
-				if (cldImg) {
+				if (cldImg && cloudinaryConstants.CLD_IMAGE_PAGE_TYPE_SETTINGS_OBJECT.cldProductNav.enabled) {
 					return {
 						pUrl: productUrl + '#' + hashAppend,
 						imgUrl: (cldImg.url != null) ? cldImg.url : URLUtils.staticURL('/images/noimagesmall.png'),
@@ -85,7 +85,8 @@
 						imgAlt: (imgFile != null) ? imgFile.alt : product.name,
 						imgTitle: (imgFile != null) ? imgFile.title : product.name
 					};
-					}
+				}
+					
 			}
 			// Custom End: Add Cloudianry primary image //
 

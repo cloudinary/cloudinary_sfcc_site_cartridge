@@ -1,0 +1,537 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<library xmlns="http://www.demandware.com/xml/impex/library/2006-10-31" library-id="SiteGenesisSharedLibrary">
+    
+    <content content-id="about-us">
+        <display-name xml:lang="x-default">About Us</display-name>
+        <display-name xml:lang="fr-FR">À propos de nous</display-name>
+        <display-name xml:lang="it-IT">Chi siamo</display-name>
+        <display-name xml:lang="ja-JP">Salesforce Commerce Cloud について</display-name>
+        <display-name xml:lang="zh-CN">关于我们</display-name>
+        <description xml:lang="x-default">It all started with a series of observations: eCommerce merchandising and marketing innovation is what generates revenue, yet most operations are spending 80% of their budgets simply maintaining current infrastructure. The pace of ecommerce accelerates daily, but most operations are scrambling only to stand still. Merchandisers and marketers are supremely frustrated, spending more time chasing outsourced providers and internal IT organizations than actually merchandising and marketing their own businesses. There had to be a better way...</description>
+        <description xml:lang="fr-FR">Tout a débuté par une série d'observations : dans l'e-commerce, l'innovation en matière de merchandising et de marketing est le générateur de recettes. Pourtant, la plupart des entreprises consacrent 80 % de leur budget au seul maintien de leur infrastructure actuelle. Alors que le rythme du commerce s'accélère chaque jour, la plupart des entreprises ont toutes les peines du monde à simplement se maintenir à jour. Les spécialistes du merchandising et du marketing sont d'autant plus frustrés qu'ils passent davantage de temps à rechercher des prestataires d'infogérance et des ressources informatiques internes qu'à déployer leurs propres actions de merchandising et de marketing. Cette situation n'était pas satisfaisante...</description>
+        <description xml:lang="it-IT">Tutto è iniziato da una serie di osservazioni: le innovazioni del modello e-commerce in materia di merchandising e marketing sono il motore che genera i profitti, tuttavia la maggior parte delle aziende spende ancora l'80% dei budget per la manutenzione dell'infrastruttura esistente. L'e-commerce ormai avanza inesorabilmente ogni giorno di più, mentre nelle aziende si fanno i salti mortali per cercare il modo di non adeguarsi ai cambiamenti. I venditori e gli esperti di marketing lavorano in continua frustrazione, costretti a correre dietro ai fornitori esterni e ai reparti IT interni, piuttosto che dedicarsi al merchandising e al marketing per la loro attività. Deve esserci una soluzione...</description>
+        <description xml:lang="ja-JP">始まりは現状を見つめるところから: eコマースによるマーチャンダイジングとマーケティングのイノベーションは、収益を生み出すものであるにもかかわらず、大部分の事業では予算の 80% を現在のインフラを保守するためだけに使っています。eコマースは日々加速しているのにもかかわらず、大部分の事業は混乱してただ立ち尽すのみです。マーチャンダイザーとマーケット担当者の葛藤は度合いを増し、実際に自社ビジネスのマーチャンダイジングとマーケティングを行うことよりも、外注先のプロバイダーや社内の IT 部門への対応に、より多くの時間を費やしています。他にもっとよい方法があるのではないか、私達はそう考えました。</description>
+        <description xml:lang="zh-CN">一系列观察结果表明：eCommerce销售和营销创新可以产生收益，而大多数企业仅仅为维持现有基础设施就要拿出80%的预算。eCommerce 的发展步伐日新月异，而大多数企业还是原地踏步。商家和营销人员要花费比实际销售和营销自己业务多得多的时间来追逐外包供应商和内部 IT 组织，对此他们感到无所适从。应该有一个更好的办法。</description>
+        <online-flag>true</online-flag>
+        <searchable-flag>true</searchable-flag>
+        <page-attributes/>
+        <custom-attributes>
+            <custom-attribute attribute-id="body" xml:lang="x-default">&lt;style&gt;&#13;
+    .cloudinary img {&#13;
+            max-width: 100%&#13;
+    }&#13;
+&lt;/style&gt;&#13;
+&lt;div class="cloudinary"&gt;$Include('Cloudinary-GetContentImage', 'url', 'images/homepage/car-accessories.jpg', 'pageType', 'aboutUs', 'isUrl', false)$ &lt;/div&gt;&#13;
+&lt;h1 class="content-header"&gt;About Us&lt;/h1&gt;&#13;
+&lt;h2&gt;It all started with a series of observations:&lt;/h2&gt;&#13;
+&lt;ul&gt;&#13;
+&lt;li&gt;eCommerce merchandising and marketing innovation is what generates revenue, yet most operations are spending 80% of their budgets simply maintaining current infrastructure.&lt;/li&gt;&#13;
+&lt;li&gt;The pace of eCommerce accelerates daily, yet most operations are scrambling only to stand still.&lt;/li&gt;&#13;
+&lt;li&gt;Merchandisers and marketers are supremely frustrated, spending more time chasing outsourced providers and internal IT organizations than actually merchandising and marketing their own businesses.&lt;/li&gt;&#13;
+&lt;/ul&gt; &#13;
+&lt;h2&gt;There had to be a better way...&lt;/h2&gt;          &#13;
+&lt;p&gt;So in 2004, we set out to find it. The vision&amp;mdash;then and now&amp;mdash;was clear: bring to market an enterprise-class eCommerce solution that would put more power and innovation in the hands of merchandisers and at the same time would remove the technical costs, risks and complexities of running an ecommerce operation. We took what we knew of great eCommerce merchandising (our founders have been in ecommerce since 1994) and applied to it the then-emerging advancements in Software-as-a-Service architectures and dynamic grid computing. Then we just worked hard. We stayed up late. We drank lots of coffee. And ultimately, in late 2005, we delivered the market&amp;rsquo;s first on-demand enterprise ecommerce platform.&lt;/p&gt;                &#13;
+&lt;h2&gt;Our customers could not be happier with the results.&lt;/h2&gt;       &#13;
+&lt;p&gt;With Salesforce Commerce Cloud eCommerce, they're spending more time leading with merchandising and marketing. They're in complete control of their site, making changes and launching new storefronts whenever they like. They're spending more time developing their own proprietary innovations (versus building commodity functionality). They receive new software upgrades from Salesforce Commerce Cloud continuously. And they never ever worry about site uptime, availability and security.&lt;/p&gt;&#13;
+&lt;p&gt;In short, they're free. Free to merchandise. Free to grow. Free to innovate. Free to change. Isn't that how eCommerce is supposed to be?&lt;/p&gt;&#13;
+&#13;
+&lt;p&gt;&#13;
+For more information please browse our &lt;a title="About Us Content" href="$url(Search-ShowContent,fdid,about-us)$"&gt;About Us&lt;/a&gt; and  &lt;a title="About Us Content" href="$url(Search-ShowContent,fdid,customer-service)$"&gt;Customer Service&lt;/a&gt; pages.&#13;
+&lt;/p&gt;</custom-attribute>
+            <custom-attribute attribute-id="body" xml:lang="fr-FR">&lt;h1 class="content-header"&gt;À propos de nous&lt;/h1&gt;&#13;
+&lt;h2&gt;Trois observations :&lt;/h2&gt;      &#13;
+&lt;ul&gt;&#13;
+&lt;li&gt;Dans l'e-commerce, l'innovation en matière de merchandising et de marketing est le générateur de recettes. Pourtant, la plupart des entreprises consacrent 80 % de leur budget au seul maintien de leur infrastructure actuelle.&lt;/li&gt;&#13;
+&lt;li&gt;Alors que le rythme du commerce s'accélère chaque jour, la plupart des entreprises ont toutes les peines du monde à simplement se maintenir à jour.&lt;/li&gt;&#13;
+&lt;li&gt;Les spécialistes du merchandising et du marketing sont d'autant plus frustrés qu'ils passent davantage de temps à rechercher des prestataires d'infogérance et des ressources informatiques internes qu'à déployer leurs propres actions de merchandising et de marketing.&lt;/li&gt;&#13;
+&lt;/ul&gt; &#13;
+&lt;h2&gt;Cette situation n'était pas satisfaisante...&lt;/h2&gt;          &#13;
+&lt;p&gt;C'est pourquoi en 2004, nous nous sommes mis en quête de meilleures solutions. Notre vision &amp;mdash;à l'époque comme aujourd'hui&amp;mdash; était claire : proposer une solution e-commerce professionnelle, capable d'offrir davantage de puissance et d'innovation aux experts du merchandising, tout en supprimant les coûts techniques, les risques et la complexité liés à la gestion d'une activité d'e-commerce. Nous avons pris ce que nous considérions comme les grands principes du merchandising en matière d'e-commerce (nos fondateurs évoluent dans ce domaine depuis 1994) et les avons appliqués aux tous premiers progrès des architectures de logiciels comme service (Saas) et de l'informatique en grille dynamique. Puis nous avons travaillé dur. Nous n'avons pas compté nos heures supplémentaires. Nous avons avalé des litres de café. Et enfin, à la fin 2005, nous avons mis sur le marché la première plateforme d'e-commerce à la demande pour entreprises,&lt;/p&gt;                &#13;
+&lt;h2&gt;Des clients des plus satisfaits&lt;/h2&gt;       &#13;
+&lt;p&gt;Avec Salesforce Commerce Cloud ecommerce, nos clients restent à la pointe dans leur domaine, avec des outils de merchandising et de marketing. Ils ont la maîtrise totale de leur site, apportent des changements et lancent de nouvelles boutiques en ligne, à leur gré. Ils se consacrent davantage au développement de leurs propres innovations (et non plus à personnaliser une fonctionnalité standard). Ils reçoivent en permanence de nouvelles mises à jour logicielles de Salesforce Commerce Cloud. Ils n'ont jamais à se soucier des questions de fonctionnement, de disponibilité et de sécurité.&lt;/p&gt;&#13;
+&lt;p&gt;En résumé, ils sont libres. Libres de vendre. Libres de croître. Libres d'innover. Libres de changer. Ne pensez-vous pas que le commerce devrait-être comme cela ?&lt;/p&gt;&#13;
+&#13;
+&lt;p&gt;&#13;
+Pour plus d'informations, rendez-vous sur nos pages &lt;a title="Contenu À propos de nous" href="$url(Search-ShowContent,fdid,about-us)$"&gt;À propos de nous&lt;/a&gt; et  &lt;a title="Contenu Service client" href="$url(Search-ShowContent,fdid,customer-service)$"&gt;Service client&lt;/a&gt; .&#13;
+&lt;/p&gt;</custom-attribute>
+            <custom-attribute attribute-id="body" xml:lang="it-IT">&lt;h1 class="content-header"&gt;Chi siamo&lt;/h1&gt;&#13;
+&lt;h2&gt;Tutto è iniziato da una serie di osservazioni:&lt;/h2&gt;      &#13;
+&lt;ul&gt;&#13;
+&lt;li&gt;Le innovazioni nei campi di merchandising e marketing e-commerce sono il motore che genera i profitti, tuttavia la maggior parte delle aziende spende ancora l'80% dei budget per la manutenzione dell'infrastruttura esistente.&lt;/li&gt;&#13;
+&lt;li&gt;L'e-commerce ormai avanza inesorabilmente ogni giorno di più, mentre nelle aziende si fanno i salti mortali per cercare il modo di non adeguarsi ai cambiamenti.&lt;/li&gt;&#13;
+&lt;li&gt;I venditori e gli esperti di marketing lavorano in continua frustrazione, costretti a correre dietro ai fornitori esterni e ai reparti IT interni, piuttosto che dedicarsi al merchandising e al marketing per la loro attività.&lt;/li&gt;&#13;
+&lt;/ul&gt; &#13;
+&lt;h2&gt;Deve esserci una soluzione...&lt;/h2&gt;          &#13;
+&lt;p&gt;Nel 2004 ci siamo decisi a trovarla. La filosofia alla base della nostra avventura era chiara allora come oggi: introdurre sul mercato una soluzione di e-commerce di livello aziendale che avrebbe portato potenziale e innovazione nelle mani dei venditori e che allo stesso tempo avrebbe abbattuto i costi tecnici, i rischi e le complessità di gestione di un'attività di e-commerce. Ci siamo basati sull'esperienza che avevamo nella vendita tramite piattaforme di e-commerce (i nostri fondatori lavorano in questo campo dal 1994) e l'abbiamo applicata alle allora emergenti innovazioni delle architetture SaaS (Software-as-a-Service) e del grid computing dinamico. Abbiamo lavorato sodo. facendo le ore piccole. Abbiamo bevuto tanti caffè. Ma poi alla fine del 2005, abbiamo rilasciato la prima piattaforma di e-commerce on-demand di livello aziendale.&lt;/p&gt;                &#13;
+&lt;h2&gt;I nostri clienti non potrebbero essere più soddisfatti dei risultati.&lt;/h2&gt;       &#13;
+&lt;p&gt;Con l'e-commerce di Salesforce Commerce Cloud, i nostri clienti possono perfezionare la loro leadership nelle attività di merchandising e marketing. Dispongono del controllo completo del loro sito, possono apportare modifiche e aprire nuovi storefront come e quando vogliono. Possono dedicarsi allo sviluppo e all'innovazione di prodotti propri e non alla creazione di funzionalità. Ricevono gli aggiornamenti del software continuamente da Salesforce Commerce Cloud E non devono mai preoccuparsi della funzionalità, della disponibilità e della sicurezza del sito.&lt;/p&gt;&#13;
+&lt;p&gt;In poche parole, sono totalmente liberi. Liberi di vendere. Liberi di crescere. Liberi di innovare. Liberi di cambiare. Non è questa l'essenza dell'e-commerce?&lt;/p&gt;&#13;
+&#13;
+&lt;p&gt;&#13;
+Per ulteriori informazioni visita le pagine &lt;a title="Contenuto Chi siamo" href="$url(Search-ShowContent,fdid,about-us)$"&gt;Chi siamo&lt;/a&gt; e  &lt;a title="Contenuto Chi siamo" href="$url(Search-ShowContent,fdid,customer-service)$"&gt;Servizio clienti.&lt;/a&gt;  &#13;
+&lt;/p&gt;</custom-attribute>
+            <custom-attribute attribute-id="body" xml:lang="ja-JP">&lt;h1 class="content-header"&gt;Salesforce Commerce Cloud について&lt;/h1&gt;&#13;
+&lt;h2&gt;始まりは現状を見つめるところから。&lt;/h2&gt;      &#13;
+&lt;ul&gt;&#13;
+&lt;li&gt;eコマースによるマーチャンダイジングとマーケティングのイノベーションは、収益を生み出すものであるにもかかわらず、大部分の事業では予算の 80% を現在のインフラを保守するためだけに使っています。&lt;/li&gt;&#13;
+&lt;li&gt;eコマースは日々加速しているのにもかかわらず、大部分の事業は混乱してただ立ち尽くしています。&lt;/li&gt;&#13;
+&lt;li&gt;マーチャンダイザーとマーケット担当者の葛藤は度合いを増し、実際に自社ビジネスのマーチャンダイジングとマーケティングを行うことよりも、外注先のプロバイダーや社内の IT 部門への対応に、より多くの時間を費やしています。&lt;/li&gt;&#13;
+&lt;/ul&gt; &#13;
+&lt;h2&gt;他にもっとよい方法があるのではないか、私達はそう考えました。&lt;/h2&gt;          &#13;
+&lt;p&gt;そして 2004 年、その方法を見つけるべく活動を開始したのです。ビジョンは、&amp;mdash; そのときも今も &amp;mdash; 明白でした。つまり、より大きな力と革新をマーチャンダイザーの手に委ねると同時に、eコマース事業を営むための技術的コスト、リスク、複雑さを排除するエンタープライズ規模の eコマースソリューションを市場にもたらすことです。私達が知っている優れた eコマースマーチャンダイジング (弊社の創設者は 1994 年から eコマースに携わっています) に基づき、当時めざましく台頭していた SaaS アーキテクチャと動的グリッドコンピューティングにそれを適用しました。後は努力に努力を重ね、夜遅くまで働き、コーヒーを何杯も飲みました。そして 2005 年の終わり、ついに市場初のオンデマンドエンタープライズ eコマースプラットフォームを世に出したのです。&lt;/p&gt;                &#13;
+&lt;h2&gt;結果は、顧客からの大絶賛でした。&lt;/h2&gt;       &#13;
+&lt;p&gt;Salesforce Commerce Cloud eコマースを使用すれば、マーチャンダイジングとマーケティングに、より多くの時間を費やせます。サイトをすべて自分たちで管理し、いつでも変更を加え、新しいストアフロントを起ち上げることができます。そして、(一般的な機能の構築ではなく) 独自のイノベーションを推し進めることに多くの時間を費やせるようになります。Salesforce Commerce Cloud から新しいソフトウェアアップグレードを継続的に受け取ることができるため、サイトのアップタイム、可用性、セキュリティについて一切心配しなくてよいのです。&lt;/p&gt;&#13;
+&lt;p&gt;つまり、自由を手に入れたということ。自由に商売を行い、自由に成長し、自由に革新を遂げ、自由に変化する。eコマースとはかくあるべきではないでしょうか?&lt;/p&gt;&#13;
+&#13;
+&lt;p&gt;&#13;
+詳細については、 &lt;a title="企業情報コンテンツ" href="$url(Search-ShowContent,fdid,about-us)$"&gt;Salesforce Commerce Cloud について&lt;/a&gt; および  &lt;a title="企業情報コンテンツ" href="$url(Search-ShowContent,fdid,customer-service)$"&gt;カスタマーサービス&lt;/a&gt; のページをお読みください。&#13;
+&lt;/p&gt;</custom-attribute>
+            <custom-attribute attribute-id="body" xml:lang="zh-CN">&lt;h1 class="content-header"&gt;公司&lt;/h1&gt;&#13;
+&lt;h2&gt;一切皆因一系列的意见而开始：&lt;/h2&gt;      &#13;
+&lt;ul&gt;&#13;
+&lt;li&gt;eCommerce销售和营销创新可以产生收益，而大多数企业仅仅为维持现有基础设施就要拿出80%的预算。&lt;/li&gt;&#13;
+&lt;li&gt;eCommerce 的发展步伐日新月异，而大多数企业只是原地踏步。&lt;/li&gt;&#13;
+&lt;li&gt;商家和营销人员要花费比实际销售和营销自己业务多得多的时间来追逐外包供应商和内部 IT 组织，对此他们感到无所适从。&lt;/li&gt;&#13;
+&lt;/ul&gt; &#13;
+&lt;h2&gt;应该有一个更好的办法。&lt;/h2&gt;          &#13;
+&lt;p&gt;于是，我们从 2004 年开始寻找更佳解决方案。&amp;mdash;当时和现在&amp;mdash;的愿景都很明确：为市场带来一个企业级的 eCommerce 解决方案，为商家提供更强大的能力的创新力，同时消除 eCommerce 企业运营的技术成本、风险和复杂性。我们启用了我们知道会很强大的 eCommerce 销售（我们的创始人自 1994 年便开始从事 eCommerce）并将其运用于当时新兴的“软件即服务”架构及动态网格计算中。然后我们不懈努力。我们昼夜不分。我们喝了很多咖啡。最终在 2005 年底，我们推出了市场上第一款按需企业 eCommerce 平台。&lt;/p&gt;                &#13;
+&lt;h2&gt;我们的客户对这些成就感到喜出望外。&lt;/h2&gt;       &#13;
+&lt;p&gt;通过 Salesforce Commerce Cloud eCommerce，他们可以将更多的时间用于实现销售和营销的领先地位。他们可以完全掌控自己的站点，按照自己的喜好随时进行更改和建立新的网店。他们可以花更多的时间开发自己的专属创新（而不是建立商品功能）。他们不断从 Salesforce Commerce Cloud 收到新的软件升级。他们永远不必担心站点运行、可用性和安全性。&lt;/p&gt;&#13;
+&lt;p&gt;总而言之，他们自由了。自由地销售。自由地成长。自由地创新。自由地更改。eCommerce 不正应该如此吗？&lt;/p&gt;&#13;
+&#13;
+&lt;p&gt;&#13;
+有关更多信息，请浏览我们的 &lt;a title="“关于我们”网页内容" href="$url(Search-ShowContent,fdid,about-us)$"&gt;关于我们&lt;/a&gt; 与  &lt;a title="“关于我们”网页内容" href="$url(Search-ShowContent,fdid,customer-service)$"&gt;客户服务&lt;/a&gt; 页面。&#13;
+&lt;/p&gt;</custom-attribute>
+            <custom-attribute attribute-id="customCSSFile">css/aboutus.css</custom-attribute>
+        </custom-attributes>
+        <folder-links>
+            <classification-link folder-id="about-us"/>
+        </folder-links>
+    </content>
+
+    <content content-id="home-bottom-womens-shoes">
+        <display-name xml:lang="x-default">Shop Women's Shoes</display-name>
+        <description xml:lang="x-default">First slot on the left below home page Flash/jQuery scroller</description>
+        <online-flag>true</online-flag>
+        <searchable-flag>false</searchable-flag>
+        <page-attributes/>
+        <custom-attributes>
+            <custom-attribute attribute-id="body" xml:lang="x-default">&lt;h2&gt;Shop Shoes&lt;/h2&gt;&#13;
+&#13;
+&lt;ul&gt;&#13;
+    &lt;li&gt;&lt;span&gt;Shoes:&lt;/span&gt;&lt;a href="$url('Search-Show', 'cgid', 'womens-accessories-shoes')$"&gt;Heels&lt;/a&gt;&lt;/li&gt;&#13;
+    &lt;li&gt;&lt;a href="$url('Search-Show', 'cgid', 'womens-accessories-shoes')$"&gt;Flats&lt;/a&gt;&lt;/li&gt;&#13;
+    &lt;li&gt;&lt;a href="$url('Search-Show', 'cgid', 'womens-accessories-shoes')$"&gt;Open Toe&lt;/a&gt;&lt;/li&gt;&#13;
+&lt;/ul&gt;&#13;
+&#13;
+&lt;a href="$url('Search-Show', 'cgid', 'womens-accessories-shoes')$" title="Go to Category: Women's Shoes"&gt;&lt;img alt="Women's Shoes" src="$Include('Cloudinary-GetContentImage', 'url', 'images/homepage/womensshoes.png', 'pageType', 'homePage', 'isUrl', true)$" /&gt;&lt;/a&gt;</custom-attribute>
+            <custom-attribute attribute-id="body" xml:lang="fr-FR">&lt;h2&gt;Acheter des chaussures&lt;/h2&gt;&#13;
+&#13;
+&lt;ul&gt;&#13;
+    &lt;li&gt;&lt;span&gt;Chaussures :&lt;/span&gt;&lt;a href="$url('Search-Show', 'cgid', 'womens-accessories-shoes')$"&gt;Talons&lt;/a&gt;&lt;/li&gt;&#13;
+    &lt;li&gt;&lt;a href="$url('Search-Show', 'cgid', 'womens-accessories-shoes')$"&gt;Ballerines&lt;/a&gt;&lt;/li&gt;&#13;
+    &lt;li&gt;&lt;a href="$url('Search-Show', 'cgid', 'womens-accessories-shoes')$"&gt;Sandales&lt;/a&gt;&lt;/li&gt;&#13;
+&lt;/ul&gt;&#13;
+&#13;
+&lt;a href="$url('Search-Show', 'cgid', 'womens-accessories-shoes')$" title="Aller à la catégorie : Chaussures Femmes"&gt;&lt;img alt="Chaussures Femmes" src="images/homepage/womensshoes.png?$staticlink$" /&gt;&lt;/a&gt;</custom-attribute>
+            <custom-attribute attribute-id="body" xml:lang="it-IT">&lt;h2&gt;Acquista scarpe&lt;/h2&gt;&#13;
+&#13;
+&lt;ul&gt;&#13;
+    &lt;li&gt;&lt;span&gt;Scarpe:&lt;/span&gt;&lt;a href="$url('Search-Show', 'cgid', 'womens-accessories-shoes')$"&gt;Con tacco&lt;/a&gt;&lt;/li&gt;&#13;
+    &lt;li&gt;&lt;a href="$url('Search-Show', 'cgid', 'womens-accessories-shoes')$"&gt;Basse&lt;/a&gt;&lt;/li&gt;&#13;
+    &lt;li&gt;&lt;a href="$url('Search-Show', 'cgid', 'womens-accessories-shoes')$"&gt;Spuntate&lt;/a&gt;&lt;/li&gt;&#13;
+&lt;/ul&gt;&#13;
+&#13;
+&lt;a href="$url('Search-Show', 'cgid', 'womens-accessories-shoes')$" title="Vai a categoria: Scarpe donna"&gt;&lt;img alt="Scarpe donna" src="images/homepage/womensshoes.png?$staticlink$" /&gt;&lt;/a&gt;</custom-attribute>
+            <custom-attribute attribute-id="body" xml:lang="ja-JP">&lt;h2&gt;シューズを購入&lt;/h2&gt;&#13;
+&#13;
+&lt;ul&gt;&#13;
+    &lt;li&gt;&lt;span&gt;シューズ: &lt;/span&gt;&lt;a href="$url('Search-Show', 'cgid', 'womens-accessories-shoes')$"&gt;ハイヒール&lt;/a&gt;&lt;/li&gt;&#13;
+    &lt;li&gt;&lt;a href="$url('Search-Show', 'cgid', 'womens-accessories-shoes')$"&gt;フラット&lt;/a&gt;&lt;/li&gt;&#13;
+    &lt;li&gt;&lt;a href="$url('Search-Show', 'cgid', 'womens-accessories-shoes')$"&gt;オープントゥ&lt;/a&gt;&lt;/li&gt;&#13;
+&lt;/ul&gt;&#13;
+&#13;
+&lt;a href="$url('Search-Show', 'cgid', 'womens-accessories-shoes')$" title="次のカテゴリに移動する:レディースシューズ"&gt;&lt;img alt="レディースシューズ" src="images/homepage/womensshoes.png?$staticlink$" /&gt;&lt;/a&gt;</custom-attribute>
+            <custom-attribute attribute-id="body" xml:lang="zh-CN">&lt;h2&gt;购买鞋类&lt;/h2&gt;&#13;
+&#13;
+&lt;ul&gt;&#13;
+    &lt;li&gt;&lt;span&gt;鞋&lt;/span&gt;：&lt;a href="$url('Search-Show', 'cgid', 'womens-accessories-shoes')$"&gt;高跟&lt;/a&gt;&lt;/li&gt;&#13;
+    &lt;li&gt;&lt;a href="$url('Search-Show', 'cgid', 'womens-accessories-shoes')$"&gt;平底&lt;/a&gt;&lt;/li&gt;&#13;
+    &lt;li&gt;&lt;a href="$url('Search-Show', 'cgid', 'womens-accessories-shoes')$"&gt;露趾&lt;/a&gt;&lt;/li&gt;&#13;
+&lt;/ul&gt;&#13;
+&#13;
+&lt;a href="$url('Search-Show', 'cgid', 'womens-accessories-shoes')$" title="前往分类：女士鞋类"&gt;&lt;img alt="女士鞋类" src="images/homepage/womensshoes.png?$staticlink$" /&gt;&lt;/a&gt;</custom-attribute>
+        </custom-attributes>
+    </content>
+
+    <content content-id="home-cycle">
+        <display-name xml:lang="x-default">Home Cycle Data</display-name>
+        <display-name xml:lang="fr-FR">Accueil Données de cycle</display-name>
+        <display-name xml:lang="it-IT">Dati dinamici pagina principale</display-name>
+        <display-name xml:lang="ja-JP">ホームサイクルデータ</display-name>
+        <display-name xml:lang="zh-CN">主页周期数据</display-name>
+        <description xml:lang="x-default">images/homepage/img01.jpg?$staticlink$</description>
+        <description xml:lang="fr-FR">images/homepage/img01.jpg?$staticlink$</description>
+        <description xml:lang="it-IT">images/homepage/img01.jpg?$staticlink$</description>
+        <description xml:lang="ja-JP">images/homepage/img01.jpg?$staticlink$</description>
+        <description xml:lang="zh-CN">images/homepage/img01.jpg?$staticlink$</description>
+        <online-flag>true</online-flag>
+        <searchable-flag>false</searchable-flag>
+        <page-attributes/>
+        <custom-attributes>
+            <custom-attribute attribute-id="body" xml:lang="x-default">&lt;ul id="homepage-slides"&gt;&#13;
+    &lt;li class="slide slide1"&gt;&#13;
+    &lt;a href="$url('Search-Show','cgid','mens-clothing-suits')$"&gt;&#13;
+            &lt;div class="banner-message"&gt;&#13;
+                &lt;div class="banner-text2"&gt;Mens&lt;/div&gt;&#13;
+                &lt;div class="banner-text1"&gt;Suits&lt;/div&gt;&#13;
+                &lt;div class="banner-text3"&gt;Shop Now&lt;/div&gt;&#13;
+            &lt;/div&gt;&#13;
+            &lt;img src="$Include('Cloudinary-GetContentImage', 'url', 'images/homepage/car-suit.jpg', 'pageType', 'homePage', 'isUrl', true)$" alt="Mens Suits"/&gt;&#13;
+        &lt;/a&gt;&#13;
+    &lt;/li&gt;&#13;
+    &lt;li class="slide slide2"&gt;&#13;
+        &lt;a href="$url('Search-Show','cgid','womens-accessories')$"&gt;&#13;
+            &lt;div class="banner-message"&gt;&#13;
+                &lt;div class="banner-text2"&gt;The&lt;/div&gt;&#13;
+                &lt;div class="banner-text1"&gt;Perfect Companion&lt;/div&gt;&#13;
+                &lt;div class="banner-text3"&gt;Shop Now&lt;/div&gt;&#13;
+            &lt;/div&gt;&#13;
+            &lt;img src="$Include('Cloudinary-GetContentImage', 'url', 'images/homepage/car-accessories.jpg', 'pageType', 'homePage', 'isUrl', true)$" alt="Perfect Companion"/&gt;&#13;
+        &lt;/a&gt;&#13;
+    &lt;/li&gt;&#13;
+    &lt;li class="slide slide3"&gt;&#13;
+        &lt;a href="$url('Search-Show','cgid','womens-accessories-shoes')$"&gt;&#13;
+            &lt;div class="banner-message"&gt;&#13;
+                &lt;div class="banner-text2"&gt;Womens&lt;/div&gt;&#13;
+                &lt;div class="banner-text1"&gt;Shoes&lt;/div&gt;&#13;
+                &lt;div class="banner-text3"&gt;Shop Now&lt;/div&gt;&#13;
+            &lt;/div&gt;&#13;
+            &lt;img src="$Include('Cloudinary-GetContentImage', 'url', 'images/homepage/car-shoes.jpg', 'pageType', 'homePage', 'isUrl', true)$" alt="Women's Shoes"/&gt;&#13;
+        &lt;/a&gt;&#13;
+    &lt;/li&gt;&#13;
+    &lt;li class="slide slide4"&gt;&#13;
+        &lt;a href="$url('Search-Show','cgid','womens-clothing-dresses')$"&gt;&#13;
+            &lt;div class="banner-message"&gt;&#13;
+                &lt;div class="banner-text2"&gt;Womens&lt;/div&gt;&#13;
+                &lt;div class="banner-text1"&gt;Dresses&lt;/div&gt;&#13;
+                &lt;div class="banner-text3"&gt;Shop Now&lt;/div&gt;&#13;
+            &lt;/div&gt;&#13;
+            &lt;img src="$Include('Cloudinary-GetContentImage', 'url', 'images/homepage/car-dresses.jpg', 'pageType', 'homePage', 'isUrl', true)$" alt="Womens Dresses"/&gt;&#13;
+        &lt;/a&gt;&#13;
+    &lt;/li&gt;&#13;
+    &lt;li class="slide slide5"&gt;&#13;
+&lt;a href="$url('Search-Show','cgid','newarrivals-womens')$"&gt;&#13;
+            &lt;div class="banner-message"&gt;&#13;
+                &lt;div class="banner-text1"&gt;Spring&lt;/div&gt;&#13;
+                &lt;div class="banner-text2"&gt;New Arrivals&lt;/div&gt;&#13;
+                &lt;div class="banner-text3"&gt;Shop Now&lt;/div&gt;&#13;
+            &lt;/div&gt;&#13;
+            &lt;img src="$Include('Cloudinary-GetContentImage', 'url', 'images/homepage/car-spring.jpg', 'pageType', 'homePage', 'isUrl', true)$" alt="Spring Arrivals" /&gt;&#13;
+        &lt;/a&gt;&#13;
+    &lt;/li&gt;&#13;
+&lt;/ul&gt;</custom-attribute>
+            <custom-attribute attribute-id="body" xml:lang="fr-FR">&lt;ul id="homepage-slides"&gt;&#13;
+    &lt;li class="slide slide1"&gt;&#13;
+    &lt;a href="$url('Search-Show','cgid','mens-clothing-suits')$"&gt;&#13;
+            &lt;div class="banner-message"&gt;&#13;
+                &lt;div class="banner-text2"&gt;Homme&lt;/div&gt;&#13;
+                &lt;div class="banner-text1"&gt;Costumes&lt;/div&gt;&#13;
+                &lt;div class="banner-text3"&gt;Acheter maintenant&lt;/div&gt;&#13;
+            &lt;/div&gt;&#13;
+            &lt;img src="images/homepage/car-suit.jpg?$staticlink$" alt="Costumes Homme" /&gt;&#13;
+        &lt;/a&gt;&#13;
+    &lt;/li&gt;&#13;
+    &lt;li class="slide slide2"&gt;&#13;
+        &lt;a href="$url('Search-Show','cgid','womens-accessories')$"&gt;&#13;
+            &lt;div class="banner-message"&gt;&#13;
+                &lt;div class="banner-text2"&gt;Le&lt;/div&gt;&#13;
+                &lt;div class="banner-text1"&gt;Compagnon idéal&lt;/div&gt;&#13;
+                &lt;div class="banner-text3"&gt;Acheter maintenant&lt;/div&gt;&#13;
+            &lt;/div&gt;&#13;
+            &lt;img src="images/homepage/car-accessories.jpg?$staticlink$" alt="Compagnon idéal" /&gt;&#13;
+        &lt;/a&gt;&#13;
+    &lt;/li&gt;&#13;
+    &lt;li class="slide slide3"&gt;&#13;
+        &lt;a href="$url('Search-Show','cgid','womens-accessories-shoes')$"&gt;&#13;
+            &lt;div class="banner-message"&gt;&#13;
+                &lt;div class="banner-text2"&gt;Femme&lt;/div&gt;&#13;
+                &lt;div class="banner-text1"&gt;Chaussures&lt;/div&gt;&#13;
+                &lt;div class="banner-text3"&gt;Acheter maintenant&lt;/div&gt;&#13;
+            &lt;/div&gt;&#13;
+            &lt;img src="images/homepage/car-shoes.jpg?$staticlink$" alt="Chaussures Femmes" /&gt;&#13;
+        &lt;/a&gt;&#13;
+    &lt;/li&gt;&#13;
+    &lt;li class="slide slide4"&gt;&#13;
+        &lt;a href="$url('Search-Show','cgid','womens-clothing-dresses')$"&gt;&#13;
+            &lt;div class="banner-message"&gt;&#13;
+                &lt;div class="banner-text2"&gt;Femme&lt;/div&gt;&#13;
+                &lt;div class="banner-text1"&gt;Robes&lt;/div&gt;&#13;
+                &lt;div class="banner-text3"&gt;Acheter maintenant&lt;/div&gt;&#13;
+            &lt;/div&gt;&#13;
+            &lt;img src="images/homepage/car-dresses.jpg?$staticlink$" alt="Robes Femmes" /&gt;&#13;
+        &lt;/a&gt;&#13;
+    &lt;/li&gt;&#13;
+    &lt;li class="slide slide5"&gt;&#13;
+&lt;a href="$url('Search-Show','cgid','newarrivals-womens')$"&gt;&#13;
+            &lt;div class="banner-message"&gt;&#13;
+                &lt;div class="banner-text1"&gt;Printemps&lt;/div&gt;&#13;
+                &lt;div class="banner-text2"&gt;Nouveautés&lt;/div&gt;&#13;
+                &lt;div class="banner-text3"&gt;Acheter maintenant&lt;/div&gt;&#13;
+            &lt;/div&gt;&#13;
+            &lt;img src="images/homepage/car-spring.jpg?$staticlink$" alt="Arrivages de printemps" /&gt;&#13;
+        &lt;/a&gt;&#13;
+    &lt;/li&gt;&#13;
+&lt;/ul&gt;</custom-attribute>
+            <custom-attribute attribute-id="body" xml:lang="it-IT">&lt;ul id="homepage-slides"&gt;&#13;
+    &lt;li class="slide slide1"&gt;&#13;
+    &lt;a href="$url('Search-Show','cgid','mens-clothing-suits')$"&gt;&#13;
+            &lt;div class="banner-message"&gt;&#13;
+                &lt;div class="banner-text2"&gt;Uomo&lt;/div&gt;&#13;
+                &lt;div class="banner-text1"&gt;Completi&lt;/div&gt;&#13;
+                &lt;div class="banner-text3"&gt;Acquista ora&lt;/div&gt;&#13;
+            &lt;/div&gt;&#13;
+            &lt;img src="images/homepage/car-suit.jpg?$staticlink$" alt="Completi uomo" /&gt;&#13;
+        &lt;/a&gt;&#13;
+    &lt;/li&gt;&#13;
+    &lt;li class="slide slide2"&gt;&#13;
+        &lt;a href="$url('Search-Show','cgid','womens-accessories')$"&gt;&#13;
+            &lt;div class="banner-message"&gt;&#13;
+                &lt;div class="banner-text2"&gt;L'&lt;/div&gt;&#13;
+                &lt;div class="banner-text1"&gt;abbinamento perfetto&lt;/div&gt;&#13;
+                &lt;div class="banner-text3"&gt;Acquista ora&lt;/div&gt;&#13;
+            &lt;/div&gt;&#13;
+            &lt;img src="images/homepage/car-accessories.jpg?$staticlink$" alt="Abbinamento perfetto" /&gt;&#13;
+        &lt;/a&gt;&#13;
+    &lt;/li&gt;&#13;
+    &lt;li class="slide slide3"&gt;&#13;
+        &lt;a href="$url('Search-Show','cgid','womens-accessories-shoes')$"&gt;&#13;
+            &lt;div class="banner-message"&gt;&#13;
+                &lt;div class="banner-text2"&gt;Donna&lt;/div&gt;&#13;
+                &lt;div class="banner-text1"&gt;Scarpe&lt;/div&gt;&#13;
+                &lt;div class="banner-text3"&gt;Acquista ora&lt;/div&gt;&#13;
+            &lt;/div&gt;&#13;
+            &lt;img src="images/homepage/car-shoes.jpg?$staticlink$" alt="Scarpe donna" /&gt;&#13;
+        &lt;/a&gt;&#13;
+    &lt;/li&gt;&#13;
+    &lt;li class="slide slide4"&gt;&#13;
+        &lt;a href="$url('Search-Show','cgid','womens-clothing-dresses')$"&gt;&#13;
+            &lt;div class="banner-message"&gt;&#13;
+                &lt;div class="banner-text2"&gt;Donna&lt;/div&gt;&#13;
+                &lt;div class="banner-text1"&gt;Vestiti&lt;/div&gt;&#13;
+                &lt;div class="banner-text3"&gt;Acquista ora&lt;/div&gt;&#13;
+            &lt;/div&gt;&#13;
+            &lt;img src="images/homepage/car-dresses.jpg?$staticlink$" alt="Vestiti donna" /&gt;&#13;
+        &lt;/a&gt;&#13;
+    &lt;/li&gt;&#13;
+    &lt;li class="slide slide5"&gt;&#13;
+&lt;a href="$url('Search-Show','cgid','newarrivals-womens')$"&gt;&#13;
+            &lt;div class="banner-message"&gt;&#13;
+                &lt;div class="banner-text1"&gt;Primavera&lt;/div&gt;&#13;
+                &lt;div class="banner-text2"&gt;Nuovi arrivi&lt;/div&gt;&#13;
+                &lt;div class="banner-text3"&gt;Acquista ora&lt;/div&gt;&#13;
+            &lt;/div&gt;&#13;
+            &lt;img src="images/homepage/car-spring.jpg?$staticlink$" alt="Collezione primaverile" /&gt;&#13;
+        &lt;/a&gt;&#13;
+    &lt;/li&gt;&#13;
+&lt;/ul&gt;</custom-attribute>
+            <custom-attribute attribute-id="body" xml:lang="ja-JP">&lt;ul id="homepage-slides"&gt;&#13;
+    &lt;li class="slide slide1"&gt;&#13;
+    &lt;a href="$url('Search-Show','cgid','mens-clothing-suits')$"&gt;&#13;
+            &lt;div class="banner-message"&gt;&#13;
+                &lt;div class="banner-text2"&gt;メンズ&lt;/div&gt;&#13;
+                &lt;div class="banner-text1"&gt;スーツ&lt;/div&gt;&#13;
+                &lt;div class="banner-text3"&gt;今すぐお買い物をする&lt;/div&gt;&#13;
+            &lt;/div&gt;&#13;
+            &lt;img src="images/homepage/car-suit.jpg?$staticlink$" alt="メンズスーツ" /&gt;&#13;
+        &lt;/a&gt;&#13;
+    &lt;/li&gt;&#13;
+    &lt;li class="slide slide2"&gt;&#13;
+        &lt;a href="$url('Search-Show','cgid','womens-accessories')$"&gt;&#13;
+            &lt;div class="banner-message"&gt;&#13;
+                &lt;div class="banner-text2"&gt; &lt;/div&gt;&#13;
+                &lt;div class="banner-text1"&gt;最高の相性&lt;/div&gt;&#13;
+                &lt;div class="banner-text3"&gt;今すぐお買い物をする&lt;/div&gt;&#13;
+            &lt;/div&gt;&#13;
+            &lt;img src="images/homepage/car-accessories.jpg?$staticlink$" alt="最高の相性" /&gt;&#13;
+        &lt;/a&gt;&#13;
+    &lt;/li&gt;&#13;
+    &lt;li class="slide slide3"&gt;&#13;
+        &lt;a href="$url('Search-Show','cgid','womens-accessories-shoes')$"&gt;&#13;
+            &lt;div class="banner-message"&gt;&#13;
+                &lt;div class="banner-text2"&gt;レディース&lt;/div&gt;&#13;
+                &lt;div class="banner-text1"&gt;シューズ&lt;/div&gt;&#13;
+                &lt;div class="banner-text3"&gt;今すぐお買い物をする&lt;/div&gt;&#13;
+            &lt;/div&gt;&#13;
+            &lt;img src="images/homepage/car-shoes.jpg?$staticlink$" alt="レディースシューズ" /&gt;&#13;
+        &lt;/a&gt;&#13;
+    &lt;/li&gt;&#13;
+    &lt;li class="slide slide4"&gt;&#13;
+        &lt;a href="$url('Search-Show','cgid','womens-clothing-dresses')$"&gt;&#13;
+            &lt;div class="banner-message"&gt;&#13;
+                &lt;div class="banner-text2"&gt;レディース&lt;/div&gt;&#13;
+                &lt;div class="banner-text1"&gt;ドレス&lt;/div&gt;&#13;
+                &lt;div class="banner-text3"&gt;今すぐお買い物をする&lt;/div&gt;&#13;
+            &lt;/div&gt;&#13;
+            &lt;img src="images/homepage/car-dresses.jpg?$staticlink$" alt="レディースワンピース" /&gt;&#13;
+        &lt;/a&gt;&#13;
+    &lt;/li&gt;&#13;
+    &lt;li class="slide slide5"&gt;&#13;
+&lt;a href="$url('Search-Show','cgid','newarrivals-womens')$"&gt;&#13;
+            &lt;div class="banner-message"&gt;&#13;
+                &lt;div class="banner-text1"&gt;春の&lt;/div&gt;&#13;
+                &lt;div class="banner-text2"&gt;新着アイテム&lt;/div&gt;&#13;
+                &lt;div class="banner-text3"&gt;今すぐお買い物をする&lt;/div&gt;&#13;
+            &lt;/div&gt;&#13;
+            &lt;img src="images/homepage/car-spring.jpg?$staticlink$" alt="春物入荷" /&gt;&#13;
+        &lt;/a&gt;&#13;
+    &lt;/li&gt;&#13;
+&lt;/ul&gt;</custom-attribute>
+            <custom-attribute attribute-id="body" xml:lang="zh-CN">&lt;ul id="homepage-slides"&gt;&#13;
+    &lt;li class="slide slide1"&gt;&#13;
+    &lt;a href="$url('Search-Show','cgid','mens-clothing-suits')$"&gt;&#13;
+            &lt;div class="banner-message"&gt;&#13;
+                &lt;div class="banner-text2"&gt;男士&lt;/div&gt;&#13;
+                &lt;div class="banner-text1"&gt;西装&lt;/div&gt;&#13;
+                &lt;div class="banner-text3"&gt;立即购买&lt;/div&gt;&#13;
+            &lt;/div&gt;&#13;
+            &lt;img src="images/homepage/car-suit.jpg?$staticlink$" alt="男士西装" /&gt;&#13;
+        &lt;/a&gt;&#13;
+    &lt;/li&gt;&#13;
+    &lt;li class="slide slide2"&gt;&#13;
+        &lt;a href="$url('Search-Show','cgid','womens-accessories')$"&gt;&#13;
+            &lt;div class="banner-message"&gt;&#13;
+                &lt;div class="banner-text2"&gt;此&lt;/div&gt;&#13;
+                &lt;div class="banner-text1"&gt;完美伴侣&lt;/div&gt;&#13;
+                &lt;div class="banner-text3"&gt;立即购买&lt;/div&gt;&#13;
+            &lt;/div&gt;&#13;
+            &lt;img src="images/homepage/car-accessories.jpg?$staticlink$" alt="完美伴侣" /&gt;&#13;
+        &lt;/a&gt;&#13;
+    &lt;/li&gt;&#13;
+    &lt;li class="slide slide3"&gt;&#13;
+        &lt;a href="$url('Search-Show','cgid','womens-accessories-shoes')$"&gt;&#13;
+            &lt;div class="banner-message"&gt;&#13;
+                &lt;div class="banner-text2"&gt;女士&lt;/div&gt;&#13;
+                &lt;div class="banner-text1"&gt;鞋类&lt;/div&gt;&#13;
+                &lt;div class="banner-text3"&gt;立即购买&lt;/div&gt;&#13;
+            &lt;/div&gt;&#13;
+            &lt;img src="images/homepage/car-shoes.jpg?$staticlink$" alt="女士鞋类" /&gt;&#13;
+        &lt;/a&gt;&#13;
+    &lt;/li&gt;&#13;
+    &lt;li class="slide slide4"&gt;&#13;
+        &lt;a href="$url('Search-Show','cgid','womens-clothing-dresses')$"&gt;&#13;
+            &lt;div class="banner-message"&gt;&#13;
+                &lt;div class="banner-text2"&gt;女士&lt;/div&gt;&#13;
+                &lt;div class="banner-text1"&gt;裙装&lt;/div&gt;&#13;
+                &lt;div class="banner-text3"&gt;立即购买&lt;/div&gt;&#13;
+            &lt;/div&gt;&#13;
+            &lt;img src="images/homepage/car-dresses.jpg?$staticlink$" alt="女士连衣裙" /&gt;&#13;
+        &lt;/a&gt;&#13;
+    &lt;/li&gt;&#13;
+    &lt;li class="slide slide5"&gt;&#13;
+&lt;a href="$url('Search-Show','cgid','newarrivals-womens')$"&gt;&#13;
+            &lt;div class="banner-message"&gt;&#13;
+                &lt;div class="banner-text1"&gt;春季&lt;/div&gt;&#13;
+                &lt;div class="banner-text2"&gt;新品&lt;/div&gt;&#13;
+                &lt;div class="banner-text3"&gt;立即购买&lt;/div&gt;&#13;
+            &lt;/div&gt;&#13;
+            &lt;img src="images/homepage/car-spring.jpg?$staticlink$" alt="春季货品" /&gt;&#13;
+        &lt;/a&gt;&#13;
+    &lt;/li&gt;&#13;
+&lt;/ul&gt;</custom-attribute>
+        </custom-attributes>
+    </content>
+
+    <content content-id="home-free-shipping-orders-over-150">
+        <display-name xml:lang="x-default">Free ground shipping on orders of $150 or more</display-name>
+        <display-name xml:lang="fr-FR">Transport terrestre gratuit pour les commandes à partir de 150 €</display-name>
+        <display-name xml:lang="it-IT">Spedizione gratuita via terra per ordini pari o superiori a € 150</display-name>
+        <display-name xml:lang="ja-JP">ご注文金額が ¥15,000 を超えると通常配送料が無料</display-name>
+        <display-name xml:lang="zh-CN">金额满 150 美元的订单享受免费陆运</display-name>
+        <online-flag>true</online-flag>
+        <searchable-flag>false</searchable-flag>
+        <page-attributes/>
+        <custom-attributes>
+            <custom-attribute attribute-id="body" xml:lang="x-default">&lt;img alt="Free Shipping on orders over $150" src="$Include('Cloudinary-GetContentImage', 'url', 'images/homepage/home-promo-free-shipping.png', 'pageType', 'homePage', 'isUrl', true)$" /&gt;&#13;
+&lt;div class="home-bottom-center-text"&gt;&#13;
+&lt;h1&gt;Free&lt;/h1&gt;&#13;
+&lt;h2&gt;Ground Shipping&lt;/h2&gt;&#13;
+&lt;h3&gt;on orders of $150 or more&lt;/h3&gt;&#13;
+&lt;/div&gt;</custom-attribute>
+            <custom-attribute attribute-id="body" xml:lang="fr-FR">&lt;img alt="Frais de port gratuits pour les commandes de plus de 150 €" src="images/homepage/home-promo-free-shipping.png?$staticlink$" /&gt;&#13;
+&lt;div class="home-bottom-center-text"&gt;&#13;
+&lt;h1&gt;Transport terrestre&lt;/h1&gt;&#13;
+&lt;h2&gt;gratuit&lt;/h2&gt;&#13;
+&lt;h3&gt;pour les commandes de plus de 150 euros&lt;/h3&gt;&#13;
+&lt;/div&gt;</custom-attribute>
+            <custom-attribute attribute-id="body" xml:lang="it-IT">&lt;img alt="Spedizione gratuita su ordini superiori a € 150" src="images/homepage/home-promo-free-shipping.png?$staticlink$" /&gt;&#13;
+&lt;div class="home-bottom-center-text"&gt;&#13;
+&lt;h1&gt;Spedizione gratuita&lt;/h1&gt;&#13;
+&lt;h2&gt;via terra&lt;/h2&gt;&#13;
+&lt;h3&gt;per ordini pari o superiori a € 150&lt;/h3&gt;&#13;
+&lt;/div&gt;</custom-attribute>
+            <custom-attribute attribute-id="body" xml:lang="ja-JP">&lt;img alt="¥15,000 を超える注文で送料無料" src="images/homepage/home-promo-free-shipping.png?$staticlink$" /&gt;&#13;
+&lt;div class="home-bottom-center-text"&gt;&#13;
+&lt;h1&gt;無料&lt;/h1&gt;&#13;
+&lt;h2&gt;通常配送&lt;/h2&gt;&#13;
+&lt;h3&gt;¥15,000 を超えるご注文&lt;/h3&gt;&#13;
+&lt;/div&gt;</custom-attribute>
+            <custom-attribute attribute-id="body" xml:lang="zh-CN">&lt;img alt="订单满 150 美元即可享免费送货" src="images/homepage/home-promo-free-shipping.png?$staticlink$" /&gt;&#13;
+&lt;div class="home-bottom-center-text"&gt;&#13;
+&lt;h1&gt;免费&lt;/h1&gt;&#13;
+&lt;h2&gt;陆路送货&lt;/h2&gt;&#13;
+&lt;h3&gt;金额达到或超过 150 美元的订单&lt;/h3&gt;&#13;
+&lt;/div&gt;</custom-attribute>
+        </custom-attributes>
+    </content>
+	
+	<content content-id="footer-about">
+        <display-name xml:lang="x-default">Footer About Links</display-name>
+        <display-name xml:lang="fr-FR">Liens À propos en pied de page</display-name>
+        <display-name xml:lang="it-IT">Link Informazioni su a piè di pagina </display-name>
+        <display-name xml:lang="ja-JP">フッターの企業情報リンク</display-name>
+        <display-name xml:lang="zh-CN">页脚关于链接</display-name>
+        <online-flag>true</online-flag>
+        <searchable-flag>false</searchable-flag>
+        <page-attributes/>
+        <custom-attributes>
+            <custom-attribute attribute-id="body" xml:lang="x-default">&lt;h3&gt;About&lt;/h3&gt;&#13;
+                &lt;ul class="menu-footer menu pipe"&gt;&#13;
+                &lt;li&gt;&lt;a href="$url('Page-Show', 'cid', 'about-us')$" title="Go to About Us"&gt;About Us&lt;/a&gt;&lt;/li&gt;&#13;
+                &lt;li&gt;&lt;a href="$url('Page-Show', 'cid', 'privacy-policy')$" title="Go to Privacy"&gt;Privacy&lt;/a&gt;&lt;/li&gt;&#13;
+                &lt;li&gt;&lt;a href="$url('Page-Show', 'cid', 'terms')$" title="Go to Terms"&gt;Terms&lt;/a&gt;&lt;/li&gt;&#13;
+                &lt;li&gt;&lt;a href="$url('Page-Show', 'cid', 'jobs-landing')$"title="Go to Jobs"&gt;Jobs&lt;/a&gt;&lt;/li&gt;                 &#13;
+                &lt;li&gt;&lt;a href="$url('Test-Start')$" title="Cloudinary Test Harnesses"&gt;Cloudinary Test Harnesses&lt;/a&gt;&lt;/li&gt;&#13;
+                &lt;/ul&gt;&lt;!-- END: footer_about --&gt;</custom-attribute>
+            <custom-attribute attribute-id="body" xml:lang="fr-FR">&lt;h3&gt;À propos&lt;/h3&gt;&#13;
+                &lt;ul class="menu-footer menu pipe"&gt;&#13;
+                &lt;li&gt;&lt;a href="$url('Page-Show', 'cid', 'about-us')$" title="Aller à À propos de nous"&gt;À propos de nous&lt;/a&gt;&lt;/li&gt;&#13;
+                &lt;li&gt;&lt;a href="$url('Page-Show', 'cid', 'privacy-policy')$" title="Aller à Déclaration de confidentialité"&gt;Confidentialité&lt;/a&gt;&lt;/li&gt;&#13;
+                &lt;li&gt;&lt;a href="$url('Page-Show', 'cid', 'terms')$" title="Aller à Conditions générales"&gt;Conditions générales&lt;/a&gt;&lt;/li&gt;&#13;
+                &lt;li&gt;&lt;a href="$url('Page-Show', 'cid', 'jobs-landing')$" title="Aller à Carrières"&gt;Carrières&lt;/a&gt;&lt;/li&gt;&#13;
+                &lt;/ul&gt;&lt;!-- END: footer_about --&gt;</custom-attribute>
+            <custom-attribute attribute-id="body" xml:lang="it-IT">&lt;h3&gt;Informazioni su&lt;/h3&gt;&#13;
+                &lt;ul class="menu-footer menu pipe"&gt;&#13;
+                &lt;li&gt;&lt;a href="$url('Page-Show', 'cid', 'about-us')$" title="Vai a Chi siamo"&gt;Chi siamo&lt;/a&gt;&lt;/li&gt;&#13;
+                &lt;li&gt;&lt;a href="$url('Page-Show', 'cid', 'privacy-policy')$" title="Vai a Privacy"&gt;Privacy&lt;/a&gt;&lt;/li&gt;&#13;
+                &lt;li&gt;&lt;a href="$url('Page-Show', 'cid', 'terms')$" title="Vai a Termini"&gt;Termini&lt;/a&gt;&lt;/li&gt;&#13;
+                &lt;li&gt;&lt;a href="$url('Page-Show', 'cid', 'jobs-landing')$" title="Vai a Lavora con noi"&gt;Lavora con noi&lt;/a&gt;&lt;/li&gt;&#13;
+                &lt;/ul&gt;&lt;!-- END: footer_about --&gt;</custom-attribute>
+            <custom-attribute attribute-id="body" xml:lang="ja-JP">&lt;h3&gt;企業情報&lt;/h3&gt;&#13;
+                &lt;ul class="menu-footer menu pipe"&gt;&#13;
+                &lt;li&gt;&lt;a href="$url('Page-Show', 'cid', 'about-us')$" title="「Salesforce Commerce Cloud について」に移動する"&gt;Salesforce Commerce Cloud について&lt;/a&gt;&lt;/li&gt;&#13;
+                &lt;li&gt;&lt;a href="$url('Page-Show', 'cid', 'privacy-policy')$" title="「プライバシー」に移動する"&gt;プライバシー&lt;/a&gt;&lt;/li&gt;&#13;
+                &lt;li&gt;&lt;a href="$url('Page-Show', 'cid', 'terms')$" title="「利用条件」に移動する"&gt;利用条件&lt;/a&gt;&lt;/li&gt;&#13;
+                &lt;li&gt;&lt;a href="$url('Page-Show', 'cid', 'jobs-landing')$" title="「採用情報」に移動する"&gt;採用情報&lt;/a&gt;&lt;/li&gt;&#13;
+                &lt;/ul&gt;&lt;!-- END: footer_about --&gt;</custom-attribute>
+            <custom-attribute attribute-id="body" xml:lang="zh-CN">&lt;h3&gt;关于&lt;/h3&gt;&#13;
+                &lt;ul class="menu-footer menu pipe"&gt;&#13;
+                &lt;li&gt;&lt;a href="$url('Page-Show', 'cid', 'about-us')$" title="前往关于我们"&gt;公司&lt;/a&gt;&lt;/li&gt;&#13;
+                &lt;li&gt;&lt;a href="$url('Page-Show', 'cid', 'privacy-policy')$" title="前往隐私"&gt;隐私政策&lt;/a&gt;&lt;/li&gt;&#13;
+                &lt;li&gt;&lt;a href="$url('Page-Show', 'cid', 'terms')$" title="前往条款"&gt;条款&lt;/a&gt;&lt;/li&gt;&#13;
+                &lt;li&gt;&lt;a href="$url('Page-Show', 'cid', 'jobs-landing')$" title="前往招聘"&gt;招聘&lt;/a&gt;&lt;/li&gt;&#13;
+                &lt;/ul&gt;&lt;!-- END: footer_about --&gt;</custom-attribute>
+        </custom-attributes>
+    </content>
+
+</library>

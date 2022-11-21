@@ -35,7 +35,6 @@
                                         <isset name="isResponsive" value="${product.cloudinaryProductImage.isResponsive}" scope="page" />
                                         <img class="swatch-circle hidden-xs-down cld-responsive"
                                             alt="${product.name}"
-                                            src="${product.cloudinaryProductImage.url}"
                                             data-src="${product.cloudinaryProductImage.url}"
                                             <isif condition="${!isResponsive}">
                                                 <isif condition="${product.cloudinaryProductImage.srcset}">

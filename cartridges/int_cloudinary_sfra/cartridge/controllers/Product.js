@@ -31,50 +31,58 @@ server.append('Show', cache.applyPromotionSensitiveCache, consentTracking.consen
 
     // Build cloudinary object
     if (cloudinaryConstants.CLD_ENABLED && product) {
-        if (product.productType === 'set' || product.productType === 'bundle') {
-            product = cloudinaryModel.addCloudinaryImagesToSetAndBundles(product);
+        if (cloudinaryConstants.CLD_IMAGE_PAGE_TYPE_SETTINGS_OBJECT.pdp.enabled) {
+            if (product.productType === 'set' || product.productType === 'bundle') {
+                product = cloudinaryModel.addCloudinaryImagesToSetAndBundles(product);
 
-            if (product.raw && product.raw.variant) {
-                colorAttrValueID = cloudinaryHelper.fetchVariationAttrValueId(product.id, cloudinaryConstants.COLOR_ATTR);
-            }
+                if (product.raw && product.raw.variant) {
+                    colorAttrValueID = cloudinaryHelper.fetchVariationAttrValueId(product.id, cloudinaryConstants.COLOR_ATTR);
+                }
 
-            if (product.CLDVideoEnabled) {
-                cloudinary.video = cloudinaryModel.getCloudinaryVideo(product.id, req.locale.id);
-            }
+                if (product.CLDVideoEnabled) {
+                    cloudinary.video = cloudinaryModel.getCloudinaryVideo(product.id, req.locale.id);
+                }
 
-            cloudinary.images = cloudinaryModel.getCloudinaryImages(product.id, {
-                pageType: cloudinaryConstants.PAGE_TYPES.PDP,
-                variationAttrValueID: colorAttrValueID
-            });
-        } else {
-            // fetch color attr value ID
-            if (params && params.variables && params.variables.color && params.variables.color.value) {
-                colorAttrValueID = params.variables.color.value;
+                cloudinary.images = cloudinaryModel.getCloudinaryImages(product.id, {
+                    pageType: cloudinaryConstants.PAGE_TYPES.PDP,
+                    variationAttrValueID: colorAttrValueID
+                });
             } else {
-                colorAttrValueID = cloudinaryHelper.fetchVariationAttrValueId(product.id, cloudinaryConstants.COLOR_ATTR);
+                // fetch color attr value ID
+                if (params && params.variables && params.variables.color && params.variables.color.value) {
+                    colorAttrValueID = params.variables.color.value;
+                } else {
+                    colorAttrValueID = cloudinaryHelper.fetchVariationAttrValueId(product.id, cloudinaryConstants.COLOR_ATTR);
+                }
+
+                if (product.CLDVideoEnabled) {
+                    cloudinary.video = cloudinaryModel.getCloudinaryVideo(product.id, req.locale.id);
+                }
+
+                cloudinary.images = cloudinaryModel.getCloudinaryImages(product.id, {
+                    pageType: cloudinaryConstants.PAGE_TYPES.PDP,
+                    variationAttrValueID: colorAttrValueID
+                });
             }
 
-            if (product.CLDVideoEnabled) {
-                cloudinary.video = cloudinaryModel.getCloudinaryVideo(product.id, req.locale.id);
-            }
+            cloudinary.isEnabled = cloudinaryConstants.CLD_ENABLED;
+            cloudinary.galleryEnabled = cloudinaryConstants.CLD_GALLERY_ENABLED;
+            cloudinary.cloudName = cloudinaryConstants.CLD_CLOUDNAME;
+            cloudinary.videoEnabled = product.CLDVideoEnabled;
+            cloudinary.videoPlayerEnabled = product.CLDVideoPlayerEnabled;
+            cloudinary.pdp = cloudinaryConstants.CLD_IMAGE_PAGE_TYPE_SETTINGS_OBJECT.pdp.enabled;
+            res.setViewData({ cloudinary: cloudinary, product: product });
+        }
 
-            cloudinary.images = cloudinaryModel.getCloudinaryImages(product.id, {
-                pageType: cloudinaryConstants.PAGE_TYPES.PDP,
-                variationAttrValueID: colorAttrValueID
-            });
-
+        if (cloudinaryConstants.CLD_IMAGE_PAGE_TYPE_SETTINGS_OBJECT.cldPdpSwatch.enabled) {
             // add cloudinary swatch images
             cloudinaryModel.addCloudinaryProductSwatchImage(product, cloudinaryConstants.PAGE_TYPES.CLD_PDP_SWATCH);
+            cloudinary.isEnabled = cloudinaryConstants.CLD_ENABLED;
+            cloudinary.cloudName = cloudinaryConstants.CLD_CLOUDNAME;
+            cloudinary.pdpSwatch = cloudinaryConstants.CLD_IMAGE_PAGE_TYPE_SETTINGS_OBJECT.cldPdpSwatch.enabled;
+            res.setViewData({ cloudinary: cloudinary, product: product });
         }
     }
-
-    cloudinary.isEnabled = cloudinaryConstants.CLD_ENABLED;
-    cloudinary.galleryEnabled = cloudinaryConstants.CLD_GALLERY_ENABLED;
-    cloudinary.cloudName = cloudinaryConstants.CLD_CLOUDNAME;
-    cloudinary.videoEnabled = product.CLDVideoEnabled;
-    cloudinary.videoPlayerEnabled = product.CLDVideoPlayerEnabled;
-
-    res.setViewData({ cloudinary: cloudinary, product: product });
 
     next();
 }, pageMetaData.computedPageMetaData);
@@ -98,17 +106,22 @@ server.append('Variation', function (req, res, next) {
             variationAttrValueID: colorAttrValueID
         });
 
+        if (!cloudinaryConstants.CLD_GALLERY_ENABLED) {
+            product = cloudinaryModel.updateProductCarouselImages(cldAssets, product);
+        }
+
         if (cldAssets && cldAssets.galleryWidget && cldAssets.galleryWidget.options &&
             cldAssets.galleryWidget.options.mediaAssets) {
             cloudinary.galleryWidget = cldAssets.galleryWidget;
+            var cloudinaryPGWContainerSuffix = params.cloudinaryPGWContainerSuffix;
+
+            var containerSuffix = product.raw.variant ? (product.raw.masterProduct.ID + '-' + product.raw.ID) : product.raw.ID;
+            cloudinaryPGWContainerSuffix = !empty(cloudinaryPGWContainerSuffix) ? cloudinaryPGWContainerSuffix : containerSuffix;
+            cloudinary.cloudinaryPGWContainerSuffix = cloudinaryPGWContainerSuffix;
 
             if (!empty(params.isBundleOrSet) && JSON.parse(params.isBundleOrSet)) {
-                product = cloudinaryModel.updateProductVariationAttrUrl(product);
-                if (product.raw.variant) {
-                    cloudinary.galleryWidget.options.container = cldAssets.galleryWidget.options.container + cloudinaryConstants.HYPHEN + product.raw.masterProduct.ID;
-                } else {
-                    cloudinary.galleryWidget.options.container = cldAssets.galleryWidget.options.container + cloudinaryConstants.HYPHEN + product.id;
-                }
+                product = cloudinaryModel.updateProductVariationAttrUrl(product, cloudinaryPGWContainerSuffix);
+                cloudinary.galleryWidget.options.container = cldAssets.galleryWidget.options.container + cloudinaryConstants.HYPHEN + cloudinaryPGWContainerSuffix;
             }
         }
 
@@ -128,20 +141,23 @@ server.append('ShowQuickView', cache.applyPromotionSensitiveCache, function (req
     cloudinary = viewData.cloudinary || {};
 
     if (cloudinaryConstants.CLD_ENABLED && product) {
-        if (product.productType === 'set' || product.productType === 'bundle') {
-            product = cloudinaryModel.addCloudinaryImagesToSetAndBundles(product);
-            cloudinary.isSetBundle = true;
-            res.setViewData({ product: product });
-        } else {
-            cloudinary.images = cloudinaryModel.getCloudinaryImages(product.id, {
-                pageType: cloudinaryConstants.PAGE_TYPES.QUICK_VIEW
-            });
-            // add cloudinary swatch images
-            cloudinaryModel.addCloudinaryProductSwatchImage(product, cloudinaryConstants.PAGE_TYPES.CLD_PDP_SWATCH);
+        if (cloudinaryConstants.CLD_IMAGE_PAGE_TYPE_SETTINGS_OBJECT.quickview.enabled) {
+            if (product.productType === 'set' || product.productType === 'bundle') {
+                product = cloudinaryModel.addCloudinaryImagesToSetAndBundles(product);
+                cloudinary.isSetBundle = true;
+                res.setViewData({ product: product });
+            } else {
+                cloudinary.images = cloudinaryModel.getCloudinaryImages(product.id, {
+                    pageType: cloudinaryConstants.PAGE_TYPES.QUICK_VIEW
+                });
+                // add cloudinary swatch images
+                cloudinaryModel.addCloudinaryProductSwatchImage(product, cloudinaryConstants.PAGE_TYPES.CLD_PDP_SWATCH);
+            }
         }
     }
 
     cloudinary.isEnabled = cloudinaryConstants.CLD_ENABLED;
+    cloudinary.quickViewEnabled = cloudinaryConstants.CLD_IMAGE_PAGE_TYPE_SETTINGS_OBJECT.quickview.enabled;
     cloudinary.galleryEnabled = cloudinaryConstants.CLD_GALLERY_ENABLED;
     cloudinary.cloudName = cloudinaryConstants.CLD_CLOUDNAME;
 

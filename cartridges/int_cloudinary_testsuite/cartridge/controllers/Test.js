@@ -222,7 +222,7 @@ TestHarness.RawSubmit = function () {
     var params = request.httpParameterMap;
     // Build cloudinary object
     if (cloudinaryConstants.CLD_ENABLED) {
-        cloudinary.raw = cloudinaryApi.getProductRawDataByTagName(params.productID.stringValue);
+        cloudinary.raw = cloudinaryApi.getProductRawDataByTagName(params.productID.stringValue, params.resourceType.stringValue);
     }
     ISML.renderTemplate('test/raw', {
         cloudinary: cloudinary,
@@ -256,6 +256,25 @@ TestHarness.VideoSubmit = function () {
     });
 };
 
+TestHarness.ProductImagesForFeeds = function () {
+    var cloudinary = {};
+    var params = request.httpParameterMap;
+
+    // Build cloudinary object
+    if (cloudinaryConstants.CLD_ENABLED) {
+        cloudinary.images = cloudinaryModel.getProductImageByIDAndViewType(params.productID.stringValue, request.locale, params.viewType.value);
+    }
+    ISML.renderTemplate('test/productImageForFeeds', {
+        cloudinary: cloudinary,
+        cartridgeVersion: cloudinaryConstants.SITE_VERSION_FOR_TEST_SUITE
+    });
+};
+TestHarness.ProductImageForFeeds = function () {
+    ISML.renderTemplate('test/productImageForFeeds', {
+        cartridgeVersion: cloudinaryConstants.SITE_VERSION_FOR_TEST_SUITE
+    });
+};
+
 // Make methods public to accept web requests
 TestHarness.ContentImageRel.public = true;
 TestHarness.ContentImageAbs.public = true;
@@ -280,5 +299,7 @@ TestHarness.RawSubmit.public = true;
 TestHarness.Start.public = true;
 TestHarness.Video.public = true;
 TestHarness.VideoSubmit.public = true;
+TestHarness.ProductImagesForFeeds.public = true;
+TestHarness.ProductImageForFeeds.public = true;
 
 module.exports = TestHarness;

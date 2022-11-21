@@ -15,7 +15,7 @@ var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants'
  * @returns {string} result - The API service response (JSON)
  */
 function fetchResourcesFromCld(args) {
-    var cldResponse = { ok: true, message: '', result: { } };
+    var cldResponse = { ok: true, message: '', result: {} };
     var configArgs = {};
     var result = [];
 
@@ -71,9 +71,38 @@ function fetchResources(tagName, resourceType) {
     return cldResources;
 }
 
+/**
+ * This method calls internal service method to fetch resources based on tag name
+ * @param {string} tagName - tag name against which need to query resources
+ * @param {string} resourceType - type of the resources to fetch
+ *
+ * @returns {Object} cldResources - object holding array of resources and updated date
+ */
+function fetchResourcesWithModifiedDate(tagName, resourceType) {
+    var cldResources = {
+        resources: '',
+        updatedAt: ''
+    };
+    if (!empty(tagName)) {
+        try {
+            var cldResponse = fetchResourcesFromCld({ tag: tagName, resourceType: resourceType });
+            if (cldResponse.ok) {
+                cldResources.resources = cldResponse.result.resources;
+                cldResources.updatedAt = cldResponse.result.updated_at;
+            }
+        } catch (e) {
+            logger.error(cloudinaryConstants.CLD_GENERAL_ERROR + e.message);
+        }
+    } else {
+        logger.error('Missing tag name, skipping call to cloudinary list API to fetch resources.');
+    }
+    return cldResources;
+}
+
 /*
 * Module exposed methods
 */
 module.exports = {
-    fetchResources: fetchResources
+    fetchResources: fetchResources,
+    fetchResourcesWithModifiedDate: fetchResourcesWithModifiedDate
 };

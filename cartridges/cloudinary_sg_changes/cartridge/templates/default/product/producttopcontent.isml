@@ -16,10 +16,12 @@
 		<isif condition="${pdict.cloudinary && pdict.cloudinary.isQuickView}">
 			<div class="cloudinary-data-container visually-hidden" data-cloudinary="<isprint value="${JSON.stringify(pdict.cloudinary)}" encoding="htmlunquote" />"></div>
 		</isif>
-		<isinclude template="product/components/cloudinaryGallery" />
 		<isset name="isBundleOrSet" value="${false}" scope="page" />
+	</isif>
+	<isif condition="${pdict.cloudinary && pdict.cloudinary.isEnabled && (pdict.cloudinary.galleryEnabled || pdict.cloudinary.isGalleryEnabled)}">
+	    <isinclude template="product/components/cloudinaryGallery" />
 	<iselse>
-		<isinclude template="product/components/productimages"/>
+	    <isinclude template="product/components/productimages"/>
 	</isif>
 	<iscomment>Custom End: Add cloudinary PGW</iscomment>
 	<iscomment>Custom Start: Cloudinary video player</iscomment>

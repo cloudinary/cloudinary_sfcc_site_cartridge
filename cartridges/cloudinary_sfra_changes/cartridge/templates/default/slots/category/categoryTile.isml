@@ -20,7 +20,7 @@
             <iscomment>Custom Start: Cloudinary image customizations </iscomment>
             <isset name="catBGImageUrl" value="${category.custom.slotBannerImage.getURL()}" scope="PAGE" />
 
-            <isif condition="${cloudinaryConstants.CLD_ENABLED && !empty(catBGImageUrl)}" >
+            <isif condition="${cloudinaryConstants.CLD_ENABLED && !empty(catBGImageUrl) && JSON.parse(cloudinaryConstants.CLD_IMAGE_PAGE_TYPE_SETTINGS).categoryBanner.enabled}" >
                 <isset name="cldBannerImage" value="${cloudinaryAPI.getCatalogImageAbsURLFromRelURL(catBGImageUrl.toString(), category.ID, cloudinaryConstants.PAGE_TYPES.CATEGORY_BANNER)}" scope="PAGE" />
                 <isset name="catBGImageUrl" value="${empty(cldBannerImage) ? catBGImageUrl : cldBannerImage.url}" scope="PAGE" />
             </isif>
@@ -30,7 +30,6 @@
                         <a href="${URLUtils.url('Search-Show', 'cgid', category.ID)}" title="${category.displayName}">
                             <div class="category-tile">
                                 <img class="img-fluid cld-responsive"
-                                    src="${catBGImageUrl}"
                                     data-src="${catBGImageUrl}"
                                     <isif condition="${typeof(catBGImageUrl.isResponsive) != 'undefined' && !empty(catBGImageUrl.isResponsive) && !catBGImageUrl.isResponsive}">
                                         <isif condition="${catBGImageUrl.srcset}">
@@ -51,4 +50,4 @@
         </div>
     </div>
 
-</isif>
+</isif> 

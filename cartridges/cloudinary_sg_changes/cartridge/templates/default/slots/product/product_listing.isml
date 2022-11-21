@@ -27,7 +27,7 @@
 						showpricing="${true}"
 						showpromotion="${true}"
 						showrating="${true}"
-						cloudinary="${isCloudinaryEnabled ? cloudinary : null}"/>
+						cloudinary="${isCloudinaryEnabled && cloudinaryConstants.CLD_IMAGE_PAGE_TYPE_SETTINGS_OBJECT.cldCartProductTile.enabled ? cloudinary : null}"/>
 					<iscomment>Custom End: Pass cloudinary object to product tile</iscomment>
 					</li>
 			</isobject>

@@ -84,6 +84,8 @@ function returnToForm(cart, params) {
     var cloudinary = {};
 
     cloudinary.isEnabled = cloudinaryConstants.CLD_ENABLED;
+    cloudinary.isCheckoutPage = true;
+    cloudinary.isCheckoutTrue = cloudinaryConstants.CLD_IMAGE_PAGE_TYPE_SETTINGS_OBJECT.checkout.enabled;
     if (cloudinaryConstants) {
         cloudinary.highResImgViewType = cloudinaryConstants.CLD_HIGH_RES_IMAGES_VIEW_TYPE;
         cloudinary.pageType = cloudinaryConstants.PAGE_TYPES.CHECKOUT;
@@ -630,9 +632,15 @@ function updateSummary() {
     var cloudinary = {};
 
     cloudinary.isEnabled = cloudinaryConstants.CLD_ENABLED;
+    cloudinary.isCheckoutPage = true;
+    cloudinary.isCheckoutTrue = cloudinaryConstants.CLD_IMAGE_PAGE_TYPE_SETTINGS_OBJECT.checkout.enabled;
     if (cloudinaryConstants) {
-        cloudinary.highResImgViewType = cloudinaryConstants.CLD_HIGH_RES_IMAGES_VIEW_TYPE;
-        cloudinary.pageType = cloudinaryConstants.PAGE_TYPES.CHECKOUT;
+        if (cloudinaryConstants.CLD_IMAGE_PAGE_TYPE_SETTINGS_OBJECT.checkout.enabled) {
+            cloudinary.highResImgViewType = cloudinaryConstants.CLD_HIGH_RES_IMAGES_VIEW_TYPE;
+            cloudinary.pageType = cloudinaryConstants.PAGE_TYPES.CHECKOUT;
+        } else {
+            cloudinary = {};
+        }
     }
     // Custom End: Add cloudinary object //
 

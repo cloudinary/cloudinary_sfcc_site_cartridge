@@ -63,7 +63,7 @@ module.exports.Start = function (args) {
                 resource = resources[idx];
 
                 // in case of debug mode terminate loop if assets limit exceeded
-                if (cloudinaryConstants.DEBUG_EXEXUTION_MODE === executionMode && assetsLimit === numberOfAssets) {
+                if (cloudinaryConstants.DEBUG_EXECUTION_MODE === executionMode && assetsLimit === numberOfAssets) {
                     break;
                 }
 
@@ -114,7 +114,7 @@ module.exports.Start = function (args) {
                     }
 
                     // in case of debug mode terminate loop if assets limit exceeded
-                    if (cloudinaryConstants.DEBUG_EXEXUTION_MODE === executionMode) {
+                    if (cloudinaryConstants.DEBUG_EXECUTION_MODE === executionMode) {
                         assetsLimit++;
                     }
                 } else {

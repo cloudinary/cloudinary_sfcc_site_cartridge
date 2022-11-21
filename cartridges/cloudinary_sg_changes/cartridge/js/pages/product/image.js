@@ -12,23 +12,25 @@ var zoomMediaQuery = matchMedia('(min-width: 960px)');
  * @param zmq {Media Query List}
  */
 function loadZoom (zmq) {
-    var $imgZoom = $('#pdpMain .main-image'),
-        hiresUrl;
-    if (!zmq) {
-        zmq = zoomMediaQuery;
-    }
+    // Custom Start: Update loadZoom for cld
+    var zmq = zmq ? zmq : zoomMediaQuery;
+    var $imgZoom = $('#pdpMain .main-image');
+    var hiresUrl;
     if ($imgZoom.length === 0 || dialog.isActive() || util.isMobile() || !zoomMediaQuery.matches) {
         // remove zoom
         $imgZoom.trigger('zoom.destroy');
         return;
     }
-    hiresUrl = $imgZoom.attr('href');
-
-    if (hiresUrl && hiresUrl !== 'null' && hiresUrl.indexOf('noimagelarge') === -1 && zoomMediaQuery.matches) {
-        $imgZoom.zoom({
-            url: hiresUrl
-        });
-    }
+    $imgZoom.each(function (idx) {
+        $imgZoom = $(this);
+        hiresUrl = $imgZoom.attr('href');
+        if (hiresUrl && hiresUrl !== 'null' && hiresUrl.indexOf('noimagelarge') === -1 && zoomMediaQuery.matches) {
+            $imgZoom.zoom({
+                url: hiresUrl
+            });
+        }
+    });
+    // Custom End: Update loadZoom for cld
 }
 
 zoomMediaQuery.addListener(loadZoom);
@@ -38,16 +40,30 @@ zoomMediaQuery.addListener(loadZoom);
  * @param {Object} atts Object with url, alt, title and hires properties
  */
 function setMainImage (atts) {
-    $('#pdpMain .primary-image').attr({
-        src: atts.url,
-        alt: atts.alt,
-        title: atts.title
-    });
-    updatePinButton(atts.url);
-    if (!dialog.isActive() && !util.isMobile()) {
-        $('#pdpMain .main-image').attr('href', atts.hires);
+     // Custom Start: Update main cld image
+    if (atts.cldEnabled) {
+        $('#pdpMain .primary-image-' + atts.prodID).attr({
+            src: atts.url,
+            alt: atts.alt,
+            title: atts.title
+        });
+        updatePinButton(atts.url);
+        if (!dialog.isActive() && !util.isMobile()) {
+            $('#pdpMain .main-image-' + atts.prodID).attr('href', atts.hires);
+        }
+    } else {
+        $('#pdpMain .primary-image').attr({
+            src: atts.url,
+            alt: atts.alt,
+            title: atts.title
+        });
+        updatePinButton(atts.url);
+        if (!dialog.isActive() && !util.isMobile()) {
+            $('#pdpMain .main-image').attr('href', atts.hires);
+        }
     }
     loadZoom();
+    // Custom End: Update main cld image //
 }
 
 function updatePinButton (imageUrl) {
@@ -85,7 +101,7 @@ function replaceImages () {
         $imageContainer = $('#pdpMain .product-image-container');
     if ($newImages.length === 0) { return; }
 
- // Custom start: Update cloudinary PGW //
+    // Custom start: Update cloudinary PGW //
     var cloudinary = $newImages.data('cld');
     if (cloudinary && cloudinary.isEnabled && cloudinary.isGalleryEnabled) {
         if (typeof cldGallery !== 'undefined' && cldGallery && cloudinary.galleryWidgetOptions && cloudinary.galleryWidgetOptions.mediaAssets) {

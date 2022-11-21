@@ -37,7 +37,7 @@
 									<a href="${URLUtils.http('Product-Show','pid', pdict.Product.ID)}">
 										<isif condition="${!empty(pdict.Product.getImage('small',0))}">
 											<iscomment>Custom Start: Render cloudinary image</iscomment>
-                                			<isif condition="${pdict.cloudinary && pdict.cloudinary.isEnabled}">
+											<isif condition="${pdict.cloudinary && pdict.cloudinary.isEnabled}">
 												<isscript>
 													var cloudinaryModel = require('*/cartridge/scripts/model/cloudinaryModel');
 													var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants')
@@ -45,8 +45,8 @@
 														pageType: cloudinaryConstants.PAGE_TYPES.RECOMMENDATION_TILE
 													});
 												</isscript>
-												<isif condition="${cldProductImage && 'url' in cldProductImage}">
-													<img src="${cldProductImage.url}"
+												<isif condition="${(cldProductImage && 'url' in cldProductImage) && cloudinaryConstants.CLD_IMAGE_PAGE_TYPE_SETTINGS_OBJECT.recommendationTile.enabled}">
+													<img
 														style="max-width:50%"
 														alt="${pdict.Product.getImage('small',0).alt}"
 														class="cld-responsive"
@@ -60,6 +60,8 @@
 															</isif>
 														</isif>
 													/>
+												<iselse/>
+													<img src="${pdict.Product.getImage('small',0).getURL()}" alt="${pdict.Product.getImage('small',0).alt}"/>
 												</isif>
 											<iselse/>
 												<img src="${pdict.Product.getImage('small',0).getURL()}" alt="${pdict.Product.getImage('small',0).alt}"/>

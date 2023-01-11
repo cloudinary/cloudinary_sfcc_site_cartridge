@@ -3,9 +3,7 @@ Cloudinary
 
 Cloudinary is a cloud service that offers a solution to any application's entire media management pipeline. 
 
-Easily upload images and videos to the cloud.  Automatically perform smart media resizing, cropping and conversion without installing any complex software.  Collaborate with Marketing and other teams on the same physical asset that gets displayed on your website or the app, so there’s no mistakes due to copying or emailing content around.  Media is seamlessly delivered through a fast CDN, and much much more. 
-
-Cloudinary offers a video component for the Salesforce B2C Commerce Page Designer.  Using this component and an accompanying Cloudinary account, you can add videos to your website pages with the click of a mouse.  Common operations such as changing video sizes, adding overlays, adapting to mobile devices are easily done through the cartridge using Cloudinary’s AI based media transformation capabilities.  Such videos are automatically transcoded to work on all popular browsers and mobile devices.  Cloudinary will optimize the videos to deliver the best quality with the least amount of bandwidth and time consumed, for a great user experience. Our comprehensive APIs and administration capabilities makes it easy to extend the cartridge functionality.
+The Cloudinary B2C Commerce integration enables you to improve the shopping experience and performance of your online store by automatically delivering images and videos that are enhanced and optimized for customers on every screen, browser, and connectivity. Whether you need to personalize assets for campaigns or improve performance for faster loading, Cloudinary offers a wide array of manipulations. Through the Business Manager, you can easily crop, resize, transcode, add overlays, and optimize images and videos in real time. Cloudinary delivers all rich media through global content delivery networks (CDNs).
 
 ## Setup ######################################################################
 

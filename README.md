@@ -17,23 +17,6 @@ Get your cloudname, api_key and api_secret from your Cloudinary account [as desc
 
 Follow the [integration guides available in this repository](documentation). There are distinct integration guides for the LINK cartridge (integrating content libraries with Cloudinary) and for Page Designer. 
 
-## Using the Page Designer cartridge ######################################################################
-
-### Tagging content in Cloudinary
-* Login to your cloudinary account and upload some videos and images to use as overlay logos.
-* Make sure you add a tag called "SFCCPageDesigner" to these videos and images.  
-  - This tag is used by default, but you can use any tag you want to.  But make sure you use this tag in the custom site preferences. 
-* Any assets with this tag will now be available inside the page designer interface.
-
-### Using the Cloudinary Video component
-* In the page designer, browse the availalbe components, pick the Cloudinary Video component and place it on the page. 
-* Open up the properties pane for the component.  
-  - Pick the video you want to use.
-  - Pick any presentation options you want to use.
-  - For overlays, choose to insert overlays and then select the image you want to overlay.
-  - Finally, chose options for the video player.
-* Save the settings and preview the page with gorgeous video
-
 
 ## Additional resources ##########################################################
 

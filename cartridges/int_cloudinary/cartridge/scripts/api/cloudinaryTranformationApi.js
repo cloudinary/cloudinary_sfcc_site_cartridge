@@ -353,7 +353,11 @@ var getImageSrcset = function (url, breakpoints) {
                         urlSize += cloudinaryConstants.FORWARD_SLASH;
                     }
                     chImageUrl = urlFirstPart + urlSize + urlLastPart;
-                    clearSrcset = clearSrcset + chImageUrl + comma;
+                    //Fixing the bug with srcset urls requiring the width for responsive
+                    //We need something like url nnnw 
+                    var srcWidth = keys[i] ? keys[i] : '500w';
+                    srcWidth = srcWidth.replace('size','');
+                    clearSrcset = clearSrcset + chImageUrl + ' ' + srcWidth + comma;
                     if (!empty(srcsetSizes[keys[i]].style)) {
                         sizesText = sizesText + srcsetSizes[keys[i]].style + comma;
                     }

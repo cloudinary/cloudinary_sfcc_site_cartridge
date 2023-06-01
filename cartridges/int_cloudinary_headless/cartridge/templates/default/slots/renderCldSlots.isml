@@ -1,0 +1,11 @@
+<div class="container home-categories homepage">
+    <div class="row home-main-categories no-gutters">
+        <isslot id="home-categories-m" description="Categories slots on the home page." context="global" />
+    </div>
+</div>
+
+<div class="container home-product-tiles homepage">
+    <div class="hp-product-grid" itemtype="http://schema.org/SomeProducts" itemid="#product">
+        <isslot id="home-products-m" description="Product tiles on the home page." context="global" />
+    </div>
+</div>

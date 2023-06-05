@@ -17,6 +17,10 @@ Get your cloudname, api_key and api_secret from your Cloudinary account [as desc
 
 Follow the [integration guides available in this repository](documentation). There are distinct integration guides for the LINK cartridge (integrating content libraries with Cloudinary) and for Page Designer. 
 
+### Setting up a composable storefront
+You now have the option to create a composable storefront by installing the **int_cloudinary_headless** cartridge.
+For more information, see the [Documentation](https://cloudinary.com/documentation/sfcc_b2c_commerce_cartridge_headless).
+
 
 ## Additional resources ##########################################################
 

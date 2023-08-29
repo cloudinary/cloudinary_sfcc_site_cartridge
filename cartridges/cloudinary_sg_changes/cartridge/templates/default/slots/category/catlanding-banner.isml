@@ -24,7 +24,7 @@
             <a href="${URLUtils.http('Search-Show', 'cgid', category.ID)}" title="${category.displayName}">
                 <isif condition="${!empty(catBGImageUrl)}">
                     <img
-                        class="cld-responsive"
+                        class="${'isResponsive' in catBGImageUrl && catBGImageUrl.isResponsive ? 'cld-responsive' : ''}"
                         data-src="${catBGImageUrl}"
                         <isif condition="${typeof(catBGImageUrl.isResponsive) != 'undefined' && !empty(catBGImageUrl.isResponsive) && !catBGImageUrl.isResponsive}">
                             <isif condition="${catBGImageUrl.srcset}">

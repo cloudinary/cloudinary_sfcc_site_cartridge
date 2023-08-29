@@ -152,7 +152,7 @@ cloudinary.getCloudinaryGalleryStyles = function (apiProduct) {
     var stylesObj = {};
 
     try {
-        if ('CLDGalleryStyles' in apiProduct.custom && !empty(apiProduct.custom.CLDGalleryStyles)) {
+        if (!empty(apiProduct) && 'CLDGalleryStyles' in apiProduct.custom && !empty(apiProduct.custom.CLDGalleryStyles)) {
             stylesObj = JSON.parse(apiProduct.custom.CLDGalleryStyles);
         } else {
             stylesObj = JSON.parse(prefs.CLD_GALLERY_STYLES);

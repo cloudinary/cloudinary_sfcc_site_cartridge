@@ -184,7 +184,7 @@
 														style="max-width:100%"
 														alt="${lineItem.product.getImage('small',0).alt}"
 														title="${lineItem.product.getImage('small',0).title}"
-														class="cld-responsive"
+														class="${'isResponsive' in cldProductImage && cldProductImage.isResponsive ? 'cld-responsive' : ''}"
 														data-src="${cldProductImage.url}"
 														<isif condition="${!('isResponsive' in cldProductImage && cldProductImage.isResponsive)}">
 															<isif condition="${'srcset' in cldProductImage && cldProductImage.srcset}">
@@ -392,7 +392,7 @@
 																	    <img src="${cldProductImage.url}"
 																			alt="${bli.product.getImage('small',0).alt}"
 																			title="${bli.product.getImage('small',0).title}"
-																			class="cld-responsive"
+																			class="${'isResponsive' in cldProductImage && cldProductImage.isResponsive ? 'cld-responsive' : ''}"
 																			data-src="${cldProductImage.url}"
 																			<isif condition="${!('isResponsive' in cldProductImage && cldProductImage.isResponsive)}">
 																				<isif condition="${'srcset' in cldProductImage && cldProductImage.srcset}">

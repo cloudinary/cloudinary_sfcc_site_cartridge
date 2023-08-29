@@ -63,7 +63,7 @@
 													<isif condition="${'cldSwatchImg' in attrValue && !empty(attrValue.cldSwatchImg)}">
 													    <img src="${attrValue.cldSwatchImg.url}"
 															alt="${attrValue.displayValue}"
-															class="cld-responsive"
+															class="${'isResponsive' in attrValue.cldSwatchImg && attrValue.cldSwatchImg.isResponsive ? 'cld-responsive' : ''}"
 															data-src="${attrValue.cldSwatchImg.url}"
 															<isif condition="${!('isResponsive' in attrValue.cldSwatchImg && attrValue.cldSwatchImg.isResponsive)}">
 																<isif condition="${'srcset' in attrValue.cldSwatchImg && !empty(attrValue.cldSwatchImg.srcset)}">

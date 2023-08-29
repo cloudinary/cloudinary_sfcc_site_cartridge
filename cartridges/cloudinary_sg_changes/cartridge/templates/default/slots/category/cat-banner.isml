@@ -17,7 +17,7 @@
 									<img
 										alt="${category.displayName}"
 										src="${category.image.httpURL}"
-										class="cld-responsive"
+										class="${'isResponsive' in cldProductImage && cldProductImage.isResponsive ? 'cld-responsive' : ''}"
 										data-src="${cldProductImage.url}"
 										<isif condition="${!('isResponsive' in cldProductImage && cldProductImage.isResponsive)}">
 											<isif condition="${'srcset' in cldProductImage && cldProductImage.srcset}">

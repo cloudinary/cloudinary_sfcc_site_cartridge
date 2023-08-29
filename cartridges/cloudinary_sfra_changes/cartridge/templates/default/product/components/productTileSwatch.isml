@@ -7,9 +7,9 @@
                             <iscomment> Custom Start: Use cloudinary swatch images if it's enabled</iscomment>
                             <isif condition="${product.CLDEnabled && swatch.images && swatch.images.cloudinaryProductSwatchImg}">
                                 <isset name="isResponsive" value="${swatch.images.cloudinaryProductSwatchImg.isResponsive}" scope="page" />
-                                <img class="swatch swatch-circle cld-responsive"
+                                <img class="swatch swatch-circle ${isResponsive ? 'cld-responsive' : ''}"
+                                    src="${swatch.images.cloudinaryProductSwatchImg.url}"
                                     data-index="${loopState.count-1}"
-                                    style="background-image: url(${swatch.images.cloudinaryProductSwatchImg.url})"
                                     alt="${swatch.images.swatch && !empty(swatch.images.swatch[0].alt) ? swatch.images.swatch[0].alt : product.productName}"
                                     data-src="${swatch.images.cloudinaryProductSwatchImg.url}"
                                     <isif condition="${!isResponsive}">
@@ -20,6 +20,7 @@
                                             sizes="${swatch.images.cloudinaryProductSwatchImg.sizes}"
                                         </isif>
                                     </isif>
+                                />
                             <iselse/>
                                 <img class="swatch swatch-circle"
                                     data-index="${loopState.count-1}"

@@ -144,7 +144,7 @@
 
 			<a class="thumb-link" href="${productUrl}" title="${Product.name}">
 				<iscomment>Custom start: Cloudinary product Tile Image attributes</iscomment>
-				<img src="${thumbnailUrl}" alt="${!empty(pdict.cldAltText) ? pdict.cldAltText : thumbnailAlt}" class="cld-responsive"
+				<img src="${thumbnailUrl}" alt="${!empty(pdict.cldAltText) ? pdict.cldAltText : thumbnailAlt}" class="${'isResponsive' in image && image.isResponsive ? 'cld-responsive' : ''}"
 					data-src="${image.getURL()}"
 					<isif condition="${!('isResponsive' in image && image.isResponsive)}">
 						<isif condition="${'srcset' in image && !empty(image.srcset)}">
@@ -375,7 +375,7 @@
 							<li>
 								<a href="${swatchproductUrl}" class="swatch ${(preselectCurrentSwatch) ? 'selected' : ''}" title="${swatchTitle}">
 									<iscomment>Custom Start: Add cloudinary swatch image and attributes</iscomment>
-									<img class="swatch-image cld-responsive"
+									<img class="swatch-image ${'isResponsive' in colorSwatch && colorSwatch.isResponsive ? 'cld-responsive' : ''}"
 										src="${swatchUrl}"
 										alt="${swatchAlt}"
 										data-thumb='{"src":"${thumbnailUrl}","alt":"${thumbnailAlt}","title":"${thumbnailTitle}"}'

@@ -49,7 +49,7 @@
 													<img
 														style="max-width:50%"
 														alt="${pdict.Product.getImage('small',0).alt}"
-														class="cld-responsive"
+														class="${'isResponsive' in cldProductImage && cldProductImage.isResponsive ? 'cld-responsive' : ''}"
 														data-src="${cldProductImage.url}"
 														<isif condition="${!('isResponsive' in cldProductImage && cldProductImage.isResponsive)}">
 															<isif condition="${'srcset' in cldProductImage && cldProductImage.srcset}">

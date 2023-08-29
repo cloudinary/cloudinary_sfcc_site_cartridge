@@ -78,7 +78,7 @@
                 <li class="thumb${imgSmStatus.first ? ' selected' : ''}">
                     <a ${href} class="thumbnail-link">
                         <img
-                            class="productthumbnail ${pdict.cloudinary && pdict.cloudinary.isEnabled ? 'cld-responsive' : ''}"
+                            class="productthumbnail ${pdict.cloudinary && pdict.cloudinary.isEnabled && img.isResponsive ? 'cld-responsive' : ''}"
                             src="${img.url}"
                             alt="${img.alt}"
                             data-lgimg='{"url":"${img.url}", "title":"<isprint value="${lgImage.title}" encoding="on"/>", "alt":"<isprint value="${lgImage.alt}" encoding="on"/>", "hires":"${hi_res}", "prodID": "${pdict.Product.ID}", "cldEnabled": "${(pdict.cloudinary && pdict.cloudinary.isEnabled)}"}'

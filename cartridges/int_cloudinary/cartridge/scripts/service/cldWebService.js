@@ -4,7 +4,6 @@
 var LocalServiceRegistry = require('dw/svc/LocalServiceRegistry');
 /* Script Includes */
 var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
-var cloudinaryConstant = require('*/cartridge/scripts/util/cloudinaryConstant');
 /**
 * Create and configure service.
 *
@@ -28,7 +27,7 @@ function getServiceConfigs(args) {
     var serviceConfig = {
         createRequest: function (svc, requestPayload) {
             var credential = svc.getConfiguration().getCredential();
-            var cldTrackingParam = cloudinaryConstants.API_TRACKING_PARAM.replace(cloudinaryConstants.CLD_TRACKING_PARAM_PLATFORM_PLACEHOLDER, cloudinaryConstant.CLD_SFCC_PLATFORM_ARCHITECTURE);
+            var cldTrackingParam = cloudinaryConstants.API_TRACKING_PARAM.replace(cloudinaryConstants.CLD_TRACKING_PARAM_PLATFORM_PLACEHOLDER, cloudinaryConstants.CLD_SFCC_PLATFORM_ARCHITECTURE);
             var url = credential.getURL();
 
             if (url.lastIndexOf(cloudinaryConstants.FORWARD_SLASH) !== (url.length - 1)) {

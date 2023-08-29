@@ -26,7 +26,7 @@ server.append('Show', cache.applyPromotionSensitiveCache, function (req, res, ne
                 cloudinaryModel.addCloudinaryProductImage(product, productPrimaryImg);
             }
 
-            if (!empty(productPrimaryImg.altText)) {
+            if (!empty(productPrimaryImg) && !empty(productPrimaryImg.altText)) {
                 cloudinary.altText = productPrimaryImg.altText;
             }
             cloudinary.isEnabled = cloudinaryConstants.CLD_ENABLED;

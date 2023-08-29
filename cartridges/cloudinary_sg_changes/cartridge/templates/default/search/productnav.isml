@@ -138,7 +138,7 @@
 						<img alt="${prevProdUrls.imgAlt}"
 							title="${prevProdUrls.imgTitle}"
 							src="${prevProdUrls.imgUrl}"
-							class="cld-responsive"
+							class="${'isResponsive' in prevProdUrls && prevProdUrls.isResponsive ? 'cld-responsive' : ''}"
 							data-src="${prevProdUrls.imgUrl}"
 							<isif condition="${!('isResponsive' in prevProdUrls && prevProdUrls.isResponsive)}">
 								<isif condition="${'srcset' in prevProdUrls && !empty(prevProdUrls.srcset)}">
@@ -164,7 +164,7 @@
 						<img alt="${nextProdUrls.imgAlt}"
 							title="${nextProdUrls.imgTitle}"
 							src="${nextProdUrls.imgUrl}"
-							class="cld-responsive"
+							class="${'isResponsive' in nextProdUrls && nextProdUrls.isResponsive ? 'cld-responsive' : ''}"
 							data-src="${nextProdUrls.imgUrl}"
 							<isif condition="${!('isResponsive' in nextProdUrls && nextProdUrls.isResponsive)}">
 								<isif condition="${'srcset' in nextProdUrls && !empty(nextProdUrls.srcset)}">

@@ -12,14 +12,16 @@
                         src="${bundledLineItem.images.cloudinaryProductImage.url}"
                         alt="${bundledLineItem.images.small[0].alt}"
                         title="${bundledLineItem.images.small[0].title}"
-                        data-src="${bundledLineItem.images.cloudinaryProductImage.url}"
                         <isif condition="${!isResponsive}">
+                            src="${bundledLineItem.images.cloudinaryProductImage.url}"
                             <isif condition="${bundledLineItem.images.cloudinaryProductImage.srcset}">
                                 srcset="${bundledLineItem.images.cloudinaryProductImage.srcset}"
                             </isif>
                             <isif condition="${bundledLineItem.images.cloudinaryProductImage.sizes}">
                                 sizes="${bundledLineItem.images.cloudinaryProductImage.sizes}"
                             </isif>
+                        <iselse/>
+                            data-src="${bundledLineItem.images.cloudinaryProductImage.url}"
                         </isif>
                     >
                 <iselse/>

@@ -16,7 +16,14 @@
                 <isset name="cldImageURLsList" value="${product.images.cloudinaryProductImages ? product.images.cloudinaryProductImages.imageURLs : pdict.cloudinary.images.imageURLs}" scope="page" />
                 <isloop items="${cldImageURLsList}" var="image" status="loopStatus">
                     <div class='carousel-item <isif condition="${loopStatus.index == 0}">active</isif>'>
-                        <img class="d-block img-fluid ${image.isResponsive ? 'cld-responsive' : ''}" src="${image.url}" data-src="${image.url}" alt="${image.alt}" itemprop="image" />
+                        <img class="d-block img-fluid ${image.isResponsive ? 'cld-responsive' : ''}"
+                            <isif condition="${image.isResponsive}">
+                                data-src="${image.url}"
+                            <iselse/>
+                                src="${image.url}"
+                            </isif>
+                            alt="${image.alt}"
+                            itemprop="image" />
                     </div>
                 </isloop>
             <iselse>

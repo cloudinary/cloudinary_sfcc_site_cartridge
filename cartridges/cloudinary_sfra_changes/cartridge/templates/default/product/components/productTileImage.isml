@@ -2,19 +2,21 @@
     <a href="${pdict.urls.product}">
         <iscomment>Custom start: add cloudinary product image</iscomment>
         <isif condition="${product.CLDEnabled && product.images && product.images.cloudinaryProductImage}">
-            <isset name="isResponsive" value="${!product.images.cloudinaryProductImage.isResponsive}" scope="page" />
+            <isset name="isResponsive" value="${product.images.cloudinaryProductImage.isResponsive}" scope="page" />
             <img class="tile-image ${isResponsive ? 'cld-responsive' : ''}"
                 src="${product.images.cloudinaryProductImage.url}"
                 alt="${!empty(pdict.cloudinary.altText) ? pdict.cloudinary.altText : product.productName}"
                 title="${product.productName}"
-                data-src="${product.images.cloudinaryProductImage.url}"
                 <isif condition="${!isResponsive}">
+                    src="${product.images.cloudinaryProductImage.url}"
                     <isif condition="${!empty(product.images.cloudinaryProductImage.srcset)}">
                          srcset="${product.images.cloudinaryProductImage.srcset}"
                     </isif>
                     <isif condition="${!empty(product.images.cloudinaryProductImage.sizes)}">
                         sizes="${product.images.cloudinaryProductImage.sizes}"
                     </isif>
+                <iselse/>
+                    data-src="${product.images.cloudinaryProductImage.url}"
                 </isif>
             />
         <iselse/>

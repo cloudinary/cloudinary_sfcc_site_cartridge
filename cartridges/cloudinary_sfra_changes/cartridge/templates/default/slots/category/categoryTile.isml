@@ -30,11 +30,13 @@
                         <a href="${URLUtils.url('Search-Show', 'cgid', category.ID)}" title="${category.displayName}">
                             <div class="category-tile">
                                 <img class="img-fluid ${catBGImageUrl.isResponsive ? 'cld-responsive' : ''}"
-                                    data-src="${catBGImageUrl}"
                                     <isif condition="${typeof(catBGImageUrl.isResponsive) != 'undefined' && !empty(catBGImageUrl.isResponsive) && !catBGImageUrl.isResponsive}">
+                                        src="${catBGImageUrl}"
                                         <isif condition="${catBGImageUrl.srcset}">
                                             srcset="${catBGImageUrl.srcset}"
                                         </isif>
+                                    <iselse/>
+                                        data-src="${catBGImageUrl}"
                                     </isif>
                                     alt="${category.displayName}"
                                 />

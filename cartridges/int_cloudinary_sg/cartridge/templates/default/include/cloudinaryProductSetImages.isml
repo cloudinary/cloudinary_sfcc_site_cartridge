@@ -78,12 +78,13 @@
                 <li class="thumb${imgSmStatus.first ? ' selected' : ''}">
                     <a ${href} class="thumbnail-link">
                         <img
-                            class="productthumbnail ${pdict.cloudinary && pdict.cloudinary.isEnabled && img.isResponsive ? 'cld-responsive' : ''}"
-                            src="${img.url}"
+                            class="productthumbnail ${img.isResponsive ? 'cld-responsive' : ''}"
                             alt="${img.alt}"
                             data-lgimg='{"url":"${img.url}", "title":"<isprint value="${lgImage.title}" encoding="on"/>", "alt":"<isprint value="${lgImage.alt}" encoding="on"/>", "hires":"${hi_res}", "prodID": "${pdict.Product.ID}", "cldEnabled": "${(pdict.cloudinary && pdict.cloudinary.isEnabled)}"}'
-                            <isif condition="${pdict.cloudinary && pdict.cloudinary.isEnabled}">
+                            <isif condition="${pdict.cloudinary && pdict.cloudinary.isEnabled && img.isResponsive}">
                                 data-src="${img.url}"
+                            <iselse/>
+                                src="${img.url}"
                             </isif>
                         />
                     </a>

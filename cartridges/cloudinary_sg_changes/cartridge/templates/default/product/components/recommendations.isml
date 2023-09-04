@@ -49,15 +49,17 @@
 													<img
 														style="max-width:50%"
 														alt="${pdict.Product.getImage('small',0).alt}"
-														class="${'isResponsive' in cldProductImage && cldProductImage.isResponsive ? 'cld-responsive' : ''}"
-														data-src="${cldProductImage.url}"
-														<isif condition="${!('isResponsive' in cldProductImage && cldProductImage.isResponsive)}">
+														class="${cldProductImage.isResponsive ? 'cld-responsive' : ''}"
+														<isif condition="${!(cldProductImage.isResponsive)}">
+															src="${cldProductImage.url}"
 															<isif condition="${'srcset' in cldProductImage && cldProductImage.srcset}">
 																srcset="${cldProductImage.srcset}"
 															</isif>
 															<isif condition="${'sizes' in cldProductImage && cldProductImage.sizes}">
 																sizes="${cldProductImage.sizes}"
 															</isif>
+														<iselse/>
+															data-src="${cldProductImage.url}"
 														</isif>
 													/>
 												<iselse/>

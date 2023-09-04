@@ -89,7 +89,7 @@
 								pageType: pdict.cloudinary.pageType
 							});
 						</isscript>
-						<isif condition="${'isResponsive' in cldProductImage && cldProductImage.isResponsive}">
+						<isif condition="${cldProductImage.isResponsive}">
 							<style>
 								.checkout-mini-cart .mini-cart-image {
 									width: 93px;
@@ -117,15 +117,17 @@
 						    <img src="${cldProductImage.url}"
 								alt="${productLineItem.product.getImage('small',0).alt}"
 								title="${productLineItem.product.getImage('small',0).title}"
-                                class="${'isResponsive' in cldProductImage && cldProductImage.isResponsive ? 'cld-responsive' : ''}"
-                                data-src="${cldProductImage.url}"
-                                <isif condition="${!('isResponsive' in cldProductImage && cldProductImage.isResponsive)}">
+                                class="${cldProductImage.isResponsive ? 'cld-responsive' : ''}"
+                                <isif condition="${!(cldProductImage.isResponsive)}">
+                                	src="${cldProductImage.url}"
                                     <isif condition="${'srcset' in cldProductImage && cldProductImage.srcset}">
                                         srcset="${cldProductImage.srcset}"
                                     </isif>
                                     <isif condition="${'sizes' in cldProductImage && cldProductImage.sizes}">
                                         sizes="${cldProductImage.sizes}"
                                     </isif>
+								<iselse/>
+									data-src="${cldProductImage.url}"
                                 </isif>
 							/>
 						</isif>

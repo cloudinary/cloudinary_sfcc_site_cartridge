@@ -8,17 +8,18 @@
                             <isif condition="${product.CLDEnabled && swatch.images && swatch.images.cloudinaryProductSwatchImg}">
                                 <isset name="isResponsive" value="${swatch.images.cloudinaryProductSwatchImg.isResponsive}" scope="page" />
                                 <img class="swatch swatch-circle ${isResponsive ? 'cld-responsive' : ''}"
-                                    src="${swatch.images.cloudinaryProductSwatchImg.url}"
                                     data-index="${loopState.count-1}"
                                     alt="${swatch.images.swatch && !empty(swatch.images.swatch[0].alt) ? swatch.images.swatch[0].alt : product.productName}"
-                                    data-src="${swatch.images.cloudinaryProductSwatchImg.url}"
                                     <isif condition="${!isResponsive}">
+                                        src="${swatch.images.cloudinaryProductSwatchImg.url}"
                                         <isif condition="${swatch.images.cloudinaryProductSwatchImg.srcset}">
                                             srcset="${swatch.images.cloudinaryProductSwatchImg.srcset}"
                                         </isif>
                                         <isif condition="${swatch.images.cloudinaryProductSwatchImg.sizes}">
                                             sizes="${swatch.images.cloudinaryProductSwatchImg.sizes}"
                                         </isif>
+                                    <iselse/>
+                                        data-src="${swatch.images.cloudinaryProductSwatchImg.url}"
                                     </isif>
                                 />
                             <iselse/>

@@ -9,7 +9,6 @@
                 <isif condition="${pdict.cloudinary && pdict.cloudinary.isEnabled && bundledLineItem.images.cloudinaryProductImage}">
                     <isset name="isResponsive" value="${bundledLineItem.images.cloudinaryProductImage.isResponsive}" scope="page" />
                     <img class="product-image ${isResponsive ? 'cld-responsive' : ''}"
-                        src="${bundledLineItem.images.cloudinaryProductImage.url}"
                         alt="${bundledLineItem.images.small[0].alt}"
                         title="${bundledLineItem.images.small[0].title}"
                         <isif condition="${!isResponsive}">

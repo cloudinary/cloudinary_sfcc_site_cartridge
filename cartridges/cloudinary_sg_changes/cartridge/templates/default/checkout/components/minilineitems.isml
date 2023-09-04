@@ -114,7 +114,7 @@
 							</style>
 						</isif>
 						<isif condition="${cldProductImage && 'url' in cldProductImage}">
-						    <img src="${cldProductImage.url}"
+						    <img
 								alt="${productLineItem.product.getImage('small',0).alt}"
 								title="${productLineItem.product.getImage('small',0).title}"
                                 class="${cldProductImage.isResponsive ? 'cld-responsive' : ''}"

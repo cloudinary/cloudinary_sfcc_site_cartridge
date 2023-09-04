@@ -42,7 +42,7 @@
                                         });
                                     </isscript>
                                     <isif condition="${cldProductImage && 'url' in cldProductImage}">
-                                        <img src="${cldProductImage.url}"
+                                        <img
                                             alt="${quantityLIproduct.getImage('small',0).alt}"
                                             title="${quantityLIproduct.getImage('small',0).title}"
                                             style="max-width:50%"

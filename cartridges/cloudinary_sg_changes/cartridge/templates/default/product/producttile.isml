@@ -144,7 +144,7 @@
 
 			<a class="thumb-link" href="${productUrl}" title="${Product.name}">
 				<iscomment>Custom start: Cloudinary product Tile Image attributes</iscomment>
-				<img src="${thumbnailUrl}" alt="${!empty(pdict.cldAltText) ? pdict.cldAltText : thumbnailAlt}" class="${image.isResponsive ? 'cld-responsive' : ''}"
+				<img alt="${!empty(pdict.cldAltText) ? pdict.cldAltText : thumbnailAlt}" class="${image.isResponsive ? 'cld-responsive' : ''}"
 					<isif condition="${!(image.isResponsive)}">
 						src="${image.getURL()}"
 						<isif condition="${'srcset' in image && !empty(image.srcset)}">

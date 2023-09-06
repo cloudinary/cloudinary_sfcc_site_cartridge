@@ -113,7 +113,7 @@
 								}
 							</style>
 						</isif>
-						<isif condition="${cldProductImage && 'url' in cldProductImage}">
+						<isif condition="${cldProductImage && cldProductImage}">
 						    <img
 								alt="${productLineItem.product.getImage('small',0).alt}"
 								title="${productLineItem.product.getImage('small',0).title}"

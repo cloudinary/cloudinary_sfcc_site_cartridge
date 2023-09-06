@@ -164,16 +164,17 @@
 						<iscomment>Custom Start: Add cloudinary image and attributes</iscomment>
 						<img alt="${nextProdUrls.imgAlt}"
 							title="${nextProdUrls.imgTitle}"
-							src="${nextProdUrls.imgUrl}"
-							class="${'isResponsive' in nextProdUrls && nextProdUrls.isResponsive ? 'cld-responsive' : ''}"
-							data-src="${nextProdUrls.imgUrl}"
-							<isif condition="${!('isResponsive' in nextProdUrls && nextProdUrls.isResponsive)}">
+							class="${nextProdUrls.isResponsive ? 'cld-responsive' : ''}"
+							<isif condition="${!(nextProdUrls.isResponsive)}">
+								src="${nextProdUrls.imgUrl}"
 								<isif condition="${'srcset' in nextProdUrls && !empty(nextProdUrls.srcset)}">
 								    srcset="${nextProdUrls.srcset}"
 								</isif>
 								<isif condition="${'sizes' in nextProdUrls && !empty(nextProdUrls.sizes)}">
 								    sizes="${nextProdUrls.sizes}"
 								</isif>
+							<iselse/>
+								data-src="${nextProdUrls.imgUrl}"
 							</isif>
 						/>
 						<iscomment>Custom End: Add cloudinary image and attributes</iscomment>

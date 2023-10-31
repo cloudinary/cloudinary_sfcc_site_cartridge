@@ -7,6 +7,9 @@
     <img
         alt="${imageJSON.url}"
         src="${imageJSON.url}"
+        <isif condition="${!empty(pdict.contentAttributes)}">
+            ${pdict.contentAttributes}
+        </isif>
         <isif condition="${!empty(imageJSON.srcset) && !empty(imageJSON.srcset)}">
             srcset= "${imageJSON.srcset}"
             sizes= "${imageJSON.sizes}"

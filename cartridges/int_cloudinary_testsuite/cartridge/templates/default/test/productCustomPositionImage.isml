@@ -1,5 +1,5 @@
 <isdecorate template="test/layout">
-<h1>Product Custom Postion Image Search Test Harness</h1>
+<h1>Product Custom Position Image Search Test Harness</h1>
 
 <isif condition="${!empty(pdict.cloudinary)}">
     <div class="alert alert-success">

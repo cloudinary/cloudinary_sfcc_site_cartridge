@@ -19,6 +19,7 @@ Cloudinary.GetContentImage = function () {
     var pageType = params.pageType.stringValue;
     var isUrl = params.isUrl.stringValue ? JSON.parse(params.isUrl.stringValue) : false;
     var contentAttributes = params.attributes ? params.attributes.stringValue : '';
+    var altText = params.altText ? params.altText.stringValue : '';
 
     if (cloudinaryConstants.CLD_ENABLED) {
         imgObj = cloudinaryModel.geContentImageURLByName(imgURL, pageType);
@@ -36,7 +37,8 @@ Cloudinary.GetContentImage = function () {
     } else {
         ISML.renderTemplate('content/renderContentImage', {
             imgURL: imgObj.imgURL,
-            contentAttributes: contentAttributes
+            contentAttributes: contentAttributes,
+            altText: altText
         });
     }
 };

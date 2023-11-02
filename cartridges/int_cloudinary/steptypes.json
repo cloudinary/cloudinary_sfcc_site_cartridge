@@ -262,6 +262,25 @@
                         "@required": false
                     }]
                 }
+            },
+            {
+                "@type-id": "custom.cloudinary.Structured.Metadata",
+                "@supports-parallel-execution": "false",
+                "@supports-site-context": "true",
+                "@supports-organization-context": "false",
+                "description": "Step used to create necessary structured metadata in the Cloudinary",
+                "module": "int_cloudinary/cartridge/scripts/jobs/steps/cldStructuredMetadata.js",
+                "function": "Start",
+                "transactional": "false",
+                "parameters": {
+                    "parameter": [
+                    {
+                        "@name": "Disabled",
+                        "description": "Mark the step as disabled. This will skip the step and returns a OK status",
+                        "@type": "boolean",
+                        "@required": false
+                    }]
+                }
             }
         ]
     }

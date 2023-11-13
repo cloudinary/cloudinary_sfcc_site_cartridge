@@ -74,18 +74,19 @@ function fetchMetadata() {
 function createMetadataSchemeCld(schema) {
     var cldResponse = { ok: true, message: '', result: {} };
     var configArgs = {};
-    var result = null;
+    var result = [];
 
     configArgs.method = 'POST';
-    configArgs.endPoint = '/metadata_fields';
+    configArgs.endPoint = Prefs.CLD_CLOUDNAME + '/metadata_fields';;
+    var service = cldWebService.getService(Prefs.CLD_UPLOAD_SVC, cldWebService.getServiceConfigs(configArgs));
+    service.setCredentialID(Prefs.CLD_REST_SERVICE_CREDENTIALS);
 
-    try {
-        var service = cldWebService.getService(Prefs.CLD_METADATA_UPLOAD, cldWebService.getServiceConfigs(configArgs));
-        schema.forEach(function (field) {
+    schema.forEach(function (field) {
+        try {
             result = service.call(field);
-            if (result.ok && result.error === 0) {
+                if (result.ok && result.error === 0) {
                 cldResponse.ok = true;
-                cldResponse.result = result.object;
+                cldResponse.result[field.label] = result.object;
                 logger.info('Metadata fields: {0} is created successfully.', result.object.label);
             } else {
                 if (result.error === Prefs.ERROR_CODES.UNAUTHORIZED) {
@@ -94,15 +95,14 @@ function createMetadataSchemeCld(schema) {
                     logger.error('Error occurred while creating metadata fields from cloudinary: {0}', JSON.parse(result.errorMessage).error.message);
                 }
                 cldResponse.ok = false;
-                cldResponse.message = result.errorMessage;
+                cldResponse.message += '\n' + field.label + ': ' + result.errorMessage;
             }
-            return cldResponse;
-        });
-    } catch (e) {
-        cldResponse.ok = false;
-        cldResponse.message = e.message;
-        logger.error(Prefs.CLD_GENERAL_ERROR + e.message);
-    }
+        } catch (e) {
+            cldResponse.ok = false;
+            cldResponse.message += '\n' + field.label + ': ' + e.message;
+            logger.error(Prefs.CLD_GENERAL_ERROR + e.message);
+        }
+    });
     return cldResponse;
 }
 

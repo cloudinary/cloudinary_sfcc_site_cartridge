@@ -127,7 +127,6 @@ CloudinaryConstants.CLD_LIST_SERVICE_API_KEY_PLACEHOLDER = '[apikey]';
 CloudinaryConstants.CLD_LIST_SERVICE_API_SECRET_PLACEHOLDER = '[apisecret]';
 CloudinaryConstants.CLD_UPLOAD_SVC = 'cloudinary.rest.upload';
 CloudinaryConstants.CLD_LIST_SVC = 'cloudinary.rest.list';
-CloudinaryConstants.CLD_METADATA_UPLOAD = 'cloudinary.metadata.upload';
 CloudinaryConstants.CLD_SEARCH_SVC = 'cloudinary.search.list';
 CloudinaryConstants.CLD_IMAGE_RESOURCE_TYPE = 'image';
 CloudinaryConstants.CLD_VIDEO_RESOURCE_TYPE = 'video';

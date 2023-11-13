@@ -10,7 +10,7 @@ module.exports.Start = function (args) {
     var jobStepHelpers = require('*/cartridge/scripts/helpers/jobStepHelpers');
 
     if (!cloudinaryConstants.CLD_ENABLED) {
-        return new Status(Status.ERROR, 'ERROR', 'Cloudinary is disabled currently');
+        return new Status(Status.ERROR, 'ERROR', 'The Cloudinary cartridge is disabled');
     }
 
     if (jobStepHelpers.isStepDisabled(args)) {

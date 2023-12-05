@@ -19,8 +19,8 @@ Cloudinary.GetContentImage = function () {
     var pageType = params.pageType.stringValue;
     var isUrl = params.isUrl.stringValue ? JSON.parse(params.isUrl.stringValue) : false;
     var contentAttributes = params.attributes ? params.attributes.stringValue : '';
-    var removeQuotes = contentAttributes.slice(-1) === '"' ? contentAttributes.substring(0, contentAttributes.length -1) : contentAttributes;
-    contentAttributes = removeQuotes[0] === '"' ? removeQuotes.substring(1) : removeQuotes;
+    var removeQuotes = contentAttributes && contentAttributes.slice(-1) === '"' ? contentAttributes.substring(0, contentAttributes.length - 1) : contentAttributes;
+    contentAttributes = removeQuotes && removeQuotes[0] === '"' ? removeQuotes.substring(1) : removeQuotes;
     var altText = params.altText ? params.altText.stringValue : '';
 
     if (cloudinaryConstants.CLD_ENABLED) {

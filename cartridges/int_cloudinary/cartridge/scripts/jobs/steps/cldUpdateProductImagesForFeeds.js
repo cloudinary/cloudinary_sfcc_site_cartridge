@@ -123,7 +123,11 @@ function writeProductFileContent(cloudinaryUrlStreamWriter, productSearchHitsItr
 
                             cloudinaryUrlStreamWriter.writeStartElement('image-group');
                             cloudinaryUrlStreamWriter.writeAttribute('view-type', params.viewType);
-                            cloudinaryUrlStreamWriter.writeAttribute('variation-value', colorAttrValueID);
+
+                            cloudinaryUrlStreamWriter.writeStartElement('variation');
+                            cloudinaryUrlStreamWriter.writeAttribute('attribute-id', 'color');
+                            cloudinaryUrlStreamWriter.writeAttribute('value', colorAttrValueID);
+                            cloudinaryUrlStreamWriter.writeEndElement();
 
                             for (var l = 0; l < imgVariantsSorted.resources.length; l++) {
                                 cloudinaryUrlStreamWriter.writeStartElement('image');

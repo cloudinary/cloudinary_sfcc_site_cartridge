@@ -266,8 +266,8 @@
             {
                 "@type-id": "custom.cloudinary.Structured.Metadata",
                 "@supports-parallel-execution": "false",
-                "@supports-site-context": "true",
-                "@supports-organization-context": "false",
+                "@supports-site-context": "false",
+                "@supports-organization-context": "true",
                 "description": "Step used to create necessary structured metadata in the Cloudinary",
                 "module": "int_cloudinary/cartridge/scripts/jobs/steps/cldStructuredMetadata.js",
                 "function": "Start",

@@ -16,16 +16,17 @@
 							<isif condition="${(cldProductImage && 'url' in cldProductImage) && cloudinaryConstants.CLD_IMAGE_PAGE_TYPE_SETTINGS_OBJECT.categoryBanner.enabled} ">
 									<img
 										alt="${category.displayName}"
-										src="${category.image.httpURL}"
-										class="cld-responsive"
-										data-src="${cldProductImage.url}"
-										<isif condition="${!('isResponsive' in cldProductImage && cldProductImage.isResponsive)}">
+										<isif condition="${!(cldProductImage.isResponsive)}">
+											src="${category.image.httpURL}"
 											<isif condition="${'srcset' in cldProductImage && cldProductImage.srcset}">
 												srcset="${cldProductImage.srcset}"
 											</isif>
 											<isif condition="${'sizes' in cldProductImage && cldProductImage.sizes}">
 												sizes="${cldProductImage.sizes}"
 											</isif>
+										<iselse/>
+											class="cld-responsive"
+											data-src="${cldProductImage.url}"
 										</isif>
 									/>
 							<iselse/>

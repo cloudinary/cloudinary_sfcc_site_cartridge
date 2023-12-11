@@ -61,17 +61,19 @@
 												<isif condition="${attrValue.isColorSwatch}">
 													<iscomment>Custom start: Add cloudinary swatch images</iscomment>
 													<isif condition="${'cldSwatchImg' in attrValue && !empty(attrValue.cldSwatchImg)}">
-													    <img src="${attrValue.cldSwatchImg.url}"
+													    <img
 															alt="${attrValue.displayValue}"
-															class="cld-responsive"
-															data-src="${attrValue.cldSwatchImg.url}"
-															<isif condition="${!('isResponsive' in attrValue.cldSwatchImg && attrValue.cldSwatchImg.isResponsive)}">
+															class="${attrValue.cldSwatchImg.isResponsive ? 'cld-responsive' : ''}"
+															<isif condition="${!(attrValue.cldSwatchImg.isResponsive)}">
+																src="${attrValue.cldSwatchImg.url}"
 																<isif condition="${'srcset' in attrValue.cldSwatchImg && !empty(attrValue.cldSwatchImg.srcset)}">
 																	srcset="${attrValue.cldSwatchImg.srcset}"
 																</isif>
 																<isif condition="${'sizes' in attrValue.cldSwatchImg && !empty(attrValue.cldSwatchImg.sizes)}">
 																	sizes="${attrValue.cldSwatchImg.sizes}"
 																</isif>
+															<iselse/>
+																data-src="${attrValue.cldSwatchImg.url}"
 															</isif>
 														>
 													<iselse/>

@@ -17,10 +17,16 @@
                 <isloop items="${cldImageURLsList}" var="image" status="loopStatus">
                     <div class='carousel-item <isif condition="${loopStatus.index == 0}">active</isif>'>
                         <img class="d-block img-fluid ${image.isResponsive ? 'cld-responsive' : ''}"
-                            <isif condition="${image.isResponsive}">
-                                data-src="${image.url}"
-                            <iselse/>
+                            <isif condition="${!image.isResponsive}">
                                 src="${image.url}"
+                                <isif condition="${image.srcset}">
+                                    srcset="${image.srcset}"
+                                </isif>
+                                <isif condition="${image.sizes}">
+                                    sizes="${image.sizes}"
+                                </isif>
+                            <iselse/>
+                                data-src="${image.url}"
                             </isif>
                             alt="${image.alt}"
                             itemprop="image" />

@@ -24,6 +24,7 @@
     <iselse>
         <isset name="imageUrl" value="${URLUtils.staticURL('/images/noimagelarge.png')}" scope="page"/>
     </isif>
+        <isset name="imgObj" value="${!empty(pdict.cloudinary.images.imageURLs) && !empty(pdict.cloudinary.images.imageURLs[0]) ? pdict.cloudinary.images.imageURLs[0] : '')}" scope="page"/>
 </isif>
 <iscomment>Custom End: Cloudinary Integration</iscomment>
 
@@ -51,11 +52,20 @@
     <iscomment>Custom Start: Cloudinary Integration</iscomment>
     <a ${href} class="product-image main-image ${pdict.cloudinary && pdict.cloudinary.isEnabled ? ('main-image-' + pdict.Product.ID) : ''}" title="${imageTitle}">
         <img
-            class="primary-image ${pdict.cloudinary && pdict.cloudinary.isEnabled ? ('cld-responsive primary-image-' + pdict.Product.ID) : ''}"
-            data-src="${imageUrl}"
-            src="${imageUrl}"
+            class="primary-image primary-image-' + pdict.Product.ID ${pdict.cloudinary && pdict.cloudinary.isEnabled && imgObj && imgObj.isResponsive ? ('cld-responsive') : ''}"
             alt="${imageAlt}"
             itemprop="image"
+            <isif condition="${imgObj && !imgObj.isResponsive}">
+                src="${imageUrl}"
+                <isif condition="${imgObj.srcset}">
+                    srcset="${imgObj.srcset}"
+                </isif>
+                <isif condition="${imgObj.sizes}">
+                    sizes="${imgObj.sizes}"
+                </isif>
+            <iselse/>
+                data-src="${imageUrl}"
+            </isif>
         />
     </a>
     <iscomment>Custom End: Cloudinary Integration</iscomment>
@@ -87,6 +97,12 @@
                                 data-src="${img.url}"
                             <iselse/>
                                 src="${img.url}"
+                                <isif condition="${pdict.cloudinary && pdict.cloudinary.isEnabled && img.srcset}">
+                                    srcset="${img.srcset}"
+                                </isif>
+                                <isif condition="${pdict.cloudinary && pdict.cloudinary.isEnabled && img.sizes}">
+                                    sizes="${img.sizes}"
+                                </isif>
                             </isif>
                         />
                     </a>

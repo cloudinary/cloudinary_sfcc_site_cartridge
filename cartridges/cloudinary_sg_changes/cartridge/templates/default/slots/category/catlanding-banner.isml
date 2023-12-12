@@ -30,6 +30,9 @@
                             <isif condition="${cldBannerImage.srcset}">
                                 srcset="${cldBannerImage.srcset}"
                             </isif>
+                            <isif condition="${cldBannerImage.sizes}">
+                                sizes="${cldBannerImage.sizes}"
+                            </isif>
                         <iselse/>
                             data-src="${catBGImageUrl}"
                         </isif>

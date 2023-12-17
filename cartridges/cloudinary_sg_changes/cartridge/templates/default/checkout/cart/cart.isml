@@ -184,15 +184,17 @@
 														style="max-width:100%"
 														alt="${lineItem.product.getImage('small',0).alt}"
 														title="${lineItem.product.getImage('small',0).title}"
-														class="cld-responsive"
-														data-src="${cldProductImage.url}"
-														<isif condition="${!('isResponsive' in cldProductImage && cldProductImage.isResponsive)}">
+														class="${cldProductImage.isResponsive ? 'cld-responsive' : ''}"
+														<isif condition="${!(cldProductImage.isResponsive)}">
+															src="${cldProductImage.url}"
 															<isif condition="${'srcset' in cldProductImage && cldProductImage.srcset}">
 																srcset="${cldProductImage.srcset}"
 															</isif>
 															<isif condition="${'sizes' in cldProductImage && cldProductImage.sizes}">
 																sizes="${cldProductImage.sizes}"
 															</isif>
+														<iselse/>
+															data-src="${cldProductImage.url}"
 														</isif>
 													/>
 												</isif>
@@ -392,15 +394,17 @@
 																	    <img src="${cldProductImage.url}"
 																			alt="${bli.product.getImage('small',0).alt}"
 																			title="${bli.product.getImage('small',0).title}"
-																			class="cld-responsive"
-																			data-src="${cldProductImage.url}"
-																			<isif condition="${!('isResponsive' in cldProductImage && cldProductImage.isResponsive)}">
+																			class="${cldProductImage.isResponsive ? 'cld-responsive' : ''}"
+																			<isif condition="${!(cldProductImage.isResponsive)}">
+																				src="${cldProductImage.url}"
 																				<isif condition="${'srcset' in cldProductImage && cldProductImage.srcset}">
 																					srcset="${cldProductImage.srcset}"
 																				</isif>
 																				<isif condition="${'sizes' in cldProductImage && cldProductImage.sizes}">
 																					sizes="${cldProductImage.sizes}"
 																				</isif>
+																			<iselse/>
+																				data-src="${cldProductImage.url}"
 																			</isif>
 																		/>
 																	</isif>

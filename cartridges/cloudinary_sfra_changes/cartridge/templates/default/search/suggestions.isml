@@ -33,16 +33,18 @@
                                     <iscomment>Custom strat: add clouidnary img</iscomment>
                                     <isif condition="${!empty(product.cloudinaryProductImage)}">
                                         <isset name="isResponsive" value="${product.cloudinaryProductImage.isResponsive}" scope="page" />
-                                        <img class="swatch-circle hidden-xs-down cld-responsive"
+                                        <img class="swatch-circle hidden-xs-down ${isResponsive ? 'cld-responsive' : ''}"
                                             alt="${product.name}"
-                                            data-src="${product.cloudinaryProductImage.url}"
                                             <isif condition="${!isResponsive}">
+                                                src="${product.cloudinaryProductImage.url}"
                                                 <isif condition="${product.cloudinaryProductImage.srcset}">
                                                     srcset="${product.cloudinaryProductImage.srcset}"
                                                 </isif>
                                                 <isif condition="${product.cloudinaryProductImage.sizes}">
                                                     sizes="${product.cloudinaryProductImage.sizes}"
                                                 </isif>
+                                            <iselse/>
+                                                data-src="${product.cloudinaryProductImage.url}"
                                             </isif>
                                         />
                                     <iselse/>

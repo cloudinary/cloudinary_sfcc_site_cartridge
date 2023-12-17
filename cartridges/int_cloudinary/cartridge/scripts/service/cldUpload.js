@@ -37,7 +37,7 @@ function buildPayload(args) {
     if (!empty(Prefs.CLD_UPLOAD_PRESET)) {
         requestObj.upload_preset = Prefs.CLD_UPLOAD_PRESET;
     }
-    requestObj.overwrite = false;
+    requestObj.overwrite = true;
     // Add SHA-1 hash signature for valid fields
     requestObj.signature = cloudinaryUtils.buildSignature(requestObj, Prefs.CLD_APISECRET);
     // These MUST come after buildSignature() so they aren't included in hash [API key, cloud name, file, resource_type]

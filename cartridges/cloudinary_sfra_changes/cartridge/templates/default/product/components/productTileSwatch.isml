@@ -7,19 +7,21 @@
                             <iscomment> Custom Start: Use cloudinary swatch images if it's enabled</iscomment>
                             <isif condition="${product.CLDEnabled && swatch.images && swatch.images.cloudinaryProductSwatchImg}">
                                 <isset name="isResponsive" value="${swatch.images.cloudinaryProductSwatchImg.isResponsive}" scope="page" />
-                                <img class="swatch swatch-circle cld-responsive"
+                                <img class="swatch swatch-circle ${isResponsive ? 'cld-responsive' : ''}"
                                     data-index="${loopState.count-1}"
-                                    style="background-image: url(${swatch.images.cloudinaryProductSwatchImg.url})"
                                     alt="${swatch.images.swatch && !empty(swatch.images.swatch[0].alt) ? swatch.images.swatch[0].alt : product.productName}"
-                                    data-src="${swatch.images.cloudinaryProductSwatchImg.url}"
                                     <isif condition="${!isResponsive}">
+                                        src="${swatch.images.cloudinaryProductSwatchImg.url}"
                                         <isif condition="${swatch.images.cloudinaryProductSwatchImg.srcset}">
                                             srcset="${swatch.images.cloudinaryProductSwatchImg.srcset}"
                                         </isif>
                                         <isif condition="${swatch.images.cloudinaryProductSwatchImg.sizes}">
                                             sizes="${swatch.images.cloudinaryProductSwatchImg.sizes}"
                                         </isif>
+                                    <iselse/>
+                                        data-src="${swatch.images.cloudinaryProductSwatchImg.url}"
                                     </isif>
+                                />
                             <iselse/>
                                 <img class="swatch swatch-circle"
                                     data-index="${loopState.count-1}"

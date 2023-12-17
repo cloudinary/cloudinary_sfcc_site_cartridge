@@ -8,18 +8,19 @@
                 <iscomment>Custom start: add cloudinary product image</iscomment>
                 <isif condition="${pdict.cloudinary && pdict.cloudinary.isEnabled && bundledLineItem.images.cloudinaryProductImage}">
                     <isset name="isResponsive" value="${bundledLineItem.images.cloudinaryProductImage.isResponsive}" scope="page" />
-                    <img class="product-image cld-responsive"
-                        src="${bundledLineItem.images.cloudinaryProductImage.url}"
+                    <img class="product-image ${isResponsive ? 'cld-responsive' : ''}"
                         alt="${bundledLineItem.images.small[0].alt}"
                         title="${bundledLineItem.images.small[0].title}"
-                        data-src="${bundledLineItem.images.cloudinaryProductImage.url}"
                         <isif condition="${!isResponsive}">
+                            src="${bundledLineItem.images.cloudinaryProductImage.url}"
                             <isif condition="${bundledLineItem.images.cloudinaryProductImage.srcset}">
                                 srcset="${bundledLineItem.images.cloudinaryProductImage.srcset}"
                             </isif>
                             <isif condition="${bundledLineItem.images.cloudinaryProductImage.sizes}">
                                 sizes="${bundledLineItem.images.cloudinaryProductImage.sizes}"
                             </isif>
+                        <iselse/>
+                            data-src="${bundledLineItem.images.cloudinaryProductImage.url}"
                         </isif>
                     >
                 <iselse/>

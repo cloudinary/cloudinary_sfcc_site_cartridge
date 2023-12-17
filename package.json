@@ -35,6 +35,6 @@
         "sgmf-scripts": "~2.0.7"
     },
     "paths": {
-        "base": "../storefront-reference-architecture/cartridges/app_storefront_base"
+        "base": "../storefront-reference-architecture-master/cartridges/app_storefront_base"
     }
 }

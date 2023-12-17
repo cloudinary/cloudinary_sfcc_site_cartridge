@@ -12,8 +12,8 @@ Cloudinary.RenderAsset = function () {
     var ContentMgr = require('dw/content/ContentMgr');
     var contentID = request.httpParameterMap.contentId.stringValue;
     var apiContent = ContentMgr.getContent(contentID);
+    response.setHttpHeader('Access-Control-Allow-Origin', '*');
     if (apiContent && apiContent.online === true && apiContent.custom.body) {
-        response.setHttpHeader('Access-Control-Allow-Origin', '*');
         ISML.renderTemplate('content/renderCldAsset', {
             content: apiContent.custom.body
         });

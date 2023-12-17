@@ -5,8 +5,9 @@
 <isset name="imageJSON" value="${pdict.imgURL}" scope="page"/>
 <isif condition="${!empty(imageJSON.url)}">
     <img
-        alt="${imageJSON.url}"
+        alt="${pdict.altText || imageJSON.url}"
         src="${imageJSON.url}"
+        ${pdict.contentAttributes}
         <isif condition="${!empty(imageJSON.srcset) && !empty(imageJSON.srcset)}">
             srcset= "${imageJSON.srcset}"
             sizes= "${imageJSON.sizes}"

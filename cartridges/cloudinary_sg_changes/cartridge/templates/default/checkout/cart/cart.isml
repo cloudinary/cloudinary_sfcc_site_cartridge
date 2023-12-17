@@ -185,7 +185,7 @@
 														alt="${lineItem.product.getImage('small',0).alt}"
 														title="${lineItem.product.getImage('small',0).title}"
 														class="${cldProductImage.isResponsive ? 'cld-responsive' : ''}"
-														<isif condition="${!(cldProductImage.isResponsive)}">
+														<isif condition="${!cldProductImage.isResponsive}">
 															src="${cldProductImage.url}"
 															<isif condition="${'srcset' in cldProductImage && cldProductImage.srcset}">
 																srcset="${cldProductImage.srcset}"

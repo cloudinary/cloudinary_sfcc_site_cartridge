@@ -29,11 +29,14 @@
                     <div class="col-sm-6 col-md-4 category-item">
                         <a href="${URLUtils.url('Search-Show', 'cgid', category.ID)}" title="${category.displayName}">
                             <div class="category-tile">
-                                <img class="img-fluid ${catBGImageUrl.isResponsive ? 'cld-responsive' : ''}"
-                                    <isif condition="${typeof(catBGImageUrl.isResponsive) != 'undefined' && !empty(catBGImageUrl.isResponsive) && !catBGImageUrl.isResponsive}">
+                                <img class="img-fluid ${cldBannerImage.isResponsive ? 'cld-responsive' : ''}"
+                                    <isif condition="${!cldBannerImage.isResponsive}">
                                         src="${catBGImageUrl}"
-                                        <isif condition="${catBGImageUrl.srcset}">
-                                            srcset="${catBGImageUrl.srcset}"
+                                        <isif condition="${cldBannerImage.srcset}">
+                                            srcset="${cldBannerImage.srcset}"
+                                        </isif>
+                                        <isif condition="${cldBannerImage.sizes}">
+                                            sizes="${cldBannerImage.sizes}"
                                         </isif>
                                     <iselse/>
                                         data-src="${catBGImageUrl}"

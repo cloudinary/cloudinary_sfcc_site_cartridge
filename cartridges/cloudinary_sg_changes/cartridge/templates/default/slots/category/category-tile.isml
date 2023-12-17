@@ -26,13 +26,16 @@
             <a href="${URLUtils.http('Search-Show', 'cgid', category.ID)}" title="${category.displayName}">
                 <isif condition="${!empty(catBGImageUrl)}">
                     <img
-                        class="${catBGImageUrl.isResponsive ? 'cld-responsive' : ''}"
-                        <isif condition="${typeof(catBGImageUrl.isResponsive) != 'undefined' && !empty(catBGImageUrl.isResponsive) && !catBGImageUrl.isResponsive}">
+                        <isif condition="${!cldBannerImage.isResponsive}">
                             src="${catBGImageUrl}"
-                            <isif condition="${catBGImageUrl.srcset}">
-                                srcset="${catBGImageUrl.srcset}"
+                            <isif condition="${cldBannerImage.srcset}">
+                                srcset="${cldBannerImage.srcset}"
+                            </isif>
+                            <isif condition="${cldBannerImage.sizes}">
+                                sizes="${cldBannerImage.sizes}"
                             </isif>
                         <iselse/>
+                            class="cld-responsive"
                             data-src="${catBGImageUrl}"
                         </isif>
                         alt="${category.displayName}"

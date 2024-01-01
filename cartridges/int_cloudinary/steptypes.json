@@ -268,7 +268,7 @@
                 "@supports-parallel-execution": "false",
                 "@supports-site-context": "true",
                 "@supports-organization-context": "false",
-                "description": "Step used to create necessary structured metadata in the Cloudinary",
+                "description": "Create the essential structured metadata in Cloudinary.",
                 "module": "int_cloudinary/cartridge/scripts/jobs/steps/cldStructuredMetadata.js",
                 "function": "Start",
                 "transactional": "false",

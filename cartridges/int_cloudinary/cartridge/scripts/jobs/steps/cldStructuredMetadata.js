@@ -20,6 +20,7 @@ module.exports.Start = function (args) {
     const schema = [
         { "label": "sfcc-product-name", "external_id": "sfcc-product-name", "type": "string" },
         { "label": "sfcc-view-type", "external_id": "sfcc-view-type", "type": "string" },
+        { "label": "sfcc-product-brand", "external_id": "sfcc-product-brand", "type": "string" },
         { "label": "sfcc-product-identifier", "external_id": "sfcc-product-identifier", "type": "string" },
         { "label": "sfcc-is-main", "external_id": "sfcc-is-main", "type": "enum", "datasource": { "values": [{ "external_id": "True", "value": "True" }, { "external_id": "False", "value": "False" }] } },
         { "label": "sfcc-gallery-position", "external_id": "sfcc-gallery-position", "type": "integer" },

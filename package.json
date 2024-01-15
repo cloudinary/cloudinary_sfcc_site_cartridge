@@ -13,7 +13,7 @@
         "test": "sgmf-scripts --test test/unit/**/*.js"
     },
     "dependencies": {
-        "cleave.js": "~1.4.2"
+        "cleave.js": "~1.6.0"
     },
     "devDependencies": {
         "css-loader": "^0.28.11",

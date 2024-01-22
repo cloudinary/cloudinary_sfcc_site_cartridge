@@ -64,7 +64,7 @@ window.renderCloudinaryVideoPlayer = function () {
 window.makeCloudinaryImagesResponsive = function () {
     var $cldResponsiveImgTags = $('.cld-responsive');
     if ($cldResponsiveImgTags && $cldResponsiveImgTags.length > 0) {
-        window.cldObj = cloudinary.default.Cloudinary.new(); // eslint-disable-line no-undef
+        window.cldObj = window.cldObj || cloudinary.default.Cloudinary.new(); // eslint-disable-line no-undef
         window.cldObj.responsive(); // eslint-disable-line no-undef
     }
 };

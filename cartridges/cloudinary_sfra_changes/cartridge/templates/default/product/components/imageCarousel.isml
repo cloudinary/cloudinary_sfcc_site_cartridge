@@ -17,6 +17,7 @@
                 <isloop items="${cldImageURLsList}" var="image" status="loopStatus">
                     <div class='carousel-item <isif condition="${loopStatus.index == 0}">active</isif>'>
                         <img class="d-block img-fluid ${image.isResponsive ? 'cld-responsive' : ''}"
+                            src="${image.url}"
                             <isif condition="${!image.isResponsive}">
                                 src="${image.url}"
                                 <isif condition="${image.srcset}">

@@ -83,10 +83,15 @@
             }),
             (window.makeCloudinaryImagesResponsive = function () {
                 var e = r(".cld-responsive");
-                e && e.length > 0 && ((window.cldObj = window.cldObj || cloudinary.default.Cloudinary.new()), window.cldObj.responsive());
+                    e && e.length > 0 && ((window.cldObj = window.cldObj || cloudinary.default.Cloudinary.new()), window.cldObj.responsive());
             }),
             r(document).ready(function () {
                 window.renderCloudinaryGalleryWidget(), window.renderCloudinaryVideoPlayer(), window.renderCloudinarySetGalleryWidgets(), window.makeCloudinaryImagesResponsive();
+                $('.icon-next, .icon-prev').on('click', function() {
+                    setTimeout(() => {
+                        window.makeCloudinaryImagesResponsive();
+                    }, 0);
+                })
             });
     },
     function (e, t, n) {

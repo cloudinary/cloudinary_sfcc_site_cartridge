@@ -74,4 +74,10 @@ $(document).ready(function () {
     window.renderCloudinaryVideoPlayer();
     window.renderCloudinarySetGalleryWidgets();
     window.makeCloudinaryImagesResponsive();
+
+    $('.icon-next, .icon-prev').on('click', function() {
+        setTimeout(() => {
+            window.makeCloudinaryImagesResponsive();
+        }, 0);
+    })
 });

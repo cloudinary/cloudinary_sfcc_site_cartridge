@@ -148,7 +148,7 @@ var applyTransformationOnProductImageRelativeURL = function (productID, relURL, 
                     relativeURL = cloudinaryConstants.FORWARD_SLASH + relativeURL;
                 }
                 // if asset name then prepend with image upload path
-                if (relativeURL.indexOf(cloudinaryConstants.CLD_IMAGE_PATH) === -1) {
+                if (relativeURL.indexOf(cloudinaryConstants.CLD_IMAGE_PATH) === -1 && cloudinaryConstants.CLD_CARTRIDGE_OPERATION_MODE !== cloudinaryConstants.CLD_GET_ASSETS_BY_TAG_NAME_MODE) {
                     if (cloudinaryConstants.CLD_IMAGE_PATH.indexOf(cloudinaryConstants.FORWARD_SLASH) !== 0) {
                         relativeURL = cloudinaryConstants.FORWARD_SLASH + cloudinaryConstants.CLD_IMAGE_PATH + relativeURL;
                     } else {

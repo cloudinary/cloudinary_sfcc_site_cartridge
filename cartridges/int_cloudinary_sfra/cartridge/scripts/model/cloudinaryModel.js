@@ -223,10 +223,14 @@ baseCloudinaryModel.updateProductCarouselImages = function (cldAssets, product) 
     var cldImages = cldAssets.imageURLs;
     for (var idx = 0; idx < cldImages.length; idx++) {
         var asset = cldImages[idx];
-        productModel.images.large[idx].url = asset.url;
-        productModel.images.large[idx].absURL = asset.url;
-        productModel.images.small[idx].url = asset.url;
-        productModel.images.small[idx].absURL = asset.url;
+        if (productModel.images.large.length > idx) {
+            productModel.images.large[idx].url = asset.url;
+            productModel.images.large[idx].absURL = asset.url;
+        }
+        if (productModel.images.small.length > idx) {
+            productModel.images.small[idx].url = asset.url;
+            productModel.images.small[idx].absURL = asset.url;
+        }
     }
     return productModel;
 };

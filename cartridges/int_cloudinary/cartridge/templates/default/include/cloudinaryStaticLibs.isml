@@ -4,6 +4,8 @@
         to render cloudinary widgets.</iscomment>
     <isif condition="${pdict.cloudinary}">
         <div class="cloudinary-data-container d-none visually-hidden" data-cloudinary="<isprint value="${JSON.stringify(pdict.cloudinary)}" encoding="htmlunquote" />"></div>
+    <iselse/>
+        <div class="cloudinary-data-container d-none visually-hidden" data-cloudinary="${preferences.CLDCloudName}"></div> 
     </isif>
     <script src="${URLUtils.staticURL('/js/cloudinaryWidgets.js')}"></script>
     <script src="${preferences.CLDCoreShrinkwrapJSURL}"></script>

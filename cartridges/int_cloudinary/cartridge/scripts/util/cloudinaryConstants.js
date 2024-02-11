@@ -141,7 +141,7 @@ CloudinaryConstants.CLD_LIBRARY_VIDEO_ENABLED = 1;
 CloudinaryConstants.CLD_LIBRARY_VIDEO_PLAYER_ENABLED = 1;
 CloudinaryConstants.CLD_SFCC_INTEGRATION = 'cloudinary_sfcc_integration';
 CloudinaryConstants.CLD_SFCC_PLATFORM = 'sfcc_' + System.compatibilityMode;
-CloudinaryConstants.CLD_SFCC_VERSION = '2.2.0';
+CloudinaryConstants.CLD_SFCC_VERSION = '24.2.1';
 CloudinaryConstants.CLD_SFCC_ENVIRONMENT = System.instanceType === System.PRODUCTION_SYSTEM || System.instanceType === System.STAGING_SYSTEM ? 'production' : 'development';
 
 // Cloudinary cartridge modes

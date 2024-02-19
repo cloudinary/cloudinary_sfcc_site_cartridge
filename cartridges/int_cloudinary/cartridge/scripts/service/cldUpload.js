@@ -39,10 +39,10 @@ function buildPayload(args) {
         requestObj.upload_preset = Prefs.CLD_UPLOAD_PRESET;
     }
 
-    if (args.executionMode && (cloudinaryConstants.DEBUG_EXECUTION_MODE.equals(args.executionMode) || cloudinaryConstants.PROD_EXECUTION_MODE.equals(args.executionMode))) {
-        requestObj.overwrite = true;
-    }  else {
+    if (args.executionMode && (cloudinaryConstants.PROD_BACK_FILE_EXECUTION_MODE.equals(args.executionMode))) {
         requestObj.overwrite = false;
+    }  else {
+        requestObj.overwrite = true;
     }
     // Add SHA-1 hash signature for valid fields
     requestObj.signature = cloudinaryUtils.buildSignature(requestObj, Prefs.CLD_APISECRET);

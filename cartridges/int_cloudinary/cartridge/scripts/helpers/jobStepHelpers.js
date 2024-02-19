@@ -148,10 +148,11 @@ var removeRedundantTags = function (redundantTags, existingTags) {
  * @param {string} assetPublicID - asset public ID
  * @param {Object} metadata - meta data
  * @param {Object} svcArgs - service related data
+ * @param {string} executionMode - job execution mode
  *
  * @returns {Object} files to be logged
  */
-var uploadFile = function (cloudinaryConstants, asset, tags, assignedFolder, assetPublicID, metadata, svcArgs) {
+var uploadFile = function (cloudinaryConstants, asset, tags, assignedFolder, assetPublicID, metadata, svcArgs, executionMode) {
     var isAssetUploaded = false;
     var cloudinarySvc = require('*/cartridge/scripts/service/cldUpload');
     var cloudinaryTagsSvc = require('*/cartridge/scripts/service/cldAddAssetTags');
@@ -164,6 +165,7 @@ var uploadFile = function (cloudinaryConstants, asset, tags, assignedFolder, ass
     args.assetPublicID = assetPublicID;
     args.servicePrefs = svcArgs.servicePrefs;
     args.cldUploadSvc = svcArgs.cldUploadSvc;
+    args.executionMode = executionMode;
 
     if (!empty(metadata)) {
         args.metadata = metadata;
@@ -397,7 +399,7 @@ var processFolder = function (currentFolder, assetURLBuildCallback, cloudinaryCo
                     assetPublicID = changedAssetIds.assetPublicID;
                     asset.cloudFolder = changedAssetIds.cldFolder;
                     isFileChanged = changedAssetIds.fileChangedStatus;
-                    isAssetUploaded = uploadFile(cloudinaryConstants, asset.assetURL, tags, asset.cloudFolder, assetPublicID, metadata, svcArgs);
+                    isAssetUploaded = uploadFile(cloudinaryConstants, asset.assetURL, tags, asset.cloudFolder, assetPublicID, metadata, svcArgs, args.CLDJobExecutionMode);
 
                     if (isAssetUploaded && isFileChanged) {
                         changedFilesCount++;
@@ -412,7 +414,7 @@ var processFolder = function (currentFolder, assetURLBuildCallback, cloudinaryCo
                 assetPublicID = changedAssetIds.assetPublicID;
                 asset.cloudFolder = changedAssetIds.cldFolder;
                 isFileChanged = changedAssetIds.fileChangedStatus;
-                isAssetUploaded = uploadFile(cloudinaryConstants, asset.assetURL, tags, asset.cloudFolder, assetPublicID, metadata, svcArgs);
+                isAssetUploaded = uploadFile(cloudinaryConstants, asset.assetURL, tags, asset.cloudFolder, assetPublicID, metadata, svcArgs, args.CLDJobExecutionMode);
 
                 if (isAssetUploaded && isFileChanged) {
                     changedFilesCount++;

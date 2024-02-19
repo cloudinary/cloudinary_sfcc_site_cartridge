@@ -378,7 +378,7 @@ var doProducts = function (args, products, metadataFields, isSearchHits) {
                     cldFolder = changedAssetObj.cldFolder;
                     isFileChanged = changedAssetObj.fileChangedStatus;
 
-                    isAssetUploaded = jobStepHelpers.uploadFile(cloudinaryConstants, assetURL, tags, cldFolder, assetPublicID, metadata, svcArgs);
+                    isAssetUploaded = jobStepHelpers.uploadFile(cloudinaryConstants, assetURL, tags, cldFolder, assetPublicID, metadata, svcArgs, args.CLDJobExecutionMode);
 
                     if (isAssetUploaded && isFileChanged) {
                         jobStepHelpers.logAssetPathChangedMessage(assetOriginalPublicID, assetPublicID);
@@ -422,7 +422,7 @@ var doProducts = function (args, products, metadataFields, isSearchHits) {
                     cldFolder = changedAssetObj.cldFolder;
                     isFileChanged = changedAssetObj.fileChangedStatus;
 
-                    isAssetUploaded = jobStepHelpers.uploadFile(cloudinaryConstants, productImg, productTags, cldFolder, assetPublicID, metadata, svcArgs);
+                    isAssetUploaded = jobStepHelpers.uploadFile(cloudinaryConstants, productImg, productTags, cldFolder, assetPublicID, metadata, svcArgs, args.CLDJobExecutionMode);
 
                     if (isAssetUploaded && isFileChanged) {
                         jobStepHelpers.logAssetPathChangedMessage(assetOriginalPublicID, assetPublicID);

@@ -33,7 +33,8 @@
                         "enum-values": {
                             "value": [
                                 "Debug",
-                                "Prod"
+                                "Prod",
+                                "Prod - backfills only"
                             ]
                         },
                         "default-value": "Debug"
@@ -97,7 +98,8 @@
                         "enum-values": {
                             "value": [
                                 "Debug",
-                                "Prod"
+                                "Prod",
+                                "Prod - backfills only"
                             ]
                         },
                         "default-value": "Debug"
@@ -179,7 +181,8 @@
                         "enum-values": {
                             "value": [
                                 "Debug",
-                                "Prod"
+                                "Prod",
+                                "Prod - backfills only"
                             ]
                         },
                         "default-value": "Debug"
@@ -237,7 +240,8 @@
                         "enum-values": {
                             "value": [
                                 "Debug",
-                                "Prod"
+                                "Prod",
+                                "Prod - backfills only"
                             ]
                         },
                         "default-value": "Debug"

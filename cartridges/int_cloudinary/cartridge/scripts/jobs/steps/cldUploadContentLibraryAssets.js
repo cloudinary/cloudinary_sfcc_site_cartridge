@@ -88,7 +88,7 @@ module.exports.Start = function (args) {
                             assetPublicID = changedAssetIds.assetPublicID;
                             asset.cloudFolder = changedAssetIds.cldFolder;
                             isFileChanged = changedAssetIds.fileChangedStatus;
-                            isAssetUploaded = jobStepHelpers.uploadFile(cloudinaryConstants, asset.assetURL, tags, asset.cloudFolder, assetOriginalPublicID, metadata, svcArgs);
+                            isAssetUploaded = jobStepHelpers.uploadFile(cloudinaryConstants, asset.assetURL, tags, asset.cloudFolder, assetOriginalPublicID, metadata, svcArgs, executionMode);
 
                             if (isAssetUploaded && isFileChanged) {
                                 jobStepHelpers.logAssetPathChangedMessage(assetOriginalPublicID, assetPublicID);
@@ -103,7 +103,7 @@ module.exports.Start = function (args) {
                         assetPublicID = changedAssetIds.assetPublicID;
                         asset.cloudFolder = changedAssetIds.cldFolder;
                         isFileChanged = changedAssetIds.fileChangedStatus;
-                        isAssetUploaded = jobStepHelpers.uploadFile(cloudinaryConstants, asset.assetURL, tags, asset.cloudFolder, assetOriginalPublicID, metadata, svcArgs);
+                        isAssetUploaded = jobStepHelpers.uploadFile(cloudinaryConstants, asset.assetURL, tags, asset.cloudFolder, assetOriginalPublicID, metadata, svcArgs, executionMode);
 
                         if (isAssetUploaded && isFileChanged) {
                             jobStepHelpers.logAssetPathChangedMessage(assetOriginalPublicID, assetPublicID);

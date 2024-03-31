@@ -102,7 +102,7 @@ CloudinaryConstants.CLD_PRODUCT_SWATCH_IMG = 'cloudinaryProductSwatchImg';
 CloudinaryConstants.VIDEO_POSTER_IMAGE_TYPE = '.jpg';
 CloudinaryConstants.QUESTION_MARK = '?';
 CloudinaryConstants.CLD_TRACKING_PARAM_PLATFORM_PLACEHOLDER = '<PLATFORM_TYPE>';
-CloudinaryConstants.API_TRACKING_PARAM = 'CloudinarySalesForceSiteCartridge/2.1 (CommerceCloud ' + System.compatibilityMode + ') Architecture ' + CloudinaryConstants.CLD_TRACKING_PARAM_PLATFORM_PLACEHOLDER;
+CloudinaryConstants.API_TRACKING_PARAM = 'CloudinarySalesForceSiteCartridge/' + sitePrefs.getCustom().CLDCartridgeVersion + ' (CommerceCloud ' + System.compatibilityMode + ') Architecture ' + CloudinaryConstants.CLD_TRACKING_PARAM_PLATFORM_PLACEHOLDER;
 CloudinaryConstants.CLD_TRACKING_PARAM = '_i=AG';
 CloudinaryConstants.CLD_PRODUCT_IMG = 'cloudinaryProductImage';
 CloudinaryConstants.DEBUG_EXECUTION_MODE = 'Debug';

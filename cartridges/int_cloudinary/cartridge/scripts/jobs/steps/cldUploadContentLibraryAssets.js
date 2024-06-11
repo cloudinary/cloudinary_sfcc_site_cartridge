@@ -137,7 +137,7 @@ module.exports.Start = function (args) {
         });
         var CLDContentLibraryJobLastExecutionDate = currentSite.preferences.custom.CLDContentLibraryJobLastExecutionDate ? currentSite.preferences.custom.CLDContentLibraryJobLastExecutionDate.toString() : currentSite.preferences.custom.CLDContentLibraryJobLastExecutionDate;
         if (runTime.toString() !== CLDContentLibraryJobLastExecutionDate) {
-            jobLogger.warn('Unable to update date, date should be : {0}', runTime.toString());
+            jobLogger.warn(' Unable to update Job Last Execution Date in Custom Preferences..., date should be... {0}', runTime.toString());
         }
     } catch (e) {
         jobLogger.error('Error occured while processing library content folder/file, message : {0}', e.message);

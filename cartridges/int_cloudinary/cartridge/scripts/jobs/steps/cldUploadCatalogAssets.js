@@ -131,10 +131,11 @@ module.exports.Start = function (args) {
         }
 
         var runTime = new Date();
+        const currentSite = Site.getCurrent();
         Transaction.wrap(function () {
-            Site.current.preferences.custom.CLDCatalogContentJobLastExecutionDate = runTime;
+            currentSite.preferences.custom.CLDCatalogContentJobLastExecutionDate = runTime;
         });
-        var CLDCatalogContentJobLastExecutionDate = Site.current.preferences.custom.CLDCatalogContentJobLastExecutionDate ? Site.current.preferences.custom.CLDCatalogContentJobLastExecutionDate.toString() : Site.current.preferences.custom.CLDCatalogContentJobLastExecutionDate;
+        var CLDCatalogContentJobLastExecutionDate = currentSite.preferences.custom.CLDCatalogContentJobLastExecutionDate ? currentSite.preferences.custom.CLDCatalogContentJobLastExecutionDate.toString() : currentSite.preferences.custom.CLDCatalogContentJobLastExecutionDate;
         if (runTime.toString() !== CLDCatalogContentJobLastExecutionDate) {
             jobLogger.warn(' Unable to update the job last execution timestamp in Custom Preferences->Cloudinary Jobs Configurations field: Catalog Content Job Last Execution Date : {0}', runTime.toString());
         }

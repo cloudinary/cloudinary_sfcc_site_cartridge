@@ -130,10 +130,14 @@ module.exports.Start = function (args) {
             }
         }
 
+        var runTime = new Date();
         Transaction.wrap(function () {
-            var runTime = new Date();
             Site.current.preferences.custom.CLDCatalogContentJobLastExecutionDate = runTime;
         });
+        var CLDCatalogContentJobLastExecutionDate = Site.current.preferences.custom.CLDCatalogContentJobLastExecutionDate ? Site.current.preferences.custom.CLDCatalogContentJobLastExecutionDate.toString() : Site.current.preferences.custom.CLDCatalogContentJobLastExecutionDate;
+        if (runTime.toString() !== CLDCatalogContentJobLastExecutionDate) {
+            jobLogger.warn(' Unable to update the job last execution timestamp in Custom Preferences->Cloudinary Jobs Configurations field: Catalog Content Job Last Execution Date : {0}', runTime.toString());
+        }
     } catch (e) {
         jobLogger.error('Error occured while processing catalog content folder/file, message : {0}', e.message);
     }

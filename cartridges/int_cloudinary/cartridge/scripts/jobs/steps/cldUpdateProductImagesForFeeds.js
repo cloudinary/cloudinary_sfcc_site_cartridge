@@ -238,8 +238,12 @@ module.exports.Start = function (args) {
         cloudinaryUrlFileWriter.close();
 
         Transaction.wrap(function () {
-            Site.current.preferences.custom.CLDImportImageAndAltTextjobLastExecutionTime = params.currentExecutionTime;
+            currentSite.preferences.custom.CLDImportImageAndAltTextjobLastExecutionTime = params.currentExecutionTime;
         });
+        var CLDImportImageAndAltTextjobLastExecutionTime = currentSite.preferences.custom.CLDImportImageAndAltTextjobLastExecutionTime ? currentSite.preferences.custom.CLDImportImageAndAltTextjobLastExecutionTime.toString() : currentSite.preferences.custom.CLDImportImageAndAltTextjobLastExecutionTime;
+        if (params.currentExecutionTime.toString() !== CLDImportImageAndAltTextjobLastExecutionTime) {
+            jobLogger.warn(' Unable to update the job last execution timestamp in Custom Preferences->Cloudinary Jobs Configurations field: Update Product Feeds Job Last Execution Date : {0}', params.currentExecutionTime.toString());
+        }
     } catch (e) {
         jobLogger.error('Error occured while processing folder/file, message : {0}', e.message);
     }

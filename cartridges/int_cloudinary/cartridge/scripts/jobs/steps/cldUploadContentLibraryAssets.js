@@ -78,7 +78,8 @@ module.exports.Start = function (args) {
                         continue;
                     }
 
-                    assetPublicID = jobStepHelpers.getAssetRelURL(args.file.toString());
+                    const file = args && args.file ? args.file.toString() : '';
+                    assetPublicID = jobStepHelpers.getAssetRelURL(file);
 
                     // if job is running in "delta" mode, check the last modification date on the file
                     if (syncMode === cloudinaryConstants.SYNC_MODE_DELTA) {
@@ -130,10 +131,14 @@ module.exports.Start = function (args) {
             }
         }
 
+        var runTime = new Date();
         Transaction.wrap(function () {
-            var runTime = new Date();
             currentSite.preferences.custom.CLDContentLibraryJobLastExecutionDate = runTime;
         });
+        var CLDContentLibraryJobLastExecutionDate = currentSite.preferences.custom.CLDContentLibraryJobLastExecutionDate ? currentSite.preferences.custom.CLDContentLibraryJobLastExecutionDate.toString() : currentSite.preferences.custom.CLDContentLibraryJobLastExecutionDate;
+        if (runTime.toString() !== CLDContentLibraryJobLastExecutionDate) {
+            jobLogger.warn(' Unable to update the job last execution timestamp in Custom Preferences->Cloudinary Jobs Configurations field: Content Library Job Last Execution Date : {0}', runTime.toString());
+        }
     } catch (e) {
         jobLogger.error('Error occured while processing library content folder/file, message : {0}', e.message);
     }

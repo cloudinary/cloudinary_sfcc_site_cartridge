@@ -15,8 +15,8 @@ var productMock = {
             mute: false,
             loop: true
         },
-        CLDImageTransformations: 'someImgTransfromations',
-        CLDVideoTransformations: 'someVideoTransfromations',
+        CLDImageTransformations: 'someImgTransformations',
+        CLDVideoTransformations: 'someVideoTransformations',
         CLDGalleryStyles: {
             container: 'someContianer',
             carouselStyle: 'thumbnails'

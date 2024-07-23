@@ -62,7 +62,7 @@ var buildLibraryAssetURL = function (file) {
         }
         assetURL = URLUtils.absStatic(URLUtils.CONTEXT_LIBRARY, null, path).toString();
     } catch (err) {
-        jobLogger.error('Error occured while building library asset URL, file : {0}, message: {1}', file.path, err);
+        jobLogger.error('Error occurred while building library asset URL, file : {0}, message: {1}', file.path, err);
     }
 
     return { assetURL: assetURL, cloudFolder: cloudFolder };
@@ -102,7 +102,7 @@ var buildCatalogAssetURL = function (file) {
             assetURL = URLUtils.absStatic(URLUtils.CONTEXT_CATALOG, siteCatalog.ID, path).toString();
         }
     } catch (err) {
-        jobLogger.error('Error occured while processing file : {0}, message: {1}', file.path, err);
+        jobLogger.error('Error occurred while processing file : {0}, message: {1}', file.path, err);
     }
 
     return { assetURL: assetURL, cloudFolder: cloudFolder };
@@ -234,7 +234,7 @@ var getAssetRelURL = function (assetURL, includeVideoExtension) {
             relURL = assetURL.substring(startToken, endToken);
         }
     } catch (ex) {
-        jobLogger.error('Error occured while getting asset rel URL, absURL: {0}, message: {1} ', assetURL, ex);
+        jobLogger.error('Error occurred while getting asset rel URL, absURL: {0}, message: {1} ', assetURL, ex);
     }
 
     return relURL;
@@ -472,7 +472,7 @@ var sendChangedFilesEmail = function (fromEmail, toEmail, subject, filesCount) {
             email.send();
         }
     } catch (ex) {
-        jobLogger.error('Error occured while sending files changed email during asset upload job, message: {1} ', ex);
+        jobLogger.error('Error occurred while sending files changed email during asset upload job, message: {1} ', ex);
     }
 };
 

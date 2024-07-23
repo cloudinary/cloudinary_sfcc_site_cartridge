@@ -28,7 +28,7 @@ cloudinary.isVideoEnabled = function (apiProduct) {
             isVideoEnabled = prefs.CLD_VIDEO_ENABLED;
         }
     } catch (ex) {
-        logger.error('Error occured while getting video preferences : ' + ex);
+        logger.error('Error occurred while getting video preferences : ' + ex);
     }
 
     return isVideoEnabled;
@@ -52,7 +52,7 @@ cloudinary.isVideoPlayerEnabled = function (apiProduct) {
             isVideoPlayerEnabled = prefs.CLD_VIDEO_PLAYER_ENABLED;
         }
     } catch (ex) {
-        logger.error('Error occured while getting video player preferences : ' + ex);
+        logger.error('Error occurred while getting video player preferences : ' + ex);
     }
 
     return isVideoPlayerEnabled;
@@ -80,7 +80,7 @@ cloudinary.isVideoEnabledForContentLibrary = function () {
             }
         }
     } catch (ex) {
-        logger.error('Error occured while getting video preferences for content library : ' + ex);
+        logger.error('Error occurred while getting video preferences for content library : ' + ex);
     }
 
     return isVideoEnabled;
@@ -108,7 +108,7 @@ cloudinary.isVideoPlayerEnabledForContentLibrary = function () {
             }
         }
     } catch (ex) {
-        logger.error('Error occured while getting video player preferences for content library : ' + ex);
+        logger.error('Error occurred while getting video player preferences for content library : ' + ex);
     }
 
     return isVideoPlayerEnabled;
@@ -133,7 +133,7 @@ cloudinary.getVideoPlayerOptions = function (apiProduct) {
             videoPlayeroptions = JSON.parse(prefs.CLD_VIDEO_OPTIONS);
         }
     } catch (ex) {
-        logger.error('Error occured while getting video player options : ' + ex);
+        logger.error('Error occurred while getting video player options : ' + ex);
     }
 
     return videoPlayeroptions;
@@ -158,7 +158,7 @@ cloudinary.getCloudinaryGalleryStyles = function (apiProduct) {
             stylesObj = JSON.parse(prefs.CLD_GALLERY_STYLES);
         }
     } catch (ex) {
-        logger.error('Error occured while retreiving cloudinary gallery styles : ' + ex);
+        logger.error('Error occurred while retreiving cloudinary gallery styles : ' + ex);
     }
 
     return stylesObj;
@@ -188,7 +188,7 @@ cloudinary.getCloudinaryTagName = function (apiProduct) {
             }
         }
     } catch (ex) {
-        logger.error('Error occured while retreiving cloudinary gallery tag name : ' + ex);
+        logger.error('Error occurred while retreiving cloudinary gallery tag name : ' + ex);
     }
 
     return tagName;
@@ -215,7 +215,7 @@ cloudinary.findObjectByExternalId = function (objArray, key) {
             }
         }
     } catch (e) {
-        logger.error('Error occured while finding object in objects array for key {0}, Error: {1}', key, e);
+        logger.error('Error occurred while finding object in objects array for key {0}, Error: {1}', key, e);
     }
 
     return obj;
@@ -253,7 +253,7 @@ cloudinary.sortResourcesByAssetPosition = function (resources) {
             });
         }
     } catch (ex) {
-        logger.error('Error occured while sorting cloudinary resources : ' + ex);
+        logger.error('Error occurred while sorting cloudinary resources : ' + ex);
     }
 
     return resources;
@@ -278,7 +278,7 @@ cloudinary.getImageTransformations = function (apiProduct) {
         tempTransformations = (!empty(apiProduct) && 'CLDImageTransformation' in apiProduct.custom && !empty(apiProduct.custom.CLDImageTransformation)) ? apiProduct.custom.CLDImageTransformation : tempTransformations;
         transformations = !empty(tempTransformations) ? tempTransformations : '';
     } catch (ex) {
-        logger.error('Error occured while fetching image transformations : ' + ex);
+        logger.error('Error occurred while fetching image transformations : ' + ex);
     }
 
     return transformations;
@@ -303,15 +303,15 @@ cloudinary.getVideoTransformations = function (apiProduct) {
         tempTransformations = (!empty(apiProduct) && 'CLDVideoTransformation' in apiProduct.custom && !empty(apiProduct.custom.CLDVideoTransformation)) ? apiProduct.custom.CLDVideoTransformation : tempTransformations;
         transformations = !empty(tempTransformations) ? tempTransformations : '';
     } catch (ex) {
-        logger.error('Error occured while fetching video transformations : ' + ex);
+        logger.error('Error occurred while fetching video transformations : ' + ex);
     }
 
     return transformations;
 };
 
 /**
- * Fetch values from different pereferences for transfromations format, quality and dpr(Device pixel ratio)
- * agaisnt image, prepend with appropriate prefixes and build a comma separted string.
+ * Fetch values from different preferences for transformations format, quality and dpr(Device pixel ratio)
+ * against image, prepend with appropriate prefixes and build a comma separted string.
  *
  * @returns {string} string value holding global level format, quality, dpr
  */
@@ -339,15 +339,15 @@ cloudinary.getImgGlobalDropdownValues = function () {
             valuesString = globalDropdownValues.join();
         }
     } catch (ex) {
-        logger.error('Error occured while fetching and building global drop down values [Image transformation format, Image quality, Image DPR] : ' + ex);
+        logger.error('Error occurred while fetching and building global drop down values [Image transformation format, Image quality, Image DPR] : ' + ex);
     }
 
     return valuesString;
 };
 
 /**
- * Fetch values from different pereferences for transfromations format, quality and dpr(Device pixel ratio)
- * agaisnt video, prepend with appropriate prefixes and build a comma separted string.
+ * Fetch values from different preferences for transformations format, quality and dpr(Device pixel ratio)
+ * against video, prepend with appropriate prefixes and build a comma separted string.
  *
  * @returns {string} string value holding global level format, quality, dpr
  */
@@ -370,7 +370,7 @@ cloudinary.getVideoGlobalDropdownValues = function () {
             valuesString = globalDropdownValues.join();
         }
     } catch (ex) {
-        logger.error('Error occured while fetching and building global drop down values [Video transformation format, video quality, video DPR] : ' + ex);
+        logger.error('Error occurred while fetching and building global drop down values [Video transformation format, video quality, video DPR] : ' + ex);
     }
 
     return valuesString;
@@ -395,7 +395,7 @@ cloudinary.getPagetypeSettings = function (pageType) {
             }
         }
     } catch (ex) {
-        logger.error('Error occured while fetching page type settings: ' + ex);
+        logger.error('Error occurred while fetching page type settings: ' + ex);
     }
 
     return settings;
@@ -423,7 +423,7 @@ cloudinary.getContentVideoPlayerOptions = function () {
             }
         }
     } catch (ex) {
-        logger.error('Error occured while getting video player options for cotent library video: ' + ex);
+        logger.error('Error occurred while getting video player options for cotent library video: ' + ex);
     }
 
     return videoPlayeroptions;
@@ -464,7 +464,7 @@ cloudinary.getAssetRelURL = function (assetURL, includeVideoExtension) {
             relURL = assetURL.substring(startToken, endToken);
         }
     } catch (ex) {
-        logger.error('Error occured while getting asset rel URL, absURL: {0}, message: {1} ', assetURL, ex);
+        logger.error('Error occurred while getting asset rel URL, absURL: {0}, message: {1} ', assetURL, ex);
     }
 
     return relURL;
@@ -515,7 +515,7 @@ cloudinary.getVideoPoster = function (videoURL) {
             }
         }
     } catch (ex) {
-        logger.error('Error occured while getting video poster image, video URL: {0}, message: {1} ', videoURL, ex);
+        logger.error('Error occurred while getting video poster image, video URL: {0}, message: {1} ', videoURL, ex);
     }
 
     return posterImg;
@@ -536,7 +536,7 @@ cloudinary.addTrackingQueryParam = function (url) {
             assetAbsolURL = url + prefs.QUESTION_MARK + prefs.CLD_TRACKING_PARAM;
         }
     } catch (ex) {
-        logger.error('Error occured while adding tracking query param in delivery URL, URL: {0}, message: {1} ', url, ex);
+        logger.error('Error occurred while adding tracking query param in delivery URL, URL: {0}, message: {1} ', url, ex);
         assetAbsolURL = url;
     }
 
@@ -578,7 +578,7 @@ cloudinary.fetchVariationAttrValueId = function (variantProductID, variationAttr
             }
         }
     } catch (ex) {
-        logger.error('Error occured while fetching variation attribute value ID for product with ID : {0}, message: {1} ', variantProduct.ID, ex);
+        logger.error('Error occurred while fetching variation attribute value ID for product with ID : {0}, message: {1} ', variantProduct.ID, ex);
     }
 
     return productVariationAttrValueId;
@@ -614,7 +614,7 @@ cloudinary.getVariantProductIDByColor = function (productID, colorAttrValueId) {
             }
         }
     } catch (ex) {
-        logger.error('Error occured while fetching variat by color variation attribute value, product: {0}, color attribute value ID: {1}, message: {2} ',
+        logger.error('Error occurred while fetching variat by color variation attribute value, product: {0}, color attribute value ID: {1}, message: {2} ',
             productID, colorAttrValueId, ex);
     }
 
@@ -641,7 +641,7 @@ cloudinary.removeLeadingAndTrailingSlashes = function (url) {
             }
         }
     } catch (ex) {
-        logger.error('Error occured while removing leading and trailing slashes from URL, URL: {0}, message: {1} ', assetURL, ex);
+        logger.error('Error occurred while removing leading and trailing slashes from URL, URL: {0}, message: {1} ', assetURL, ex);
     }
 
     return assetURL;

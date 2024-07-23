@@ -140,7 +140,7 @@ module.exports.Start = function (args) {
             jobLogger.warn(' Unable to update the job last execution timestamp in Custom Preferences->Cloudinary Jobs Configurations field: Catalog Content Job Last Execution Date : {0}', runTime.toString());
         }
     } catch (e) {
-        jobLogger.error('Error occured while processing catalog content folder/file, message : {0}', e.message);
+        jobLogger.error('Error occurred while processing catalog content folder/file, message : {0}', e.message);
     }
 
     return new Status(Status.OK);

@@ -34,7 +34,7 @@ function fetchResourcesFromCld(args) {
             if (result.error === cloudinaryConstants.ERROR_CODES.UNAUTHORIZED) {
                 logger.error('Error occurred while connecting to the service due to invalid credentials, message: {0}', result.errorMessage);
             } else {
-                logger.error('Error occured while retrieving resources from cloudinary for tag : {0}, message: {1}', args.tag, result.errorMessage);
+                logger.error('Error occurred while retrieving resources from cloudinary for tag : {0}, message: {1}', args.tag, result.errorMessage);
             }
             cldResponse.ok = false;
             cldResponse.message = result.errorMessage;

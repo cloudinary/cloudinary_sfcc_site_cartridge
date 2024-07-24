@@ -481,7 +481,7 @@ var checkMandatoryMetadataFields = function (metadataFields, viewType) {
             }
         }
     } catch (e) {
-        jobLogger.error('Error occured while checking mandatory metadata fields, message: {0}', e.message);
+        jobLogger.error('Error occurred while checking mandatory metadata fields, message: {0}', e.message);
     }
 
     if (cloudinaryConstants.CLD_HIGH_RES_IMAGES_VIEW_TYPE.equalsIgnoreCase(viewType) || cloudinaryConstants.VIDEO_VIEW_TYPE.equalsIgnoreCase(viewType) ||
@@ -567,7 +567,7 @@ module.exports.Start = function (args) {
                 emailSubject, changedFilesCount);
         }
     } catch (e) {
-        jobLogger.error('Error occured while processing folder/file, message : {0}', e.message);
+        jobLogger.error('Error occurred while processing folder/file, message : {0}', e.message);
     }
 
     return new Status(Status.OK);

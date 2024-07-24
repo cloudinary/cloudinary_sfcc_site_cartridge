@@ -57,7 +57,7 @@ baseCloudinaryModel.getCloudinaryProductSwatchImage = function (masterProductID,
             }
         }
     } catch (ex) {
-        logger.error('Error occured while adding cloudinary swatch images to product variation attributes for product with ID: {0}, message: {1} ', productID, ex);
+        logger.error('Error occurred while adding cloudinary swatch images to product variation attributes for product with ID: {0}, message: {1} ', productID, ex);
     }
 
     return swatchURLObj;

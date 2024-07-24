@@ -82,7 +82,7 @@ baseCloudinaryModel.addCloudinaryProductSwatchImage = function (product, pageTyp
             });
         }
     } catch (ex) {
-        logger.error('Error occured while adding cloudinary swatch images to product variation attributes for product with ID: {0}, message: {1} ', product.id, ex);
+        logger.error('Error occurred while adding cloudinary swatch images to product variation attributes for product with ID: {0}, message: {1} ', product.id, ex);
     }
 };
 
@@ -150,7 +150,7 @@ baseCloudinaryModel.addCloudinaryImagesToSetAndBundles = function (product) {
             colorAttrValueID = null;
         });
     } catch (ex) {
-        logger.error('Error occured while adding set/bundled product cloudinary images, product: {0}, message: {1} ', productModel.id, ex);
+        logger.error('Error occurred while adding set/bundled product cloudinary images, product: {0}, message: {1} ', productModel.id, ex);
     }
 
     return productModel;
@@ -188,7 +188,7 @@ baseCloudinaryModel.updateProductVariationAttrUrl = function (product, cloudinar
             productModel.variationAttributes = productVariationAttrs;
         }
     } catch (ex) {
-        logger.error('Error occured while updating product variation attribute value url to add query param for bundle or set product: {0}, message: {1} ', productModel.id, ex);
+        logger.error('Error occurred while updating product variation attribute value url to add query param for bundle or set product: {0}, message: {1} ', productModel.id, ex);
     }
 
     return productModel;

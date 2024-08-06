@@ -59,28 +59,45 @@ module.exports.Start = function (args) {
 
             var svcArgs = jobStepHelpers.getCldUploadSvcArgs();
 
-            for (var idx = 0; idx < resources.length; idx++) {
-                resource = resources[idx];
+            if (!empty(resources) && resources.length) {
+                for (var idx = 0; idx < resources.length; idx++) {
+                    resource = resources[idx];
 
-                // in case of debug mode terminate loop if assets limit exceeded
-                if (cloudinaryConstants.DEBUG_EXECUTION_MODE === executionMode && assetsLimit === numberOfAssets) {
-                    break;
-                }
-
-                if (resource.isFile() && cloudinaryUtils.validFile(resource.getName(), cloudinaryConstants)) {
-                    asset = jobStepHelpers.buildLibraryAssetURL(resource, resource.getName());
-
-                    // check asset total size limit
-                    if (resource.length() > cloudinaryConstants.ASSET_UPLOAD_SIZE_LIMIT_BYTES) {
-                        jobStepHelpers.logAssetLargerThanLimitMsg(resource.getFullPath(), resource.length());
-                        continue;
+                    // in case of debug mode terminate loop if assets limit exceeded
+                    if (cloudinaryConstants.DEBUG_EXECUTION_MODE === executionMode && assetsLimit === numberOfAssets) {
+                        break;
                     }
 
-                    assetPublicID = jobStepHelpers.getAssetRelURL(asset.assetURL);
+                    if (resource.isFile() && cloudinaryUtils.validFile(resource.getName(), cloudinaryConstants)) {
+                        asset = jobStepHelpers.buildLibraryAssetURL(resource, resource.getName());
 
-                    // if job is running in "delta" mode, check the last modification date on the file
-                    if (syncMode === cloudinaryConstants.SYNC_MODE_DELTA) {
-                        if (resource.lastModified > lastJobExecution) {
+                        // check asset total size limit
+                        if (resource.length() > cloudinaryConstants.ASSET_UPLOAD_SIZE_LIMIT_BYTES) {
+                            jobStepHelpers.logAssetLargerThanLimitMsg(resource.getFullPath(), resource.length());
+                            continue;
+                        }
+
+                        assetPublicID = jobStepHelpers.getAssetRelURL(asset.assetURL);
+
+                        // if job is running in "delta" mode, check the last modification date on the file
+                        if (syncMode === cloudinaryConstants.SYNC_MODE_DELTA) {
+                            if (resource.lastModified > lastJobExecution) {
+                                changedAssetIds = jobStepHelpers.changePublicIdAndCloudFolder(assetPublicID, asset.cloudFolder);
+                                assetOriginalPublicID = assetPublicID;
+                                assetPublicID = changedAssetIds.assetPublicID;
+                                asset.cloudFolder = changedAssetIds.cldFolder;
+                                isFileChanged = changedAssetIds.fileChangedStatus;
+
+                                isAssetUploaded = jobStepHelpers.uploadFile(cloudinaryConstants, asset.assetURL, tags, asset.cloudFolder, assetPublicID, metadata, svcArgs, executionMode);
+
+                                if (isAssetUploaded && isFileChanged) {
+                                    jobStepHelpers.logAssetPathChangedMessage(assetOriginalPublicID, assetPublicID);
+                                    changedFilesCount++;
+                                    isAssetUploaded = false;
+                                    isFileChanged = false;
+                                }
+                            }
+                        } else {
                             changedAssetIds = jobStepHelpers.changePublicIdAndCloudFolder(assetPublicID, asset.cloudFolder);
                             assetOriginalPublicID = assetPublicID;
                             assetPublicID = changedAssetIds.assetPublicID;
@@ -96,30 +113,15 @@ module.exports.Start = function (args) {
                                 isFileChanged = false;
                             }
                         }
-                    } else {
-                        changedAssetIds = jobStepHelpers.changePublicIdAndCloudFolder(assetPublicID, asset.cloudFolder);
-                        assetOriginalPublicID = assetPublicID;
-                        assetPublicID = changedAssetIds.assetPublicID;
-                        asset.cloudFolder = changedAssetIds.cldFolder;
-                        isFileChanged = changedAssetIds.fileChangedStatus;
 
-                        isAssetUploaded = jobStepHelpers.uploadFile(cloudinaryConstants, asset.assetURL, tags, asset.cloudFolder, assetPublicID, metadata, svcArgs, executionMode);
-
-                        if (isAssetUploaded && isFileChanged) {
-                            jobStepHelpers.logAssetPathChangedMessage(assetOriginalPublicID, assetPublicID);
-                            changedFilesCount++;
-                            isAssetUploaded = false;
-                            isFileChanged = false;
+                        // in case of debug mode terminate loop if assets limit exceeded
+                        if (cloudinaryConstants.DEBUG_EXECUTION_MODE === executionMode) {
+                            assetsLimit++;
                         }
+                    } else {
+                        changedFilesCount += jobStepHelpers.processFolder(resource, jobStepHelpers.buildCatalogAssetURL, cloudinaryConstants, args,
+                            cloudinaryConstants.CLD_CATALOG_CONTENT_JOB_LAST_EXECUTION_DATE);
                     }
-
-                    // in case of debug mode terminate loop if assets limit exceeded
-                    if (cloudinaryConstants.DEBUG_EXECUTION_MODE === executionMode) {
-                        assetsLimit++;
-                    }
-                } else {
-                    changedFilesCount += jobStepHelpers.processFolder(resource, jobStepHelpers.buildCatalogAssetURL, cloudinaryConstants, args,
-                        cloudinaryConstants.CLD_CATALOG_CONTENT_JOB_LAST_EXECUTION_DATE);
                 }
             }
 
@@ -140,7 +142,7 @@ module.exports.Start = function (args) {
             jobLogger.warn(' Unable to update the job last execution timestamp in Custom Preferences->Cloudinary Jobs Configurations field: Catalog Content Job Last Execution Date : {0}', runTime.toString());
         }
     } catch (e) {
-        jobLogger.error('Error occurred while processing catalog content folder/file, message : {0}', e.message);
+        jobLogger.error('Error occurred while processing catalog content folder/file, message: {0} at: line number {1}', e.message, e.lineNumber);
     }
 
     return new Status(Status.OK);

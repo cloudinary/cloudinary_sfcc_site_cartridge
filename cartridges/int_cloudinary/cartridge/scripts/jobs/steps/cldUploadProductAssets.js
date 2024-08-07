@@ -567,7 +567,7 @@ module.exports.Start = function (args) {
                 emailSubject, changedFilesCount);
         }
     } catch (e) {
-        jobLogger.error('Error occurred while processing folder/file, message : {0}', e.message);
+        jobLogger.error('Error occurred while processing folder/file, message : {0} at: line number {1}', e.message, e.lineNumber);
     }
 
     return new Status(Status.OK);

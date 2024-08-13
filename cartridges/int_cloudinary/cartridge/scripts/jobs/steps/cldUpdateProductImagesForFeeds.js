@@ -67,6 +67,7 @@ function writeProductFileContent(cloudinaryUrlStreamWriter, productSearchHitsItr
     var imgVariantsUnSorted;
     var imgVariantsSorted = {};
     var variantTag;
+    var clrAttrArray = [];
 
     try {
         while (productSearchHitsItr.hasNext()) {
@@ -115,6 +116,13 @@ function writeProductFileContent(cloudinaryUrlStreamWriter, productSearchHitsItr
                         for (var k = 0; k < product.variants.length; k++) {
                             variantsID = product.variants[k].ID;
                             colorAttrValueID = cloudinaryHelper.fetchVariationAttrValueId(variantsID, cloudinaryConstants.COLOR_ATTR);
+
+                            if (!clrAttrArray.includes(colorAttrValueID)) {
+                                clrAttrArray.push(colorAttrValueID);
+                            } else {
+                                break;
+                            }
+
                             variantTag = productID + cloudinaryConstants.HYPHEN + colorAttrValueID;
 
                             imgVariantsUnSorted = cldFetchResourcesSvc.fetchResourcesWithModifiedDate(variantTag, cloudinaryConstants.CLD_IMAGE_RESOURCE_TYPE);

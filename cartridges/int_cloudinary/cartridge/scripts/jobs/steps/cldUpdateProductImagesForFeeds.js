@@ -120,7 +120,7 @@ function writeProductFileContent(cloudinaryUrlStreamWriter, productSearchHitsItr
                             if (!clrAttrArray.includes(colorAttrValueID)) {
                                 clrAttrArray.push(colorAttrValueID);
                             } else {
-                                break;
+                                continue;
                             }
 
                             variantTag = productID + cloudinaryConstants.HYPHEN + colorAttrValueID;

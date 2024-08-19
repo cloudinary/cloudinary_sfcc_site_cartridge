@@ -121,11 +121,10 @@ function writeProductFileContent(cloudinaryUrlStreamWriter, productSearchHitsItr
 
                             variantTag = productID + cloudinaryConstants.HYPHEN + colorAttrValueID;
                             
-                            if (!clrAttrArray.includes(variantTag)) {
-                                clrAttrArray.push(variantTag);
-                            } else {
+                            if (clrAttrArray.includes(variantTag)) {
                                 continue;
                             }
+                            clrAttrArray.push(variantTag);
 
                             imgVariantsUnSorted = cldFetchResourcesSvc.fetchResourcesWithModifiedDate(variantTag, cloudinaryConstants.CLD_IMAGE_RESOURCE_TYPE);
                             imgVariantsSorted.resources = cloudinaryHelper.sortResourcesByAssetPosition(imgVariantsUnSorted.resources);

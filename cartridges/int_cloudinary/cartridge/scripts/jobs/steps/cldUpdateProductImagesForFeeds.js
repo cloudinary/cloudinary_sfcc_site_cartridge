@@ -112,41 +112,39 @@ function writeProductFileContent(cloudinaryUrlStreamWriter, productSearchHitsItr
                     cloudinaryUrlStreamWriter.writeEndElement();
                     cloudinaryUrlStreamWriter.writeCharacters('\n');
 
-                    if (!product.variants.empty) {
-                        var variants = product.variants.iterator();
-                        while (variants.hasNext()) {
-                            var variant = variants.next();
-                            variantsID = variant.ID;
-                            colorAttrValueID = cloudinaryHelper.fetchVariationAttrValueId(variantsID, cloudinaryConstants.COLOR_ATTR);
+                    var variants = product.variants.iterator();
+                    while (variants.hasNext()) {
+                        var variant = variants.next();
+                        variantsID = variant.ID;
+                        colorAttrValueID = cloudinaryHelper.fetchVariationAttrValueId(variantsID, cloudinaryConstants.COLOR_ATTR);
 
-                            variantTag = productID + cloudinaryConstants.HYPHEN + colorAttrValueID;
-                            
-                            if (clrAttrArray.includes(variantTag)) {
-                                continue;
-                            }
-                            clrAttrArray.push(variantTag);
+                        variantTag = productID + cloudinaryConstants.HYPHEN + colorAttrValueID;
 
-                            imgVariantsUnSorted = cldFetchResourcesSvc.fetchResourcesWithModifiedDate(variantTag, cloudinaryConstants.CLD_IMAGE_RESOURCE_TYPE);
-                            imgVariantsSorted.resources = cloudinaryHelper.sortResourcesByAssetPosition(imgVariantsUnSorted.resources);
-                            imgVariantsSorted.updatedAt = imgAssets.updatedAt;
+                        if (clrAttrArray.includes(variantTag)) {
+                            continue;
+                        }
+                        clrAttrArray.push(variantTag);
 
-                            cloudinaryUrlStreamWriter.writeStartElement('image-group');
-                            cloudinaryUrlStreamWriter.writeAttribute('view-type', params.viewType);
+                        imgVariantsUnSorted = cldFetchResourcesSvc.fetchResourcesWithModifiedDate(variantTag, cloudinaryConstants.CLD_IMAGE_RESOURCE_TYPE);
+                        imgVariantsSorted.resources = cloudinaryHelper.sortResourcesByAssetPosition(imgVariantsUnSorted.resources);
+                        imgVariantsSorted.updatedAt = imgAssets.updatedAt;
 
-                            cloudinaryUrlStreamWriter.writeStartElement('variation');
-                            cloudinaryUrlStreamWriter.writeAttribute('attribute-id', 'color');
-                            cloudinaryUrlStreamWriter.writeAttribute('value', colorAttrValueID);
-                            cloudinaryUrlStreamWriter.writeEndElement();
+                        cloudinaryUrlStreamWriter.writeStartElement('image-group');
+                        cloudinaryUrlStreamWriter.writeAttribute('view-type', params.viewType);
 
-                            for (let imgResources of imgVariantsSorted.resources) {
-                                cloudinaryUrlStreamWriter.writeStartElement('image');
-                                cloudinaryUrlStreamWriter.writeAttribute('path', imgResources.public_id);
-                                cloudinaryUrlStreamWriter.writeEndElement();
-                                cloudinaryUrlStreamWriter.writeCharacters('\n');
-                            }
+                        cloudinaryUrlStreamWriter.writeStartElement('variation');
+                        cloudinaryUrlStreamWriter.writeAttribute('attribute-id', 'color');
+                        cloudinaryUrlStreamWriter.writeAttribute('value', colorAttrValueID);
+                        cloudinaryUrlStreamWriter.writeEndElement();
+
+                        for (let imgResources of imgVariantsSorted.resources) {
+                            cloudinaryUrlStreamWriter.writeStartElement('image');
+                            cloudinaryUrlStreamWriter.writeAttribute('path', imgResources.public_id);
                             cloudinaryUrlStreamWriter.writeEndElement();
                             cloudinaryUrlStreamWriter.writeCharacters('\n');
                         }
+                        cloudinaryUrlStreamWriter.writeEndElement();
+                        cloudinaryUrlStreamWriter.writeCharacters('\n');
                     }
                     cloudinaryUrlStreamWriter.writeEndElement();
                     cloudinaryUrlStreamWriter.writeCharacters('\n');

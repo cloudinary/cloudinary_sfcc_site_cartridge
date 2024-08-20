@@ -84,12 +84,9 @@ function writeProductFileContent(cloudinaryUrlStreamWriter, productSearchHitsItr
             if (!empty(imgAssetsSorted) && !empty(imgAssetsSorted.resources) && imgAssetsSorted.resources.length > 0) {
                 if (!empty(params.jobLastExecutionTime)) {
                     skipCurrentProduct = true;
-                    for (let assetsSorted of imgAssetsSorted.resources) {
-                        productDate = new Date(imgAssetsSorted.updatedAt);
-                        if (productDate >= lastJobExecution) {
-                            skipCurrentProduct = false;
-                            break;
-                        }
+                    productDate = new Date(imgAssetsSorted.updatedAt);
+                    if (productDate >= lastJobExecution) {
+                        skipCurrentProduct = false;
                     }
 
                     if (skipCurrentProduct) {

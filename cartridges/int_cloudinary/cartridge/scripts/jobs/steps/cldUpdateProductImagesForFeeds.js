@@ -59,7 +59,6 @@ function writeProductFileContent(cloudinaryUrlStreamWriter, productSearchHitsItr
     var numberOfProcessedProducts = 0;
     var product;
     var productID;
-    var productDate;
     var variantsID;
     var colorAttrValueID;
     var sfccAltText;

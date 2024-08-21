@@ -79,8 +79,7 @@ function writeProductFileContent(cloudinaryUrlStreamWriter, productSearchHitsItr
             imgAssets = cldFetchResourcesSvc.fetchResourcesWithModifiedDate(productID, cloudinaryConstants.CLD_IMAGE_RESOURCE_TYPE);
             imgAssetsSorted.resources = cloudinaryHelper.sortResourcesByAssetPosition(imgAssets.resources);
             imgAssetsSorted.updatedAt = imgAssets.updatedAt;
-            productDate =  !empty(imgAssetsSorted) ? new Date(imgAssetsSorted.updatedAt) : null;
-            if (!empty(imgAssetsSorted) && !empty(imgAssetsSorted.resources) && imgAssetsSorted.resources.length > 0 && !empty(params.jobLastExecutionTime) && productDate >= lastJobExecution) {
+            if (!empty(imgAssetsSorted) && !empty(imgAssetsSorted.resources) && imgAssetsSorted.resources.length > 0 && !empty(params.jobLastExecutionTime) && new Date(imgAssetsSorted.updatedAt) >= lastJobExecution) {
                 cloudinaryUrlStreamWriter.writeStartElement('product');
                 cloudinaryUrlStreamWriter.writeAttribute('product-id', product.ID);
                 if (params.enableUrlOverride) {

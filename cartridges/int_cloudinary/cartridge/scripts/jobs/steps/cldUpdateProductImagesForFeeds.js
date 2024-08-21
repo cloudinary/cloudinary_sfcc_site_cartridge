@@ -172,8 +172,8 @@ function writeProductFileContent(cloudinaryUrlStreamWriter, productSearchHitsItr
                 cloudinaryUrlStreamWriter.writeEndElement();
                 cloudinaryUrlStreamWriter.writeCharacters('\n');
                 cloudinaryUrlStreamWriter.writeCharacters('\n');
+                numberOfProcessedProducts++;
             }
-            numberOfProcessedProducts++;
         }
     } catch (ex) {
         jobLogger.error('Error occurred while processing folder/file, message : {0}', ex.message);

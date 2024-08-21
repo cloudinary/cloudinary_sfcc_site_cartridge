@@ -60,7 +60,6 @@ function writeProductFileContent(cloudinaryUrlStreamWriter, productSearchHitsItr
     var product;
     var productID;
     var productDate;
-    var skipCurrentProduct;
     var variantsID;
     var colorAttrValueID;
     var sfccAltText;
@@ -83,13 +82,8 @@ function writeProductFileContent(cloudinaryUrlStreamWriter, productSearchHitsItr
 
             if (!empty(imgAssetsSorted) && !empty(imgAssetsSorted.resources) && imgAssetsSorted.resources.length > 0) {
                 if (!empty(params.jobLastExecutionTime)) {
-                    skipCurrentProduct = true;
                     productDate = new Date(imgAssetsSorted.updatedAt);
-                    if (productDate >= lastJobExecution) {
-                        skipCurrentProduct = false;
-                    }
-
-                    if (skipCurrentProduct) {
+                    if (productDate <= lastJobExecution) {
                         continue;
                     }
                 }

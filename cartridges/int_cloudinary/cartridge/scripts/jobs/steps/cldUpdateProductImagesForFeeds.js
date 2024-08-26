@@ -59,14 +59,13 @@ function writeProductFileContent(cloudinaryUrlStreamWriter, productSearchHitsItr
     var numberOfProcessedProducts = 0;
     var product;
     var productID;
-    var productDate;
-    var skipCurrentProduct;
     var variantsID;
     var colorAttrValueID;
     var sfccAltText;
     var imgVariantsUnSorted;
     var imgVariantsSorted = {};
     var variantTag;
+    var clrAttrArray = [];
 
     try {
         while (productSearchHitsItr.hasNext()) {
@@ -79,22 +78,7 @@ function writeProductFileContent(cloudinaryUrlStreamWriter, productSearchHitsItr
             imgAssets = cldFetchResourcesSvc.fetchResourcesWithModifiedDate(productID, cloudinaryConstants.CLD_IMAGE_RESOURCE_TYPE);
             imgAssetsSorted.resources = cloudinaryHelper.sortResourcesByAssetPosition(imgAssets.resources);
             imgAssetsSorted.updatedAt = imgAssets.updatedAt;
-
-            if (!empty(imgAssetsSorted) && !empty(imgAssetsSorted.resources) && imgAssetsSorted.resources.length > 0) {
-                if (!empty(params.jobLastExecutionTime)) {
-                    skipCurrentProduct = true;
-                    for (var i = 0; i < imgAssetsSorted.resources.length; i++) {
-                        productDate = new Date(imgAssetsSorted.updatedAt);
-                        if (productDate >= lastJobExecution) {
-                            skipCurrentProduct = false;
-                            break;
-                        }
-                    }
-
-                    if (skipCurrentProduct) {
-                        continue;
-                    }
-                }
+            if (!empty(imgAssetsSorted) && !empty(imgAssetsSorted.resources) && imgAssetsSorted.resources.length > 0 && !empty(params.jobLastExecutionTime) && new Date(imgAssetsSorted.updatedAt) >= lastJobExecution) {
                 cloudinaryUrlStreamWriter.writeStartElement('product');
                 cloudinaryUrlStreamWriter.writeAttribute('product-id', product.ID);
                 if (params.enableUrlOverride) {
@@ -102,42 +86,48 @@ function writeProductFileContent(cloudinaryUrlStreamWriter, productSearchHitsItr
                     cloudinaryUrlStreamWriter.writeStartElement('image-group');
                     cloudinaryUrlStreamWriter.writeAttribute('view-type', params.viewType);
 
-                    for (var j = 0; j < imgAssetsSorted.resources.length; j++) {
+                    for (let imgResource of imgAssetsSorted.resources) {
                         cloudinaryUrlStreamWriter.writeStartElement('image');
-                        cloudinaryUrlStreamWriter.writeAttribute('path', imgAssetsSorted.resources[j].public_id);
+                        cloudinaryUrlStreamWriter.writeAttribute('path', imgResource.public_id);
                         cloudinaryUrlStreamWriter.writeEndElement();
                         cloudinaryUrlStreamWriter.writeCharacters('\n');
                     }
                     cloudinaryUrlStreamWriter.writeEndElement();
                     cloudinaryUrlStreamWriter.writeCharacters('\n');
 
-                    if (!product.variants.empty) {
-                        for (var k = 0; k < product.variants.length; k++) {
-                            variantsID = product.variants[k].ID;
-                            colorAttrValueID = cloudinaryHelper.fetchVariationAttrValueId(variantsID, cloudinaryConstants.COLOR_ATTR);
-                            variantTag = productID + cloudinaryConstants.HYPHEN + colorAttrValueID;
+                    var variants = product.variants.iterator();
+                    while (variants.hasNext()) {
+                        var variant = variants.next();
+                        variantsID = variant.ID;
+                        colorAttrValueID = cloudinaryHelper.fetchVariationAttrValueId(variantsID, cloudinaryConstants.COLOR_ATTR);
 
-                            imgVariantsUnSorted = cldFetchResourcesSvc.fetchResourcesWithModifiedDate(variantTag, cloudinaryConstants.CLD_IMAGE_RESOURCE_TYPE);
-                            imgVariantsSorted.resources = cloudinaryHelper.sortResourcesByAssetPosition(imgVariantsUnSorted.resources);
-                            imgVariantsSorted.updatedAt = imgAssets.updatedAt;
+                        variantTag = productID + cloudinaryConstants.HYPHEN + colorAttrValueID;
 
-                            cloudinaryUrlStreamWriter.writeStartElement('image-group');
-                            cloudinaryUrlStreamWriter.writeAttribute('view-type', params.viewType);
+                        if (clrAttrArray.includes(variantTag)) {
+                            continue;
+                        }
+                        clrAttrArray.push(variantTag);
 
-                            cloudinaryUrlStreamWriter.writeStartElement('variation');
-                            cloudinaryUrlStreamWriter.writeAttribute('attribute-id', 'color');
-                            cloudinaryUrlStreamWriter.writeAttribute('value', colorAttrValueID);
-                            cloudinaryUrlStreamWriter.writeEndElement();
+                        imgVariantsUnSorted = cldFetchResourcesSvc.fetchResourcesWithModifiedDate(variantTag, cloudinaryConstants.CLD_IMAGE_RESOURCE_TYPE);
+                        imgVariantsSorted.resources = cloudinaryHelper.sortResourcesByAssetPosition(imgVariantsUnSorted.resources);
+                        imgVariantsSorted.updatedAt = imgAssets.updatedAt;
 
-                            for (var l = 0; l < imgVariantsSorted.resources.length; l++) {
-                                cloudinaryUrlStreamWriter.writeStartElement('image');
-                                cloudinaryUrlStreamWriter.writeAttribute('path', imgVariantsSorted.resources[l].public_id);
-                                cloudinaryUrlStreamWriter.writeEndElement();
-                                cloudinaryUrlStreamWriter.writeCharacters('\n');
-                            }
+                        cloudinaryUrlStreamWriter.writeStartElement('image-group');
+                        cloudinaryUrlStreamWriter.writeAttribute('view-type', params.viewType);
+
+                        cloudinaryUrlStreamWriter.writeStartElement('variation');
+                        cloudinaryUrlStreamWriter.writeAttribute('attribute-id', 'color');
+                        cloudinaryUrlStreamWriter.writeAttribute('value', colorAttrValueID);
+                        cloudinaryUrlStreamWriter.writeEndElement();
+
+                        for (let imgResources of imgVariantsSorted.resources) {
+                            cloudinaryUrlStreamWriter.writeStartElement('image');
+                            cloudinaryUrlStreamWriter.writeAttribute('path', imgResources.public_id);
                             cloudinaryUrlStreamWriter.writeEndElement();
                             cloudinaryUrlStreamWriter.writeCharacters('\n');
                         }
+                        cloudinaryUrlStreamWriter.writeEndElement();
+                        cloudinaryUrlStreamWriter.writeCharacters('\n');
                     }
                     cloudinaryUrlStreamWriter.writeEndElement();
                     cloudinaryUrlStreamWriter.writeCharacters('\n');
@@ -152,12 +142,12 @@ function writeProductFileContent(cloudinaryUrlStreamWriter, productSearchHitsItr
                         sfccAltText = null;
                         var imgAssetsContainer = imgAssetsSorted.resources;
 
-                        for (var m = 0; m < imgAssetsContainer.length; m++) {
+                        for (let imgContainer of imgAssetsContainer) {
                             var isAltText = false;
-                            var altText = imgAssetsContainer[m].metadata.filter(function (data) {
+                            var altText = imgContainer.metadata.filter(function (data) {
                                 return data.external_id === cloudinaryConstants.SFCC_ALTTEXT_EXTERNAL_ID;
                             });
-                            isAltText = imgAssetsContainer[m].metadata.filter(function (data) {
+                            isAltText = imgContainer.metadata.filter(function (data) {
                                 return data.external_id === cloudinaryConstants.SFCC_IS_MAIN && data.value.value === cloudinaryConstants.TRUE;
                             });
 
@@ -180,8 +170,8 @@ function writeProductFileContent(cloudinaryUrlStreamWriter, productSearchHitsItr
                 cloudinaryUrlStreamWriter.writeEndElement();
                 cloudinaryUrlStreamWriter.writeCharacters('\n');
                 cloudinaryUrlStreamWriter.writeCharacters('\n');
+                numberOfProcessedProducts++;
             }
-            numberOfProcessedProducts++;
         }
     } catch (ex) {
         jobLogger.error('Error occurred while processing folder/file, message : {0}', ex.message);

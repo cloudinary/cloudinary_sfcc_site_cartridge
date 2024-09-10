@@ -51,6 +51,7 @@ function show() {
             cloudinary.videoEnabled = isVideoEnabled;
             cloudinary.videoPlayerEnabled = isVideoPlayerEnabled;
             cloudinary.cloudName = cloudinaryConstants.CLD_CLOUDNAME;
+            cloudinary.basePath = cloudinaryConstants.CLD_BASE_PATH;
             if (isVideoEnabled) {
                 cloudinary.video = cloudinaryModel.getCloudinaryVideo(product.object.ID, request.locale);
             }
@@ -114,6 +115,7 @@ function detail() {
             cloudinary.videoPlayerEnabled = isVideoPlayerEnabled;
             cloudinary.cloudName = cloudinaryConstants.CLD_CLOUDNAME;
             cloudinary.isQuickView = params.source && params.source.stringValue === 'quickview' ? true : false;
+            cloudinary.basePath = cloudinaryConstants.CLD_BASE_PATH;
             if (isVideoEnabled) {
                 cloudinary.video = cloudinaryModel.getCloudinaryVideo(product.object.ID, request.locale);
             }

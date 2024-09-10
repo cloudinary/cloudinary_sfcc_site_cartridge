@@ -71,6 +71,7 @@ server.append('Show', cache.applyPromotionSensitiveCache, consentTracking.consen
             cloudinary.videoEnabled = product.CLDVideoEnabled;
             cloudinary.videoPlayerEnabled = product.CLDVideoPlayerEnabled;
             cloudinary.pdp = cloudinaryConstants.CLD_IMAGE_PAGE_TYPE_SETTINGS_OBJECT.pdp.enabled;
+            cloudinary.basePath = cloudinaryConstants.CLD_BASE_PATH;
             res.setViewData({ cloudinary: cloudinary, product: product });
         }
 

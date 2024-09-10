@@ -67,6 +67,7 @@ Cloudinary.GetContentVideo = function () {
     cloudinaryStaticContent.cloudName = cloudinaryConstants.CLD_CLOUDNAME;
     cloudinaryStaticContent.randomNumber = UUIDUtils.createUUID();
     cloudinaryStaticContent.isEnabled = cloudinaryConstants.CLD_ENABLED;
+    cloudinaryStaticContent.basePath = cloudinaryConstants.CLD_BASE_PATH;
 
     ISML.renderTemplate('content/renderContentVideo', {
         cloudinaryStaticContent: cloudinaryStaticContent

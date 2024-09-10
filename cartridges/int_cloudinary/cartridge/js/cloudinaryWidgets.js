@@ -10,6 +10,9 @@ window.renderCloudinaryGalleryWidget = function () {
     if (cloudinaryObj) {
         if (cloudinaryObj.galleryEnabled && typeof cloudinary !== 'undefined') {
             var galleryOptions = cloudinaryObj.images.galleryWidget.options;
+            if (cloudinaryObj.basePath.indexOf('res.cloudinary.com') === -1) {
+                galleryOptions.SecureDistribution = cloudinaryObj.basePath;
+            }
             window.cldGallery = cloudinary.galleryWidget(galleryOptions); // eslint-disable-line no-undef
             cldGallery.render(); // eslint-disable-line no-undef
         } else if (cloudinaryObj.images && cloudinaryObj.images.imageURLs) {
@@ -30,6 +33,9 @@ window.renderCloudinarySetGalleryWidgets = function () {
 
         if (cldObj && cldObj.isEnabled && cldSetImages && cldSetImages.galleryWidget &&
             cldObj.galleryEnabled && typeof cloudinary !== 'undefined') {
+            if (cldObj.basePath.indexOf('res.cloudinary.com') === -1) {
+                cldSetImages.galleryOptions.options.SecureDistribution = cldObj.basePath;
+            }
             window.cldGallery = cloudinary.galleryWidget(cldSetImages.galleryWidget.options); // eslint-disable-line no-undef
             cldGallery.render(); // eslint-disable-line no-undef
         }
@@ -48,6 +54,12 @@ window.renderCloudinaryVideoPlayer = function () {
         if (cldObj && cldObj.video && cldObj.video.videoURL &&
             cldObj.video.videoURL !== '' && cldObj.video.videoURL !== 'null') {
             if (cldObj.videoPlayerEnabled && typeof cloudinary !== 'undefined') {
+
+                if (cldObj.basePath.indexOf('res.cloudinary.com') === -1) {
+                    cldObj.video.widgetOptions.private_cdn = true;
+                    cldObj.video.widgetOptions.cname = cldObj.basePath;
+                    cldObj.video.widgetOptions.secure_distribution = cldObj.basePath;
+                }
                 var cld = cloudinary.Cloudinary.new({ cloud_name: cldObj.cloudName }); // eslint-disable-line no-undef
                 var player = cld.videoPlayer('cld-video-player' + (videoPlayerID ? '-' + videoPlayerID : ''), cldObj.video.widgetOptions);
                 player.source(cldObj.video.videoURL, {}).play();
@@ -63,10 +75,10 @@ window.renderCloudinaryVideoPlayer = function () {
 
 window.makeCloudinaryImagesResponsive = function () {
     var $cldResponsiveImgTags = $('.cld-responsive');
-    var $cldEl = $('.cloudinary-data-container');
+    var $cldEl = $('.cloudinary-data-container').length > 0 ? $('.cloudinary-data-container') : $('.cloudinary-data-cloud-container');
     var cloudinaryObj = $cldEl.data('cloudinary');
     if ($cldResponsiveImgTags && $cldResponsiveImgTags.length > 0) {
-        window.cldObj = window.cldObj || cloudinary.default.Cloudinary.new({cloud_name: cloudinaryObj.cloudName || cloudinaryObj}); // eslint-disable-line no-undef
+        window.cldObj = window.cldObj || cloudinary.default.Cloudinary.new({ cloud_name: cloudinaryObj.cloudName || cloudinaryObj }); // eslint-disable-line no-undef
         window.cldObj.responsive(); // eslint-disable-line no-undef
     }
 };

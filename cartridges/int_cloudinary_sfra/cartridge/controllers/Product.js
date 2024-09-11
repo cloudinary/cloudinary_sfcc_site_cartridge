@@ -11,6 +11,7 @@ var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants'
 var cloudinaryModel = require('*/cartridge/scripts/model/cloudinaryModel');
 var cloudinaryHelper = require('*/cartridge/scripts/helpers/cloudinaryHelpers');
 var pageMetaData = require('*/cartridge/scripts/middleware/pageMetaData');
+var URLUtils = require('dw/web/URLUtils');
 
 /**
  * @typedef ProductDetailPageResourceMap
@@ -71,7 +72,7 @@ server.append('Show', cache.applyPromotionSensitiveCache, consentTracking.consen
             cloudinary.videoEnabled = product.CLDVideoEnabled;
             cloudinary.videoPlayerEnabled = product.CLDVideoPlayerEnabled;
             cloudinary.pdp = cloudinaryConstants.CLD_IMAGE_PAGE_TYPE_SETTINGS_OBJECT.pdp.enabled;
-            cloudinary.basePath = cloudinaryConstants.CLD_BASE_PATH;
+            cloudinary.domain = cloudinaryConstants.CLD_BASE_PATH.match(/^(?:https?:\/\/)?([^\/]+)\/?/)[1];
             res.setViewData({ cloudinary: cloudinary, product: product });
         }
 
@@ -107,6 +108,9 @@ server.append('Variation', function (req, res, next) {
             variationAttrValueID: colorAttrValueID
         });
 
+        var staticUrl = URLUtils.staticURL('images/noimagelarge.png');
+        product.ErrorImage = staticUrl.toString();
+        
         if (!cloudinaryConstants.CLD_GALLERY_ENABLED) {
             product = cloudinaryModel.updateProductCarouselImages(cldAssets, product);
         }
@@ -127,6 +131,7 @@ server.append('Variation', function (req, res, next) {
         }
 
         cloudinary.isCLDEnabled = cloudinaryConstants.CLD_ENABLED;
+        cloudinary.domain = cloudinaryConstants.CLD_BASE_PATH.match(/^(?:https?:\/\/)?([^\/]+)\/?/)[1];
         cloudinary.isGalleryEnabled = cloudinaryConstants.CLD_GALLERY_ENABLED;
     }
 
@@ -161,6 +166,7 @@ server.append('ShowQuickView', cache.applyPromotionSensitiveCache, function (req
     cloudinary.quickViewEnabled = cloudinaryConstants.CLD_IMAGE_PAGE_TYPE_SETTINGS_OBJECT.quickview.enabled;
     cloudinary.galleryEnabled = cloudinaryConstants.CLD_GALLERY_ENABLED;
     cloudinary.cloudName = cloudinaryConstants.CLD_CLOUDNAME;
+    cloudinary.domain = cloudinaryConstants.CLD_BASE_PATH.match(/^(?:https?:\/\/)?([^\/]+)\/?/)[1];
 
     res.setViewData({ cloudinary: cloudinary });
 

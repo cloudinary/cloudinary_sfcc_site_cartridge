@@ -108,9 +108,6 @@ server.append('Variation', function (req, res, next) {
             variationAttrValueID: colorAttrValueID
         });
 
-        var staticUrl = URLUtils.staticURL('images/noimagelarge.png');
-        product.ErrorImage = staticUrl.toString();
-        
         if (!cloudinaryConstants.CLD_GALLERY_ENABLED) {
             product = cloudinaryModel.updateProductCarouselImages(cldAssets, product);
         }

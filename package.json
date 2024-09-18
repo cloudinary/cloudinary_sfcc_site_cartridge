@@ -1,6 +1,6 @@
 {
     "name": "int_cloudinary_sfra",
-    "version": "24.2.4",
+    "version": "24.2.5",
     "description": "Cloudinary Cartridge For Images",
     "main": "index.js",
     "scripts": {

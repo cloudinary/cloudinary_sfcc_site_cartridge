@@ -5,20 +5,23 @@ var $ = require('jquery');
 window.renderCloudinaryGalleryWidget = function () {
     var imgUrls;
     var $cldEl = $('.cloudinary-data-container');
-    var cloudinaryObj = $cldEl.data('cloudinary');
 
-    if (cloudinaryObj) {
-        if (cloudinaryObj.galleryEnabled && typeof cloudinary !== 'undefined') {
-            var galleryOptions = cloudinaryObj.images.galleryWidget.options;
-            if (cloudinaryObj.domain !== 'res.cloudinary.com') {
-                galleryOptions.SecureDistribution = cloudinaryObj.domain;
+    $cldEl.each(function() {
+        var cloudinaryObj = $(this).data('cloudinary');
+
+        if (cloudinaryObj) {
+            if (cloudinaryObj.galleryEnabled && typeof cloudinary !== 'undefined') {
+                var galleryOptions = cloudinaryObj.images.galleryWidget.options;
+                if (cloudinaryObj.domain !== 'res.cloudinary.com') {
+                    galleryOptions.SecureDistribution = cloudinaryObj.domain;
+                }
+                window.cldGallery = cloudinary.galleryWidget(galleryOptions); // eslint-disable-line no-undef
+                cldGallery.render(); // eslint-disable-line no-undef
+            } else if (cloudinaryObj.images && cloudinaryObj.images.imageURLs) {
+                imgUrls = cloudinaryObj.images.imageURLs;
             }
-            window.cldGallery = cloudinary.galleryWidget(galleryOptions); // eslint-disable-line no-undef
-            cldGallery.render(); // eslint-disable-line no-undef
-        } else if (cloudinaryObj.images && cloudinaryObj.images.imageURLs) {
-            imgUrls = cloudinaryObj.images.imageURLs;
         }
-    }
+    });
 
     return imgUrls;
 };
@@ -75,7 +78,7 @@ window.renderCloudinaryVideoPlayer = function () {
 
 window.makeCloudinaryImagesResponsive = function () {
     var $cldResponsiveImgTags = $('.cld-responsive');
-    var $cldEl = $('.cloudinary-data-container').length > 0 ? $('.cloudinary-data-container') : $('.cloudinary-data-modal-container');
+    var $cldEl = $('.cloudinary-data-container');
     var cloudinaryObj = $cldEl.data('cloudinary');
     if ($cldResponsiveImgTags && $cldResponsiveImgTags.length > 0) {
         window.cldObj = window.cldObj || cloudinary.default.Cloudinary.new({ cloud_name: cloudinaryObj.cloudName || cloudinaryObj }); // eslint-disable-line no-undef

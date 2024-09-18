@@ -72,7 +72,7 @@ server.append('Show', cache.applyPromotionSensitiveCache, consentTracking.consen
             cloudinary.videoEnabled = product.CLDVideoEnabled;
             cloudinary.videoPlayerEnabled = product.CLDVideoPlayerEnabled;
             cloudinary.pdp = cloudinaryConstants.CLD_IMAGE_PAGE_TYPE_SETTINGS_OBJECT.pdp.enabled;
-            cloudinary.domain = cloudinaryConstants.CLD_BASE_PATH.match(/^(?:https?:\/\/)?([^\/]+)\/?/)[1];
+            cloudinary.domain = cloudinaryConstants.CLD_BASE_PATH.match('^(?:https?:\/\/)?([^\/:]+)')[1];
             res.setViewData({ cloudinary: cloudinary, product: product });
         }
 
@@ -128,7 +128,7 @@ server.append('Variation', function (req, res, next) {
         }
 
         cloudinary.isCLDEnabled = cloudinaryConstants.CLD_ENABLED;
-        cloudinary.domain = cloudinaryConstants.CLD_BASE_PATH.match(/^(?:https?:\/\/)?([^\/]+)\/?/)[1];
+        cloudinary.domain = cloudinaryConstants.CLD_BASE_PATH.match('^(?:https?:\/\/)?([^\/:]+)')[1];
         cloudinary.isGalleryEnabled = cloudinaryConstants.CLD_GALLERY_ENABLED;
     }
 
@@ -163,7 +163,7 @@ server.append('ShowQuickView', cache.applyPromotionSensitiveCache, function (req
     cloudinary.quickViewEnabled = cloudinaryConstants.CLD_IMAGE_PAGE_TYPE_SETTINGS_OBJECT.quickview.enabled;
     cloudinary.galleryEnabled = cloudinaryConstants.CLD_GALLERY_ENABLED;
     cloudinary.cloudName = cloudinaryConstants.CLD_CLOUDNAME;
-    cloudinary.domain = cloudinaryConstants.CLD_BASE_PATH.match(/^(?:https?:\/\/)?([^\/]+)\/?/)[1];
+    cloudinary.domain = cloudinaryConstants.CLD_BASE_PATH.match('^(?:https?:\/\/)?([^\/:]+)')[1];
 
     res.setViewData({ cloudinary: cloudinary });
 

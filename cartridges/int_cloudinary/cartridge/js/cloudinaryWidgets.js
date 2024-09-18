@@ -75,7 +75,7 @@ window.renderCloudinaryVideoPlayer = function () {
 
 window.makeCloudinaryImagesResponsive = function () {
     var $cldResponsiveImgTags = $('.cld-responsive');
-    var $cldEl = $('.cloudinary-data-container').length > 0 ? $('.cloudinary-data-container') : $('.cloudinary-data-cloud-container');
+    var $cldEl = $('.cloudinary-data-container').length > 0 ? $('.cloudinary-data-container') : $('.cloudinary-data-modal-container');
     var cloudinaryObj = $cldEl.data('cloudinary');
     if ($cldResponsiveImgTags && $cldResponsiveImgTags.length > 0) {
         window.cldObj = window.cldObj || cloudinary.default.Cloudinary.new({ cloud_name: cloudinaryObj.cloudName || cloudinaryObj }); // eslint-disable-line no-undef

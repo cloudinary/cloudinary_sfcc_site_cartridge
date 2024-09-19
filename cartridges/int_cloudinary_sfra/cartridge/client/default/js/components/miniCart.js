@@ -6,10 +6,8 @@ module.exports = function () {
 	const config = { childList: true, subtree: true };
 
 	const callback = function () {
-		if (targetNode.innerHTML.length > 0) {
-			if (typeof window.makeCloudinaryImagesResponsive !== 'undefined') {
-				window.makeCloudinaryImagesResponsive();
-			}
+		if (targetNode.innerHTML.length > 0 && typeof window.makeCloudinaryImagesResponsive !== 'undefined') {
+			window.makeCloudinaryImagesResponsive();
 		}
 	};
 

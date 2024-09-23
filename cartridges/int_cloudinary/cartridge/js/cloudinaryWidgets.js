@@ -6,7 +6,7 @@ window.renderCloudinaryGalleryWidget = function () {
     var imgUrls;
     var $cldEl = $('.cloudinary-data-container');
 
-    $cldEl.each(function() {
+    $cldEl.each(function () {
         var cloudinaryObj = $(this).data('cloudinary');
 
         if (cloudinaryObj) {
@@ -14,6 +14,7 @@ window.renderCloudinaryGalleryWidget = function () {
                 var galleryOptions = cloudinaryObj.images.galleryWidget.options;
                 if (cloudinaryObj.domain !== 'res.cloudinary.com') {
                     galleryOptions.SecureDistribution = cloudinaryObj.domain;
+                    galleryOptions.galleryOptions = true;
                 }
                 window.cldGallery = cloudinary.galleryWidget(galleryOptions); // eslint-disable-line no-undef
                 cldGallery.render(); // eslint-disable-line no-undef
@@ -38,6 +39,7 @@ window.renderCloudinarySetGalleryWidgets = function () {
             cldObj.galleryEnabled && typeof cloudinary !== 'undefined') {
             if (cldObj.domain !== 'res.cloudinary.com') {
                 cldSetImages.galleryOptions.options.SecureDistribution = cldObj.domain;
+                cldSetImages.galleryOptions.galleryOptions = true;
             }
             window.cldGallery = cloudinary.galleryWidget(cldSetImages.galleryWidget.options); // eslint-disable-line no-undef
             cldGallery.render(); // eslint-disable-line no-undef
@@ -59,9 +61,8 @@ window.renderCloudinaryVideoPlayer = function () {
             if (cldObj.videoPlayerEnabled && typeof cloudinary !== 'undefined') {
 
                 if (cldObj.domain !== 'res.cloudinary.com') {
-                    cldObj.video.widgetOptions.private_cdn = true;
-                    cldObj.video.widgetOptions.cname = cldObj.domain;
-                    cldObj.video.widgetOptions.secure_distribution = cldObj.domain;
+                    cldObj.video.widgetOptions.privateCdn = true;
+                    cldObj.video.widgetOptions.secureDistribution = cldObj.domain;
                 }
                 var cld = cloudinary.Cloudinary.new({ cloud_name: cldObj.cloudName }); // eslint-disable-line no-undef
                 var player = cld.videoPlayer('cld-video-player' + (videoPlayerID ? '-' + videoPlayerID : ''), cldObj.video.widgetOptions);

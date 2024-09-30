@@ -15,6 +15,7 @@ window.renderCloudinaryGalleryWidget = function () {
                 if (cloudinaryObj.domain !== 'res.cloudinary.com') {
                     galleryOptions.SecureDistribution = cloudinaryObj.domain;
                     galleryOptions.galleryOptions = true;
+                    galleryOptions.privateCdn = true;
                 }
                 window.cldGallery = cloudinary.galleryWidget(galleryOptions); // eslint-disable-line no-undef
                 cldGallery.render(); // eslint-disable-line no-undef
@@ -38,8 +39,9 @@ window.renderCloudinarySetGalleryWidgets = function () {
         if (cldObj && cldObj.isEnabled && cldSetImages && cldSetImages.galleryWidget &&
             cldObj.galleryEnabled && typeof cloudinary !== 'undefined') {
             if (cldObj.domain !== 'res.cloudinary.com') {
-                cldSetImages.galleryOptions.options.SecureDistribution = cldObj.domain;
-                cldSetImages.galleryOptions.galleryOptions = true;
+                cldSetImages.galleryWidget.options.SecureDistribution = cldObj.domain;
+                cldSetImages.galleryWidget.options.galleryOptions = true;
+                cldSetImages.galleryWidget.options.privateCdn = true;
             }
             window.cldGallery = cloudinary.galleryWidget(cldSetImages.galleryWidget.options); // eslint-disable-line no-undef
             cldGallery.render(); // eslint-disable-line no-undef

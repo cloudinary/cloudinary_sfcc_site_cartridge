@@ -25,6 +25,7 @@ exports.modifyGETResponse = function (order, doc) {
                     }
                     cloudinary.orderConfirmationEnabled = cldPageSetting.orderConfirmation.enabled;
                     cloudinary.orderHistoryEnabled = cldPageSetting.orderHistory.enabled;
+                    cloudinary.cloudName = cloudinaryConstants.CLD_CLOUDNAME;
                     item.c_cloudinary = cloudinary;
                 });
             }

@@ -21,6 +21,7 @@ exports.modifyGETResponse = function (product) {
                     var imagePageTypeSetting = JSON.parse(cloudinaryConstants.CLD_IMAGE_PAGE_TYPE_SETTINGS);
                     item.c_cloudinary.c_autoResponsiveDimensions = imagePageTypeSetting.plp.autoResponsiveDimensions;
                     item.c_cloudinary.plpEnabled = cloudinaryConstants.CLD_IMAGE_PAGE_TYPE_SETTINGS_OBJECT.plp.enabled;
+                    item.c_cloudinary.cloudName = cloudinaryConstants.CLD_CLOUDNAME;
                 });
             }
 

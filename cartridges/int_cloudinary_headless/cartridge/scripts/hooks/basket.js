@@ -42,6 +42,7 @@ exports.modifyPOSTResponse = function (basket, doc) {
                     cloudinary.miniCartEnabled = cldPageSetting.miniCart.enabled;
                     cloudinary.cartEnabled = cldPageSetting.cart.enabled;
                     cloudinary.checkoutEnabled = cldPageSetting.checkout.enabled;
+                    cloudinary.cloudName = cloudinaryConstants.CLD_CLOUDNAME;
                     item.c_cloudinary = cloudinary;
                 });
             }

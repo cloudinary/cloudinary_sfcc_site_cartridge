@@ -5,6 +5,9 @@
     <iscomment>Custom Start: Cloudinary includes </iscomment>
     <isset name="cloudinaryConstants" value="${require('*/cartridge/scripts/util/cloudinaryConstants')}" scope="PAGE" />
     <isset name="cloudinaryAPI" value="${require('*/cartridge/scripts/api/cloudinaryApi')}" scope="PAGE" />
+    <isif condition="${JSON.parse(cloudinaryConstants.CLD_IMAGE_PAGE_TYPE_SETTINGS).categoryBanner.enabled && JSON.parse(cloudinaryConstants.CLD_IMAGE_PAGE_TYPE_SETTINGS).categoryBanner.automateResponsivenessWithJS}">
+        <isinclude template="include/cloudinaryShrinkwrap"/>
+    </isif>
     <iscomment>Custom END: Cloudinary includes </iscomment>
 
     <div class="category-slot">

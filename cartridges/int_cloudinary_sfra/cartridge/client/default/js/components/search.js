@@ -5,12 +5,18 @@ var baseSearch = require('base/components/search');
 module.exports = function () {
     baseSearch();
     // Custom Start: Make suggested product images responsive //
-    $('.suggestions-wrapper').bind('DOMSubtreeModified', function (e) {
-        if (e.target.innerHTML.length > 0) {
-            if (typeof window.makeCloudinaryImagesResponsive !== 'undefined') {
-                window.makeCloudinaryImagesResponsive();
-            }
-        }
-    });
+    const targetNode = document.querySelector('.suggestions-wrapper');
+	if (targetNode) {
+		const config = { childList: true, subtree: true };
+	
+		const callback = function () {
+			if (targetNode.innerHTML.length > 0 && typeof window.makeCloudinaryImagesResponsive !== 'undefined') {
+				window.makeCloudinaryImagesResponsive();
+			}
+		};
+	
+		const observer = new MutationObserver(callback);
+		observer.observe(targetNode, config);
+	}
     // Custom End: Make suggested product images responsive //
 };

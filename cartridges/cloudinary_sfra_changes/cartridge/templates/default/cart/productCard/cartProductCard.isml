@@ -56,6 +56,12 @@
 
         <isinclude template="cart/productCard/cartProductCardProductPrice" />
 
+        <isif condition="${!lineItem.isBonusProductLineItem}"/>
+            <div class="hidden-md-down">
+                <isinclude template="components/deleteButton" />
+            </div>
+        </isif>
+
     </div>
 
     <isif condition="${lineItem.bonusProductLineItemUUID === 'bonus'}">

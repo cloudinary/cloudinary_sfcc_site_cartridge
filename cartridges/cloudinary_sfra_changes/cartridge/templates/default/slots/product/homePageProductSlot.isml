@@ -7,7 +7,7 @@
         <div class="col-6 col-sm-4">
             <iscomment>Custom start: Add cloudinary page type</iscomment>
             <isinclude url="${URLUtils.url('Tile-Show', 'pid', product.ID, 'pview', 'tile', 'ratings', true,
-                'swatches', true, 'pageType', 'homePage', 'pageTypeSwatches', 'cldHomePageSwatch')}"/>
+                'swatches', true, 'pageType', 'cldhomePageProductTile', 'pageTypeSwatches', 'cldHomePageSwatch')}"/>
             <iscomment>Custom end: Add cloudinary page type</iscomment>
         </div>
 

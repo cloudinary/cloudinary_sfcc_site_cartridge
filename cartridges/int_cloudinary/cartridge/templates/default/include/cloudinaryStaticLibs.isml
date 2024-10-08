@@ -8,12 +8,13 @@
         <div class="cloudinary-data-container d-none visually-hidden" data-cloudinary="${preferences.CLDCloudName}"></div> 
     </isif>
     <script src="${URLUtils.staticURL('/js/cloudinaryWidgets.js')}"></script>
-    <script src="${preferences.CLDCoreShrinkwrapJSURL}"></script>
+    
     <isif condition="${pdict.cloudinary && pdict.cloudinary.videoEnabled && pdict.cloudinary.videoPlayerEnabled}">
         <link href="${preferences.CLDVideoPlayerCSSURL}" rel="stylesheet"/>
         <script src="${preferences.CLDVideoPlayerJSURL}"></script>
     </isif>
-    <isif condition="${preferences.CLDGalleryEnabled}">
-        <script src="${preferences.CLDGalleryJSURL}"></script>
+    <isset name="CLDImagePageTypeSettings" value="${JSON.parse(preferences.CLDImagePageTypeSettings)}" scope="page"/>
+    <isif condition="${(CLDImagePageTypeSettings.miniCart.enabled && CLDImagePageTypeSettings.miniCart.automateResponsivenessWithJS) || (CLDImagePageTypeSettings.searchSuggestions.enabled && CLDImagePageTypeSettings.searchSuggestions.automateResponsivenessWithJS)}">
+        <isinclude template="include/cloudinaryShrinkwrap"/>
     </isif>
 </isif>

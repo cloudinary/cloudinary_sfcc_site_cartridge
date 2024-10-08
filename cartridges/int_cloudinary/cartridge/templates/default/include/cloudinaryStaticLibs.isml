@@ -8,7 +8,6 @@
         <div class="cloudinary-data-container d-none visually-hidden" data-cloudinary="${preferences.CLDCloudName}"></div> 
     </isif>
     <script src="${URLUtils.staticURL('/js/cloudinaryWidgets.js')}"></script>
-    
     <isif condition="${pdict.cloudinary && pdict.cloudinary.videoEnabled && pdict.cloudinary.videoPlayerEnabled}">
         <link href="${preferences.CLDVideoPlayerCSSURL}" rel="stylesheet"/>
         <script src="${preferences.CLDVideoPlayerJSURL}"></script>

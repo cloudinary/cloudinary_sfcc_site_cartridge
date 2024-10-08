@@ -1,3 +1,10 @@
+<iscomment> Custom Start: include cloudinary shrinkwrap. </iscomment>
+<isset name="CLDImagePageTypeSettings" value="${JSON.parse(dw.system.Site.current.preferences.custom.CLDImagePageTypeSettings)}" scope="page"/>
+<isif condition="${CLDImagePageTypeSettings.cart.enabled && CLDImagePageTypeSettings.cart.automateResponsivenessWithJS}">
+    <isinclude template="include/cloudinaryShrinkwrap"/>
+</isif>
+<iscomment> Custom End: include cloudinary shrinkwrap. </iscomment>
+
 <isloop items="${lineItem.bundledProductLineItems}" var="bundledLineItem">
     <div class="bundled-line-item clearfix">
         <div class="line-item-name">

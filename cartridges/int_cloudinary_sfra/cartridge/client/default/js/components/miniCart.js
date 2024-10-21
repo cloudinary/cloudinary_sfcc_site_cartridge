@@ -5,13 +5,11 @@ module.exports = function () {
     const targetNode = document.querySelector('.minicart');
     if (targetNode) {
         const config = { childList: true, subtree: true };
-
         const callback = function () {
             if (targetNode.innerHTML.length > 0 && typeof window.makeCloudinaryImagesResponsive !== 'undefined') {
                 window.makeCloudinaryImagesResponsive();
             }
         };
-
         const observer = new MutationObserver(callback);
         observer.observe(targetNode, config);
     }

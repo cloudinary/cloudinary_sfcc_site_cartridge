@@ -14,7 +14,6 @@ window.renderCloudinaryGalleryWidget = function () {
                 var galleryOptions = cloudinaryObj.images.galleryWidget.options;
                 if (cloudinaryObj.domain !== 'res.cloudinary.com') {
                     galleryOptions.SecureDistribution = cloudinaryObj.domain;
-                    galleryOptions.galleryOptions = true;
                     galleryOptions.privateCdn = true;
                 }
                 window.cldGallery = cloudinary.galleryWidget(galleryOptions); // eslint-disable-line no-undef
@@ -40,7 +39,6 @@ window.renderCloudinarySetGalleryWidgets = function () {
             cldObj.galleryEnabled && typeof cloudinary !== 'undefined') {
             if (cldObj.domain !== 'res.cloudinary.com') {
                 cldSetImages.galleryWidget.options.SecureDistribution = cldObj.domain;
-                cldSetImages.galleryWidget.options.galleryOptions = true;
                 cldSetImages.galleryWidget.options.privateCdn = true;
             }
             window.cldGallery = cloudinary.galleryWidget(cldSetImages.galleryWidget.options); // eslint-disable-line no-undef

@@ -51,6 +51,7 @@ function show() {
             cloudinary.videoEnabled = isVideoEnabled;
             cloudinary.videoPlayerEnabled = isVideoPlayerEnabled;
             cloudinary.cloudName = cloudinaryConstants.CLD_CLOUDNAME;
+            cloudinary.domain = cloudinaryConstants.CLD_BASE_PATH.match(/^(?:https?:\/\/)?([^\/]+)/)[1];
             if (isVideoEnabled) {
                 cloudinary.video = cloudinaryModel.getCloudinaryVideo(product.object.ID, request.locale);
             }
@@ -114,6 +115,7 @@ function detail() {
             cloudinary.videoPlayerEnabled = isVideoPlayerEnabled;
             cloudinary.cloudName = cloudinaryConstants.CLD_CLOUDNAME;
             cloudinary.isQuickView = params.source && params.source.stringValue === 'quickview' ? true : false;
+            cloudinary.domain = cloudinaryConstants.CLD_BASE_PATH.match(/^(?:https?:\/\/)?([^\/]+)/)[1];
             if (isVideoEnabled) {
                 cloudinary.video = cloudinaryModel.getCloudinaryVideo(product.object.ID, request.locale);
             }
@@ -197,6 +199,7 @@ function hitTile() {
         var cldAltText = product.object.custom.CLDAltTextForImages;
         }
     var enabledRecommendation = cloudinaryConstants.CLD_IMAGE_PAGE_TYPE_SETTINGS_OBJECT.recommendationTile.enabled;    
+    cloudinary.domain = cloudinaryConstants.CLD_BASE_PATH.match(/^(?:https?:\/\/)?([^\/]+)/)[1];
     // Custom End: Add cloudinary object //
     if (product.isVisible()) {
         var productView = app.getView('Product', {

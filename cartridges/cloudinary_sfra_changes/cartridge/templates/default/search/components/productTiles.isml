@@ -10,14 +10,15 @@
     <isscript>
         pdict.CLDGalleryJSURL = dw.system.Site.current.preferences.custom.CLDGalleryJSURL;
     </isscript>
-
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var CLDGalleryJSURL = JSON.parse('<isprint value="${JSON.stringify(pdict.CLDGalleryJSURL)}" encoding="jsonvalue"/>');
-            const script = document.createElement('script');
-            script.src = CLDGalleryJSURL;
-            document.body.appendChild(script);
-        })
+        var CLDGalleryJSURL = JSON.parse('<isprint value="${JSON.stringify(pdict.CLDGalleryJSURL)}" encoding="jsonvalue"/>');
+        const galleryScript = document.createElement('script');
+        galleryScript.src = CLDGalleryJSURL;
+        document.body.appendChild(galleryScript);
+        galleryScript.onload = () => {
+            window.cldProductGallery = cloudinary;
+            window.renderCloudinaryGalleryWidget();
+        };
     </script>
 </isif>
 <iscomment> Custom End: include cloudinary shrinkwrap. </iscomment>

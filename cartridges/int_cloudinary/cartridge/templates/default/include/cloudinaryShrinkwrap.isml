@@ -9,8 +9,6 @@
         const script = document.createElement('script');
         script.src = shrinkwrapUrl;
         document.body.appendChild(script);
-        script.onload = () => {
-            window.makeCloudinaryImagesResponsive();
-        };
+        window.makeCloudinaryImagesResponsive();
     }
 </script>

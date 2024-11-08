@@ -9,24 +9,14 @@
     <iscomment> Custom Start: include cloudinary shrinkwrap. </iscomment>
     <isset name="CLDImagePageTypeSettings" value="${JSON.parse(dw.system.Site.current.preferences.custom.CLDImagePageTypeSettings)}" scope="page"/>
     <isif condition="${dw.system.Site.current.preferences.custom.CLDGalleryEnabled}">
-        <isscript>
-            pdict.CLDGalleryJSURL = dw.system.Site.current.preferences.custom.CLDGalleryJSURL;
-        </isscript>
+        <script src="${dw.system.Site.current.preferences.custom.CLDGalleryJSURL}"></script>
         <script>
-            var CLDGalleryJSURL = JSON.parse('<isprint value="${JSON.stringify(pdict.CLDGalleryJSURL)}" encoding="jsonvalue"/>');
-            const galleryScript = document.createElement('script');
-            galleryScript.src = CLDGalleryJSURL;
-            document.body.appendChild(galleryScript);
-            galleryScript.onload = () => {
-                window.cldProductGallery = cloudinary;
-                window.renderCloudinaryGalleryWidget();
-            };
+            window.cldProductGallery = cloudinary;
         </script>
     </isif>
     <isif condition="${(CLDImagePageTypeSettings.pdp.enabled && CLDImagePageTypeSettings.pdp.automateResponsivenessWithJS) || (CLDImagePageTypeSettings.cldPdpSwatch.enabled && CLDImagePageTypeSettings.cldPdpSwatch.automateResponsivenessWithJS)}">
         <isinclude template="include/cloudinaryShrinkwrap"/>
     </isif>
-
     <iscomment> Custom End: include cloudinary shrinkwrap. </iscomment>
 
     <iscomment>Custom start: add variable for cloudinary PGW</iscomment>

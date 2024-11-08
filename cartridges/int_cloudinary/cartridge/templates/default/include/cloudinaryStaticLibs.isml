@@ -8,21 +8,13 @@
         <div class="cloudinary-data-container d-none visually-hidden" data-cloudinary="${preferences.CLDCloudName}"></div>
     </isif>
     <script src="${URLUtils.staticURL('/js/cloudinaryWidgets.js')}"></script>
-    <isif condition="${pdict.cloudinary && pdict.cloudinary.videoEnabled && pdict.cloudinary.videoPlayerEnabled}">
+    <isif condition="${preferences.CLDVideoEnabled && preferences.CLDVideoPlayerEnabled}">
         <link href="${preferences.CLDVideoPlayerCSSURL}" rel="stylesheet"/>
+        <script src="${preferences.CLDVideoPlayerJSURL}"></script>
+        <script>
+            window.cldVideoPlayer = cloudinary.Cloudinary;
+        </script>
     </isif>
-    <isscript>
-        pdict.CLDVideoPlayerJSURL = preferences.CLDVideoPlayerJSURL;
-    </isscript>
-    <script>
-        var CLDVideoPlayerJSURL = JSON.parse('<isprint value="${JSON.stringify(pdict.CLDVideoPlayerJSURL)}" encoding="jsonvalue"/>');
-            const script = document.createElement('script');
-            script.src = CLDVideoPlayerJSURL;
-            document.body.appendChild(script);
-            script.onload = () => {
-                window.cldVideoPlayer = cloudinary.Cloudinary;
-            };
-    </script>
     <isset name="CLDImagePageTypeSettings" value="${JSON.parse(preferences.CLDImagePageTypeSettings)}" scope="page"/>
     <isif condition="${(CLDImagePageTypeSettings.miniCart.enabled && CLDImagePageTypeSettings.miniCart.automateResponsivenessWithJS) || (CLDImagePageTypeSettings.searchSuggestions.enabled && CLDImagePageTypeSettings.searchSuggestions.automateResponsivenessWithJS)}">
         <isinclude template="include/cloudinaryShrinkwrap"/>

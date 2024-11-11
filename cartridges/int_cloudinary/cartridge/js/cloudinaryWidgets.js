@@ -82,9 +82,7 @@ window.makeCloudinaryImagesResponsive = function () {
     var $cldEl = $('.cloudinary-data-container');
     var cloudinaryObj = $cldEl.data('cloudinary');
     if ($cldResponsiveImgTags && $cldResponsiveImgTags.length > 0) {
-        if (window.cldObj) {
-            window.cldObj = window.cldObj;
-        } else if ( window.cloudinary && window.cloudinary.default) {
+        if ( window.cldObj === undefined && window.cloudinary && window.cloudinary.default) {
             window.cldObj = window.cloudinary.default.Cloudinary.new({ cloud_name: cloudinaryObj.cloudName || cloudinaryObj });
         }
         window.cldObj && window.cldObj.responsive(); // eslint-disable-line no-undef

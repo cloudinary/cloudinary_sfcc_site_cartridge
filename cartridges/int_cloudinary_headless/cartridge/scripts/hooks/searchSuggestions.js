@@ -18,6 +18,7 @@ exports.modifyGETResponse = function (doc) {
                         { pageType: cloudinaryConstants.PAGE_TYPES.SEARCH_SUGGESTIONS });
                     item.c_cloudinary = cloudinaryImage;
                     item.c_cloudinary.suggestionEnabled = cloudinaryConstants.CLD_IMAGE_PAGE_TYPE_SETTINGS_OBJECT.searchSuggestions.enabled;
+                    item.c_cloudinary.cloudName = cloudinaryConstants.CLD_CLOUDNAME;
                 });
             }
         }

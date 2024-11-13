@@ -9,7 +9,7 @@
                 "description": "Step used to upload product images/videos on Cloudinary",
                 "module": "int_cloudinary/cartridge/scripts/jobs/steps/cldUploadProductAssets.js",
                 "function": "Start",
-                "transactional": "false",
+                "transactional": false,
                 "parameters": {
                     "parameter": [{
                         "@name": "CLDAssetRenameReportEmail",
@@ -81,7 +81,7 @@
                 "description": "Step used to upload product images/videos on Cloudinary",
                 "module": "int_cloudinary/cartridge/scripts/jobs/steps/cldUpdateProductImagesForFeeds.js",
                 "function": "Start",
-                "transactional": "false",
+                "transactional": false,
                 "parameters": {
                     "parameter": [{
                         "@name": "CLDNumberOfAssets",
@@ -157,7 +157,7 @@
                 "description": "Step used to upload content library images/videos on Cloudinary",
                 "module": "int_cloudinary/cartridge/scripts/jobs/steps/cldUploadContentLibraryAssets.js",
                 "function": "Start",
-                "transactional": "fasle",
+                "transactional": false,
                 "parameters": {
                     "parameter": [{
                         "@name": "CLDAssetRenameReportEmail",
@@ -216,7 +216,7 @@
                 "description": "Step used to upload catalog images/videos on Cloudinary",
                 "module": "int_cloudinary/cartridge/scripts/jobs/steps/cldUploadCatalogAssets.js",
                 "function": "Start",
-                "transactional": "false",
+                "transactional": false,
                 "parameters": {
                     "parameter": [{
                         "@name": "CLDAssetRenameReportEmail",
@@ -275,7 +275,7 @@
                 "description": "Create the essential structured metadata in Cloudinary.",
                 "module": "int_cloudinary/cartridge/scripts/jobs/steps/cldStructuredMetadata.js",
                 "function": "Start",
-                "transactional": "false",
+                "transactional": false,
                 "parameters": {
                     "parameter": [
                     {

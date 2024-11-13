@@ -3,8 +3,11 @@
     <iscomment> Render a tile of the category Name and the Category Landing Slot Image field </iscomment>
 
     <iscomment>Custom Start: Cloudinary includes </iscomment>
-    <isset name="cloudinaryConstants" value="${require('*/cartridge/scripts/util/cloudinaryConstants')}" scope="PAGE" />
-    <isset name="cloudinaryAPI" value="${require('*/cartridge/scripts/api/cloudinaryApi')}" scope="PAGE" />
+    <isset name="cloudinaryConstants" value="${require('*/cartridge/scripts/util/cloudinaryConstants')}" scope="page" />
+    <isset name="cloudinaryAPI" value="${require('*/cartridge/scripts/api/cloudinaryApi')}" scope="page" />
+    <isif condition="${JSON.parse(cloudinaryConstants.CLD_IMAGE_PAGE_TYPE_SETTINGS).categoryBanner.enabled && JSON.parse(cloudinaryConstants.CLD_IMAGE_PAGE_TYPE_SETTINGS).categoryBanner.automateResponsivenessWithJS}">
+        <isinclude template="include/cloudinaryShrinkwrap"/>
+    </isif>
     <iscomment>Custom END: Cloudinary includes </iscomment>
 
     <div class="category-slot">
@@ -18,11 +21,11 @@
             <isloop items="${slotcontent.content}" var="category">
             
             <iscomment>Custom Start: Cloudinary image customizations </iscomment>
-            <isset name="catBGImageUrl" value="${category.custom.slotBannerImage.getURL()}" scope="PAGE" />
+            <isset name="catBGImageUrl" value="${category.custom.slotBannerImage.getURL()}" scope="page" />
 
             <isif condition="${cloudinaryConstants.CLD_ENABLED && !empty(catBGImageUrl) && JSON.parse(cloudinaryConstants.CLD_IMAGE_PAGE_TYPE_SETTINGS).categoryBanner.enabled}" >
                 <isset name="cldBannerImage" value="${cloudinaryAPI.getCatalogImageAbsURLFromRelURL(catBGImageUrl.toString(), category.ID, cloudinaryConstants.PAGE_TYPES.CATEGORY_BANNER)}" scope="PAGE" />
-                <isset name="catBGImageUrl" value="${empty(cldBannerImage) ? catBGImageUrl : cldBannerImage.url}" scope="PAGE" />
+                <isset name="catBGImageUrl" value="${empty(cldBannerImage) ? catBGImageUrl : cldBannerImage.url}" scope="page" />
             </isif>
 
                 <isif condition="${!empty(catBGImageUrl)}">

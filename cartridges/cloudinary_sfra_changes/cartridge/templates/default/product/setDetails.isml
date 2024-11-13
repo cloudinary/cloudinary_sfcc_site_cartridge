@@ -6,6 +6,19 @@
         assets.addCss('/css/product/detail.css');
     </isscript>
 
+    <iscomment> Custom Start: include cloudinary shrinkwrap. </iscomment>
+    <isset name="CLDImagePageTypeSettings" value="${JSON.parse(dw.system.Site.current.preferences.custom.CLDImagePageTypeSettings)}" scope="page"/>
+    <isif condition="${dw.system.Site.current.preferences.custom.CLDGalleryEnabled}">
+        <script src="${dw.system.Site.current.preferences.custom.CLDGalleryJSURL}"></script>
+        <script>
+            window.cldProductGallery = cloudinary;
+        </script>
+    </isif>
+    <isif condition="${(CLDImagePageTypeSettings.pdp.enabled && CLDImagePageTypeSettings.pdp.automateResponsivenessWithJS) || (CLDImagePageTypeSettings.cldPdpSwatch.enabled && CLDImagePageTypeSettings.cldPdpSwatch.automateResponsivenessWithJS)}">
+        <isinclude template="include/cloudinaryShrinkwrap"/>
+    </isif>
+    <iscomment> Custom End: include cloudinary shrinkwrap. </iscomment>
+
     <iscomment>Custom start: add variable for cloudinary PGW</iscomment>
     <isif condition="${pdict.cloudinary && pdict.cloudinary.isEnabled}">
         <isset name="isBundleOrSet" value="${true}" scope="page" />

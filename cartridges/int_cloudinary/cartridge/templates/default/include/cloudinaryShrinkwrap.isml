@@ -1,0 +1,14 @@
+<isset name="sitePref" value="${dw.system.Site.current.preferences.custom}" scope="page" />
+<isscript>
+    pdict.CLDCoreShrinkwrapJSURL = sitePref.CLDCoreShrinkwrapJSURL;
+</isscript>
+
+<script>
+    var shrinkwrapUrl = JSON.parse('<isprint value="${JSON.stringify(pdict.CLDCoreShrinkwrapJSURL)}" encoding="jsonvalue"/>');
+    if (document.querySelector('script[src="'+shrinkwrapUrl+'"]') === null) {
+        const script = document.createElement('script');
+        script.src = shrinkwrapUrl;
+        document.body.appendChild(script);
+        window.makeCloudinaryImagesResponsive();
+    }
+</script>

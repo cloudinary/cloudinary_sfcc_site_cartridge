@@ -53,6 +53,16 @@ module.exports.Start = function (args) {
 
     try {
         if (!empty(siteCatalog)) {
+            var runTime = new Date();
+            const currentSite = Site.getCurrent();
+            Transaction.wrap(function () {
+                currentSite.preferences.custom.CLDCatalogContentJobLastExecutionDate = runTime;
+            });
+            var CLDCatalogContentJobLastExecutionDate = currentSite.preferences.custom.CLDCatalogContentJobLastExecutionDate ? currentSite.preferences.custom.CLDCatalogContentJobLastExecutionDate.toString() : currentSite.preferences.custom.CLDCatalogContentJobLastExecutionDate;
+            if (runTime.toString() !== CLDCatalogContentJobLastExecutionDate) {
+                jobLogger.warn(' Unable to update the job last execution timestamp in Custom Preferences->Cloudinary Jobs Configurations field: Catalog Content Job Last Execution Date : {0}', runTime.toString());
+            }
+
             catalogFolder = new File(cloudinaryConstants.FORWARD_SLASH + File.CATALOGS + cloudinaryConstants.FORWARD_SLASH +
                 siteCatalog.ID);
             resources = catalogFolder.listFiles();
@@ -130,16 +140,6 @@ module.exports.Start = function (args) {
                 jobStepHelpers.sendChangedFilesEmail(cloudinaryConstants.CUSTOMER_SERVICE_EMAIL, notificationEmail,
                     cloudinaryConstants.CONTENT_ASSETS_NAME_CHANGED_EMAIL_SUBJECT, changedFilesCount);
             }
-        }
-
-        var runTime = new Date();
-        const currentSite = Site.getCurrent();
-        Transaction.wrap(function () {
-            currentSite.preferences.custom.CLDCatalogContentJobLastExecutionDate = runTime;
-        });
-        var CLDCatalogContentJobLastExecutionDate = currentSite.preferences.custom.CLDCatalogContentJobLastExecutionDate ? currentSite.preferences.custom.CLDCatalogContentJobLastExecutionDate.toString() : currentSite.preferences.custom.CLDCatalogContentJobLastExecutionDate;
-        if (runTime.toString() !== CLDCatalogContentJobLastExecutionDate) {
-            jobLogger.warn(' Unable to update the job last execution timestamp in Custom Preferences->Cloudinary Jobs Configurations field: Catalog Content Job Last Execution Date : {0}', runTime.toString());
         }
     } catch (e) {
         jobLogger.error('Error occurred while processing catalog content folder/file, message: {0} at: line number {1}', e.message, e.lineNumber);

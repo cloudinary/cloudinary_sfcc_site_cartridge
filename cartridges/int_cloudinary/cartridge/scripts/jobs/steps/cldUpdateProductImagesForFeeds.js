@@ -209,6 +209,14 @@ module.exports.Start = function (args) {
     };
 
     try {
+        Transaction.wrap(function () {
+            currentSite.preferences.custom.CLDImportImageAndAltTextjobLastExecutionTime = params.currentExecutionTime;
+        });
+        var CLDImportImageAndAltTextjobLastExecutionTime = currentSite.preferences.custom.CLDImportImageAndAltTextjobLastExecutionTime ? currentSite.preferences.custom.CLDImportImageAndAltTextjobLastExecutionTime.toString() : currentSite.preferences.custom.CLDImportImageAndAltTextjobLastExecutionTime;
+        if (params.currentExecutionTime.toString() !== CLDImportImageAndAltTextjobLastExecutionTime) {
+            jobLogger.warn(' Unable to update the job last execution timestamp in Custom Preferences->Cloudinary Jobs Configurations field: Update Product Feeds Job Last Execution Date : {0}', params.currentExecutionTime.toString());
+        }
+
         var productSearchHitsItr = getProductSearchHitIt();
         // catalog Start
         var CloudinaryFetchUrlsFile = new File(dw.io.File.IMPEX + '/' + params.CatalogFilePath + '/' + Site.getCurrent().ID + '_' + params.catalogID + '_' + StringUtils.formatCalendar(currentSite.getCalendar(), cloudinaryConstants.DATETIME_FORMAT) + '.xml');
@@ -226,14 +234,6 @@ module.exports.Start = function (args) {
         cloudinaryUrlStreamWriter.writeEndElement();
         cloudinaryUrlStreamWriter.close();
         cloudinaryUrlFileWriter.close();
-
-        Transaction.wrap(function () {
-            currentSite.preferences.custom.CLDImportImageAndAltTextjobLastExecutionTime = params.currentExecutionTime;
-        });
-        var CLDImportImageAndAltTextjobLastExecutionTime = currentSite.preferences.custom.CLDImportImageAndAltTextjobLastExecutionTime ? currentSite.preferences.custom.CLDImportImageAndAltTextjobLastExecutionTime.toString() : currentSite.preferences.custom.CLDImportImageAndAltTextjobLastExecutionTime;
-        if (params.currentExecutionTime.toString() !== CLDImportImageAndAltTextjobLastExecutionTime) {
-            jobLogger.warn(' Unable to update the job last execution timestamp in Custom Preferences->Cloudinary Jobs Configurations field: Update Product Feeds Job Last Execution Date : {0}', params.currentExecutionTime.toString());
-        }
     } catch (e) {
         jobLogger.error('Error occurred while processing folder/file, message: {0} at: line number {1}', e.message, e.lineNumber);
     }

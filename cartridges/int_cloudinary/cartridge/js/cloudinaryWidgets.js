@@ -73,6 +73,18 @@ window.renderCloudinaryVideoPlayer = function () {
             }
         }
     });
+    const targetNode = document.querySelector('#cld-video-player');
+    if (targetNode) {
+        const config = { childList: true, subtree: true };
+        const callback = function () {
+            if (targetNode.classList.contains('vjs-error')) {
+                observer.disconnect();
+                targetNode.remove(); // Remove the target node from the DOM
+            }
+        };
+        const observer = new MutationObserver(callback);
+        observer.observe(targetNode, config);
+    }
 
     return cldURLs;
 };
@@ -82,7 +94,7 @@ window.makeCloudinaryImagesResponsive = function () {
     var $cldEl = $('.cloudinary-data-container');
     var cloudinaryObj = $cldEl.data('cloudinary');
     if ($cldResponsiveImgTags && $cldResponsiveImgTags.length > 0) {
-        if ( window.cldObj === undefined && window.cloudinary && window.cloudinary.default) {
+        if (window.cldObj === undefined && window.cloudinary && window.cloudinary.default) {
             window.cldObj = window.cloudinary.default.Cloudinary.new({ cloud_name: cloudinaryObj.cloudName || cloudinaryObj });
         }
         window.cldObj && window.cldObj.responsive(); // eslint-disable-line no-undef

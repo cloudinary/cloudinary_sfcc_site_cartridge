@@ -251,10 +251,12 @@ var getImageDimensions = function (pageType) {
                 dimensions.isResponsive = imgGlobalSettings[cloudinaryConstants.RESPONSIVE_KEY];
                 if (cloudinaryConstants.RESPONSIVE_DIMENSIONS_KEY in imgGlobalSettings && !empty(imgGlobalSettings[cloudinaryConstants.RESPONSIVE_DIMENSIONS_KEY])) {
                     dimensions.dimensionsString = imgGlobalSettings[cloudinaryConstants.RESPONSIVE_DIMENSIONS_KEY];
+                    dimensions.dimensionsString = dimensions.dimensionsString.replace('w_auto,c_scale', 'w_auto,c_limit');
                 }
             } else {
                 if (cloudinaryConstants.DIMENSIONS_KEY in imgGlobalSettings && !empty(imgGlobalSettings[cloudinaryConstants.DIMENSIONS_KEY])) {
                     dimensions.dimensionsString = imgGlobalSettings[cloudinaryConstants.DIMENSIONS_KEY];
+                    dimensions.dimensionsString = dimensions.dimensionsString.replace('w_auto,c_scale', 'w_auto,c_limit');
                 }
                 if (cloudinaryConstants.BREAKPOINTS_KEY in imgGlobalSettings && !empty(imgGlobalSettings[cloudinaryConstants.BREAKPOINTS_KEY])) {
                     dimensions.breakpoints = imgGlobalSettings[cloudinaryConstants.BREAKPOINTS_KEY];

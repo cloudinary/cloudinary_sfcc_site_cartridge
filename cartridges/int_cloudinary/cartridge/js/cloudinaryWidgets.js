@@ -16,8 +16,8 @@ window.renderCloudinaryGalleryWidget = function () {
                     galleryOptions.SecureDistribution = cloudinaryObj.domain;
                     galleryOptions.privateCdn = true;
                 }
-                window.cldGallery = window.cldProductGallery ? window.cldProductGallery.galleryWidget(galleryOptions) : cloudinary.galleryWidget(galleryOptions); // eslint-disable-line no-undef
-                cldGallery.render(); // eslint-disable-line no-undef
+                window.cldGallery = window.cldProductGallery ? window.cldProductGallery.galleryWidget(galleryOptions) : (cloudinary.galleryWidget && cloudinary.galleryWidget(galleryOptions)); // eslint-disable-line no-undef
+                window.cldGallery && cldGallery.render(); // eslint-disable-line no-undef
             } else if (cloudinaryObj.images && cloudinaryObj.images.imageURLs) {
                 imgUrls = cloudinaryObj.images.imageURLs;
             }
@@ -41,8 +41,8 @@ window.renderCloudinarySetGalleryWidgets = function () {
                 cldSetImages.galleryWidget.options.SecureDistribution = cldObj.domain;
                 cldSetImages.galleryWidget.options.privateCdn = true;
             }
-            window.cldGallery = window.cldProductGallery.galleryWidget(cldSetImages.galleryWidget.options); // eslint-disable-line no-undef
-            cldGallery.render(); // eslint-disable-line no-undef
+            window.cldGallery = window.cldProductGallery ? window.cldProductGallery.galleryWidget(cldSetImages.galleryWidget.options) : (cloudinary.galleryWidget && cloudinary.galleryWidget(cldSetImages.galleryWidget.options)); // eslint-disable-line no-undef
+            window.cldGallery && cldGallery.render(); // eslint-disable-line no-undef
         }
     });
 };
@@ -82,7 +82,7 @@ window.makeCloudinaryImagesResponsive = function () {
     var $cldEl = $('.cloudinary-data-container');
     var cloudinaryObj = $cldEl.data('cloudinary');
     if ($cldResponsiveImgTags && $cldResponsiveImgTags.length > 0) {
-        if ( window.cldObj === undefined && window.cloudinary && window.cloudinary.default) {
+        if (window.cldObj === undefined && window.cloudinary && window.cloudinary.default) {
             window.cldObj = window.cloudinary.default.Cloudinary.new({ cloud_name: cloudinaryObj.cloudName || cloudinaryObj });
         }
         window.cldObj && window.cldObj.responsive(); // eslint-disable-line no-undef

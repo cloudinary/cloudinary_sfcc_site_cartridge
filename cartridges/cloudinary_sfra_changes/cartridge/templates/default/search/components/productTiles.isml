@@ -7,9 +7,15 @@
 </isif>
 
 <isif condition="${dw.system.Site.current.preferences.custom.CLDGalleryEnabled}">
-    <script src="${dw.system.Site.current.preferences.custom.CLDGalleryJSURL}"></script>
     <script>
-        window.cldProductGallery = cloudinary;
+        var CLDGalleryJSURL = '${dw.system.Site.current.preferences.custom.CLDGalleryJSURL}';
+        const script = document.createElement('script');
+        script.src = CLDGalleryJSURL;
+        document.body.appendChild(script);
+        script.onload = () => {
+            window.cldProductGallery = cloudinary;
+            window.renderCloudinaryGalleryWidget();
+        }
     </script>
 </isif>
 <iscomment> Custom End: include cloudinary shrinkwrap. </iscomment>

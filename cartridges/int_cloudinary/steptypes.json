@@ -268,6 +268,25 @@
                 }
             },
             {
+                "@type-id": "custom.cloudinary.UploadOrgStaticContent",
+                "@supports-parallel-execution": "false",
+                "@supports-site-context": "true",
+                "@supports-organization-context": "true",
+                "description": "Steps used to upload organization static content to cloudinary.",
+                "module": "int_cloudinary/cartridge/scripts/jobs/steps/cloudinaryUploadOrgContent.js",
+                "function": "Start",
+                "transactional": false,
+                "parameters": {
+                    "parameter": [
+                    {
+                        "@name": "Disabled",
+                        "description": "Mark the step as disabled. This will skip the step and returns a OK status",
+                        "@type": "boolean",
+                        "@required": false
+                    }]
+                }
+            },
+            {
                 "@type-id": "custom.cloudinary.Structured.Metadata",
                 "@supports-parallel-execution": "false",
                 "@supports-site-context": "true",

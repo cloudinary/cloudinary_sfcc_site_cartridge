@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata xmlns="http://www.demandware.com/xml/impex/metadata/2006-10-31">
+    <type-extension type-id="OrganizationPreferences">
+        <custom-attribute-definitions>
+            <attribute-definition attribute-id="CLDAPIkey">
+                <display-name xml:lang="x-default">CLDAPIkey</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="CLDBasePath">
+                <display-name xml:lang="x-default">CLDBasePath</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>https://res.cloudinary.com/</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="CLDCartridgeVersion">
+                <display-name xml:lang="x-default">CLDCartridgeVersion</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>true</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>24.2.6</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="CLDCloudName">
+                <display-name xml:lang="x-default">CLDCloudName</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>sfcc-cartridge-development</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="CLDEnabled">
+                <display-name xml:lang="x-default">CLDEnabled</display-name>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="CLDImagePageTypeSettings">
+                <display-name xml:lang="x-default">CLDImagePageTypeSettings</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="CLDImageTransformDPR">
+                <display-name xml:lang="x-default">CLDImageTransformDPR</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="CLDImageTransformFormat">
+                <display-name xml:lang="x-default">CLDImageTransformFormat</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="CLDImageTransformQuality">
+                <display-name xml:lang="x-default">CLDImageTransformQuality</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="CLDImageTransformation">
+                <display-name xml:lang="x-default">CLDImageTransformation</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="CLDLastSyncJobExecution">
+                <display-name xml:lang="x-default">CLDLastSyncJobExecution</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="CLDOrgContentImgPath">
+                <display-name xml:lang="x-default">CLDOrgContentImgPath</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="CLDOrgContentVideoPath">
+                <display-name xml:lang="x-default">CLDOrgContentVideoPath</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="CLDRestServiceCredentialsID">
+                <display-name xml:lang="x-default">CLDRestServiceCredentialsID</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>RefArch.cloudinary.rest.creds</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="CLDSecretKey">
+                <display-name xml:lang="x-default">CLDSecretKey</display-name>
+                <type>password</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="CLDVideoTransformFormat">
+                <display-name xml:lang="x-default">CLDVideoTransformFormat</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="CLDVideoTransformQuality">
+                <display-name xml:lang="x-default">CLDVideoTransformQuality</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="CLDVideoTransformation">
+                <display-name xml:lang="x-default">CLDVideoTransformation</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+        </custom-attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="cloudinary">
+                <display-name xml:lang="x-default">cloudinary</display-name>
+                <attribute attribute-id="CLDAPIkey"/>
+                <attribute attribute-id="CLDVideoTransformation"/>
+                <attribute attribute-id="CLDOrgContentImgPath"/>
+                <attribute attribute-id="CLDOrgContentVideoPath"/>
+                <attribute attribute-id="CLDBasePath"/>
+                <attribute attribute-id="CLDEnabled"/>
+                <attribute attribute-id="CLDCloudName"/>
+                <attribute attribute-id="CLDSecretKey"/>
+                <attribute attribute-id="CLDVideoTransformFormat"/>
+                <attribute attribute-id="CLDImageTransformQuality"/>
+                <attribute attribute-id="CLDImagePageTypeSettings"/>
+                <attribute attribute-id="CLDLastSyncJobExecution"/>
+                <attribute attribute-id="CLDImageTransformation"/>
+                <attribute attribute-id="CLDVideoTransformQuality"/>
+                <attribute attribute-id="CLDImageTransformFormat"/>
+                <attribute attribute-id="CLDImageTransformDPR"/>
+                <attribute attribute-id="CLDRestServiceCredentialsID"/>
+                <attribute attribute-id="CLDCartridgeVersion"/>
+            </attribute-group>
+        </group-definitions>
+    </type-extension>
+</metadata>

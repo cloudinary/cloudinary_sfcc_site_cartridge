@@ -278,12 +278,26 @@
                 "transactional": false,
                 "parameters": {
                     "parameter": [
-                    {
-                        "@name": "Disabled",
-                        "description": "Mark the step as disabled. This will skip the step and returns a OK status",
-                        "@type": "boolean",
-                        "@required": false
-                    }]
+                        {
+                            "@name": "CLDSyncMode",
+                            "description": "Cloudinary Job Sync Mode",
+                            "@type": "string",
+                            "@required": "true",
+                            "enum-values": {
+                                "value": [
+                                    "FULL",
+                                    "DELTA"
+                                ]
+                            },
+                            "default-value": "FULL"
+                        },
+                        {
+                            "@name": "Disabled",
+                            "description": "Mark the step as disabled. This will skip the step and returns a OK status",
+                            "@type": "boolean",
+                            "@required": false
+                        }
+                    ]
                 }
             },
             {

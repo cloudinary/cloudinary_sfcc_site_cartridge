@@ -3,7 +3,7 @@
 /* API Includes */
 var LocalServiceRegistry = require('dw/svc/LocalServiceRegistry');
 /* Script Includes */
-var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
+var cloudinaryConstants = require('~/cartridge/scripts/util/cloudinaryConstants');
 /**
 * Create and configure service.
 *

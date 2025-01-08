@@ -9,8 +9,8 @@
                 <externally-managed-flag>false</externally-managed-flag>
                 <min-length>0</min-length>
             </attribute-definition>
-            <attribute-definition attribute-id="CLDBasePath">
-                <display-name xml:lang="x-default">CLDBasePath</display-name>
+            <attribute-definition attribute-id="CLDImagesBasePath">
+                <display-name xml:lang="x-default">CLDImagesBasePath</display-name>
                 <type>string</type>
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
@@ -137,7 +137,7 @@
                 <attribute attribute-id="CLDVideoTransformation"/>
                 <attribute attribute-id="CLDOrgContentImgPath"/>
                 <attribute attribute-id="CLDOrgContentVideoPath"/>
-                <attribute attribute-id="CLDBasePath"/>
+                <attribute attribute-id="CLDImagesBasePath"/>
                 <attribute attribute-id="CLDEnabled"/>
                 <attribute attribute-id="CLDCloudName"/>
                 <attribute attribute-id="CLDSecretKey"/>

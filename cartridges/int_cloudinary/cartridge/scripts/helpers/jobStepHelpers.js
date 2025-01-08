@@ -8,7 +8,7 @@ var File = require('dw/io/File');
 var Site = require('dw/system/Site');
 var URLUtils = require('dw/web/URLUtils');
 
-var WS = require('*/cartridge/scripts/service/cldWebService');
+var WS = require('~/cartridge/scripts/service/cldWebService');
 
 var assetsLimit = 0;
 var changedFilesCount = 0;
@@ -154,8 +154,8 @@ var removeRedundantTags = function (redundantTags, existingTags) {
  */
 var uploadFile = function (cloudinaryConstants, asset, tags, assignedFolder, assetPublicID, metadata, svcArgs, executionMode) {
     var isAssetUploaded = false;
-    var cloudinarySvc = require('*/cartridge/scripts/service/cldUpload');
-    var cloudinaryTagsSvc = require('*/cartridge/scripts/service/cldAddAssetTags');
+    var cloudinarySvc = require('~/cartridge/scripts/service/cldUpload');
+    var cloudinaryTagsSvc = require('~/cartridge/scripts/service/cldAddAssetTags');
 
     var args = svcArgs.svcConfigArgs;
     var uploadResult;
@@ -206,7 +206,7 @@ var uploadFile = function (cloudinaryConstants, asset, tags, assignedFolder, ass
  * @returns {string} asset rel URL
  */
 var getAssetRelURL = function (assetURL, includeVideoExtension) {
-    var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
+    var cloudinaryConstants = require('~/cartridge/scripts/util/cloudinaryConstants');
 
     var endToken;
     var relURL = '';
@@ -269,8 +269,8 @@ var logAssetLargerThanLimitMsg = function (filePath, fileSize) {
  * @returns {Object} - object holding public id and folder
 */
 var changePublicIdAndCloudFolder = function (cldAssetPublicID, cldAssetFolder, isProductAsset) {
-    var cloudinaryUtils = require('*/cartridge/scripts/util/cloudinaryUtils');
-    var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
+    var cloudinaryUtils = require('~/cartridge/scripts/util/cloudinaryUtils');
+    var cloudinaryConstants = require('~/cartridge/scripts/util/cloudinaryConstants');
 
     var assetPublicID = cldAssetPublicID;
     var cldFolder = cldAssetFolder;
@@ -324,8 +324,8 @@ var logAssetPathChangedMessage = function (originalFilePath, changedFilePath) {
  * @returns {Object} svcArgs - data related to service
  */
 var getCldUploadSvcArgs = function () {
-    var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
-    var cloudinaryUtils = require('*/cartridge/scripts/util/cloudinaryUtils');
+    var cloudinaryConstants = require('~/cartridge/scripts/util/cloudinaryConstants');
+    var cloudinaryUtils = require('~/cartridge/scripts/util/cloudinaryUtils');
     var svcConfigArgs = {};
     var servicePrefs = cloudinaryUtils.buildUploadServicePrefs(cloudinaryConstants);
     var service = WS.getService(servicePrefs.CLD_UPLOAD_SVC, WS.getServiceConfigs(svcConfigArgs));

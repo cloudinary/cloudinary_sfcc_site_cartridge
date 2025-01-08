@@ -4,7 +4,7 @@
 var Calendar = require('dw/util/Calendar');
 var logger = require('dw/system/Logger').getLogger('Cloudinary', 'UPLOAD');
 
-var cloudinaryUtils = require('*/cartridge/scripts/util/cloudinaryUtils');
+var cloudinaryUtils = require('~/cartridge/scripts/util/cloudinaryUtils');
 
 /**
  * This method creates the request object.

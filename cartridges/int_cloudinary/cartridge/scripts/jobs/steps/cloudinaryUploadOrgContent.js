@@ -6,174 +6,6 @@ var File = require('dw/io/File');
 var jobLogger = require('dw/system').Logger.getLogger('Cloudinary', 'UPLOAD');
 
 /**
- * Manipulates asset absolute URL and get relative URL.
- *
- * @param {string} assetURL - asset absolute URL
- * @param {boolean} includeVideoExtension - flag to use video extension
- *
- * @returns {string} asset rel URL
- */
-var getAssetRelURL = function (assetURL, includeVideoExtension) {
-    var cloudinaryConstants = require('~/cartridge/scripts/util/cloudinaryOrgConstants');
-
-    var endToken;
-    var relURL = '';
-    var startToken;
-    var tempPath = '';
-
-    try {
-        startToken = assetURL.lastIndexOf(cloudinaryConstants.FORWARD_SLASH) + 1;
-        endToken = assetURL.lastIndexOf(cloudinaryConstants.DOT);
-        // check if base path is not configured to '/'
-        if ((cloudinaryConstants.IMAGES_BASE_PATH.indexOf(cloudinaryConstants.FORWARD_SLASH) === 0 && cloudinaryConstants.IMAGES_BASE_PATH.length > 1)) {
-            if (assetURL.indexOf(cloudinaryConstants.IMAGES_BASE_PATH) > -1) {
-                startToken = assetURL.lastIndexOf(cloudinaryConstants.IMAGES_BASE_PATH) + cloudinaryConstants.IMAGES_BASE_PATH.length + 1;
-            }
-        } else if (assetURL.indexOf(cloudinaryConstants.DEFAULT_DIRECTORY) > -1) {
-            tempPath = assetURL.substring(assetURL.lastIndexOf(cloudinaryConstants.DEFAULT_DIRECTORY) + cloudinaryConstants.DEFAULT_DIRECTORY.length);
-            startToken = !empty(tempPath)
-                ? assetURL.lastIndexOf(tempPath.substring(tempPath.indexOf(cloudinaryConstants.FORWARD_SLASH)))
-                : startToken;
-        }
-
-        if (includeVideoExtension) {
-            relURL = assetURL.substring(startToken);
-        } else {
-            relURL = assetURL.substring(startToken, endToken);
-        }
-    } catch (ex) {
-        jobLogger.error('Error occurred while getting asset rel URL, absURL: {0}, message: {1} ', assetURL, ex);
-    }
-
-    return relURL;
-};
-
-/**
- * Find if asset type is video or not.
- *
- * @param {string} url - asset URL
- *
- * @returns {boolean} flag to indicate video type
- */
-function isVideo(url, constants) {
-    var cloudinaryUtils = require('~/cartridge/scripts/util/cloudinaryOrgUtils');
-
-    var isVideo = false;
-    var fileType = url.substring(url.lastIndexOf(constants.DOT) + 1);
-    var videoFormats = cloudinaryUtils.getVideoFormats();
-
-    if (!empty(fileType) && videoFormats.indexOf(fileType) > -1) {
-        isVideo = true;
-    }
-
-    return isVideo;
-}
-
-/**
- * Valid file returns boolean based on the extension of the current file
- *
- * @param {string} candidate - the current asset
- * @returns {boolean} - whether or not the file has a valid extension
- */
-function validFile(file) {
-    var Utils = require('~/cartridge/scripts/util/cloudinaryOrgUtils');
-    var cloudinaryOrgConstants = require('~/cartridge/scripts/util/cloudinaryOrgConstants');
-
-    var imageFormats = Utils.getImageFormats();
-    var videoFormats = Utils.getVideoFormats();
-    var rawFormats = Utils.getRawFormats();
-    var fileType = file.substring(file.lastIndexOf(cloudinaryOrgConstants.DOT) + 1);
-
-    if (imageFormats.indexOf(fileType) > -1) {
-        return true;
-    }
-    if (videoFormats.indexOf(fileType) > -1) {
-        return true;
-    }
-    if (rawFormats.indexOf(fileType) > -1) {
-        return true;
-    }
-    return false;
-}
-
-/**
- * function for uploading images to Cloudinary
- *
- * @param {Object} cloudinarySvc - the service
- * @param {Object} asset - asset object to parse
- * @param {string} tags - all tags defined for asset
- * @param {string} assignedFolder - folder of asset
- * @param {Object} chunkObj - the chunk file data
- * @returns {Object} files to be logged
- */
-function uploadFiles(cloudinarySvc, asset, tags, assignedFolder, chunkObj, metadata, assetPublicID) {
-    var cloudinaryOrgConstants = require('~/cartridge/scripts/util/cloudinaryOrgConstants');
-    var cloudinaryUtils = require('~/cartridge/scripts/util/cloudinaryOrgUtils');
-    var uploadResult;
-    var args = {};
-    args.cloudinaryFolder = assignedFolder;
-    args.tags = tags;
-    args.assetPublicID = assetPublicID;
-
-    if (!empty(metadata)) {
-        args.metadata = metadata;
-    }
-
-    var servicePrefs = cloudinaryUtils.buildUploadServicePrefs(cloudinaryOrgConstants);
-    args.servicePrefs = servicePrefs;
-
-    args.file = asset.toString();
-    uploadResult = cloudinarySvc.uploadAsset(args);
-
-    if (!uploadResult.ok) {
-        jobLogger.debug('Upload failed for file : {0}, message : {1}', asset, uploadResult.message);
-    } else {
-        jobLogger.debug(uploadResult.message);
-    }
-
-}
-
-/**
- * It's used to change the public ID and folder if they include special characters.
- *
- * @param {string} cldAssetPublicID - cloudinary asset public ID
- * @param {string} cldAssetFolder - cloudinary asset folder
- * @param {boolean} isProductAsset - flag to indicate if product asset
- *
- * @returns {Object} - object holding public id and folder
-*/
-var changePublicIdAndCloudFolder = function (cldAssetPublicID, cldAssetFolder, isProductAsset) {
-    var cloudinaryUtils = require('~/cartridge/scripts/util/cloudinaryOrgUtils');
-    var cloudinaryConstants = require('~/cartridge/scripts/util/cloudinaryOrgConstants');
-
-    var assetPublicID = cldAssetPublicID;
-    var cldFolder = cldAssetFolder;
-    var fileChangedStatus = false;
-    var isIncludeSpecialChars;
-    var isProdAsset = isProductAsset;
-
-    if (!empty(assetPublicID)) {
-        if (!isProdAsset) {
-            assetPublicID = assetPublicID.substring(assetPublicID.lastIndexOf(cloudinaryConstants.FORWARD_SLASH) + 1);
-        }
-        isIncludeSpecialChars = cloudinaryUtils.isIncludeSpecialChars(assetPublicID);
-        if (isIncludeSpecialChars) {
-            assetPublicID = cloudinaryUtils.replaceSpecialChars(assetPublicID);
-            fileChangedStatus = true;
-        }
-    }
-
-    if (!empty(cldFolder)) {
-        isIncludeSpecialChars = cloudinaryUtils.isIncludeSpecialChars(cldFolder);
-        if (isIncludeSpecialChars) {
-            cldFolder = cloudinaryUtils.replaceSpecialChars(cldFolder);
-        }
-    }
-
-    return { assetPublicID: assetPublicID, cldFolder: cldFolder, fileChangedStatus: fileChangedStatus };
-};
-
-/**
  * Creates valid paath argument and uploads a single asset
  *
  * @param {string} folder - current processing folder
@@ -181,31 +13,27 @@ var changePublicIdAndCloudFolder = function (cldAssetPublicID, cldAssetFolder, i
  * @returns {boolean} - true/false
  */
 function doFile(folder, file) {
-    var cloudinarySvc = require('~/cartridge/scripts/service/cldOrgUpload');
-    var cloudinaryOrgConstants = require('~/cartridge/scripts/util/cloudinaryOrgConstants');
+    var cloudinarySvc = require('~/cartridge/scripts/service/cldUpload');
+    var cloudinaryConstants = require('~/cartridge/scripts/util/cloudinaryConstants');
+    var jobStepHelpers = require('~/cartridge/scripts/helpers/jobStepHelpers');
+    var cloudinaryUtils = require('~/cartridge/scripts/util/cloudinaryUtils');
+
     var url;
 
     try {
-        if (file.path && isVideo(file.path, cloudinaryOrgConstants)) {
-            folder = cloudinaryOrgConstants.CLD_ORG_CONTENT_VIDEO_PATH;
+        if (file.path && cloudinaryUtils.isVideo(file.path, cloudinaryConstants)) {
+            folder = cloudinaryConstants.CLD_ORG_CONTENT_VIDEO_PATH;
         } else {
-            folder = cloudinaryOrgConstants.CLD_ORG_CONTENT_IMAGE_PATH;
+            folder = cloudinaryConstants.CLD_ORG_CONTENT_IMAGE_PATH;
         }
 
-        // if (folder.lastIndexOf(cloudinaryOrgConstants.FORWARD_SLASH) != folder.length - 1) {
-        //     folder =  folder + cloudinaryOrgConstants.FORWARD_SLASH;
-        // }
-
-        // path = file.getFullPath().toString().replace(cloudinaryOrgConstants.FORWARD_SLASH + File.STATIC, '');
-        // path = path.replace('default/', '');
-        // path = path.replace('//', '/');
-
-        url = cloudinaryOrgConstants.HOST_NAME + cloudinaryOrgConstants.ORG_CONTENT_DW_URL + file.path;
+        url = cloudinaryConstants.HOST_NAME + cloudinaryConstants.ORG_CONTENT_DW_URL + file.path;
         jobLogger.info('Now uploading file: {0}', file.getName());
-        var assetPublicID = getAssetRelURL(file.toString());
-        var changedAssetIds = changePublicIdAndCloudFolder(assetPublicID, folder);
+        var assetPublicID = jobStepHelpers.getAssetRelURL(file.toString());
+        var changedAssetIds = jobStepHelpers.changePublicIdAndCloudFolder(assetPublicID, folder);
         assetPublicID = changedAssetIds.assetPublicID;
-        uploadFiles(cloudinarySvc, url, null, folder, null, null, assetPublicID);
+        var svcArgs = jobStepHelpers.getCldUploadSvcArgs();
+        jobStepHelpers.uploadFile(cloudinaryConstants, url, null, folder, assetPublicID, null, svcArgs, null);
 
         return true;
     } catch (err) {
@@ -220,9 +48,9 @@ function doFile(folder, file) {
  * @param {Object} folder - the current folder
  * @param {array} arrFilelist - list of files (optional)
  * @param {string} syncMode - full/delta
- * @param {string} cloudinaryOrgConstants - organization constants
+ * @param {string} cloudinaryConstants - organization constants
 */
-var processFolder = function (folder, arrFilelist, syncMode, lastJobExecution) {
+var processFolder = function (folder, arrFilelist, syncMode, lastJobExecution, cloudinaryUtils, cloudinaryConstants) {
     var counter;
     var file;
     var files = folder.listFiles();
@@ -233,13 +61,13 @@ var processFolder = function (folder, arrFilelist, syncMode, lastJobExecution) {
         file = files[counter - 1];
         if (file.isDirectory()) {
             jobLogger.debug('** Now processing folder: {0}', file.getName());
-            filelist = processFolder(file, null, syncMode, lastJobExecution);
+            filelist = processFolder(file, null, syncMode, lastJobExecution, cloudinaryUtils, cloudinaryConstants);
         } else {
             filelist.push(file);
-            if (validFile(file.getName())) {
+            if (cloudinaryUtils.validFile(file.getName(), cloudinaryConstants)) {
                 jobLogger.debug('** Now processing file: {0}', file.getName());
                 // If this is a delta job, skip files already processed
-                if (syncMode === 'delta') {
+                if (syncMode === 'DELTA') {
                     if (file.lastModified() > lastJobExecution) {
                         doFile(folder.getFullPath(), file);
                     }
@@ -262,16 +90,22 @@ function start(args) {
     var System = require('dw/system/System');
     var Transaction = require('dw/system/Transaction');
 
-    var cloudinaryOrgConstants = require('~/cartridge/scripts/util/cloudinaryOrgConstants');
+    var cloudinaryConstants = require('~/cartridge/scripts/util/cloudinaryConstants');
+    var jobStepHelpers = require('~/cartridge/scripts/helpers/jobStepHelpers');
+    var cloudinaryUtils = require('~/cartridge/scripts/util/cloudinaryUtils');
+
     var debugCounter = args.debugCounter || 0;
     var orgContentFolder;
-    var lastJobExecution = new Date(cloudinaryOrgConstants.CLD_LAST_SYNC);
+    var lastJobExecution = new Date(cloudinaryConstants.CLD_LAST_SYNC);
     var resource;
     var resources;
 
     try {
-        if (cloudinaryOrgConstants.CLD_ENABLED) {
-            orgContentFolder = new File(cloudinaryOrgConstants.FORWARD_SLASH + File.STATIC + cloudinaryOrgConstants.FORWARD_SLASH);
+        if (cloudinaryConstants.CLD_ENABLED) {
+            if (jobStepHelpers.isStepDisabled(args)) {
+                return new Status(Status.OK, 'OK', 'Step disabled, skip it...');
+            }
+            orgContentFolder = new File(cloudinaryConstants.FORWARD_SLASH + File.STATIC + cloudinaryConstants.FORWARD_SLASH);
             resources = orgContentFolder.listFiles();
 
             if (resources) {
@@ -281,17 +115,17 @@ function start(args) {
                 });
                 for (var idx = 0; idx < resources.length; idx++) {
                     resource = resources[idx];
-                    if (resource.isFile() && validFile(resource.getName())) {
+                    if (resource.isFile() && cloudinaryUtils.validFile(resource.getName(), cloudinaryConstants)) {
                         // if the job is running in "delta" mode skip already processed files
-                        if (args.syncMode === 'delta') {
+                        if (args.CLDSyncMode === 'DELTA') {
                             if (resource.lastModified() > lastJobExecution) {
-                                doFile(folder.getName(), resource, lastJobExecution);
+                                doFile(resource.getName(), resource);
                             }
                         } else {
-                            doFile(folder.getName(), resource, lastJobExecution);
+                            doFile(resource.getName(), resource);
                         }
                     } else {
-                        processFolder(resource, null, args.syncMode, lastJobExecution);
+                        processFolder(resource, null, args.CLDSyncMode, lastJobExecution, cloudinaryUtils, cloudinaryConstants);
                     }
 
                     if (debugCounter !== 0) {
@@ -306,7 +140,7 @@ function start(args) {
             jobLogger.error('Cloudinary is disabled currently at organization level');
         }
     } catch (ex) {
-        jobLogger.error('Error occurred while uploading organization static content on cloudinary, error : {0}, {1}', ex, ex.fileName);
+        jobLogger.error('Error occurred while uploading organization static content on cloudinary, error : {0}, {1}, {2}', ex, ex.fileName, ex.lineNumber);
     }
 };
 

@@ -1,10 +1,5 @@
 'use strict';
 
-var URLUtils = require('dw/web/URLUtils');
-var File = require('dw/io/File');
-
-var jobLogger = require('dw/system').Logger.getLogger('Cloudinary', 'UPLOAD');
-
 /**
  * Creates valid paath argument and uploads a single asset
  *
@@ -17,6 +12,7 @@ function doFile(folder, file) {
     var cloudinaryConstants = require('~/cartridge/scripts/util/cloudinaryConstants');
     var jobStepHelpers = require('~/cartridge/scripts/helpers/jobStepHelpers');
     var cloudinaryUtils = require('~/cartridge/scripts/util/cloudinaryUtils');
+    var jobLogger = require('dw/system').Logger.getLogger('Cloudinary', 'UPLOAD');
 
     var url;
 
@@ -50,7 +46,7 @@ function doFile(folder, file) {
  * @param {string} syncMode - full/delta
  * @param {string} cloudinaryConstants - organization constants
 */
-var processFolder = function (folder, arrFilelist, syncMode, lastJobExecution, cloudinaryUtils, cloudinaryConstants) {
+var processFolder = function (folder, arrFilelist, syncMode, lastJobExecution, cloudinaryUtils, cloudinaryConstants, jobLogger) {
     var counter;
     var file;
     var files = folder.listFiles();
@@ -61,7 +57,7 @@ var processFolder = function (folder, arrFilelist, syncMode, lastJobExecution, c
         file = files[counter - 1];
         if (file.isDirectory()) {
             jobLogger.debug('** Now processing folder: {0}', file.getName());
-            filelist = processFolder(file, null, syncMode, lastJobExecution, cloudinaryUtils, cloudinaryConstants);
+            filelist = processFolder(file, null, syncMode, lastJobExecution, cloudinaryUtils, cloudinaryConstants, jobLogger);
         } else {
             filelist.push(file);
             if (cloudinaryUtils.validFile(file.getName(), cloudinaryConstants)) {
@@ -93,6 +89,8 @@ function start(args) {
     var cloudinaryConstants = require('~/cartridge/scripts/util/cloudinaryConstants');
     var jobStepHelpers = require('~/cartridge/scripts/helpers/jobStepHelpers');
     var cloudinaryUtils = require('~/cartridge/scripts/util/cloudinaryUtils');
+    var jobLogger = require('dw/system').Logger.getLogger('Cloudinary', 'UPLOAD');
+    var File = require('dw/io/File');
 
     var debugCounter = args.debugCounter || 0;
     var orgContentFolder;
@@ -125,7 +123,7 @@ function start(args) {
                             doFile(resource.getName(), resource);
                         }
                     } else {
-                        processFolder(resource, null, args.CLDSyncMode, lastJobExecution, cloudinaryUtils, cloudinaryConstants);
+                        processFolder(resource, null, args.CLDSyncMode, lastJobExecution, cloudinaryUtils, cloudinaryConstants, jobLogger);
                     }
 
                     if (debugCounter !== 0) {

@@ -90,9 +90,7 @@ window.makeCloudinaryImagesResponsive = function () {
 };
 
 $(document).ready(function () {
-    window.renderCloudinaryGalleryWidget();
     window.renderCloudinaryVideoPlayer();
-    window.renderCloudinarySetGalleryWidgets();
     window.makeCloudinaryImagesResponsive();
 
     $('.icon-next, .icon-prev').on('click', function () {

@@ -8,9 +8,6 @@
 
     <iscomment> Custom Start: include cloudinary shrinkwrap. </iscomment>
     <isset name="CLDImagePageTypeSettings" value="${JSON.parse(dw.system.Site.current.preferences.custom.CLDImagePageTypeSettings)}" scope="page"/>
-    <isif condition="${dw.system.Site.current.preferences.custom.CLDGalleryEnabled}">
-        <script src="${dw.system.Site.current.preferences.custom.CLDGalleryJSURL}" />
-    </isif>
     <isif condition="${(CLDImagePageTypeSettings.pdp.enabled && CLDImagePageTypeSettings.pdp.automateResponsivenessWithJS) || (CLDImagePageTypeSettings.cldPdpSwatch.enabled && CLDImagePageTypeSettings.cldPdpSwatch.automateResponsivenessWithJS)}">
         <isinclude template="include/cloudinaryShrinkwrap"/>
     </isif>
@@ -42,6 +39,7 @@
                 <iscomment>Custom start: add cloudinary PGW</iscomment>
                 <isif condition="${pdict.cloudinary && pdict.cloudinary.isEnabled && pdict.cloudinary.galleryEnabled}">
                     <isinclude template="product/components/cloudinaryGallery" />
+                    <script src="${dw.system.Site.current.preferences.custom.CLDGalleryJSURL}" onload="window.cldProductGallery = cloudinary; window.renderCloudinaryGalleryWidget();"> </script>
                     <isset name="isBundleOrSet" value="${false}" scope="page" />
                 <iselse>
                      <!-- Product Images Carousel -->

@@ -73,6 +73,18 @@ window.renderCloudinaryVideoPlayer = function () {
             }
         }
     });
+    const targetNode = document.querySelector('#cld-video-player');
+    if (targetNode) {
+        const config = { childList: true, subtree: true };
+        const callback = function () {
+            if (targetNode.classList.contains('vjs-error')) {
+                observer.disconnect();
+                targetNode.remove(); // Remove the target node from the DOM
+            }
+        };
+        const observer = new MutationObserver(callback);
+        observer.observe(targetNode, config);
+    }
 
     return cldURLs;
 };

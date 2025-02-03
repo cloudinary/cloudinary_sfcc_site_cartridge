@@ -14,62 +14,70 @@
 var CloudinaryConstants = {};
 var Site = require('dw/system/Site');
 var System = require('dw/system/System');
-var sitePrefs = Site.getCurrent().getPreferences();
 
-CloudinaryConstants.CLD_APIKEY = sitePrefs.getCustom().CLDAPIkey;
-CloudinaryConstants.CLD_APISECRET = sitePrefs.getCustom().CLDSecretKey;
-CloudinaryConstants.CLD_AUTOUPLOAD_MAPPING = sitePrefs.getCustom().CLDAutoUploadMapping;
-CloudinaryConstants.CLD_BASE_PATH = sitePrefs.getCustom().CLDBaseDeliveryPath;
-CloudinaryConstants.CLD_CLOUDNAME = sitePrefs.getCustom().CLDCloudName;
-CloudinaryConstants.CLD_CONTENT_IMAGE_PATH = sitePrefs.getCustom().CLDContentImagePath;
-CloudinaryConstants.CLD_CATALOG_IMAGE_PATH = sitePrefs.getCustom().CLDCatalogImagePath;
-CloudinaryConstants.CLD_ENABLED = sitePrefs.getCustom().CLDEnabled;
-CloudinaryConstants.CLD_GALLERY_ENABLED = sitePrefs.getCustom().CLDGalleryEnabled;
-CloudinaryConstants.CLD_IMAGE_PATH = sitePrefs.getCustom().CLDProductImagePath;
-CloudinaryConstants.CLD_UPLOAD_PRESET = sitePrefs.getCustom().CLDUploadPreset;
-CloudinaryConstants.CLD_VIDEO_PATH = sitePrefs.getCustom().CLDProductVideoPath;
-CloudinaryConstants.CLD_VIDEO_OPTIONS = sitePrefs.getCustom().CLDVideoPlayerStyle;
-CloudinaryConstants.CLD_VIDEO_ENABLED = sitePrefs.getCustom().CLDVideoEnabled;
-CloudinaryConstants.CLD_VIDEO_PLAYER_ENABLED = sitePrefs.getCustom().CLDVideoPlayerEnabled;
-CloudinaryConstants.CLD_VIDEO_CUSTOM_MAP_PATH = sitePrefs.getCustom().CLDVideoCustomMapPath;
-CloudinaryConstants.CLD_USE_VIDEO_CUSTOM_MAPPING = sitePrefs.getCustom().CLDVideoCustomMappingEnabled;
-CloudinaryConstants.CLD_GALLERY_STYLES = sitePrefs.getCustom().CLDGalleryStyles;
-CloudinaryConstants.CLD_PRODUCT_ATTRIBUTE_FOR_TAGS = sitePrefs.getCustom().CLDProductAttributeForTags;
-CloudinaryConstants.CLD_GLOBAL_IMAGE_TRANSFORMATIONS = sitePrefs.getCustom().CLDImageTransformation;
-CloudinaryConstants.CLD_GLOBAL_VIDEO_TRANSFORMATIONS = sitePrefs.getCustom().CLDVideoTransformation;
-CloudinaryConstants.CLD_GLOBAL_IMAGE_TRANSFORM_FORMAT = sitePrefs.getCustom().CLDImageTransformFormat;
-CloudinaryConstants.CLD_GLOBAL_VIDEO_TRANSFORM_FORMAT = sitePrefs.getCustom().CLDVideoTransformFormat;
-CloudinaryConstants.CLD_GLOBAL_IMAGE_QUALITY = sitePrefs.getCustom().CLDImageTransformQuality;
-CloudinaryConstants.CLD_GLOBAL_VIDEO_QUALITY = sitePrefs.getCustom().CLDVideoTransformQuality;
-CloudinaryConstants.CLD_GLOBAL_IMAGE_DPR = sitePrefs.getCustom().CLDImageTransformDPR;
-CloudinaryConstants.CLD_IMAGE_PAGE_TYPE_SETTINGS = sitePrefs.getCustom().CLDImagePageTypeSettings;
-CloudinaryConstants.CLD_HIGH_RES_IMAGES_VIEW_TYPE = sitePrefs.getCustom().CLDHighResImageViewType;
-CloudinaryConstants.CLD_SMD_ENDPOINT = sitePrefs.getCustom().CLDMetadataFilteringEndpoint;
-CloudinaryConstants.CLD_SMD_ENDPOINT_GALLERY_POSITION = sitePrefs.getCustom().CLDMetadataEndpointByGalleryPosition;
-CloudinaryConstants.CLD_SMD_KEY = sitePrefs.getCustom().CLDSMDKey;
-CloudinaryConstants.CLD_SMD_VALUE = sitePrefs.getCustom().CLDSMDValue;
-CloudinaryConstants.CLD_INCLUDE_VIDEOS_IN_PGW = sitePrefs.getCustom().CLDIncludeVideosInPGW;
-CloudinaryConstants.IMAGES_BASE_PATH = sitePrefs.getCustom().CLDImagesBasePath;
-CloudinaryConstants.CLD_SWATCH_IMAGES_VIEW_TYPE = sitePrefs.getCustom().CLDSwatchImageViewType;
-CloudinaryConstants.CLD_ENABLE_SWATCH_ON_PLP = sitePrefs.getCustom().CLDEnableSwatchOnPLP;
-CloudinaryConstants.CLD_CUSTOM_MAPPING_VIDEO_FORMAT = sitePrefs.getCustom().CLDVideoCustomMappingFormat;
-CloudinaryConstants.CUSTOMER_SERVICE_EMAIL = sitePrefs.getCustom().customerServiceEmail;
-CloudinaryConstants.CLD_ASSETS_UPLOAD_LIMIT_MB = sitePrefs.getCustom().CLDMaxAssetUploadLimitMBs;
-CloudinaryConstants.CLD_CARTRIDGE_OPERATION_MODE = sitePrefs.getCustom().CLDCartridgeOperationMode.value;
-CloudinaryConstants.CLD_CARTRIDGE_CONTENT_OPERATION_MODE = sitePrefs.getCustom().CLDCartridgeContentOperationMode.value;
-CloudinaryConstants.CLD_CONTENT_LIBRARY_JOB_LAST_EXECUTION_DATE = sitePrefs.getCustom().CLDContentLibraryJobLastExecutionDate;
-CloudinaryConstants.CLD_CATALOG_CONTENT_JOB_LAST_EXECUTION_DATE = sitePrefs.getCustom().CLDCatalogContentJobLastExecutionDate;
-CloudinaryConstants.CLD_REPORTING_LOG_LEVEL = sitePrefs.getCustom().CLDReportingLogLevel.value;
-CloudinaryConstants.CLD_REST_SERVICE_CREDENTIALS = sitePrefs.getCustom().CLDRestServiceCredentialsID;
+var sitePrefs = Site.getCurrent().getPreferences() || System.getPreferences();
 
-// Enable disable cloudinary on specific pages constants
-CloudinaryConstants.CLD_IMAGE_PAGE_TYPE_SETTINGS_OBJECT = JSON.parse(CloudinaryConstants.CLD_IMAGE_PAGE_TYPE_SETTINGS);
+CloudinaryConstants.CLD_APIKEY = 'CLDAPIkey' in sitePrefs.custom ? sitePrefs.getCustom().CLDAPIkey : '';
+CloudinaryConstants.CLD_APISECRET = 'CLDSecretKey' in sitePrefs.custom ? sitePrefs.getCustom().CLDSecretKey : '';
+CloudinaryConstants.CLD_AUTOUPLOAD_MAPPING = 'CLDAutoUploadMapping' in sitePrefs.custom && sitePrefs.getCustom().CLDAutoUploadMapping;
+CloudinaryConstants.CLD_BASE_PATH = 'CLDBaseDeliveryPath' in sitePrefs.custom ? sitePrefs.getCustom().CLDBaseDeliveryPath : '';
+CloudinaryConstants.CLD_CLOUDNAME = 'CLDCloudName' in sitePrefs.custom ? sitePrefs.getCustom().CLDCloudName : '';
+CloudinaryConstants.CLD_CONTENT_IMAGE_PATH = 'CLDContentImagePath' in sitePrefs.custom && sitePrefs.getCustom().CLDContentImagePath;
+CloudinaryConstants.CLD_CATALOG_IMAGE_PATH = 'CLDCatalogImagePath' in sitePrefs.custom && sitePrefs.getCustom().CLDCatalogImagePath;
+CloudinaryConstants.CLD_ENABLED = 'CLDEnabled' in sitePrefs.custom && sitePrefs.getCustom().CLDEnabled;
+CloudinaryConstants.CLD_GALLERY_ENABLED = 'CLDGalleryEnabled' in sitePrefs.custom && sitePrefs.getCustom().CLDGalleryEnabled;
+CloudinaryConstants.CLD_IMAGE_PATH = 'CLDProductImagePath' in sitePrefs.custom && sitePrefs.getCustom().CLDProductImagePath;
+CloudinaryConstants.CLD_UPLOAD_PRESET = 'CLDUploadPreset' in sitePrefs.custom ? sitePrefs.getCustom().CLDUploadPreset : '';
+CloudinaryConstants.CLD_VIDEO_PATH = 'CLDProductVideoPath' in sitePrefs.custom && sitePrefs.getCustom().CLDProductVideoPath;
+CloudinaryConstants.CLD_VIDEO_OPTIONS = 'CLDVideoPlayerStyle' in sitePrefs.custom && sitePrefs.getCustom().CLDVideoPlayerStyle;
+CloudinaryConstants.CLD_VIDEO_ENABLED = 'CLDVideoEnabled' in sitePrefs.custom && sitePrefs.getCustom().CLDVideoEnabled;
+CloudinaryConstants.CLD_VIDEO_PLAYER_ENABLED = 'CLDVideoPlayerEnabled' in sitePrefs.custom && sitePrefs.getCustom().CLDVideoPlayerEnabled;
+CloudinaryConstants.CLD_VIDEO_CUSTOM_MAP_PATH = 'CLDVideoCustomMapPath' in sitePrefs.custom ? sitePrefs.getCustom().CLDVideoCustomMapPath : '';
+CloudinaryConstants.CLD_USE_VIDEO_CUSTOM_MAPPING = 'CLDVideoCustomMappingEnabled' in sitePrefs.custom && sitePrefs.getCustom().CLDVideoCustomMappingEnabled;
+CloudinaryConstants.CLD_GALLERY_STYLES = 'CLDGalleryStyles' in sitePrefs.custom && sitePrefs.getCustom().CLDGalleryStyles;
+CloudinaryConstants.CLD_PRODUCT_ATTRIBUTE_FOR_TAGS = 'CLDProductAttributeForTags' in sitePrefs.custom && sitePrefs.getCustom().CLDProductAttributeForTags;
+CloudinaryConstants.CLD_GLOBAL_IMAGE_TRANSFORMATIONS = 'CLDImageTransformation' in sitePrefs.custom ? sitePrefs.getCustom().CLDImageTransformation : '';
+CloudinaryConstants.CLD_GLOBAL_VIDEO_TRANSFORMATIONS = 'CLDVideoTransformation' in sitePrefs.custom ? sitePrefs.getCustom().CLDVideoTransformation : '';
+CloudinaryConstants.CLD_GLOBAL_IMAGE_TRANSFORM_FORMAT = 'CLDImageTransformFormat' in sitePrefs.custom && sitePrefs.getCustom().CLDImageTransformFormat;
+CloudinaryConstants.CLD_GLOBAL_VIDEO_TRANSFORM_FORMAT = 'CLDVideoTransformFormat' in sitePrefs.custom && sitePrefs.getCustom().CLDVideoTransformFormat;
+CloudinaryConstants.CLD_GLOBAL_IMAGE_QUALITY = 'CLDImageTransformQuality' in sitePrefs.custom && sitePrefs.getCustom().CLDImageTransformQuality;
+CloudinaryConstants.CLD_GLOBAL_VIDEO_QUALITY = 'CLDVideoTransformQuality' in sitePrefs.custom && sitePrefs.getCustom().CLDVideoTransformQuality;
+CloudinaryConstants.CLD_GLOBAL_IMAGE_DPR = 'CLDImageTransformDPR' in sitePrefs.custom && sitePrefs.getCustom().CLDImageTransformDPR;
+CloudinaryConstants.CLD_IMAGE_PAGE_TYPE_SETTINGS = 'CLDImagePageTypeSettings' in sitePrefs.custom && sitePrefs.getCustom().CLDImagePageTypeSettings;
+CloudinaryConstants.CLD_HIGH_RES_IMAGES_VIEW_TYPE = 'CLDHighResImageViewType' in sitePrefs.custom && sitePrefs.getCustom().CLDHighResImageViewType;
+CloudinaryConstants.CLD_SMD_ENDPOINT = 'CLDMetadataFilteringEndpoint' in sitePrefs.custom && sitePrefs.getCustom().CLDMetadataFilteringEndpoint;
+CloudinaryConstants.CLD_SMD_ENDPOINT_GALLERY_POSITION = 'CLDMetadataEndpointByGalleryPosition' in sitePrefs.custom && sitePrefs.getCustom().CLDMetadataEndpointByGalleryPosition;
+CloudinaryConstants.CLD_SMD_KEY = 'CLDSMDKey' in sitePrefs.custom && sitePrefs.getCustom().CLDSMDKey;
+CloudinaryConstants.CLD_SMD_VALUE = 'CLDSMDValue' in sitePrefs.custom && sitePrefs.getCustom().CLDSMDValue;
+CloudinaryConstants.CLD_INCLUDE_VIDEOS_IN_PGW = 'CLDIncludeVideosInPGW' in sitePrefs.custom && sitePrefs.getCustom().CLDIncludeVideosInPGW;
+CloudinaryConstants.IMAGES_BASE_PATH = 'CLDImagesBasePath' in sitePrefs.custom && sitePrefs.getCustom().CLDImagesBasePath;
+CloudinaryConstants.CLD_SWATCH_IMAGES_VIEW_TYPE = 'CLDSwatchImageViewType' in sitePrefs.custom && sitePrefs.getCustom().CLDSwatchImageViewType;
+CloudinaryConstants.CLD_ENABLE_SWATCH_ON_PLP = 'CLDEnableSwatchOnPLP' in sitePrefs.custom && sitePrefs.getCustom().CLDEnableSwatchOnPLP;
+CloudinaryConstants.CLD_CUSTOM_MAPPING_VIDEO_FORMAT = 'CLDVideoCustomMappingFormat' in sitePrefs.custom && sitePrefs.getCustom().CLDVideoCustomMappingFormat;
+CloudinaryConstants.CUSTOMER_SERVICE_EMAIL = 'customerServiceEmail' in sitePrefs.custom && sitePrefs.getCustom().customerServiceEmail;
+CloudinaryConstants.CLD_ASSETS_UPLOAD_LIMIT_MB = 'CLDMaxAssetUploadLimitMBs' in sitePrefs.custom && sitePrefs.getCustom().CLDMaxAssetUploadLimitMBs;
+CloudinaryConstants.CLD_CARTRIDGE_OPERATION_MODE = 'CLDCartridgeOperationMode' in sitePrefs.custom && sitePrefs.getCustom().CLDCartridgeOperationMode.value;
+CloudinaryConstants.CLD_CARTRIDGE_CONTENT_OPERATION_MODE = 'CLDCartridgeContentOperationMode' in sitePrefs.custom && sitePrefs.getCustom().CLDCartridgeContentOperationMode.value;
+CloudinaryConstants.CLD_CONTENT_LIBRARY_JOB_LAST_EXECUTION_DATE = 'CLDContentLibraryJobLastExecutionDate' in sitePrefs.custom ? sitePrefs.getCustom().CLDContentLibraryJobLastExecutionDate : '';
+CloudinaryConstants.CLD_CATALOG_CONTENT_JOB_LAST_EXECUTION_DATE = 'CLDCatalogContentJobLastExecutionDate' in sitePrefs.custom ? sitePrefs.getCustom().CLDCatalogContentJobLastExecutionDate : '';
+CloudinaryConstants.CLD_REPORTING_LOG_LEVEL = 'CLDReportingLogLevel' in sitePrefs.custom && sitePrefs.getCustom().CLDReportingLogLevel.value;
+CloudinaryConstants.CLD_REST_SERVICE_CREDENTIALS = 'CLDRestServiceCredentialsID' in sitePrefs.custom && sitePrefs.getCustom().CLDRestServiceCredentialsID;
 
 // Enable pgw
-CloudinaryConstants.CLD_360_SPINSETS_ENABLED = sitePrefs.getCustom().CLDEnable360SpinSets;
-CloudinaryConstants.CLD_3D_OBJECTS_ENABLED = sitePrefs.getCustom().CLDEnable3DObjects;
+CloudinaryConstants.CLD_360_SPINSETS_ENABLED = 'CLDEnable360SpinSets' in sitePrefs.custom && sitePrefs.getCustom().CLDEnable360SpinSets;
+CloudinaryConstants.CLD_3D_OBJECTS_ENABLED = 'CLDEnable3DObjects' in sitePrefs.custom && sitePrefs.getCustom().CLDEnable3DObjects;
 
-// General constants
+// Enable disable cloudinary on specific pages constants
+CloudinaryConstants.CLD_IMAGE_PAGE_TYPE_SETTINGS_OBJECT = 'CLDImagePageTypeSettings' in sitePrefs.custom && JSON.parse(CloudinaryConstants.CLD_IMAGE_PAGE_TYPE_SETTINGS || '{}');
+
+// Cloudinary orgainization preferences
+CloudinaryConstants.CLD_ORG_CONTENT_IMAGE_PATH = 'CLDOrgContentImgPath' in sitePrefs.custom && sitePrefs.getCustom().CLDOrgContentImgPath || 'organization/content/images';
+CloudinaryConstants.CLD_ORG_CONTENT_VIDEO_PATH = 'CLDOrgContentVideoPath' in sitePrefs.custom && sitePrefs.getCustom().CLDOrgContentVideoPath || 'organization/content/videos';
+CloudinaryConstants.CLD_LAST_SYNC = 'CLDLastSyncJobExecution' in sitePrefs.custom && sitePrefs.getCustom().CLDLastSyncJobExecution || '01/01/1970';
+
+CloudinaryConstants.CLD_UPLOAD_PRESET = 'sfra_default';
+CloudinaryConstants.ORG_CONTENT_DW_URL = '/on/demandware.servlet/webdav/Sites/Static/';
+CloudinaryConstants.HOST_NAME = 'https://' + System.getInstanceHostname();
 CloudinaryConstants.IMAGE_UPLOAD_URL_RESOURCE_TYPE = 'image/upload';
 CloudinaryConstants.VIDEO_UPLOAD_URL_RESOURCE_TYPE = 'video/upload';
 CloudinaryConstants.RAW_UPLOAD_URL_RESOURCE_TYPE = '/raw/upload';
@@ -102,7 +110,6 @@ CloudinaryConstants.CLD_PRODUCT_SWATCH_IMG = 'cloudinaryProductSwatchImg';
 CloudinaryConstants.VIDEO_POSTER_IMAGE_TYPE = '.jpg';
 CloudinaryConstants.QUESTION_MARK = '?';
 CloudinaryConstants.CLD_TRACKING_PARAM_PLATFORM_PLACEHOLDER = '<PLATFORM_TYPE>';
-CloudinaryConstants.API_TRACKING_PARAM = 'CloudinarySalesForceSiteCartridge/' + sitePrefs.getCustom().CLDCartridgeVersion + ' (CommerceCloud ' + System.compatibilityMode + ') Architecture ' + CloudinaryConstants.CLD_TRACKING_PARAM_PLATFORM_PLACEHOLDER;
 CloudinaryConstants.CLD_TRACKING_PARAM = '_i=AG';
 CloudinaryConstants.CLD_PRODUCT_IMG = 'cloudinaryProductImage';
 CloudinaryConstants.DEBUG_EXECUTION_MODE = 'Debug';
@@ -116,6 +123,7 @@ CloudinaryConstants.ASSET_UPLOAD_SIZE_LIMIT_BYTES = CloudinaryConstants.CLD_ASSE
 CloudinaryConstants.CLD_PRODUCT_IMGS = 'cloudinaryProductImages';
 CloudinaryConstants.CLD_QUERY_PARAM_FOR_SET_AND_BUNDLE = '&isBundleOrSet=true';
 CloudinaryConstants.CLD_QURY_PARAM_FOR_PGW_CONTAINER_SUFFIX = '&cloudinaryPGWContainerSuffix=';
+CloudinaryConstants.API_TRACKING_PARAM = 'CloudinarySalesForceSiteCartridge/' + (sitePrefs.getCustom().CLDCartridgeVersion || '') + ' (CommerceCloud ' + System.compatibilityMode + ') Architecture ' + CloudinaryConstants.CLD_TRACKING_PARAM_PLATFORM_PLACEHOLDER;
 CloudinaryConstants.CLD_VIEW_TYPE_PLACE_HOLDER = 'VIEW_TYPE';
 CloudinaryConstants.CLD_PUBLIC_ID_SPECIAL_CHARS_REGEX = /[%&#?\\<>]/g;
 CloudinaryConstants.CLD_REPORTING_LOG_LEVELS = {

@@ -3,8 +3,8 @@
 /* API Includes */
 var logger = require('dw/system/Logger').getLogger('Cloudinary', 'UPLOAD');
 
-var cloudinaryUtils = require('*/cartridge/scripts/util/cloudinaryUtils');
-var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
+var cloudinaryUtils = require('~/cartridge/scripts/util/cloudinaryUtils');
+var cloudinaryConstants = require('~/cartridge/scripts/util/cloudinaryConstants');
 
 /**
  * This method creates the request object.

@@ -1,7 +1,7 @@
 'use strict';
 
 var MessageDigest = require('dw/crypto/MessageDigest');
-var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
+var cloudinaryConstants = require('~/cartridge/scripts/util/cloudinaryConstants');
 
 /**
  * This method creates the request object.

@@ -178,7 +178,7 @@ var uploadFile = function (cloudinaryConstants, asset, tags, assignedFolder, ass
         if (uploadResult.errorCode === cloudinaryConstants.ERROR_CODES.UNAUTHORIZED) {
             jobLogger.error('Error occurred while connecting with service due to invalid credentials, message: {0}', uploadResult.message);
         } else {
-            jobLogger.error('jobStepHelpers~uploadFile: Error uploading file: {0}, message: {1}, line number 177', asset, uploadResult.message);
+            jobLogger.error('Error uploading file: {0}, message: {1}', asset, uploadResult.message);
         }
     } else if ('resultObj' in uploadResult && !empty(uploadResult.resultObj) && 'existing' in uploadResult.resultObj &&
         uploadResult.resultObj.existing) {

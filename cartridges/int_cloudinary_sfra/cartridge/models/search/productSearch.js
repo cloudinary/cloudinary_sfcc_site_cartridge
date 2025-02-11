@@ -1,8 +1,5 @@
 'use strict';
 
-var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
-var cloudinaryAPI = require('*/cartridge/scripts/api/cloudinaryApi');
-
 var productSearchBase = module.superModule;
 
 /**
@@ -19,10 +16,13 @@ var productSearchBase = module.superModule;
 function ProductSearch(productSearch, httpParams, sortingRule, sortingOptions, rootCategory) {
     productSearchBase.call(this, productSearch, httpParams, sortingRule, sortingOptions, rootCategory);
 
+    var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
+    var cloudinaryAPI = require('*/cartridge/scripts/api/cloudinaryApi');
+
     if (cloudinaryConstants.CLD_ENABLED && !empty(this.bannerImageUrl)) {
         if (cloudinaryConstants.CLD_IMAGE_PAGE_TYPE_SETTINGS_OBJECT.categoryBanner.enabled) {
             var cldBannerImage = cloudinaryAPI.getCatalogImageAbsURLFromRelURL(this.bannerImageUrl.toString(), this.category.id,
-            cloudinaryConstants.PAGE_TYPES.CATEGORY_BANNER);
+                cloudinaryConstants.PAGE_TYPES.CATEGORY_BANNER);
             if (!empty(cldBannerImage)) {
                 this.cldBannerImage = cldBannerImage;
             }

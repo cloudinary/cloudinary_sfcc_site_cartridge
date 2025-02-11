@@ -1,8 +1,5 @@
 'use strict';
 
-var decorators = require('*/cartridge/models/product/decorators/index');
-var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
-
 var productBundleBase = module.superModule;
 
 /**
@@ -22,6 +19,9 @@ var productBundleBase = module.superModule;
  */
 module.exports = function bundleProduct(product, apiProduct, options, factory) {
     productBundleBase.call(this, product, apiProduct, options, factory);
+
+    var decorators = require('*/cartridge/models/product/decorators/index');
+    var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
 
     if (cloudinaryConstants.CLD_ENABLED) {
         decorators.cloudinary(product, apiProduct);

@@ -1,13 +1,11 @@
 'use strict';
 
-// API includes
-var jobLogger = require('dw/system').Logger.getLogger('Cloudinary', 'CREATE');
-var Status = require('dw/system/Status');
-
 module.exports.Start = function (args) {
     var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
     var cloudinaryMetadataSvc = require('*/cartridge/scripts/service/cldMetadata');
     var jobStepHelpers = require('*/cartridge/scripts/helpers/jobStepHelpers');
+    var jobLogger = require('dw/system').Logger.getLogger('Cloudinary', 'CREATE');
+    var Status = require('dw/system/Status');
 
     if (!cloudinaryConstants.CLD_ENABLED) {
         return new Status(Status.ERROR, 'ERROR', 'The Cloudinary cartridge is disabled');

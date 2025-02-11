@@ -8,15 +8,15 @@ server.extend(page);
 var csrfProtection = require('*/cartridge/scripts/middleware/csrf');
 var consentTracking = require('*/cartridge/scripts/middleware/consentTracking');
 
-var cloudinaryModel = require('*/cartridge/scripts/model/cloudinaryModel');
-var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
-
 server.append(
     'Show',
     server.middleware.https,
     consentTracking.consent,
     csrfProtection.generateToken,
     function (req, res, next) {
+        var cloudinaryModel = require('*/cartridge/scripts/model/cloudinaryModel');
+        var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
+
         var cloudinary = {};
         var lineItems = res.viewData.items;
         var productLineItemPrimaryImg;
@@ -31,7 +31,8 @@ server.append(
                         lineItem.bundledProductLineItems.forEach(function (bli, idx) {
                             bundledLineItem = bli;
                             productLineItemPrimaryImg = cloudinaryModel.getProductPrimaryImage(bundledLineItem.id, cloudinaryConstants.CLD_HIGH_RES_IMAGES_VIEW_TYPE, {
-                                pageType: cloudinaryConstants.PAGE_TYPES.CART });
+                                pageType: cloudinaryConstants.PAGE_TYPES.CART
+                            });
 
                             if (bundledLineItem.images && productLineItemPrimaryImg) {
                                 bundledLineItem = cloudinaryModel.addCloudinaryProductImage(bundledLineItem, productLineItemPrimaryImg);
@@ -64,6 +65,9 @@ server.append(
     });
 
 server.append('MiniCartShow', function (req, res, next) {
+    var cloudinaryModel = require('*/cartridge/scripts/model/cloudinaryModel');
+    var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
+
     var cloudinary = {};
     var lineItems = res.viewData.items;
     var productLineItemPrimaryImg;
@@ -78,7 +82,8 @@ server.append('MiniCartShow', function (req, res, next) {
                     lineItem.bundledProductLineItems.forEach(function (bli, idx) {
                         bundledLineItem = bli;
                         productLineItemPrimaryImg = cloudinaryModel.getProductPrimaryImage(bundledLineItem.id, cloudinaryConstants.CLD_HIGH_RES_IMAGES_VIEW_TYPE, {
-                            pageType: cloudinaryConstants.PAGE_TYPES.MINI_CART });
+                            pageType: cloudinaryConstants.PAGE_TYPES.MINI_CART
+                        });
 
                         if (bundledLineItem.images && productLineItemPrimaryImg) {
                             bundledLineItem = cloudinaryModel.addCloudinaryProductImage(bundledLineItem, productLineItemPrimaryImg);

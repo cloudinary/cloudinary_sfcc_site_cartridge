@@ -1,16 +1,15 @@
 'use strict';
 
-// API includes
-var jobLogger = require('dw/system').Logger.getLogger('Cloudinary', 'UPLOAD');
-var ContentMgr = require('dw/content/ContentMgr');
-var File = require('dw/io/File');
-var Status = require('dw/system/Status');
-
 var changedFilesCount = 0;
 
 module.exports.Start = function (args) {
     var Site = require('dw/system/Site');
     var Transaction = require('dw/system/Transaction');
+    var jobLogger = require('dw/system').Logger.getLogger('Cloudinary', 'UPLOAD');
+    var ContentMgr = require('dw/content/ContentMgr');
+    var File = require('dw/io/File');
+    var Status = require('dw/system/Status');
+
     var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
     var cloudinaryUtils = require('*/cartridge/scripts/util/cloudinaryUtils');
     var jobStepHelpers = require('*/cartridge/scripts/helpers/jobStepHelpers');

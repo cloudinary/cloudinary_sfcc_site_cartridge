@@ -10,16 +10,6 @@
 *@created     : 23 April 2020
 *********************************************************************************************************/
 
-// API includes
-var ProductMgr = require('dw/catalog/ProductMgr');
-var logger = require('dw/system/Logger').getLogger('int_cloudinary', 'int_cloudinary');
-
-// script includes
-var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
-var cloudinaryHelper = require('*/cartridge/scripts/helpers/cloudinaryHelpers');
-var cloudinaryAPI = require('*/cartridge/scripts/api/cloudinaryApi');
-var cldTransformationAPI = require('*/cartridge/scripts/api/cloudinaryTranformationApi');
-
 /**
  * Get cloudinary images and Product Gallery Widget options based on preferences.
  *
@@ -29,6 +19,13 @@ var cldTransformationAPI = require('*/cartridge/scripts/api/cloudinaryTranformat
  * @returns {string} JSON string holding image assets URLs and widget options
  */
 var getCloudinaryImages = function (productID, params) {
+    var ProductMgr = require('dw/catalog/ProductMgr');
+    var logger = require('dw/system/Logger').getLogger('int_cloudinary', 'int_cloudinary');
+
+    var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
+    var cloudinaryHelper = require('*/cartridge/scripts/helpers/cloudinaryHelpers');
+    var cloudinaryAPI = require('*/cartridge/scripts/api/cloudinaryApi');
+
     var assets = {};
     var assetPublicID;
     var cldTag = '';
@@ -159,6 +156,14 @@ var getCloudinaryImages = function (productID, params) {
  * @returns {string} JSON string holding video URL and player options
  */
 var getCloudinaryVideo = function (productID, currentLocale) {
+    var ProductMgr = require('dw/catalog/ProductMgr');
+    var logger = require('dw/system/Logger').getLogger('int_cloudinary', 'int_cloudinary');
+
+    var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
+    var cloudinaryHelper = require('*/cartridge/scripts/helpers/cloudinaryHelpers');
+    var cloudinaryAPI = require('*/cartridge/scripts/api/cloudinaryApi');
+    var cldTransformationAPI = require('*/cartridge/scripts/api/cloudinaryTranformationApi');
+
     var isVideoEnabled = false;
     var isVideoPlayerEnabled = false;
     var globalTransformations = '';
@@ -230,6 +235,11 @@ var getCloudinaryVideo = function (productID, currentLocale) {
  * @returns {Object} object holding image asset URL
  */
 var geContentImageURLByName = function (imageName, pageType) {
+    var logger = require('dw/system/Logger').getLogger('int_cloudinary', 'int_cloudinary');
+
+    var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
+    var cloudinaryAPI = require('*/cartridge/scripts/api/cloudinaryApi');
+
     var image = {};
 
     try {
@@ -254,6 +264,11 @@ var geContentImageURLByName = function (imageName, pageType) {
  * @returns {Object} object holding image asset URL
  */
 var geContentImageURLByURL = function (url, pageType) {
+    var logger = require('dw/system/Logger').getLogger('int_cloudinary', 'int_cloudinary');
+
+    var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
+    var cloudinaryAPI = require('*/cartridge/scripts/api/cloudinaryApi');
+
     var image = {};
 
     try {
@@ -277,6 +292,13 @@ var geContentImageURLByURL = function (url, pageType) {
  * @returns {Object} object holding video URL and player options
  */
 var geContentVideoByName = function (videoName) {
+    var logger = require('dw/system/Logger').getLogger('int_cloudinary', 'int_cloudinary');
+
+    var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
+    var cloudinaryHelper = require('*/cartridge/scripts/helpers/cloudinaryHelpers');
+    var cloudinaryAPI = require('*/cartridge/scripts/api/cloudinaryApi');
+    var cldTransformationAPI = require('*/cartridge/scripts/api/cloudinaryTranformationApi');
+
     var videos = {};
 
     try {
@@ -322,6 +344,13 @@ var geContentVideoByName = function (videoName) {
  * @returns {Object} object holding video URL and player options
  */
 var geContentVideoByURL = function (url) {
+    var logger = require('dw/system/Logger').getLogger('int_cloudinary', 'int_cloudinary');
+
+    var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
+    var cloudinaryHelper = require('*/cartridge/scripts/helpers/cloudinaryHelpers');
+    var cloudinaryAPI = require('*/cartridge/scripts/api/cloudinaryApi');
+    var cldTransformationAPI = require('*/cartridge/scripts/api/cloudinaryTranformationApi');
+
     var videos = {};
 
     try {
@@ -369,6 +398,13 @@ var geContentVideoByURL = function (url) {
  * @returns {Object} object holding image URL and srcset attributes
  */
 var getProductPrimaryImage = function (productID, viewType, params) {
+    var ProductMgr = require('dw/catalog/ProductMgr');
+    var logger = require('dw/system/Logger').getLogger('int_cloudinary', 'int_cloudinary');
+
+    var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
+    var cloudinaryHelper = require('*/cartridge/scripts/helpers/cloudinaryHelpers');
+    var cloudinaryAPI = require('*/cartridge/scripts/api/cloudinaryApi');
+
     var isSwatch = false;
     var productPrimaryImg;
     var productImgs = [];
@@ -426,6 +462,11 @@ var getProductPrimaryImage = function (productID, viewType, params) {
  * @returns {Object} object holding image URL and srcset attributes
  */
 var getPLPCustomImage = function (productID, position) {
+    var logger = require('dw/system/Logger').getLogger('int_cloudinary', 'int_cloudinary');
+
+    var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
+    var cloudinaryAPI = require('*/cartridge/scripts/api/cloudinaryApi');
+
     var plpImg;
 
     try {
@@ -447,10 +488,14 @@ var getPLPCustomImage = function (productID, position) {
  * @returns {Object} images - object holding array of resources
  */
 var searchProductSetAndBundleImagesByTags = function (product, withFields) {
+    var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
+    var cloudinaryHelper = require('*/cartridge/scripts/helpers/cloudinaryHelpers');
+    var cloudinaryAPI = require('*/cartridge/scripts/api/cloudinaryApi');
+
     var images = [];
 
     if (!empty(product) && cloudinaryConstants.CLD_ENABLED && !cloudinaryConstants.CLD_GALLERY_ENABLED
-            && cloudinaryConstants.CLD_CARTRIDGE_OPERATION_MODE === cloudinaryConstants.CLD_GET_ASSETS_BY_TAG_NAME_MODE) {
+        && cloudinaryConstants.CLD_CARTRIDGE_OPERATION_MODE === cloudinaryConstants.CLD_GET_ASSETS_BY_TAG_NAME_MODE) {
         var subProducts = [];
         if (product.productSet) {
             subProducts = product.productSetProducts;
@@ -474,6 +519,8 @@ var searchProductSetAndBundleImagesByTags = function (product, withFields) {
 * @returns {Object} images - object holding array of resources
 */
 var getProductImageByIDAndViewType = function (productID, currentLocale, viewType) {
+    var ProductMgr = require('dw/catalog/ProductMgr');
+
     var productFetch;
     var productImages;
 

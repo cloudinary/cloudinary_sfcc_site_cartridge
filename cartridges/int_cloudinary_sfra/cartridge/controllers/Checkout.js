@@ -8,9 +8,6 @@ server.extend(page);
 var csrfProtection = require('*/cartridge/scripts/middleware/csrf');
 var consentTracking = require('*/cartridge/scripts/middleware/consentTracking');
 
-var cloudinaryModel = require('*/cartridge/scripts/model/cloudinaryModel');
-var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
-
 // Main entry point for Checkout
 server.append(
     'Begin',
@@ -18,6 +15,9 @@ server.append(
     consentTracking.consent,
     csrfProtection.generateToken,
     function (req, res, next) {
+        var cloudinaryModel = require('*/cartridge/scripts/model/cloudinaryModel');
+        var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
+
         var cloudinary = {};
         var orderModel = res.viewData.order;
         var shippings = [];

@@ -1,11 +1,5 @@
 'use strict';
 
-/* API Includes */
-var logger = require('dw/system/Logger').getLogger('Cloudinary', 'UPLOAD');
-
-var cloudinaryUtils = require('*/cartridge/scripts/util/cloudinaryUtils');
-var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
-
 /**
  * This method creates the request object.
  *
@@ -14,6 +8,10 @@ var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants'
  * @returns {string} result - The API service response (JSON)
  */
 function buildPayload(args) {
+    var logger = require('dw/system/Logger').getLogger('Cloudinary', 'UPLOAD');
+    var cloudinaryUtils = require('~/cartridge/scripts/util/cloudinaryUtils');
+    var cloudinaryConstants = require('~/cartridge/scripts/util/cloudinaryConstants');
+
     var Prefs = args.servicePrefs;
     var publicID = args.assetPublicID;
     var requestObj = {};
@@ -62,6 +60,9 @@ function buildPayload(args) {
  * @returns {string} result - The API service response (JSON)
  */
 function uploadAsset(args) {
+    var logger = require('dw/system/Logger').getLogger('Cloudinary', 'UPLOAD');
+    var cloudinaryUtils = require('~/cartridge/scripts/util/cloudinaryUtils');
+
     var Prefs = args.servicePrefs;
     var result = [];
     var cldResponse = { ok: true, message: '' };

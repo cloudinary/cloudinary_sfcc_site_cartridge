@@ -1,18 +1,15 @@
 'use strict';
 
-/* API Includes */
-var cldWebService = require('*/cartridge/scripts/service/cldWebService');
-var logger = require('dw/system/Logger').getLogger('Cloudinary', 'UPLOAD');
-
-/* Cloudinary Prefs */
-var Prefs = require('*/cartridge/scripts/util/cloudinaryConstants');
-
 /**
  * This method uses the service to get metadata fields from cld.
  *
  * @returns {string} result - The API service response (JSON)
  */
 function fetchMetadataFromCld() {
+    var cldWebService = require('*/cartridge/scripts/service/cldWebService');
+    var logger = require('dw/system/Logger').getLogger('Cloudinary', 'UPLOAD');
+    var Prefs = require('*/cartridge/scripts/util/cloudinaryConstants');
+
     var cldResponse = { ok: true, message: '', result: {} };
     var configArgs = {};
     var result = [];
@@ -52,6 +49,9 @@ function fetchMetadataFromCld() {
  * @returns {Object} metadataFields - The metadata fields
  */
 function fetchMetadata() {
+    var logger = require('dw/system/Logger').getLogger('Cloudinary', 'UPLOAD');
+    var Prefs = require('*/cartridge/scripts/util/cloudinaryConstants');
+
     var metadataFields;
     try {
         var cldResponse = fetchMetadataFromCld();
@@ -72,19 +72,23 @@ function fetchMetadata() {
  * @returns {string} result - The API service response (JSON)
  */
 function createMetadataSchemeCld(schema) {
+    var cldWebService = require('*/cartridge/scripts/service/cldWebService');
+    var logger = require('dw/system/Logger').getLogger('Cloudinary', 'UPLOAD');
+    var Prefs = require('*/cartridge/scripts/util/cloudinaryConstants');
+
     var cldResponse = { ok: true, message: '', result: {} };
     var configArgs = {};
     var result = [];
 
     configArgs.method = 'POST';
-    configArgs.endPoint = Prefs.CLD_CLOUDNAME + '/metadata_fields';;
+    configArgs.endPoint = Prefs.CLD_CLOUDNAME + '/metadata_fields';
     var service = cldWebService.getService(Prefs.CLD_UPLOAD_SVC, cldWebService.getServiceConfigs(configArgs));
     service.setCredentialID(Prefs.CLD_REST_SERVICE_CREDENTIALS);
 
     schema.forEach(function (field) {
         try {
             result = service.call(field);
-                if (result.ok && result.error === 0) {
+            if (result.ok && result.error === 0) {
                 cldResponse.ok = true;
                 cldResponse.result[field.label] = result.object;
                 logger.info('Metadata fields: {0} is created successfully.', result.object.label);

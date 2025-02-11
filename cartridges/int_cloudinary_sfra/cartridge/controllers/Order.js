@@ -8,15 +8,15 @@ server.extend(page);
 var csrfProtection = require('*/cartridge/scripts/middleware/csrf');
 var consentTracking = require('*/cartridge/scripts/middleware/consentTracking');
 
-var cloudinaryModel = require('*/cartridge/scripts/model/cloudinaryModel');
-var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
-
 server.append(
     'Confirm',
     consentTracking.consent,
     server.middleware.https,
     csrfProtection.generateToken,
     function (req, res, next) {
+        var cloudinaryModel = require('*/cartridge/scripts/model/cloudinaryModel');
+        var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
+
         var cloudinary = {};
         var orderModel = res.viewData.order;
         var shippings = [];

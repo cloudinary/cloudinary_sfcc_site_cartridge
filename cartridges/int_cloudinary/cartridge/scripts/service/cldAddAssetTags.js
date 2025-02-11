@@ -1,11 +1,5 @@
 'use strict';
 
-/* API Includes */
-var Calendar = require('dw/util/Calendar');
-var logger = require('dw/system/Logger').getLogger('Cloudinary', 'UPLOAD');
-
-var cloudinaryUtils = require('*/cartridge/scripts/util/cloudinaryUtils');
-
 /**
  * This method creates the request object.
  *
@@ -14,6 +8,11 @@ var cloudinaryUtils = require('*/cartridge/scripts/util/cloudinaryUtils');
  * @returns {string} result - The API service response (JSON)
  */
 function buildPayload(args) {
+    var Calendar = require('dw/util/Calendar');
+    var logger = require('dw/system/Logger').getLogger('Cloudinary', 'UPLOAD');
+
+    var cloudinaryUtils = require('~/cartridge/scripts/util/cloudinaryUtils');
+
     var prefs = args.servicePrefs;
     var publicID = args.assetPublicID;
     var requestObj = {};
@@ -48,6 +47,9 @@ function buildPayload(args) {
  * @returns {string} result - The API service response (JSON)
  */
 function addAssetTags(args) {
+    var logger = require('dw/system/Logger').getLogger('Cloudinary', 'UPLOAD');
+    var cloudinaryUtils = require('~/cartridge/scripts/util/cloudinaryUtils');
+
     var prefs = args.servicePrefs;
     var result = [];
     var cldResponse = { ok: true, message: '' };

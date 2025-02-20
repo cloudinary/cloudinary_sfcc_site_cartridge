@@ -1,14 +1,14 @@
 'use strict';
 
 module.exports = function (object, hit) {
-    var seachVariationAttributesBase = module.superModule;
+    var searchVariationAttributesBase = module.superModule;
 
     var URLUtils = require('dw/web/URLUtils');
     var collections = require('*/cartridge/scripts/util/collections');
     var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
 
     var ATTRIBUTE_NAME = 'color';
-    seachVariationAttributesBase = seachVariationAttributesBase.call(this, object, hit);
+    searchVariationAttributesBase = searchVariationAttributesBase.call(this, object, hit);
     var colors = hit.getRepresentedVariationValues(ATTRIBUTE_NAME);
 
     if (cloudinaryConstants.CLD_ENABLED && object.variationAttributes[0] && object.variationAttributes[0].values[0] &&

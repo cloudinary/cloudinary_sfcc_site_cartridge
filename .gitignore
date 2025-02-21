@@ -22,9 +22,8 @@ test/appium/webdriver/config.json
 .history
 test-reports/
 
-**/static/default/css/*.css
-**/static/default/css/*.js
-**/static/default/js/*.js
+**/static/default/css/
+**/static/default/js/
 sitegenesis-master/
 storefront-reference-architecture-master/
 .vscode

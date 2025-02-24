@@ -1,22 +1,13 @@
 'use strict';
 
-// API includes
-var CatalogMgr = require('dw/catalog/CatalogMgr');
-var File = require('dw/io/File');
-var FileWriter = require('dw/io/FileWriter');
-var ProductSearchModel = require('dw/catalog/ProductSearchModel');
-var Status = require('dw/system/Status');
-var Site = require('dw/system/Site');
-var StringUtils = require('dw/util/StringUtils');
-var XMLStreamWriter = require('dw/io/XMLStreamWriter');
-var jobLogger = require('dw/system').Logger.getLogger('Cloudinary', 'UPLOAD');
-
-
 /**
  * Function used to get product search hits
  * @returns {Object} - productSearchHitsItr
  */
 function getProductSearchHitIt() {
+    var CatalogMgr = require('dw/catalog/CatalogMgr');
+    var ProductSearchModel = require('dw/catalog/ProductSearchModel');
+
     var siteRootCategory = CatalogMgr.getSiteCatalog().getRoot();
     var productSearchModel = new ProductSearchModel();
     productSearchModel.setCategoryID(siteRootCategory.ID);
@@ -53,6 +44,8 @@ function writeProductFileContent(cloudinaryUrlStreamWriter, productSearchHitsItr
     var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
     var cldFetchResourcesSvc = require('*/cartridge/scripts/service/cldFetchResources');
     var cloudinaryHelper = require('*/cartridge/scripts/helpers/cloudinaryHelpers');
+    var jobLogger = require('dw/system').Logger.getLogger('Cloudinary', 'UPLOAD');
+
     var imgAssets;
     var imgAssetsSorted = {};
     var lastJobExecution = new Date(params.jobLastExecutionTime);
@@ -78,6 +71,7 @@ function writeProductFileContent(cloudinaryUrlStreamWriter, productSearchHitsItr
             imgAssets = cldFetchResourcesSvc.fetchResourcesWithModifiedDate(productID, cloudinaryConstants.CLD_IMAGE_RESOURCE_TYPE);
             imgAssetsSorted.resources = cloudinaryHelper.sortResourcesByAssetPosition(imgAssets.resources);
             imgAssetsSorted.updatedAt = imgAssets.updatedAt;
+
             if (!empty(imgAssetsSorted) && !empty(imgAssetsSorted.resources) && imgAssetsSorted.resources.length > 0 && !empty(params.jobLastExecutionTime) && new Date(imgAssetsSorted.updatedAt) >= lastJobExecution) {
                 cloudinaryUrlStreamWriter.writeStartElement('product');
                 cloudinaryUrlStreamWriter.writeAttribute('product-id', product.ID);
@@ -181,10 +175,18 @@ function writeProductFileContent(cloudinaryUrlStreamWriter, productSearchHitsItr
 module.exports.Start = function (args) {
     var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
     var jobStepHelpers = require('*/cartridge/scripts/helpers/jobStepHelpers');
-    var sitePrefs = Site.getCurrent().getPreferences();
-    var currentSite = Site.getCurrent();
+    var Site = require('dw/system/Site');
     var Calendar = require('dw/util/Calendar');
     var Transaction = require('dw/system/Transaction');
+    var File = require('dw/io/File');
+    var FileWriter = require('dw/io/FileWriter');
+    var Status = require('dw/system/Status');
+    var StringUtils = require('dw/util/StringUtils');
+    var XMLStreamWriter = require('dw/io/XMLStreamWriter');
+    var jobLogger = require('dw/system').Logger.getLogger('Cloudinary', 'UPLOAD');
+
+    var sitePrefs = Site.getCurrent().getPreferences();
+    var currentSite = Site.getCurrent();
     var calendar = new Calendar();
 
     if (!cloudinaryConstants.CLD_ENABLED) {

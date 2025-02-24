@@ -1,13 +1,5 @@
 'use strict';
 
-// Api includes
-var logger = require('dw/system/Logger').getLogger('int_cloudinary', 'int_cloudinary');
-var CatalogMgr = require('dw/catalog/CatalogMgr');
-var ProductMgr = require('dw/catalog/ProductMgr');
-
-// Script includes
-var prefs = require('*/cartridge/scripts/util/cloudinaryConstants');
-
 var cloudinary = {};
 
 /**
@@ -19,6 +11,9 @@ var cloudinary = {};
  * @returns {boolean} flag indicates if video is enabled or not
  */
 cloudinary.isVideoEnabled = function (apiProduct) {
+    var logger = require('dw/system/Logger').getLogger('int_cloudinary', 'int_cloudinary');
+    var prefs = require('*/cartridge/scripts/util/cloudinaryConstants');
+
     var isVideoEnabled = false;
 
     try {
@@ -43,6 +38,9 @@ cloudinary.isVideoEnabled = function (apiProduct) {
  * @returns {boolean} flag indicates if video player is enabled or not
  */
 cloudinary.isVideoPlayerEnabled = function (apiProduct) {
+    var logger = require('dw/system/Logger').getLogger('int_cloudinary', 'int_cloudinary');
+    var prefs = require('*/cartridge/scripts/util/cloudinaryConstants');
+
     var isVideoPlayerEnabled = false;
 
     try {
@@ -65,6 +63,9 @@ cloudinary.isVideoPlayerEnabled = function (apiProduct) {
  * @returns {boolean} flag indicates if video is enabled or not
  */
 cloudinary.isVideoEnabledForContentLibrary = function () {
+    var logger = require('dw/system/Logger').getLogger('int_cloudinary', 'int_cloudinary');
+    var prefs = require('*/cartridge/scripts/util/cloudinaryConstants');
+
     var ContentMgr = require('dw/content/ContentMgr');
     var isVideoEnabled = false;
     var library;
@@ -93,6 +94,9 @@ cloudinary.isVideoEnabledForContentLibrary = function () {
  * @returns {boolean} flag indicates if video player is enabled or not
  */
 cloudinary.isVideoPlayerEnabledForContentLibrary = function () {
+    var logger = require('dw/system/Logger').getLogger('int_cloudinary', 'int_cloudinary');
+    var prefs = require('*/cartridge/scripts/util/cloudinaryConstants');
+
     var ContentMgr = require('dw/content/ContentMgr');
     var isVideoPlayerEnabled = false;
     var library;
@@ -124,6 +128,9 @@ cloudinary.isVideoPlayerEnabledForContentLibrary = function () {
  * @returns {Object} video player options object
  */
 cloudinary.getVideoPlayerOptions = function (apiProduct) {
+    var logger = require('dw/system/Logger').getLogger('int_cloudinary', 'int_cloudinary');
+    var prefs = require('*/cartridge/scripts/util/cloudinaryConstants');
+
     var videoPlayeroptions = {};
 
     try {
@@ -149,6 +156,9 @@ cloudinary.getVideoPlayerOptions = function (apiProduct) {
  * @returns {Object} Cloudinary gallery styles object
  */
 cloudinary.getCloudinaryGalleryStyles = function (apiProduct) {
+    var logger = require('dw/system/Logger').getLogger('int_cloudinary', 'int_cloudinary');
+    var prefs = require('*/cartridge/scripts/util/cloudinaryConstants');
+
     var stylesObj = {};
 
     try {
@@ -174,6 +184,9 @@ cloudinary.getCloudinaryGalleryStyles = function (apiProduct) {
  * @returns {string} tagName - Cloudinary gallery tag name
  */
 cloudinary.getCloudinaryTagName = function (apiProduct) {
+    var logger = require('dw/system/Logger').getLogger('int_cloudinary', 'int_cloudinary');
+    var prefs = require('*/cartridge/scripts/util/cloudinaryConstants');
+
     var tagName = '';
 
     try {
@@ -203,6 +216,8 @@ cloudinary.getCloudinaryTagName = function (apiProduct) {
  * @returns {Object} object
  */
 cloudinary.findObjectByExternalId = function (objArray, key) {
+    var logger = require('dw/system/Logger').getLogger('int_cloudinary', 'int_cloudinary');
+
     var obj;
 
     try {
@@ -230,6 +245,9 @@ cloudinary.findObjectByExternalId = function (objArray, key) {
  * @returns {array} Sorted resources
  */
 cloudinary.sortResourcesByAssetPosition = function (resources) {
+    var logger = require('dw/system/Logger').getLogger('int_cloudinary', 'int_cloudinary');
+    var prefs = require('*/cartridge/scripts/util/cloudinaryConstants');
+
     var comparison;
     var metadataObj1;
     var metadataObj2;
@@ -268,6 +286,9 @@ cloudinary.sortResourcesByAssetPosition = function (resources) {
  * @returns {string} trnaformations string
  */
 cloudinary.getImageTransformations = function (apiProduct) {
+    var logger = require('dw/system/Logger').getLogger('int_cloudinary', 'int_cloudinary');
+    var CatalogMgr = require('dw/catalog/CatalogMgr');
+
     var siteCatalog;
     var tempTransformations;
     var transformations = '';
@@ -293,6 +314,9 @@ cloudinary.getImageTransformations = function (apiProduct) {
  * @returns {string} trnaformations string
  */
 cloudinary.getVideoTransformations = function (apiProduct) {
+    var logger = require('dw/system/Logger').getLogger('int_cloudinary', 'int_cloudinary');
+    var CatalogMgr = require('dw/catalog/CatalogMgr');
+
     var siteCatalog;
     var tempTransformations;
     var transformations = '';
@@ -316,6 +340,9 @@ cloudinary.getVideoTransformations = function (apiProduct) {
  * @returns {string} string value holding global level format, quality, dpr
  */
 cloudinary.getImgGlobalDropdownValues = function () {
+    var logger = require('dw/system/Logger').getLogger('int_cloudinary', 'int_cloudinary');
+    var prefs = require('*/cartridge/scripts/util/cloudinaryConstants');
+
     var globalDropdownValues = [];
     var valuesString = '';
 
@@ -352,6 +379,9 @@ cloudinary.getImgGlobalDropdownValues = function () {
  * @returns {string} string value holding global level format, quality, dpr
  */
 cloudinary.getVideoGlobalDropdownValues = function () {
+    var logger = require('dw/system/Logger').getLogger('int_cloudinary', 'int_cloudinary');
+    var prefs = require('*/cartridge/scripts/util/cloudinaryConstants');
+
     var globalDropdownValues = [];
     var valuesString = '';
 
@@ -385,6 +415,9 @@ cloudinary.getVideoGlobalDropdownValues = function () {
  * @returns {Object} page type settings object
  */
 cloudinary.getPagetypeSettings = function (pageType) {
+    var logger = require('dw/system/Logger').getLogger('int_cloudinary', 'int_cloudinary');
+    var prefs = require('*/cartridge/scripts/util/cloudinaryConstants');
+
     var settings;
 
     try {
@@ -410,6 +443,9 @@ cloudinary.getPagetypeSettings = function (pageType) {
  */
 cloudinary.getContentVideoPlayerOptions = function () {
     var ContentMgr = require('dw/content/ContentMgr');
+    var logger = require('dw/system/Logger').getLogger('int_cloudinary', 'int_cloudinary');
+    var prefs = require('*/cartridge/scripts/util/cloudinaryConstants');
+
     var library;
     var videoPlayeroptions = {};
 
@@ -438,6 +474,9 @@ cloudinary.getContentVideoPlayerOptions = function () {
  * @returns {string} asset rel URL
  */
 cloudinary.getAssetRelURL = function (assetURL, includeVideoExtension) {
+    var logger = require('dw/system/Logger').getLogger('int_cloudinary', 'int_cloudinary');
+    var prefs = require('*/cartridge/scripts/util/cloudinaryConstants');
+
     var endToken;
     var relURL = '';
     var startToken;
@@ -476,6 +515,8 @@ cloudinary.getAssetRelURL = function (assetURL, includeVideoExtension) {
  * @returns {string} cloudinary base path
  */
 cloudinary.getCLDBasePath = function () {
+    var prefs = require('*/cartridge/scripts/util/cloudinaryConstants');
+
     var cldBasePath = prefs.CLD_BASE_PATH;
 
     if (!empty(cldBasePath) && cldBasePath.lastIndexOf(prefs.FORWARD_SLASH) !== (cldBasePath.length - 1)) {
@@ -494,6 +535,9 @@ cloudinary.getCLDBasePath = function () {
  */
 cloudinary.getVideoPoster = function (videoURL) {
     var cloudinaryUtils = require('*/cartridge/scripts/util/cloudinaryUtils');
+    var logger = require('dw/system/Logger').getLogger('int_cloudinary', 'int_cloudinary');
+    var prefs = require('*/cartridge/scripts/util/cloudinaryConstants');
+
     var fileType;
     var posterImg = '';
     var videoFormates = cloudinaryUtils.getVideoFormats();
@@ -529,6 +573,9 @@ cloudinary.getVideoPoster = function (videoURL) {
  * @returns {string} url with query param
  */
 cloudinary.addTrackingQueryParam = function (url) {
+    var logger = require('dw/system/Logger').getLogger('int_cloudinary', 'int_cloudinary');
+    var prefs = require('*/cartridge/scripts/util/cloudinaryConstants');
+
     var assetAbsolURL = '';
 
     try {
@@ -552,6 +599,10 @@ cloudinary.addTrackingQueryParam = function (url) {
  * @returns {string} variation attr value ID
  */
 cloudinary.fetchVariationAttrValueId = function (variantProductID, variationAttr) {
+    var logger = require('dw/system/Logger').getLogger('int_cloudinary', 'int_cloudinary');
+    var ProductMgr = require('dw/catalog/ProductMgr');
+    var prefs = require('*/cartridge/scripts/util/cloudinaryConstants');
+
     var productVariationAttr;
     var productVariationAttrValue;
     var productVariationAttrValueId;
@@ -594,6 +645,8 @@ cloudinary.fetchVariationAttrValueId = function (variantProductID, variationAttr
  */
 cloudinary.getVariantProductIDByColor = function (productID, colorAttrValueId) {
     var HashMap = require('dw/util/HashMap');
+    var logger = require('dw/system/Logger').getLogger('int_cloudinary', 'int_cloudinary');
+    var prefs = require('*/cartridge/scripts/util/cloudinaryConstants');
 
     var attributesFilterMap;
     var masterProduct;
@@ -629,6 +682,9 @@ cloudinary.getVariantProductIDByColor = function (productID, colorAttrValueId) {
  * @returns {string} assetURL
  */
 cloudinary.removeLeadingAndTrailingSlashes = function (url) {
+    var logger = require('dw/system/Logger').getLogger('int_cloudinary', 'int_cloudinary');
+    var prefs = require('*/cartridge/scripts/util/cloudinaryConstants');
+
     var assetURL = url;
 
     try {
@@ -648,6 +704,8 @@ cloudinary.removeLeadingAndTrailingSlashes = function (url) {
 };
 
 cloudinary.generateTagsQuery = function (productsList) {
+    var prefs = require('*/cartridge/scripts/util/cloudinaryConstants');
+
     var query = '';
     for (var i = 0; i < productsList.length; i++) {
         var product = productsList[i];
@@ -675,4 +733,3 @@ cloudinary.generateTagsQuery = function (productsList) {
 };
 
 module.exports = cloudinary;
-

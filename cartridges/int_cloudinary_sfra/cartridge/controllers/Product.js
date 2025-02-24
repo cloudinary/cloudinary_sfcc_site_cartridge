@@ -7,9 +7,6 @@ server.extend(page);
 
 var cache = require('*/cartridge/scripts/middleware/cache');
 var consentTracking = require('*/cartridge/scripts/middleware/consentTracking');
-var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
-var cloudinaryModel = require('*/cartridge/scripts/model/cloudinaryModel');
-var cloudinaryHelper = require('*/cartridge/scripts/helpers/cloudinaryHelpers');
 var pageMetaData = require('*/cartridge/scripts/middleware/pageMetaData');
 
 /**
@@ -23,6 +20,10 @@ var pageMetaData = require('*/cartridge/scripts/middleware/pageMetaData');
  */
 
 server.append('Show', cache.applyPromotionSensitiveCache, consentTracking.consent, function (req, res, next) {
+    var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
+    var cloudinaryModel = require('*/cartridge/scripts/model/cloudinaryModel');
+    var cloudinaryHelper = require('*/cartridge/scripts/helpers/cloudinaryHelpers');
+
     var cloudinary = {};
     var colorAttrValueID;
     var viewData = res.getViewData();
@@ -89,6 +90,9 @@ server.append('Show', cache.applyPromotionSensitiveCache, consentTracking.consen
 }, pageMetaData.computedPageMetaData);
 
 server.append('Variation', function (req, res, next) {
+    var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
+    var cloudinaryModel = require('*/cartridge/scripts/model/cloudinaryModel');
+
     var cloudinary = {};
     var cldAssets;
     var colorAttrValueID;
@@ -136,6 +140,9 @@ server.append('Variation', function (req, res, next) {
 });
 
 server.append('ShowQuickView', cache.applyPromotionSensitiveCache, function (req, res, next) {
+    var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
+    var cloudinaryModel = require('*/cartridge/scripts/model/cloudinaryModel');
+
     var cloudinary;
     var viewData = res.getViewData();
     var product = viewData.product;

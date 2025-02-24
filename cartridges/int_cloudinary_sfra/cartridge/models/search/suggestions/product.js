@@ -1,12 +1,5 @@
 'use strict';
 
-var URLUtils = require('dw/web/URLUtils');
-var ACTION_ENDPOINT = 'Product-Show';
-var IMAGE_SIZE = 'medium';
-
-var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
-var cloudinaryModel = require('*/cartridge/scripts/model/cloudinaryModel');
-
 var productSuggestionsProduct = module.superModule;
 
 /**
@@ -16,6 +9,7 @@ var productSuggestionsProduct = module.superModule;
  * @return {string} - Image URL
  */
 function getImageUrl(product) {
+    var IMAGE_SIZE = 'medium';
     var imageProduct = product;
     if (product.master) {
         imageProduct = product.variationModel.defaultVariant;
@@ -32,6 +26,11 @@ function getImageUrl(product) {
  * @return {Object[]} - Array of suggested products
  */
 function getProducts(suggestedProducts, maxItems) {
+    var URLUtils = require('dw/web/URLUtils');
+    var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
+    var cloudinaryModel = require('*/cartridge/scripts/model/cloudinaryModel');
+
+    var ACTION_ENDPOINT = 'Product-Show';
     var product = null;
     var products = [];
     var cldProductImg;
@@ -63,6 +62,7 @@ function getProducts(suggestedProducts, maxItems) {
  */
 function ProductSuggestions(suggestions, maxItems) {
     productSuggestionsProduct.call(this, suggestions, maxItems);
+    var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
 
     if (cloudinaryConstants.CLD_ENABLED) {
         // calling this method again since base model doesn't return product id

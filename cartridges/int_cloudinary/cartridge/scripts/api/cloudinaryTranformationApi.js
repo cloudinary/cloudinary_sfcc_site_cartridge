@@ -1,4 +1,5 @@
 'use strict';
+
 /** ************************************************************************************************
 *@file        : File Name - cloudinaryTransformationApi
 *@description : This script file behaves as the cloudinary transformation script API which can be used by developers
@@ -8,21 +9,16 @@
 *@created     : 01 May 2020
 ****************************************************************************************************/
 
-// API includes
-var CatalogMgr = require('dw/catalog/CatalogMgr');
-var ProductMgr = require('dw/catalog/ProductMgr');
-var logger = require('dw/system/Logger').getLogger('int_cloudinary', 'int_cloudinary');
-
-// script includes
-var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
-var cloudinaryHelper = require('*/cartridge/scripts/helpers/cloudinaryHelpers');
-
 /**
  * Fetch the global image transformations specified on site level.
  *
  * @returns {string} global image transformations string
  */
 var getGlobalImageTransformation = function () {
+    var logger = require('dw/system/Logger').getLogger('int_cloudinary', 'int_cloudinary');
+    var cloudinaryHelper = require('*/cartridge/scripts/helpers/cloudinaryHelpers');
+    var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
+
     var dropdownValues = '';
     var transformations = '';
 
@@ -50,6 +46,10 @@ var getGlobalImageTransformation = function () {
  * @returns {string} global video transformations string
  */
 var getGlobalVideoTransformation = function () {
+    var logger = require('dw/system/Logger').getLogger('int_cloudinary', 'int_cloudinary');
+    var cloudinaryHelper = require('*/cartridge/scripts/helpers/cloudinaryHelpers');
+    var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
+
     var dropdownValues = '';
     var transformations = '';
 
@@ -81,6 +81,11 @@ var getGlobalVideoTransformation = function () {
  * @returns {string} image product/catalog level transformations string
  */
 var getProductCatalogImageTransformation = function (productID) {
+    var ProductMgr = require('dw/catalog/ProductMgr');
+    var CatalogMgr = require('dw/catalog/CatalogMgr');
+    var logger = require('dw/system/Logger').getLogger('int_cloudinary', 'int_cloudinary');
+    var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
+
     var apiProduct;
     var siteCatalog;
     var tempTransformations;
@@ -110,6 +115,11 @@ var getProductCatalogImageTransformation = function (productID) {
  * @returns {string} image product/catalog level transformations string
  */
 var getProductCatalogVideoTransformation = function (productID) {
+    var ProductMgr = require('dw/catalog/ProductMgr');
+    var CatalogMgr = require('dw/catalog/CatalogMgr');
+    var logger = require('dw/system/Logger').getLogger('int_cloudinary', 'int_cloudinary');
+    var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
+
     var apiProduct;
     var siteCatalog;
     var tempTransformations;
@@ -139,6 +149,10 @@ var getProductCatalogVideoTransformation = function (productID) {
  * @returns {string} category level transformations string
  */
 var getCategoryImageTransformation = function (categoryId) {
+    var CatalogMgr = require('dw/catalog/CatalogMgr');
+    var logger = require('dw/system/Logger').getLogger('int_cloudinary', 'int_cloudinary');
+    var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
+
     var category;
     var siteCatalog;
     var transformations = '';
@@ -170,6 +184,10 @@ var getCategoryImageTransformation = function (categoryId) {
  * @returns {string} category level transformations string
  */
 var getCategoryVideoTransformation = function (categoryId) {
+    var CatalogMgr = require('dw/catalog/CatalogMgr');
+    var logger = require('dw/system/Logger').getLogger('int_cloudinary', 'int_cloudinary');
+    var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
+
     var category;
     var siteCatalog;
     var transformations = '';
@@ -197,6 +215,10 @@ var getCategoryVideoTransformation = function (categoryId) {
  * @returns {string} catalog level transformations string
  */
 var getCatalogImageTransformation = function () {
+    var CatalogMgr = require('dw/catalog/CatalogMgr');
+    var logger = require('dw/system/Logger').getLogger('int_cloudinary', 'int_cloudinary');
+    var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
+
     var catalog;
     var transformations = '';
 
@@ -218,6 +240,10 @@ var getCatalogImageTransformation = function () {
  * @returns {string} catalog level transformations string
  */
 var getCatalogVideoTransformation = function () {
+    var CatalogMgr = require('dw/catalog/CatalogMgr');
+    var logger = require('dw/system/Logger').getLogger('int_cloudinary', 'int_cloudinary');
+    var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
+
     var catalog;
     var transformations = '';
 
@@ -234,13 +260,17 @@ var getCatalogVideoTransformation = function () {
 };
 
 /**
- *  Fetch image dimensions specified on site level.
+ * Fetch image dimensions specified on site level.
  *
  * @param {string} pageType - page type defined at site level
  *
  * @returns {Object} object holding image page type settings and dimensions
  */
 var getImageDimensions = function (pageType) {
+    var cloudinaryHelper = require('*/cartridge/scripts/helpers/cloudinaryHelpers');
+    var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
+    var logger = require('dw/system/Logger').getLogger('int_cloudinary', 'int_cloudinary');
+
     var dimensions = { isResponsive: false };
     var imgGlobalSettings;
 
@@ -270,7 +300,6 @@ var getImageDimensions = function (pageType) {
     return dimensions;
 };
 
-
 /**
  * Build srcset and sizes attributes for HTML <img> tag to make it responsive.
  *
@@ -280,6 +309,9 @@ var getImageDimensions = function (pageType) {
  * @returns {Object} object holding srcset values
  */
 var getImageSrcset = function (url, breakpoints) {
+    var logger = require('dw/system/Logger').getLogger('int_cloudinary', 'int_cloudinary');
+    var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
+
     var imgSrcset = { text: '', clearSrcset: '' };
     var srcsetSizes = breakpoints;
 
@@ -380,6 +412,9 @@ var getImageSrcset = function (url, breakpoints) {
  */
 var getContentLibraryImageTransformation = function () {
     var ContentMgr = require('dw/content/ContentMgr');
+    var logger = require('dw/system/Logger').getLogger('int_cloudinary', 'int_cloudinary');
+    var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
+
     var staticLibrary;
     var transformations = '';
 
@@ -402,6 +437,9 @@ var getContentLibraryImageTransformation = function () {
  */
 var getContentLibraryVideoTransformation = function () {
     var ContentMgr = require('dw/content/ContentMgr');
+    var logger = require('dw/system/Logger').getLogger('int_cloudinary', 'int_cloudinary');
+    var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
+
     var staticLibrary;
     var transformations = '';
 

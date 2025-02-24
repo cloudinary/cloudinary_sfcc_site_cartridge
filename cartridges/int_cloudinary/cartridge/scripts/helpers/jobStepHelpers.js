@@ -1,15 +1,5 @@
 'use strict';
 
-// API includes
-var assetRenameLogger = require('dw/system').Logger.getLogger('cld-asset-upload-report', 'cld-asset-upload-report');
-var jobLogger = require('dw/system').Logger.getLogger('Cloudinary', 'UPLOAD');
-var ContentMgr = require('dw/content/ContentMgr');
-var File = require('dw/io/File');
-var Site = require('dw/system/Site');
-var URLUtils = require('dw/web/URLUtils');
-
-var WS = require('*/cartridge/scripts/service/cldWebService');
-
 var assetsLimit = 0;
 var changedFilesCount = 0;
 
@@ -38,6 +28,11 @@ var isStepDisabled = function (params) {
  */
 var buildLibraryAssetURL = function (file) {
     var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
+    var jobLogger = require('dw/system').Logger.getLogger('Cloudinary', 'UPLOAD');
+    var ContentMgr = require('dw/content/ContentMgr');
+    var File = require('dw/io/File');
+    var Site = require('dw/system/Site');
+    var URLUtils = require('dw/web/URLUtils');
 
     var assetURL = '';
     var currentSite;
@@ -78,8 +73,10 @@ var buildLibraryAssetURL = function (file) {
  */
 var buildCatalogAssetURL = function (file) {
     var CatalogMgr = require('dw/catalog/CatalogMgr');
-
+    var jobLogger = require('dw/system').Logger.getLogger('Cloudinary', 'UPLOAD');
     var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
+    var File = require('dw/io/File');
+    var URLUtils = require('dw/web/URLUtils');
 
     var assetURL = '';
     var cloudFolder = '';
@@ -154,8 +151,9 @@ var removeRedundantTags = function (redundantTags, existingTags) {
  */
 var uploadFile = function (cloudinaryConstants, asset, tags, assignedFolder, assetPublicID, metadata, svcArgs, executionMode) {
     var isAssetUploaded = false;
-    var cloudinarySvc = require('*/cartridge/scripts/service/cldUpload');
-    var cloudinaryTagsSvc = require('*/cartridge/scripts/service/cldAddAssetTags');
+    var cloudinarySvc = require('~/cartridge/scripts/service/cldUpload');
+    var cloudinaryTagsSvc = require('~/cartridge/scripts/service/cldAddAssetTags');
+    var jobLogger = require('dw/system').Logger.getLogger('Cloudinary', 'UPLOAD');
 
     var args = svcArgs.svcConfigArgs;
     var uploadResult;
@@ -206,7 +204,8 @@ var uploadFile = function (cloudinaryConstants, asset, tags, assignedFolder, ass
  * @returns {string} asset rel URL
  */
 var getAssetRelURL = function (assetURL, includeVideoExtension) {
-    var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
+    var cloudinaryConstants = require('~/cartridge/scripts/util/cloudinaryConstants');
+    var jobLogger = require('dw/system').Logger.getLogger('Cloudinary', 'UPLOAD');
 
     var endToken;
     var relURL = '';
@@ -249,6 +248,7 @@ var getAssetRelURL = function (assetURL, includeVideoExtension) {
  */
 var logAssetLargerThanLimitMsg = function (filePath, fileSize) {
     var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
+    var assetRenameLogger = require('dw/system').Logger.getLogger('cld-asset-upload-report', 'cld-asset-upload-report');
 
     if (cloudinaryConstants.CLD_REPORTING_LOG_LEVEL === cloudinaryConstants.CLD_REPORTING_LOG_LEVELS.WARN) {
         assetRenameLogger.warn('File size is too large to upload, skipping... file: {0}, size in bytes: {1}', filePath, fileSize);
@@ -308,6 +308,7 @@ var changePublicIdAndCloudFolder = function (cldAssetPublicID, cldAssetFolder, i
  */
 var logAssetPathChangedMessage = function (originalFilePath, changedFilePath) {
     var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
+    var assetRenameLogger = require('dw/system').Logger.getLogger('cld-asset-upload-report', 'cld-asset-upload-report');
 
     if (cloudinaryConstants.CLD_REPORTING_LOG_LEVEL === cloudinaryConstants.CLD_REPORTING_LOG_LEVELS.WARN) {
         assetRenameLogger.warn('File path changed, original path: {0}, changedPath: {1} ', originalFilePath, changedFilePath);
@@ -326,6 +327,8 @@ var logAssetPathChangedMessage = function (originalFilePath, changedFilePath) {
 var getCldUploadSvcArgs = function () {
     var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
     var cloudinaryUtils = require('*/cartridge/scripts/util/cloudinaryUtils');
+    var WS = require('~/cartridge/scripts/service/cldWebService');
+
     var svcConfigArgs = {};
     var servicePrefs = cloudinaryUtils.buildUploadServicePrefs(cloudinaryConstants);
     var service = WS.getService(servicePrefs.CLD_UPLOAD_SVC, WS.getServiceConfigs(svcConfigArgs));
@@ -351,6 +354,7 @@ var getCldUploadSvcArgs = function () {
 */
 var processFolder = function (currentFolder, assetURLBuildCallback, cloudinaryConstants, args, lastJobExecutionDate) {
     var cloudinaryUtils = require('*/cartridge/scripts/util/cloudinaryUtils');
+    var jobLogger = require('dw/system').Logger.getLogger('Cloudinary', 'UPLOAD');
 
     var asset;
     var assetPublicID;
@@ -449,6 +453,7 @@ var sendChangedFilesEmail = function (fromEmail, toEmail, subject, filesCount) {
     var HashMap = require('dw/util/HashMap');
     var Mail = require('dw/net/Mail');
     var Template = require('dw/util/Template');
+    var jobLogger = require('dw/system').Logger.getLogger('Cloudinary', 'UPLOAD');
 
     var context;
     var content;

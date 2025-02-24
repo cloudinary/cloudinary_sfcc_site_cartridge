@@ -1,8 +1,5 @@
 'use strict';
 
-var MessageDigest = require('dw/crypto/MessageDigest');
-var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
-
 /**
  * This method creates the request object.
  * @param {string} requestObj - The request object
@@ -11,6 +8,8 @@ var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants'
  * @returns {string} result - The API service response (JSON)
  */
 function buildSignature(requestObj, apiSecret) {
+    var MessageDigest = require('dw/crypto/MessageDigest');
+
     if (empty(apiSecret)) {
         return false;
     }
@@ -198,6 +197,8 @@ function getAssetType(file, constantsObj) {
  * @returns {string} changed path
  */
 function isIncludeSpecialChars(path) {
+    var cloudinaryConstants = require('~/cartridge/scripts/util/cloudinaryConstants');
+
     var result = false;
 
     if (!empty(path)) {
@@ -215,6 +216,8 @@ function isIncludeSpecialChars(path) {
  * @returns {string} changed path
  */
 function replaceSpecialChars(originalPath) {
+    var cloudinaryConstants = require('~/cartridge/scripts/util/cloudinaryConstants');
+
     var path = originalPath;
     if (!empty(path)) {
         path = path.replace(cloudinaryConstants.CLD_PUBLIC_ID_SPECIAL_CHARS_REGEX, '_');

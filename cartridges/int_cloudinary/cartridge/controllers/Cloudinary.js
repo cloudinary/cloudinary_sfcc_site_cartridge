@@ -1,12 +1,5 @@
 'use strict';
 
-var ISML = require('dw/template/ISML');
-var URLUtils = require('dw/web/URLUtils');
-
-var cloudinaryModel = require('*/cartridge/scripts/model/cloudinaryModel');
-var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
-var cloudinaryHelper = require('*/cartridge/scripts/helpers/cloudinaryHelpers');
-
 var Cloudinary = {};
 var params = request.httpParameterMap;
 
@@ -14,6 +7,10 @@ var params = request.httpParameterMap;
  * Get content image/url from cloudinary for library content.
  */
 Cloudinary.GetContentImage = function () {
+    var cloudinaryModel = require('*/cartridge/scripts/model/cloudinaryModel');
+    var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
+    var ISML = require('dw/template/ISML');
+
     var imgObj = {};
     var imgURL = params.url.stringValue;
     var pageType = params.pageType.stringValue;
@@ -26,6 +23,7 @@ Cloudinary.GetContentImage = function () {
     if (cloudinaryConstants.CLD_ENABLED) {
         imgObj = cloudinaryModel.geContentImageURLByName(imgURL, pageType);
     } else {
+        var URLUtils = require('dw/web/URLUtils');
         imgObj.imgURL = {
             url: URLUtils.imageURL(URLUtils.CONTEXT_LIBRARY, null, imgURL, null)
         };
@@ -50,6 +48,10 @@ Cloudinary.GetContentImage = function () {
  */
 Cloudinary.GetContentVideo = function () {
     var UUIDUtils = require('dw/util/UUIDUtils');
+    var cloudinaryModel = require('*/cartridge/scripts/model/cloudinaryModel');
+    var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
+    var cloudinaryHelper = require('*/cartridge/scripts/helpers/cloudinaryHelpers');
+    var ISML = require('dw/template/ISML');
 
     var cloudinaryStaticContent = {};
     var videoURL = params.url.stringValue;
@@ -57,6 +59,7 @@ Cloudinary.GetContentVideo = function () {
     if (cloudinaryConstants.CLD_ENABLED) {
         cloudinaryStaticContent.video = cloudinaryModel.geContentVideoByName(videoURL);
     } else {
+        var URLUtils = require('dw/web/URLUtils');
         cloudinaryStaticContent.video = {
             videoURL: URLUtils.imageURL(URLUtils.CONTEXT_LIBRARY, null, videoURL, null)
         };

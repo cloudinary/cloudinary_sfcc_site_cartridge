@@ -1,10 +1,5 @@
 'use strict';
 
-// API includes
-var jobLogger = require('dw/system').Logger.getLogger('Cloudinary', 'UPLOAD');
-var HashMap = require('dw/util/HashMap');
-var Status = require('dw/system/Status');
-
 var changedFilesCount = 0;
 
 /**
@@ -19,6 +14,7 @@ var changedFilesCount = 0;
 var buildTags = function (masterProduct, product, viewType) {
     var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
     var cloudinaryHelper = require('*/cartridge/scripts/helpers/cloudinaryHelpers');
+    var jobLogger = require('dw/system').Logger.getLogger('Cloudinary', 'UPLOAD');
 
     var productVariationAttrValueId;
     var tagName;
@@ -99,6 +95,7 @@ var buildTags = function (masterProduct, product, viewType) {
 */
 var buildAssetMetadata = function (product, assetViewTypePosition, metadataFields, asset, productTagName, viewType) {
     var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
+    var jobLogger = require('dw/system').Logger.getLogger('Cloudinary', 'UPLOAD');
 
     var externalIdForTrue;
     var externalIdForFalse;
@@ -186,6 +183,8 @@ var buildAssetMetadata = function (product, assetViewTypePosition, metadataField
 var processVariants = function (masterProduct, masterProdImages, metadataFields, args, cldAssetsLimitCount) {
     var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
     var cloudinaryHelper = require('*/cartridge/scripts/helpers/cloudinaryHelpers');
+    var jobLogger = require('dw/system').Logger.getLogger('Cloudinary', 'UPLOAD');
+    var HashMap = require('dw/util/HashMap');
 
     var assetsLimit = args.CLDNumberOfAssets || 0;
     var assetsLimitCount = cldAssetsLimitCount;
@@ -322,6 +321,7 @@ var doProducts = function (args, products, metadataFields, isSearchHits) {
     var cloudinaryUtils = require('*/cartridge/scripts/util/cloudinaryUtils');
     var cloudinaryHelper = require('*/cartridge/scripts/helpers/cloudinaryHelpers');
     var jobStepHelpers = require('*/cartridge/scripts/helpers/jobStepHelpers');
+    var jobLogger = require('dw/system').Logger.getLogger('Cloudinary', 'UPLOAD');
 
     var assetURL;
     var assetPublicID;
@@ -465,6 +465,7 @@ var doProducts = function (args, products, metadataFields, isSearchHits) {
  */
 var checkMandatoryMetadataFields = function (metadataFields, viewType) {
     var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
+    var jobLogger = require('dw/system').Logger.getLogger('Cloudinary', 'UPLOAD');
 
     var mandatoryFieldsExist = false;
     var mandatoryFieldsCount = 0;
@@ -498,7 +499,9 @@ var checkMandatoryMetadataFields = function (metadataFields, viewType) {
 
 module.exports.Start = function (args) {
     var ProductSearchModel = require('dw/catalog/ProductSearchModel');
-
+    var jobLogger = require('dw/system').Logger.getLogger('Cloudinary', 'UPLOAD');
+    var Status = require('dw/system/Status');
+    
     var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
     var cloudinaryMetadataSvc = require('*/cartridge/scripts/service/cldMetadata');
     var jobStepHelpers = require('*/cartridge/scripts/helpers/jobStepHelpers');

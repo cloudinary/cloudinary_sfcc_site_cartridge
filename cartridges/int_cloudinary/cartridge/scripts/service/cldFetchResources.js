@@ -1,12 +1,5 @@
 'use strict';
 
-/* API Includes */
-var cldWebService = require('*/cartridge/scripts/service/cldWebService');
-var logger = require('dw/system/Logger').getLogger('Cloudinary', 'UPLOAD');
-
-/* Script Includes */
-var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
-
 /**
  * This method uses the service to get all resources based on tags.
  *
@@ -15,6 +8,10 @@ var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants'
  * @returns {string} result - The API service response (JSON)
  */
 function fetchResourcesFromCld(args) {
+    var cldWebService = require('*/cartridge/scripts/service/cldWebService');
+    var logger = require('dw/system/Logger').getLogger('Cloudinary', 'UPLOAD');
+    var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
+
     var cldResponse = { ok: true, message: '', result: {} };
     var configArgs = {};
     var result = [];
@@ -55,6 +52,9 @@ function fetchResourcesFromCld(args) {
  * @returns {Object} cldResources - object holding array of resources
  */
 function fetchResources(tagName, resourceType) {
+    var logger = require('dw/system/Logger').getLogger('Cloudinary', 'UPLOAD');
+    var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
+
     var cldResources;
     if (!empty(tagName)) {
         try {
@@ -79,6 +79,9 @@ function fetchResources(tagName, resourceType) {
  * @returns {Object} cldResources - object holding array of resources and updated date
  */
 function fetchResourcesWithModifiedDate(tagName, resourceType) {
+    var logger = require('dw/system/Logger').getLogger('Cloudinary', 'UPLOAD');
+    var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
+
     var cldResources = {
         resources: '',
         updatedAt: ''

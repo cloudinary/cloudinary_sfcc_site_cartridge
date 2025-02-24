@@ -1,12 +1,5 @@
 'use strict';
 
-/* API Includes */
-var cldWebService = require('*/cartridge/scripts/service/cldWebService');
-var logger = require('dw/system/Logger').getLogger('Cloudinary', 'UPLOAD');
-
-/* Script Includes */
-var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
-
 /**
  * This method uses the service to get all resources based on tags.
  *
@@ -15,7 +8,11 @@ var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants'
  * @returns {string} result - The API service response (JSON)
  */
 function searchResourcesFromCld(args) {
-    var cldResponse = { ok: true, message: '', result: { } };
+    var cldWebService = require('*/cartridge/scripts/service/cldWebService');
+    var logger = require('dw/system/Logger').getLogger('Cloudinary', 'UPLOAD');
+    var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
+
+    var cldResponse = { ok: true, message: '', result: {} };
     var configArgs = {};
     var result = [];
     var withField = !empty(args.withFields) ? args.withFields : ['tags', 'metadata'];
@@ -59,6 +56,9 @@ function searchResourcesFromCld(args) {
  * @returns {Object} cldResources - object holding array of resources
  */
 function searchResources(tagsSearchQuery, withFields) {
+    var logger = require('dw/system/Logger').getLogger('Cloudinary', 'UPLOAD');
+    var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
+
     var cldResources;
     if (!empty(tagsSearchQuery)) {
         try {

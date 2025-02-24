@@ -1,8 +1,5 @@
 'use strict';
 
-var decorators = require('*/cartridge/models/product/decorators/index');
-var prefs = require('*/cartridge/scripts/util/cloudinaryConstants');
-
 var fullProductBase = module.superModule;
 
 /**
@@ -21,6 +18,9 @@ var fullProductBase = module.superModule;
  */
 module.exports = function fullProduct(product, apiProduct, options) {
     fullProductBase.call(this, product, apiProduct, options);
+
+    var decorators = require('*/cartridge/models/product/decorators/index');
+    var prefs = require('*/cartridge/scripts/util/cloudinaryConstants');
 
     if (prefs.CLD_ENABLED) {
         decorators.cloudinary(product, apiProduct);

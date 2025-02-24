@@ -1,12 +1,5 @@
 'use strict';
 
-var logger = require('dw/system/Logger').getLogger('int_cloudinary', 'int_cloudinary');
-var ProductMgr = require('dw/catalog/ProductMgr');
-
-var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
-var cloudinaryAPI = require('*/cartridge/scripts/api/cloudinaryApi');
-var cloudinaryHelper = require('*/cartridge/scripts/helpers/cloudinaryHelpers');
-
 var baseCloudinaryModel = module.superModule;
 
 /**
@@ -17,6 +10,11 @@ var baseCloudinaryModel = module.superModule;
  *
  */
 baseCloudinaryModel.addCloudinaryProductSwatchImage = function (product, pageType) {
+    var logger = require('dw/system/Logger').getLogger('int_cloudinary', 'int_cloudinary');
+    var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
+    var cloudinaryAPI = require('*/cartridge/scripts/api/cloudinaryApi');
+    var cloudinaryHelper = require('*/cartridge/scripts/helpers/cloudinaryHelpers');
+
     var swatchURLObjs = [];
     var swatchURLObj;
     var variationAttrID;
@@ -94,6 +92,11 @@ baseCloudinaryModel.addCloudinaryProductSwatchImage = function (product, pageTyp
  * @returns {Object} product model
  */
 baseCloudinaryModel.addCloudinaryImagesToSetAndBundles = function (product) {
+    var logger = require('dw/system/Logger').getLogger('int_cloudinary', 'int_cloudinary');
+    var ProductMgr = require('dw/catalog/ProductMgr');
+    var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
+    var cloudinaryHelper = require('*/cartridge/scripts/helpers/cloudinaryHelpers');
+
     var subProducts = [];
     var subProductCldImgs;
     var colorAttrValueID;
@@ -124,10 +127,10 @@ baseCloudinaryModel.addCloudinaryImagesToSetAndBundles = function (product) {
                 subProductCldImgs.galleryWidget.options.container) {
                 if (subProduct.raw && subProduct.raw.variant) {
                     subProductCldImgs.galleryWidget.options.container = subProductCldImgs.galleryWidget.options.container +
-                    cloudinaryConstants.HYPHEN + subProduct.raw.masterProduct.ID + cloudinaryConstants.HYPHEN + subProduct.id;
+                        cloudinaryConstants.HYPHEN + subProduct.raw.masterProduct.ID + cloudinaryConstants.HYPHEN + subProduct.id;
                 } else {
                     subProductCldImgs.galleryWidget.options.container = subProductCldImgs.galleryWidget.options.container +
-                    cloudinaryConstants.HYPHEN + subProduct.id;
+                        cloudinaryConstants.HYPHEN + subProduct.id;
                 }
             }
 
@@ -165,6 +168,9 @@ baseCloudinaryModel.addCloudinaryImagesToSetAndBundles = function (product) {
  * @returns {Object} product model
  */
 baseCloudinaryModel.updateProductVariationAttrUrl = function (product, cloudinaryPGWContainerSuffix) {
+    var logger = require('dw/system/Logger').getLogger('int_cloudinary', 'int_cloudinary');
+    var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
+
     var productVariationAttrs;
     var productVariationAttrValues;
     var productModel = product;
@@ -203,6 +209,8 @@ baseCloudinaryModel.updateProductVariationAttrUrl = function (product, cloudinar
  * @returns {Object} product model
  */
 baseCloudinaryModel.addCloudinaryProductImage = function (product, cldProductImage) {
+    var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
+
     if (!empty(product) && !empty(cldProductImage)) {
         Object.defineProperty(product.images, cloudinaryConstants.CLD_PRODUCT_IMG, {
             enumerable: true,

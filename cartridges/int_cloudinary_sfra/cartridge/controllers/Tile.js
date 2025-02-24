@@ -6,10 +6,11 @@ var page = module.superModule;
 server.extend(page);
 
 var cache = require('*/cartridge/scripts/middleware/cache');
-var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
 
 server.append('Show', cache.applyPromotionSensitiveCache, function (req, res, next) {
     var cloudinaryModel = require('*/cartridge/scripts/model/cloudinaryModel');
+    var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
+
     var cloudinary = {};
     var pageType = req.querystring.pageType;
     var pageTypeSwatches = req.querystring.pageTypeSwatches;

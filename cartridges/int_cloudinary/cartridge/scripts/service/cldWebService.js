@@ -1,9 +1,5 @@
 'use strict';
 
-/* API Includes */
-var LocalServiceRegistry = require('dw/svc/LocalServiceRegistry');
-/* Script Includes */
-var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
 /**
 * Create and configure service.
 *
@@ -13,6 +9,8 @@ var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants'
 * @returns {Service} - The configured service
 */
 function getService(serviceID, serviceConfig) {
+    var LocalServiceRegistry = require('dw/svc/LocalServiceRegistry');
+
     var cldWebService = LocalServiceRegistry.createService(serviceID, serviceConfig);
     return cldWebService;
 }
@@ -24,6 +22,8 @@ function getService(serviceID, serviceConfig) {
  * @returns {Object} - The service configuration
  */
 function getServiceConfigs(args) {
+    var cloudinaryConstants = require('~/cartridge/scripts/util/cloudinaryConstants');
+
     var serviceConfig = {
         createRequest: function (svc, requestPayload) {
             var credential = svc.getConfiguration().getCredential();

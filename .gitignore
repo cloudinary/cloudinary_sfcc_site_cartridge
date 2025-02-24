@@ -24,6 +24,7 @@ test-reports/
 
 **/static/default/css/
 **/static/default/js/
+!**/bm_cloudinary/cartridge/static/default/
 sitegenesis-master/
 storefront-reference-architecture-master/
 .vscode

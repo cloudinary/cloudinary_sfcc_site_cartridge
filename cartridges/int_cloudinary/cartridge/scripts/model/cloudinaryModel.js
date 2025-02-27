@@ -11,6 +11,34 @@
 *********************************************************************************************************/
 
 /**
+ * Get cloudinary video transformations.
+ *
+ * @param {string} productCatalogTransformations - productCatalogTransformations
+ *
+ * @returns {array} transformation
+ */
+function getCloudinaryVideoTransformation(productCatalogTransformations) {
+    var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
+
+    let transformation = [];
+
+    var globalVideoTranformFormat = cloudinaryConstants.CLD_GLOBAL_VIDEO_TRANSFORM_FORMAT;
+    if (!empty(globalVideoTranformFormat) && globalVideoTranformFormat !== 'null' && globalVideoTranformFormat.value !== 'null') {
+        transformation.push({ 'format': globalVideoTranformFormat.value });
+    }
+
+    var globalVideoQuality = cloudinaryConstants.CLD_GLOBAL_VIDEO_QUALITY;
+    if (!empty(globalVideoQuality) && globalVideoQuality !== 'null' && globalVideoQuality.value !== 'null') {
+        transformation.push({ 'quality': globalVideoQuality.value });
+    }
+
+    if (!empty(cloudinaryConstants.CLD_GLOBAL_VIDEO_TRANSFORMATIONS)) {
+        transformation.push({ 'raw_transformation': cloudinaryConstants.CLD_GLOBAL_VIDEO_TRANSFORMATIONS + ',' + productCatalogTransformations });
+    }
+    return transformation;
+}
+
+/**
  * Get cloudinary images and Product Gallery Widget options based on preferences.
  *
  * @param {string} productID - product ID
@@ -208,9 +236,10 @@ var getCloudinaryVideo = function (productID, currentLocale) {
                 if (isVideoPlayerEnabled) {
                     widgetOptions = cloudinaryHelper.getVideoPlayerOptions(product);
 
+                    const transformation = getCloudinaryVideoTransformation(productCatalogTransformations);
+
                     if (!empty(widgetOptions)) {
-                        widgetOptions.transformations = (!empty(globalTransformations)
-                            ? globalTransformations + cloudinaryConstants.COMMA : cloudinaryConstants.EMPTY_STRING) + productCatalogTransformations;
+                        widgetOptions.transformation = !empty(transformation) && transformation.length > 0 ? transformation : cloudinaryConstants.EMPTY_STRING;
                         widgetOptions.posterOptions = { publicId: videos.videoPoster };
                         delete videos.videoPoster;
                     }
@@ -315,8 +344,10 @@ var geContentVideoByName = function (videoName) {
                 var isvideoPlayerEnabled = cloudinaryHelper.isVideoPlayerEnabledForContentLibrary();
                 if (isvideoPlayerEnabled) {
                     var widgetOptions = cloudinaryHelper.getContentVideoPlayerOptions();
+                    const transformation = getCloudinaryVideoTransformation(libraryTransformations);
+
                     if (!empty(widgetOptions)) {
-                        widgetOptions.transformations = (!empty(globalTransformations) ? globalTransformations + cloudinaryConstants.COMMA : '') + libraryTransformations;
+                        widgetOptions.transformation = !empty(transformation) && transformation.length > 0 ? transformation : '';
                         widgetOptions.posterOptions = { publicId: video.videoPoster };
                     }
                     videos.widgetOptions = widgetOptions;

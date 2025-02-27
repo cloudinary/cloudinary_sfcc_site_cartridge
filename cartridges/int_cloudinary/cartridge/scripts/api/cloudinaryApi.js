@@ -261,6 +261,11 @@ var applyTransformationOnProductVideoRelativeURL = function (productID, relURL) 
                 finalURL = cloudinaryHelper.getCLDBasePath() + cloudinaryConstants.VIDEO_UPLOAD_URL_RESOURCE_TYPE +
                     cloudinaryConstants.FORWARD_SLASH + relativeURL;
                 finalURLObj = applyTransformationOnProductVideoAbsoluteURL(productID, finalURL);
+                const videoURL = {
+                    videoURL: finalURLObj.videoURL,
+                    publicId: relativeURL.split(relativeURL.lastIndexOf('.'))[0]
+                }
+                finalURLObj.videoURL = videoURL;
             }
         }
     } catch (ex) {
@@ -656,7 +661,7 @@ function applyTransformationOnContent(relURL, urlType, dimensionsStr) {
         logger.error(cloudinaryConstants.CLD_APPLY_CONTENT_REL_URL_TRANSFORM_ERROR, relURL, ex);
     }
 
-    return finalURL;
+    return { finalURL: finalURL, publicId: contentImgPath + libraryID + relURL };
 }
 
 /**
@@ -1524,6 +1529,10 @@ var getProductVideoByCustomMapping = function (productID, currentLocale) {
 
                 finalURL = finalURL.replace(cloudinaryConstants.URL_EMPTY_SPACES_REGEX, cloudinaryConstants.URL_EMPTY_SPACES_REPLACE);
                 finalURL = applyTransformationOnProductVideoAbsoluteURL(productID, finalURL);
+                finalURL.videoURL = {
+                    videoURL: finalURL.videoURL,
+                    publicId: cloudinaryConstants.CLD_VIDEO_PATH + cloudinaryConstants.FORWARD_SLASH + tempUrl
+                }
             }
         }
     } catch (ex) {

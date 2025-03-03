@@ -262,7 +262,6 @@ var applyTransformationOnProductVideoRelativeURL = function (productID, relURL) 
                     cloudinaryConstants.FORWARD_SLASH + relativeURL;
                 finalURLObj = applyTransformationOnProductVideoAbsoluteURL(productID, finalURL);
                 const videoURL = {
-                    videoURL: finalURLObj.videoURL,
                     publicId: relativeURL.split(relativeURL.lastIndexOf('.'))[0]
                 }
                 finalURLObj.videoURL = videoURL;
@@ -720,7 +719,7 @@ var applyTransformationOnContentImageRelativeURL = function (relURL, pageType) {
                 }
 
                 finalURL = applyTransformationOnContent(relativeURL, cloudinaryConstants.CONTENT_TYPE_IMG, dimensionsStr);
-                urlObj.url = finalURL;
+                urlObj.url = finalURL.finalURL;
                 if (!empty(imgPageTypeSettings) && imgPageTypeSettings.isResponsive) {
                     srcsetUrl = applyTransformationOnContent(relativeURL, cloudinaryConstants.CONTENT_TYPE_IMG, dimensionsStr);
                 } else {
@@ -799,7 +798,7 @@ var applyTransformationOnContentImageAbsoluteURL = function (absURL, pageType) {
 
                 // build transformed image URL
                 finalURL = applyTransformationOnContent(relURL, cloudinaryConstants.CONTENT_TYPE_IMG, dimensionsStr);
-                urlObj.url = finalURL;
+                urlObj.url = finalURL.finalURL;
 
                 if (!empty(imgPageTypeSettings) && imgPageTypeSettings.isResponsive) {
                     srcsetUrl = applyTransformationOnContent(relURL, cloudinaryConstants.CONTENT_TYPE_IMG, dimensionsStr);
@@ -865,7 +864,8 @@ var applyTransformationOnContentVideoRelativeURL = function (relURL) {
                 }
                 // build transformed video URL
                 finalURL = applyTransformationOnContent(relativeURL, cloudinaryConstants.CONTENT_TYPE_VIDEO, null);
-                videoPoster = cloudinaryHelper.getVideoPoster(finalURL);
+                videoPoster = cloudinaryHelper.getVideoPoster(finalURL.finalURL);
+                delete finalURL.finalURL;
             }
         }
     } catch (ex) {
@@ -906,7 +906,8 @@ var applyTransformationOnContentVideoAbsoluteURL = function (absURL) {
                 }
                 // build transformed video URL
                 finalURL = applyTransformationOnContent(relURL, cloudinaryConstants.CONTENT_TYPE_VIDEO, null);
-                videoPoster = cloudinaryHelper.getVideoPoster(finalURL);
+                videoPoster = cloudinaryHelper.getVideoPoster(finalURL.finalURL);
+                delete finalURL.finalURL;
             }
         }
     } catch (ex) {
@@ -1530,7 +1531,6 @@ var getProductVideoByCustomMapping = function (productID, currentLocale) {
                 finalURL = finalURL.replace(cloudinaryConstants.URL_EMPTY_SPACES_REGEX, cloudinaryConstants.URL_EMPTY_SPACES_REPLACE);
                 finalURL = applyTransformationOnProductVideoAbsoluteURL(productID, finalURL);
                 finalURL.videoURL = {
-                    videoURL: finalURL.videoURL,
                     publicId: cloudinaryConstants.CLD_VIDEO_PATH + cloudinaryConstants.FORWARD_SLASH + tempUrl
                 }
             }

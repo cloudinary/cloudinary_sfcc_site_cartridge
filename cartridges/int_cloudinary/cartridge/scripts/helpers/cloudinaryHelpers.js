@@ -557,6 +557,8 @@ cloudinary.getVideoPoster = function (videoURL) {
             } else {
                 posterImg = videoURL + prefs.VIDEO_POSTER_IMAGE_TYPE;
             }
+            const format = prefs.CLD_GLOBAL_VIDEO_TRANSFORM_FORMAT;
+            posterImg = posterImg.replace('f_' + format.value, 'f_auto');
         }
     } catch (ex) {
         logger.error('Error occurred while getting video poster image, video URL: {0}, message: {1} ', videoURL, ex);

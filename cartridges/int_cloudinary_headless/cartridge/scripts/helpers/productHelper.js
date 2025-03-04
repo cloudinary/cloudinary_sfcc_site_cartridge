@@ -1,13 +1,5 @@
 'use strict';
 
-var cloudinaryAPI = require('*/cartridge/scripts/api/cloudinaryApi');
-var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
-var cloudinaryHelper = require('*/cartridge/scripts/helpers/cloudinaryHelpers');
-var cloudinaryModel = require('*/cartridge/scripts/model/cloudinaryModel');
-var ProductMgr = require('dw/catalog/ProductMgr');
-
-var Logger = require('dw/system/Logger');
-
 /**
 * Used to get product swatch images from Cloudinary on productDetails hook
 *
@@ -17,6 +9,11 @@ var Logger = require('dw/system/Logger');
 * @returns {array} -swatchURLObjs
 */
 function getPdpSwatches(doc, product) {
+    var cloudinaryAPI = require('*/cartridge/scripts/api/cloudinaryApi');
+    var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
+    var cloudinaryHelper = require('*/cartridge/scripts/helpers/cloudinaryHelpers');
+
+    var Logger = require('dw/system/Logger');
     var cldSwatch = [];
     try {
         var swatchURLObjs = [];
@@ -86,7 +83,14 @@ function getPdpSwatches(doc, product) {
 * @returns {array} -item
 */
 function getCloudinaryBundleSetImages(productId, params, item, isProductBundle, isProductSet) {
+    var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
+    var cloudinaryModel = require('*/cartridge/scripts/model/cloudinaryModel');
+
+    var ProductMgr = require('dw/catalog/ProductMgr');
+    var Logger = require('dw/system/Logger');
+
     try {
+
         const cldPageSetting = cloudinaryConstants.CLD_IMAGE_PAGE_TYPE_SETTINGS_OBJECT;
         let cloudinary = {
             isEnabled: cloudinaryConstants.CLD_ENABLED,
@@ -105,7 +109,6 @@ function getCloudinaryBundleSetImages(productId, params, item, isProductBundle, 
 
         let imageArray = [];
         var variationArray;
-        let cldSwatchs;
 
         if (isProductBundle) {
             variationArray = item.product.variationAttributes && item.product.variationAttributes.length > 0 ? item.product.variationAttributes.toArray() : null;
@@ -118,7 +121,7 @@ function getCloudinaryBundleSetImages(productId, params, item, isProductBundle, 
             //Cloudinary swatch images for bundle and set variations
             if (cldPageSetting.cldPdpSwatch.enabled) {
                 var productData = ProductMgr.getProduct(productId);
-                cloudinary.cldSwatchs = getPdpSwatches(isProductBundle ? item.product : item, productData);
+                cloudinary.cldSwatches = getPdpSwatches(isProductBundle ? item.product : item, productData);
             }
 
             // Cloudinary Mini Cart Images for bundle and set
@@ -154,7 +157,7 @@ function getCloudinaryBundleSetImages(productId, params, item, isProductBundle, 
 };
 
 /**
-* Used to get cloudinary images for variaitions
+* Used to get cloudinary images for variations
 *
 * @param {Object} variationArray - variation products
 * @param {Array} imageArray - imageArray
@@ -165,6 +168,9 @@ function getCloudinaryBundleSetImages(productId, params, item, isProductBundle, 
 * @returns {array} -imageArray
 */
 function getCldVariationImages(variationArray, imageArray, isProductBundleOrSet, params, productId) {
+    var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
+    var cloudinaryModel = require('*/cartridge/scripts/model/cloudinaryModel');
+
     variationArray.some(function (variationAttr) {
         variationAttrID = variationAttr.id;
         if (cloudinaryConstants.COLOR_ATTR.equals(variationAttrID) && !empty(variationAttr.values)) {

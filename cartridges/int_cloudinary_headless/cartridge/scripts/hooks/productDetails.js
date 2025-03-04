@@ -29,7 +29,6 @@ exports.modifyGETResponse = function (product, doc) {
                 if (bundleProducts) {
                     bundleProducts.some(function (bundleItem, index) {
                         const productId = bundleItem.id || bundleItem.product.ID;
-                        const cldVariationArray = [];
                         params.variationAttrValueID = null;
                         productHelper.getCloudinaryBundleSetImages(productId, params, bundleItem, product.bundle, product.productSet);
                     })
@@ -44,7 +43,7 @@ exports.modifyGETResponse = function (product, doc) {
             // Get Cloudinary images for master product
             cloudinaryImage.push({ images: cloudinaryModel.getCloudinaryImages(product.ID, params) })
 
-            // Get the Cloudinary porduct gallery Image
+            // Get the Cloudinary product gallery Image
             if (cloudinaryImage) {
                 cloudinary.pdpImages = cloudinaryImage;
             }
@@ -58,7 +57,7 @@ exports.modifyGETResponse = function (product, doc) {
             // Cloudinary PDP Swatches
             if (cldPageSetting.cldPdpSwatch.enabled) {
                 if (!empty(doc) && !empty(doc.variationAttributes)) {
-                    cloudinary.cldSwatchs = productHelper.getPdpSwatches(doc, product);
+                    cloudinary.cldSwatches = productHelper.getPdpSwatches(doc, product);
                 }
             }
 

@@ -24,7 +24,7 @@ exports.modifyGETResponse = function (product) {
                     if (imagePageTypeSetting.cldPlpSwatch.enabled) {
                         if (!empty(item) && !empty(item.variationAttributes)) {
                             var productData = ProductMgr.getProduct(item.productId);
-                            item.c_cloudinary.cldSwatchs = productHelper.getPdpSwatches(item, productData);
+                            item.c_cloudinary.cldSwatches = productHelper.getPdpSwatches(item, productData);
                         }
                     }
                     item.c_cloudinary.c_autoResponsiveDimensions = imagePageTypeSetting.plp.autoResponsiveDimensions;

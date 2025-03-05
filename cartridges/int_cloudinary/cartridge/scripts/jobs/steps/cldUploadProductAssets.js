@@ -75,7 +75,7 @@ var buildTags = function (masterProduct, product, viewType) {
         }
     } catch (e) {
         jobLogger.error('Error occurred while building tags for product with ID : {0}, message: {1}',
-             !empty(product) ? product.ID : (!empty(masterProduct) ? masterProduct.ID : ''), e.message);
+            !empty(product) ? product.ID : (!empty(masterProduct) ? masterProduct.ID : ''), e.message);
     }
 
     return tags;
@@ -316,7 +316,7 @@ var processVariants = function (masterProduct, masterProdImages, metadataFields,
  * @param {Object} metadataFields - object holding meta data fields
  * @param {boolean} isSearchHits - flag to indicate if product fetched from search indexes
  */
-var doProducts = function (args, products, metadataFields, isSearchHits) {
+var doProducts = function (args, products, metadataFields, isSearchHits, syncMode, lastJobExecution) {
     var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
     var cloudinaryUtils = require('*/cartridge/scripts/util/cloudinaryUtils');
     var cloudinaryHelper = require('*/cartridge/scripts/helpers/cloudinaryHelpers');
@@ -347,6 +347,10 @@ var doProducts = function (args, products, metadataFields, isSearchHits) {
 
     while (products.hasNext()) {
         product = isSearchHits ? products.next().product : products.next();
+        if ((syncMode === cloudinaryConstants.SYNC_MODE_DELTA) && (product.lastModified < lastJobExecution)) {
+            continue;
+        }
+
         productImages = product.getImages(args.CLDViewType);
 
         if (product.isVariant()) {
@@ -501,7 +505,10 @@ module.exports.Start = function (args) {
     var ProductSearchModel = require('dw/catalog/ProductSearchModel');
     var jobLogger = require('dw/system').Logger.getLogger('Cloudinary', 'UPLOAD');
     var Status = require('dw/system/Status');
-    
+    var Site = require('dw/system/Site');
+    var Calendar = require('dw/util/Calendar');
+    var Transaction = require('dw/system/Transaction');
+
     var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
     var cloudinaryMetadataSvc = require('*/cartridge/scripts/service/cldMetadata');
     var jobStepHelpers = require('*/cartridge/scripts/helpers/jobStepHelpers');
@@ -511,6 +518,8 @@ module.exports.Start = function (args) {
     var catalogs;
     var isSearchHits = false;
     var metadataFields;
+    var currentSite = Site.getCurrent();
+    var calendar = new Calendar();
 
     if (!cloudinaryConstants.CLD_ENABLED) {
         return new Status(Status.ERROR, 'ERROR', 'Cloudinary is disabled currently');
@@ -526,6 +535,9 @@ module.exports.Start = function (args) {
     var notificationEmail = args.CLDAssetRenameReportEmail;
     var viewType = args.CLDViewType;
     var catalogsToProcess = args.CLDCatalogIds;
+    var syncMode = args.CLDSyncMode;
+    var currentExecutionTime = calendar.getTime();
+    var lastJobExecution = new Date(cloudinaryConstants.CLD_CATALOG_CONTENT_JOB_LAST_EXECUTION_DATE);
 
     if (!empty(executionMode) && cloudinaryConstants.DEBUG_EXECUTION_MODE.equals(executionMode)) {
         if (empty(numberOfAssets)) {
@@ -534,6 +546,14 @@ module.exports.Start = function (args) {
     }
 
     try {
+        Transaction.wrap(function () {
+            currentSite.preferences.custom.CLDCatalogContentJobLastExecutionDate = currentExecutionTime;
+        });
+        var CLDCatalogContentJobLastExecutionDate = currentSite.preferences.custom.CLDCatalogContentJobLastExecutionDate ? currentSite.preferences.custom.CLDImportImageAndAltTextjobLastExecutionTime.toString() : currentSite.preferences.custom.CLDImportImageAndAltTextjobLastExecutionTime;
+        if (currentExecutionTime.toString() !== CLDCatalogContentJobLastExecutionDate) {
+            jobLogger.warn(' Unable to update the job last execution timestamp in Custom Preferences->Cloudinary Jobs Configurations field: Catalog Content Job Last Execution Date : {0}', currentExecutionTime.toString());
+        }
+
         // fetch structural metadata feilds from cld DAM
         metadataFields = cloudinaryMetadataSvc.fetchMetadata();
         if (!checkMandatoryMetadataFields(metadataFields, viewType)) {
@@ -550,7 +570,7 @@ module.exports.Start = function (args) {
                 catalog = catalogs[cat];
                 jobLogger.debug('Processing catalog: {0}', catalog);
                 allProducts = ProductMgr.queryProductsInCatalog(CatalogMgr.getCatalog(catalog));
-                doProducts(args, allProducts, metadataFields, isSearchHits);
+                doProducts(args, allProducts, metadataFields, isSearchHits, syncMode, lastJobExecution);
             }
         } else {
             var productSearchHitsItr;
@@ -560,7 +580,7 @@ module.exports.Start = function (args) {
             productSearchModel.setRecursiveCategorySearch(true);
             productSearchModel.search();
             productSearchHitsItr = productSearchModel.getProductSearchHits();
-            doProducts(args, productSearchHitsItr, metadataFields, isSearchHits);
+            doProducts(args, productSearchHitsItr, metadataFields, isSearchHits, syncMode, lastJobExecution);
         }
 
         // send email if any file changed

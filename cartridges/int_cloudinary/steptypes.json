@@ -46,7 +46,8 @@
                         "@required": "true",
                         "enum-values": {
                             "value": [
-                                "FULL"
+                                "FULL",
+                                "DELTA"
                             ]
                         },
                         "default-value": "FULL"

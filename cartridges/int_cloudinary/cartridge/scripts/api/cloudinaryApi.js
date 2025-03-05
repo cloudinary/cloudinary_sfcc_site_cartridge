@@ -262,7 +262,7 @@ var applyTransformationOnProductVideoRelativeURL = function (productID, relURL) 
                     cloudinaryConstants.FORWARD_SLASH + relativeURL;
                 finalURLObj = applyTransformationOnProductVideoAbsoluteURL(productID, finalURL);
                 const videoURL = {
-                    publicId: relativeURL.split(relativeURL.lastIndexOf('.'))[0]
+                    publicId: relativeURL.substring(0, relativeURL.lastIndexOf('.')) || relativeURL
                 }
                 finalURLObj.videoURL = videoURL;
             }

@@ -60,7 +60,7 @@ window.renderCloudinaryVideoPlayer = function () {
                 }
                 let cld = window.cldVideoPlayer.new({ cloud_name: cldObj.cloudName });
                 let player = cld.videoPlayer('cld-video-player' + (videoPlayerID ? '-' + videoPlayerID : ''), cldObj.video.widgetOptions);
-                player.source(cldObj.video.videoURL, {}).play();
+                player.source(cldObj.video.videoURL.publicId, {}).play();
             } else {
                 cldURLs.push(cldObj.video.videoURL);
             }

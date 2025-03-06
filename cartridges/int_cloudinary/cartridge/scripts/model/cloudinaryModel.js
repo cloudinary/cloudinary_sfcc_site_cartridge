@@ -201,6 +201,7 @@ var getCloudinaryVideo = function (productID, currentLocale) {
     var video;
     var videos = {};
     var widgetOptions;
+    const posterTransformation = [];
 
     try {
         if (cloudinaryConstants.CLD_ENABLED) {
@@ -229,7 +230,6 @@ var getCloudinaryVideo = function (productID, currentLocale) {
 
                 if (!empty(video)) {
                     videos.videoURL = video.videoURL;
-                    videos.videoPoster = video.videoPoster;
                 }
 
                 isVideoPlayerEnabled = cloudinaryHelper.isVideoPlayerEnabled(product);
@@ -240,8 +240,13 @@ var getCloudinaryVideo = function (productID, currentLocale) {
 
                     if (!empty(widgetOptions)) {
                         widgetOptions.transformation = !empty(transformation) && transformation.length > 0 ? transformation : cloudinaryConstants.EMPTY_STRING;
-                        widgetOptions.posterOptions = { publicId: videos.videoPoster };
-                        delete videos.videoPoster;
+                        var videoPosterTransforamtion = cloudinaryConstants.CLD_GLOBAL_VIDEO_POSTER_TRANSFORMATIONS;
+                        if (videoPosterTransforamtion) {
+                            posterTransformation.push({
+                                raw_transformation: videoPosterTransforamtion
+                            })
+                            widgetOptions.posterOptions = { transformation: posterTrans };
+                        }
                     }
 
                     videos.widgetOptions = widgetOptions;
@@ -329,6 +334,7 @@ var geContentVideoByName = function (videoName) {
     var cldTransformationAPI = require('*/cartridge/scripts/api/cloudinaryTranformationApi');
 
     var videos = {};
+    const posterTransformation = [];
 
     try {
         if (cloudinaryConstants.CLD_ENABLED) {
@@ -348,7 +354,13 @@ var geContentVideoByName = function (videoName) {
 
                     if (!empty(widgetOptions)) {
                         widgetOptions.transformation = !empty(transformation) && transformation.length > 0 ? transformation : '';
-                        widgetOptions.posterOptions = { publicId: video.videoPoster };
+                        var videoPosterTransforamtion = cloudinaryConstants.CLD_GLOBAL_VIDEO_POSTER_TRANSFORMATIONS;
+                        if (videoPosterTransforamtion) {
+                            posterTransformation.push({
+                                raw_transformation: videoPosterTransforamtion
+                            })
+                            widgetOptions.posterOptions = { transformation: posterTrans };
+                        }
                     }
                     videos.widgetOptions = widgetOptions;
                 } else {

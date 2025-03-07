@@ -170,6 +170,7 @@ function getCloudinaryBundleSetImages(productId, params, item, isProductBundle, 
 function getCldVariationImages(variationArray, imageArray, isProductBundleOrSet, params, productId) {
     var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
     var cloudinaryModel = require('*/cartridge/scripts/model/cloudinaryModel');
+    let variationAttrID;
 
     variationArray.some(function (variationAttr) {
         variationAttrID = variationAttr.id;

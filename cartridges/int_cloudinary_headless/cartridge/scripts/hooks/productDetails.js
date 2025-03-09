@@ -16,10 +16,36 @@ exports.modifyGETResponse = function (product, doc) {
                 variationAttrValueID: product.custom.color
             };
 
-            // Get the Cloudinary porduct gallery Image
-            var cloudinaryImage = cloudinaryModel.getCloudinaryImages(product.ID, params);
+            var cloudinaryImage = [];
+
+            // Get Cloudinary images for bundle or set master product and its variations
+            if (product.bundle || product.productSet) {
+                let bundleProducts;
+                if (doc.bundledProducts && doc.bundledProducts.length > 0) {
+                    bundleProducts = doc.bundledProducts.toArray();
+                } else if (doc.setProducts && doc.setProducts.length > 0) {
+                    bundleProducts = doc.setProducts.toArray();
+                }
+                if (bundleProducts) {
+                    bundleProducts.some(function (bundleItem, index) {
+                        const productId = bundleItem.id || bundleItem.product.ID;
+                        params.variationAttrValueID = null;
+                        productHelper.getCloudinaryBundleSetImages(productId, params, bundleItem, product.bundle, product.productSet);
+                    })
+                }
+            } else {
+                var variationArray = doc.variationAttributes && doc.variationAttributes.length > 0 ? doc.variationAttributes.toArray() : null;
+                if (variationArray) {
+                    productHelper.getCldVariationImages(variationArray, cloudinaryImage, false, params, product.ID)
+                }
+            }
+
+            // Get Cloudinary images for master product
+            cloudinaryImage.push({ images: cloudinaryModel.getCloudinaryImages(product.ID, params) })
+
+            // Get the Cloudinary product gallery Image
             if (cloudinaryImage) {
-                cloudinary.cloudinaryImage = cloudinaryImage;
+                cloudinary.pdpImages = cloudinaryImage;
             }
 
             // Cloudinary Product Video
@@ -31,7 +57,7 @@ exports.modifyGETResponse = function (product, doc) {
             // Cloudinary PDP Swatches
             if (cldPageSetting.cldPdpSwatch.enabled) {
                 if (!empty(doc) && !empty(doc.variationAttributes)) {
-                    cloudinary.cldSwatchs = productHelper.getPdpSwatches(doc, product);
+                    cloudinary.cldSwatches = productHelper.getPdpSwatches(doc, product);
                 }
             }
 
@@ -65,7 +91,6 @@ exports.modifyGETResponse = function (product, doc) {
             }
 
             cloudinary.pdpSwatch = cldPageSetting.cldPdpSwatch.enabled;
-            cloudinary.images = cloudinaryModel.getCloudinaryImages(product.ID, params);
             cloudinary.productId = product.ID;
             cloudinary.isEnabled = cloudinaryConstants.CLD_ENABLED;
             cloudinary.galleryEnabled = cloudinaryConstants.CLD_GALLERY_ENABLED;

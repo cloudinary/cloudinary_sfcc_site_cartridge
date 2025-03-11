@@ -1,4 +1,5 @@
 'use strict';
+
 var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
 var cloudinaryModel = require('*/cartridge/scripts/model/cloudinaryModel');
 var Logger = require('dw/system/Logger');
@@ -13,12 +14,12 @@ exports.modifyGETResponse = function (product, doc) {
             var cloudinary = {};
 
             // Cloudinary plp images for recommendation tile
-            var cloudinaryImage = cloudinaryModel.getProductPrimaryImage(product.ID,
+            var cldRecommendationImages = cloudinaryModel.getProductPrimaryImage(product.ID,
                 cloudinaryConstants.CLD_HIGH_RES_IMAGES_VIEW_TYPE, { pageType: cloudinaryConstants.PAGE_TYPES.PLP });
-            cloudinaryImage.c_autoResponsiveDimensions = cldPageSetting.plp.autoResponsiveDimensions;
-            cloudinaryImage.plpEnabled = cldPageSetting.plp.enabled;
-            
-            cloudinary = cloudinaryImage;
+            cldRecommendationImages.c_autoResponsiveDimensions = cldPageSetting.plp.autoResponsiveDimensions;
+            cldRecommendationImages.plpEnabled = cldPageSetting.plp.enabled;
+
+            cloudinary = cldRecommendationImages;
 
             var params = {
                 pageType: cloudinaryConstants.PAGE_TYPES.PDP,

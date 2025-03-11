@@ -11,7 +11,6 @@ exports.modifyGETResponse = function (product, doc) {
     try {
         if (cloudinaryConstants.CLD_ENABLED) {
             var cldPageSetting = cloudinaryConstants.CLD_IMAGE_PAGE_TYPE_SETTINGS_OBJECT;
-            var cloudinary = {};
 
             // Cloudinary plp images for recommendation tile
             var cldRecommendationImages = cloudinaryModel.getProductPrimaryImage(product.ID,
@@ -19,7 +18,7 @@ exports.modifyGETResponse = function (product, doc) {
             cldRecommendationImages.c_autoResponsiveDimensions = cldPageSetting.plp.autoResponsiveDimensions;
             cldRecommendationImages.plpEnabled = cldPageSetting.plp.enabled;
 
-            cloudinary = cldRecommendationImages;
+            var cloudinary = cldRecommendationImages;
 
             var params = {
                 pageType: cloudinaryConstants.PAGE_TYPES.PDP,

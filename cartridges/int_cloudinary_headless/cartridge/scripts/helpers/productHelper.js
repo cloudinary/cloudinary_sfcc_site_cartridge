@@ -18,18 +18,14 @@ function getPdpSwatches(doc, product) {
     try {
         var swatchURLObjs = [];
         var swatchURLObj;
-        var variationAttrID;
-        var variationAttrValueID;
-        var productID;
         var variantID;
-        productID = product.ID || doc.id;
+        var productID = product.ID || doc.id;
         var variationArray = doc.variationAttributes.length > 0 ? doc.variationAttributes.toArray() : null;
 
         if (!empty(variationArray)) {
             variationArray.some(function (variationAttr) { // eslint-disable-line
-                variationAttrID = variationAttr.id;
                 // only consider color attribute for swatch images
-                if (cloudinaryConstants.COLOR_ATTR.equals(variationAttrID) && !empty(variationAttr.values)) {
+                if (cloudinaryConstants.COLOR_ATTR.equals(variationAttr.id) && !empty(variationAttr.values)) {
                     var variationAttrArray = variationAttr.values.toArray();
                     variationAttrArray.forEach(function (attributeValue) {
                         // check if swatch image exists in SFCC
@@ -42,15 +38,15 @@ function getPdpSwatches(doc, product) {
                             swatchURLObj = cloudinaryAPI.getProductPrimaryImageURLUsingTagName(productID, {
                                 pageType: cloudinaryConstants.PAGE_TYPES.CLD_PDP_SWATCH,
                                 isSwatch: true,
-                                variationAttrValueID: variationAttrValueID
+                                variationAttrValueID: attributeValue.value
                             });
                         } else if (cloudinaryConstants.CLD_CARTRIDGE_OPERATION_MODE === cloudinaryConstants.CLD_GET_ASSETS_BY_VIEW_TYPE_MODE) {
-                            variantID = cloudinaryHelper.getVariantProductIDByColor(productID, variationAttrValueID);
+                            variantID = cloudinaryHelper.getVariantProductIDByColor(productID, attributeValue.value);
                             productID = !empty(variantID) ? variantID : productID;
                             swatchURLObjs = cloudinaryAPI.getProductImagesByViewType(productID, cloudinaryConstants.CLD_SWATCH_IMAGES_VIEW_TYPE, cloudinaryConstants.PAGE_TYPES.CLD_PDP_SWATCH);
                             swatchURLObj = swatchURLObjs.length > 0 ? swatchURLObjs[0] : swatchURLObj;
                         } else if (cloudinaryConstants.CLD_CARTRIDGE_OPERATION_MODE === cloudinaryConstants.CLD_GET_ASSETS_BY_AUTO_UPLOAD_MODE) {
-                            variantID = cloudinaryHelper.getVariantProductIDByColor(productID, variationAttrValueID);
+                            variantID = cloudinaryHelper.getVariantProductIDByColor(productID, attributeValue.value);
                             productID = !empty(variantID) ? variantID : productID;
                             swatchURLObjs = cloudinaryAPI.getProductImagesByAutoupload(productID, cloudinaryConstants.PAGE_TYPES.CLD_PDP_SWATCH, cloudinaryConstants.CLD_SWATCH_IMAGES_VIEW_TYPE);
                             swatchURLObj = swatchURLObjs.length > 0 ? swatchURLObjs[0] : swatchURLObj;
@@ -58,7 +54,7 @@ function getPdpSwatches(doc, product) {
 
                         if (!empty(swatchURLObj)) {
                             cldSwatch.push({
-                                variationAttrValueID: variationAttrValueID,
+                                variationAttrValueID: attributeValue.value,
                                 cldUrl: swatchURLObj.url
                             }); // eslint-disable-line
                         }
@@ -170,11 +166,9 @@ function getCloudinaryBundleSetImages(productId, params, item, isProductBundle, 
 function getCldVariationImages(variationArray, imageArray, isProductBundleOrSet, params, productId) {
     var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
     var cloudinaryModel = require('*/cartridge/scripts/model/cloudinaryModel');
-    let variationAttrID;
 
     variationArray.some(function (variationAttr) {
-        variationAttrID = variationAttr.id;
-        if (cloudinaryConstants.COLOR_ATTR.equals(variationAttrID) && !empty(variationAttr.values)) {
+        if (cloudinaryConstants.COLOR_ATTR.equals(variationAttr.id) && !empty(variationAttr.values)) {
             var variationAttrArray = variationAttr.values.toArray();
             variationAttrArray.forEach(function (attributeValue) {
                 params.variationAttrValueID = attributeValue.value;

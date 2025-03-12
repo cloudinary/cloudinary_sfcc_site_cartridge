@@ -19,7 +19,7 @@ function getPdpSwatches(doc, product) {
         var swatchURLObjs = [];
         var swatchURLObj;
         var variantID;
-        var productID = doc.id;
+        var productID = product.ID;
         var variationArray = doc.variationAttributes.length > 0 ? doc.variationAttributes.toArray() : null;
 
         if (!empty(variationArray)) {

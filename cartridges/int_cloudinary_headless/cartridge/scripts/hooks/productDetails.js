@@ -22,7 +22,7 @@ exports.modifyGETResponse = function (product, doc) {
                 variationAttrValueID: product.custom.color
             };
 
-            var cloudinaryImage = [];
+            var cloudinaryPDPImages = [];
 
             // Get Cloudinary images for bundle or set master product and its variations
             if (product.bundle || product.productSet) {
@@ -42,16 +42,16 @@ exports.modifyGETResponse = function (product, doc) {
             } else {
                 var variationArray = doc.variationAttributes && doc.variationAttributes.length > 0 ? doc.variationAttributes.toArray() : null;
                 if (variationArray) {
-                    productHelper.getCldVariationImages(variationArray, cloudinaryImage, false, params, product.ID)
+                    productHelper.getCldVariationImages(variationArray, cloudinaryPDPImages, false, params, product.ID)
                 }
             }
 
             // Get Cloudinary images for master product
-            cloudinaryImage.push({ images: cloudinaryModel.getCloudinaryImages(product.ID, params) })
+            cloudinaryPDPImages.push({ images: cloudinaryModel.getCloudinaryImages(product.ID, params) })
 
             // Get the Cloudinary product gallery Image
-            if (cloudinaryImage) {
-                cloudinary.pdpImages = cloudinaryImage;
+            if (cloudinaryPDPImages) {
+                cloudinary.pdpImages = cloudinaryPDPImages;
             }
 
             // Cloudinary Product Video

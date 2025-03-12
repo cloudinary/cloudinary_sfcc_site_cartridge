@@ -99,7 +99,7 @@ function getCloudinaryBundleSetImages(productId, params, item, isProductBundle, 
             miniCartEnabled: cldPageSetting.miniCart.enabled,
             orderConfirmation: cldPageSetting.orderConfirmation.enabled,
             orderHistory: cldPageSetting.orderHistory.enabled,
-            cldPgwSuffix: productId
+            cldPgwSuffix: productId,
         }
 
         let imageArray = [];

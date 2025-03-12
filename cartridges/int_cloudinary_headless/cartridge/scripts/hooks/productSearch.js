@@ -4,7 +4,9 @@ exports.modifyGETResponse = function (product) {
     var cloudinaryAPI = require('*/cartridge/scripts/api/cloudinaryApi');
     var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
     var cloudinaryModel = require('*/cartridge/scripts/model/cloudinaryModel');
+    var productHelper = require('*/cartridge/scripts/helpers/productHelper');
     var Logger = require('dw/system/Logger');
+    var ProductMgr = require('dw/catalog/ProductMgr');
     var Status = require('dw/system/Status');
     try {
         if (cloudinaryConstants.CLD_ENABLED) {
@@ -18,6 +20,12 @@ exports.modifyGETResponse = function (product) {
                         cloudinaryConstants.CLD_HIGH_RES_IMAGES_VIEW_TYPE, { pageType: cloudinaryConstants.PAGE_TYPES.PLP });
                     item.c_cloudinary = cloudinaryImage;
                     var imagePageTypeSetting = JSON.parse(cloudinaryConstants.CLD_IMAGE_PAGE_TYPE_SETTINGS);
+                    if (imagePageTypeSetting.cldPlpSwatch.enabled) {
+                        if (!empty(item) && !empty(item.variationAttributes)) {
+                            var productData = ProductMgr.getProduct(item.productId);
+                            item.c_cloudinary.cldSwatches = productHelper.getPdpSwatches(item, productData);
+                        }
+                    }
                     item.c_cloudinary.c_autoResponsiveDimensions = imagePageTypeSetting.plp.autoResponsiveDimensions;
                     item.c_cloudinary.plpEnabled = cloudinaryConstants.CLD_IMAGE_PAGE_TYPE_SETTINGS_OBJECT.plp.enabled;
                     item.c_cloudinary.cloudName = cloudinaryConstants.CLD_CLOUDNAME;

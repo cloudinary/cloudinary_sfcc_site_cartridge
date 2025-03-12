@@ -1,12 +1,12 @@
 'use strict';
-var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
-var cloudinaryModel = require('*/cartridge/scripts/model/cloudinaryModel');
-var Logger = require('dw/system/Logger');
-var productHelper = require('*/cartridge/scripts/helpers/productHelper');
-var Status = require('dw/system/Status');
-var UUIDUtils = require('dw/util/UUIDUtils');
 
 exports.modifyGETResponse = function (product, doc) {
+    var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
+    var cloudinaryModel = require('*/cartridge/scripts/model/cloudinaryModel');
+    var Logger = require('dw/system/Logger');
+    var productHelper = require('*/cartridge/scripts/helpers/productHelper');
+    var Status = require('dw/system/Status');
+    var UUIDUtils = require('dw/util/UUIDUtils');
     try {
         if (cloudinaryConstants.CLD_ENABLED) {
             var cldPageSetting = cloudinaryConstants.CLD_IMAGE_PAGE_TYPE_SETTINGS_OBJECT;

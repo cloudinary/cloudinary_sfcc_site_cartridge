@@ -19,7 +19,7 @@ function getPdpSwatches(doc, product) {
         var swatchURLObjs = [];
         var swatchURLObj;
         var variantID;
-        var productID = product.ID || doc.id;
+        var productID = product.ID;
         var variationArray = doc.variationAttributes.length > 0 ? doc.variationAttributes.toArray() : null;
 
         if (!empty(variationArray)) {
@@ -29,7 +29,6 @@ function getPdpSwatches(doc, product) {
                     var variationAttrArray = variationAttr.values.toArray();
                     variationAttrArray.forEach(function (attributeValue) {
                         // check if swatch image exists in SFCC
-                        variationAttrValueID = attributeValue.value;
 
                         if (cloudinaryConstants.CLD_CARTRIDGE_OPERATION_MODE === cloudinaryConstants.CLD_GET_ASSETS_BY_TAG_NAME_MODE) {
                             if (product.variant) {
@@ -66,7 +65,7 @@ function getPdpSwatches(doc, product) {
         Logger.error('producthelper~getPdpSwatches -> There is an error while executing the file {0} at: line number {1}: {2}', ex.fileName, ex.lineNumber, ex.toString());
     }
     return cldSwatch;
-};
+}
 
 /**
 * Used to get product set and bundle images from Cloudinary on productDetails hook
@@ -100,7 +99,7 @@ function getCloudinaryBundleSetImages(productId, params, item, isProductBundle, 
             miniCartEnabled: cldPageSetting.miniCart.enabled,
             orderConfirmation: cldPageSetting.orderConfirmation.enabled,
             orderHistory: cldPageSetting.orderHistory.enabled,
-            cldPgwSuffix: productId
+            cldPgwSuffix: productId,
         }
 
         let imageArray = [];

@@ -1,14 +1,13 @@
 'use strict';
 
-var cloudinaryAPI = require('*/cartridge/scripts/api/cloudinaryApi');
-var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
-var cloudinaryModel = require('*/cartridge/scripts/model/cloudinaryModel');
-var productHelper = require('*/cartridge/scripts/helpers/productHelper');
-var Logger = require('dw/system/Logger');
-var ProductMgr = require('dw/catalog/ProductMgr');
-var Status = require('dw/system/Status');
-
 exports.modifyGETResponse = function (product) {
+    var cloudinaryAPI = require('*/cartridge/scripts/api/cloudinaryApi');
+    var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
+    var cloudinaryModel = require('*/cartridge/scripts/model/cloudinaryModel');
+    var productHelper = require('*/cartridge/scripts/helpers/productHelper');
+    var Logger = require('dw/system/Logger');
+    var ProductMgr = require('dw/catalog/ProductMgr');
+    var Status = require('dw/system/Status');
     try {
         if (cloudinaryConstants.CLD_ENABLED) {
             var prd = product && product.hits && product.hits.length > 0 ? product.hits.toArray() : null;

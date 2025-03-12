@@ -1,16 +1,15 @@
 'use strict';
 
-var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
-var cloudinaryModel = require('*/cartridge/scripts/model/cloudinaryModel');
-var Logger = require('dw/system/Logger');
-var Status = require('dw/system/Status');
-
 exports.modifyPOSTResponse = function (basket, doc) {
+    var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
+    var cloudinaryModel = require('*/cartridge/scripts/model/cloudinaryModel');
+    var Logger = require('dw/system/Logger');
+    var Status = require('dw/system/Status');
     try {
         if (cloudinaryConstants.CLD_ENABLED) {
             var cldPageSetting = cloudinaryConstants.CLD_IMAGE_PAGE_TYPE_SETTINGS_OBJECT;
             var products = doc && doc.productItems && doc.productItems.length > 0 ? doc.productItems.toArray() : null;
-            
+
             if (products) {
                 var item = null;
                 products.forEach(function (key) {
@@ -43,6 +42,7 @@ exports.modifyPOSTResponse = function (basket, doc) {
                     cloudinary.cartEnabled = cldPageSetting.cart.enabled;
                     cloudinary.checkoutEnabled = cldPageSetting.checkout.enabled;
                     cloudinary.cloudName = cloudinaryConstants.CLD_CLOUDNAME;
+                    cloudinary.plpEnabled = cldPageSetting.plp.enabled;
                     item.c_cloudinary = cloudinary;
                 });
             }

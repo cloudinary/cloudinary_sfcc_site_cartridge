@@ -1,12 +1,11 @@
 'use strict';
 
-var cloudinaryAPI = require('*/cartridge/scripts/api/cloudinaryApi');
-var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
-var cloudinaryModel = require('*/cartridge/scripts/model/cloudinaryModel');
-var Logger = require('dw/system/Logger');
-var Status = require('dw/system/Status');
-
 exports.modifyGETResponse = function (product) {
+    var cloudinaryAPI = require('*/cartridge/scripts/api/cloudinaryApi');
+    var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
+    var cloudinaryModel = require('*/cartridge/scripts/model/cloudinaryModel');
+    var Logger = require('dw/system/Logger');
+    var Status = require('dw/system/Status');
     try {
         if (cloudinaryConstants.CLD_ENABLED) {
             var prd = product && product.hits && product.hits.length > 0 ? product.hits.toArray() : null;
@@ -27,7 +26,7 @@ exports.modifyGETResponse = function (product) {
 
             // Get Search Refinement Swatches on PLP
             var refinements = product && product.refinements && product.refinements.length > 0 ? product.refinements.toArray() : null;
-            
+
             if (!empty(refinements)) {
                 refinements.forEach(function (elem) {
                     item = elem;

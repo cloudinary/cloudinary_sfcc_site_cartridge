@@ -1,25 +1,57 @@
 'use strict';
-var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
-var cloudinaryModel = require('*/cartridge/scripts/model/cloudinaryModel');
-var Logger = require('dw/system/Logger');
-var productHelper = require('*/cartridge/scripts/helpers/productHelper');
-var Status = require('dw/system/Status');
-var UUIDUtils = require('dw/util/UUIDUtils');
 
 exports.modifyGETResponse = function (product, doc) {
+    var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
+    var cloudinaryModel = require('*/cartridge/scripts/model/cloudinaryModel');
+    var Logger = require('dw/system/Logger');
+    var productHelper = require('*/cartridge/scripts/helpers/productHelper');
+    var Status = require('dw/system/Status');
+    var UUIDUtils = require('dw/util/UUIDUtils');
     try {
         if (cloudinaryConstants.CLD_ENABLED) {
             var cldPageSetting = cloudinaryConstants.CLD_IMAGE_PAGE_TYPE_SETTINGS_OBJECT;
-            var cloudinary = {};
+
+            // Cloudinary plp images for recommendation tile
+            var cloudinary = cloudinaryModel.getProductPrimaryImage(product.ID,
+                cloudinaryConstants.CLD_HIGH_RES_IMAGES_VIEW_TYPE, { pageType: cloudinaryConstants.PAGE_TYPES.PLP });
+            cloudinary.c_autoResponsiveDimensions = cldPageSetting.plp.autoResponsiveDimensions;
+            cloudinary.plpEnabled = cldPageSetting.plp.enabled;
+
             var params = {
                 pageType: cloudinaryConstants.PAGE_TYPES.PDP,
                 variationAttrValueID: product.custom.color
             };
 
-            // Get the Cloudinary porduct gallery Image
-            var cloudinaryImage = cloudinaryModel.getCloudinaryImages(product.ID, params);
-            if (cloudinaryImage) {
-                cloudinary.cloudinaryImage = cloudinaryImage;
+            var cloudinaryPDPImages = [];
+
+            // Get Cloudinary images for bundle or set master product and its variations
+            if (product.bundle || product.productSet) {
+                let bundleProducts;
+                if (doc.bundledProducts && doc.bundledProducts.length > 0) {
+                    bundleProducts = doc.bundledProducts.toArray();
+                } else if (doc.setProducts && doc.setProducts.length > 0) {
+                    bundleProducts = doc.setProducts.toArray();
+                }
+                if (bundleProducts) {
+                    bundleProducts.some(function (bundleItem, index) {
+                        const productId = bundleItem.id || bundleItem.product.ID;
+                        params.variationAttrValueID = null;
+                        productHelper.getCloudinaryBundleSetImages(productId, params, bundleItem, product.bundle, product.productSet);
+                    })
+                }
+            } else {
+                var variationArray = doc.variationAttributes && doc.variationAttributes.length > 0 ? doc.variationAttributes.toArray() : null;
+                if (variationArray) {
+                    productHelper.getCldVariationImages(variationArray, cloudinaryPDPImages, false, params, product.ID)
+                }
+            }
+
+            // Get Cloudinary images for master product
+            cloudinaryPDPImages.push({ images: cloudinaryModel.getCloudinaryImages(product.ID, params) })
+
+            // Get the Cloudinary product gallery Image
+            if (cloudinaryPDPImages) {
+                cloudinary.pdpImages = cloudinaryPDPImages;
             }
 
             // Cloudinary Product Video
@@ -31,7 +63,7 @@ exports.modifyGETResponse = function (product, doc) {
             // Cloudinary PDP Swatches
             if (cldPageSetting.cldPdpSwatch.enabled) {
                 if (!empty(doc) && !empty(doc.variationAttributes)) {
-                    cloudinary.cldSwatchs = productHelper.getPdpSwatches(doc, product);
+                    cloudinary.cldSwatches = productHelper.getPdpSwatches(doc, product);
                 }
             }
 
@@ -65,7 +97,6 @@ exports.modifyGETResponse = function (product, doc) {
             }
 
             cloudinary.pdpSwatch = cldPageSetting.cldPdpSwatch.enabled;
-            cloudinary.images = cloudinaryModel.getCloudinaryImages(product.ID, params);
             cloudinary.productId = product.ID;
             cloudinary.isEnabled = cloudinaryConstants.CLD_ENABLED;
             cloudinary.galleryEnabled = cloudinaryConstants.CLD_GALLERY_ENABLED;
@@ -74,6 +105,7 @@ exports.modifyGETResponse = function (product, doc) {
             cloudinary.videoPlayerEnabled = cloudinaryConstants.CLD_VIDEO_PLAYER_ENABLED;
             cloudinary.pdp = cldPageSetting.pdp.enabled;
             cloudinary.cartEnabled = cldPageSetting.cart.enabled;
+            cloudinary.isResponsive = cldPageSetting.plp.automateResponsivenessWithJS;
             cloudinary.isCheckoutEnabled = cldPageSetting.checkout.enabled;
             cloudinary.miniCartEnabled = cldPageSetting.miniCart.enabled;
             cloudinary.orderConfirmation = cldPageSetting.orderConfirmation.enabled;

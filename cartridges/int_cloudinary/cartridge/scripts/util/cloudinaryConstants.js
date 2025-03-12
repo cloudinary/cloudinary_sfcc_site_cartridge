@@ -37,6 +37,7 @@ CloudinaryConstants.CLD_GALLERY_STYLES = sitePrefs.getCustom().CLDGalleryStyles;
 CloudinaryConstants.CLD_PRODUCT_ATTRIBUTE_FOR_TAGS = sitePrefs.getCustom().CLDProductAttributeForTags;
 CloudinaryConstants.CLD_GLOBAL_IMAGE_TRANSFORMATIONS = sitePrefs.getCustom().CLDImageTransformation;
 CloudinaryConstants.CLD_GLOBAL_VIDEO_TRANSFORMATIONS = sitePrefs.getCustom().CLDVideoTransformation;
+CloudinaryConstants.CLD_GLOBAL_VIDEO_POSTER_TRANSFORMATIONS = sitePrefs.getCustom().CLDVideoPosterTransformations;
 CloudinaryConstants.CLD_GLOBAL_IMAGE_TRANSFORM_FORMAT = sitePrefs.getCustom().CLDImageTransformFormat;
 CloudinaryConstants.CLD_GLOBAL_VIDEO_TRANSFORM_FORMAT = sitePrefs.getCustom().CLDVideoTransformFormat;
 CloudinaryConstants.CLD_GLOBAL_IMAGE_QUALITY = sitePrefs.getCustom().CLDImageTransformQuality;

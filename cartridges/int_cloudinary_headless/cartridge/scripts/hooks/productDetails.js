@@ -110,6 +110,7 @@ exports.modifyGETResponse = function (product, doc) {
             cloudinary.miniCartEnabled = cldPageSetting.miniCart.enabled;
             cloudinary.orderConfirmation = cldPageSetting.orderConfirmation.enabled;
             cloudinary.orderHistory = cldPageSetting.orderHistory.enabled;
+            cloudinary.domain = cloudinaryConstants.CLD_BASE_PATH.match(/^(?:https?:\/\/)?([^\/]+)/)[1];
             doc.c_cloudinary = cloudinary; // eslint-disable-line
         }
     } catch (ex) {

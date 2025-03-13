@@ -100,6 +100,7 @@ function getCloudinaryBundleSetImages(productId, params, item, isProductBundle, 
             orderConfirmation: cldPageSetting.orderConfirmation.enabled,
             orderHistory: cldPageSetting.orderHistory.enabled,
             cldPgwSuffix: productId,
+            domain: cloudinaryConstants.CLD_BASE_PATH.match(/^(?:https?:\/\/)?([^\/]+)/)[1]
         }
 
         let imageArray = [];

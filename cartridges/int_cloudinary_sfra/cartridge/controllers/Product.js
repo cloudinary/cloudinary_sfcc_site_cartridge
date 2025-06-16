@@ -46,7 +46,7 @@ server.append('Show', cache.applyPromotionSensitiveCache, consentTracking.consen
 
                 cloudinary.images = cloudinaryModel.getCloudinaryImages(product.id, {
                     pageType: cloudinaryConstants.PAGE_TYPES.PDP,
-                    variationAttrValueID: colorAttrValueID
+                    variationColorAttrID: colorAttrValueID
                 });
             } else {
                 // fetch color attr value ID
@@ -62,7 +62,7 @@ server.append('Show', cache.applyPromotionSensitiveCache, consentTracking.consen
 
                 cloudinary.images = cloudinaryModel.getCloudinaryImages(product.id, {
                     pageType: cloudinaryConstants.PAGE_TYPES.PDP,
-                    variationAttrValueID: colorAttrValueID
+                    variationColorAttrID: colorAttrValueID
                 });
             }
 
@@ -96,6 +96,7 @@ server.append('Variation', function (req, res, next) {
     var cloudinary = {};
     var cldAssets;
     var colorAttrValueID;
+    var sizeAttrValueID;
     var params = req.querystring;
     var viewData = res.getViewData();
     var product = viewData.product;
@@ -106,9 +107,14 @@ server.append('Variation', function (req, res, next) {
             colorAttrValueID = params.variables.color.value;
         }
 
+        if (params && params.variables && params.variables.accessorySize && params.variables.accessorySize.value || params.variables.size && params.variables.size.value) {
+            sizeAttrValueID = params.variables.accessorySize.value ? params.variables.accessorySize.value : params.variables.size.value ? params.variables.size.value : null
+        }
+
         cldAssets = cloudinaryModel.getCloudinaryImages(product.id, {
             pageType: cloudinaryConstants.PAGE_TYPES.PDP,
-            variationAttrValueID: colorAttrValueID
+            variationColorAttrID: colorAttrValueID,
+            variationSizeAttrID: sizeAttrValueID
         });
 
         if (!cloudinaryConstants.CLD_GALLERY_ENABLED) {

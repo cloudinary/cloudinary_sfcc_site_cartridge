@@ -600,7 +600,7 @@ cloudinary.addTrackingQueryParam = function (url) {
  *
  * @returns {string} variation attr value ID
  */
-cloudinary.fetchVariationAttrValueId = function (variantProductID, variationAttr) {
+cloudinary.fetchVariationAttrValueId = function (variantProductID, variationAttr, sizeAttr) {
     var logger = require('dw/system/Logger').getLogger('int_cloudinary', 'int_cloudinary');
     var ProductMgr = require('dw/catalog/ProductMgr');
     var prefs = require('*/cartridge/scripts/util/cloudinaryConstants');
@@ -616,17 +616,19 @@ cloudinary.fetchVariationAttrValueId = function (variantProductID, variationAttr
         if (!empty(variantProduct)) {
             productVariationModel = variantProduct.variationModel;
 
-            if (variationAttr === prefs.COLOR_ATTR) {
-                productVariationAttr = productVariationModel.getProductVariationAttribute(prefs.COLOR_ATTR);
-            } else if (variationAttr === prefs.SIZE_ATTR) {
-                productVariationAttr = productVariationModel.getProductVariationAttribute(prefs.SIZE_ATTR);
-            }
+            for (var i=0; i<productVariationModel.productVariationAttributes.length; i++) {
+                productVariationAttr = productVariationModel.getProductVariationAttribute(productVariationModel.productVariationAttributes[i].ID);
 
-            if (!empty(productVariationModel) && !empty(productVariationAttr)) {
-                productVariationAttrValue = productVariationModel.getVariationValue(variantProduct, productVariationAttr);
+                if (!empty(productVariationModel) && !empty(productVariationAttr)) {
+                    productVariationAttrValue = productVariationModel.getVariationValue(variantProduct, productVariationAttr);
 
-                if (!empty(productVariationAttrValue)) {
-                    productVariationAttrValueId = productVariationAttrValue.ID;
+                    if (!empty(productVariationAttrValue)) {
+                        if (!empty(productVariationAttrValueId)) {
+                            productVariationAttrValueId = productVariationAttrValueId + prefs.HYPHEN + productVariationAttrValue.ID;
+                        } else {
+                            productVariationAttrValueId = productVariationAttrValue.ID;
+                        }
+                    }
                 }
             }
         }

@@ -58,6 +58,7 @@ var getCloudinaryImages = function (productID, params) {
     var assetPublicID;
     var cldTag = '';
     var colorAttrValueID;
+    var sizeAttrValueID;
     var cldAssetURLs = [];
     var galleryOptions = {};
     var imageURL;
@@ -73,7 +74,8 @@ var getCloudinaryImages = function (productID, params) {
         if (cloudinaryConstants.CLD_ENABLED) {
             // initialize optional params
             if (!empty(params)) {
-                colorAttrValueID = params.variationAttrValueID;
+                colorAttrValueID = params.variationAttrValueID ? params.variationAttrValueID : params.variationColorAttrID;
+                sizeAttrValueID = params.variationSizeAttrID ? params.variationSizeAttrID : null;
                 pageType = params.pageType;
             }
 
@@ -95,6 +97,10 @@ var getCloudinaryImages = function (productID, params) {
 
                     if (!empty(colorAttrValueID)) {
                         cldTag += cloudinaryConstants.HYPHEN + colorAttrValueID;
+                    }
+
+                    if (!empty(sizeAttrValueID)) {
+                        cldTag += cloudinaryConstants.HYPHEN + sizeAttrValueID;
                     }
                     mediaAssets.push({ tag: cldTag, mediaType: cloudinaryConstants.CLD_IMAGE_RESOURCE_TYPE });
                     mediaAssets.push({ tag: cldTag, mediaType: cloudinaryConstants.CLD_VIDEO_RESOURCE_TYPE });

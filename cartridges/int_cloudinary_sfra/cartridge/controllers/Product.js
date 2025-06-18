@@ -107,8 +107,8 @@ server.append('Variation', function (req, res, next) {
             colorAttrValueID = params.variables.color.value;
         }
 
-        if (params && params.variables && params.variables.accessorySize && params.variables.accessorySize.value || params.variables.size && params.variables.size.value) {
-            sizeAttrValueID = params.variables.accessorySize.value ? params.variables.accessorySize.value : params.variables.size.value ? params.variables.size.value : null
+        if ((params && params.variables) && ((params.variables.accessorySize && params.variables.accessorySize.value) || (params.variables.size && params.variables.size.value))) {
+            sizeAttrValueID = params.variables.accessorySize.value || params.variables.size.value || null;
         }
 
         cldAssets = cloudinaryModel.getCloudinaryImages(product.id, {

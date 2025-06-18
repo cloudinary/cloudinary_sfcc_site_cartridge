@@ -162,7 +162,7 @@ TestHarness.ImageSubmit = function () {
         } else {
             variationAttrValueID = cloudinaryHelper.fetchVariationAttrValueId(params.productID.stringValue);
             cloudinary.images = cloudinaryModel.getCloudinaryImages(params.productID.stringValue, {
-                pageType: params.pageType.stringValue, variationAttrValueID: variationAttrValueID
+                pageType: params.pageType.stringValue, variationColorAttrID: variationAttrValueID
             });
         }
     }

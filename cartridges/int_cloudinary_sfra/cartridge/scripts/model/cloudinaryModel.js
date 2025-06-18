@@ -118,7 +118,7 @@ baseCloudinaryModel.addCloudinaryImagesToSetAndBundles = function (product) {
 
             subProductCldImgs = baseCloudinaryModel.getCloudinaryImages(subProduct.id, {
                 pageType: cloudinaryConstants.PAGE_TYPES.PDP,
-                variationAttrValueID: colorAttrValueID,
+                variationColorAttrID: colorAttrValueID,
                 setAndBundleImages: setAndBundleImages
             });
 

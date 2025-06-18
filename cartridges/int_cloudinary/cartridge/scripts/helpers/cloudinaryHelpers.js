@@ -596,11 +596,11 @@ cloudinary.addTrackingQueryParam = function (url) {
  * Fetch variation attribute value ID for variant product.
  *
  * @param {string} variantProductID - variant product ID
- * @param {string} variationAttr - variation attribute
+ * @param {string} colorVariationAttr - variation attribute
  *
  * @returns {string} variation attr value ID
  */
-cloudinary.fetchVariationAttrValueId = function (variantProductID, variationAttr, sizeAttr) {
+cloudinary.fetchVariationAttrValueId = function (variantProductID, colorVariationAttr, sizeAttr) {
     var logger = require('dw/system/Logger').getLogger('int_cloudinary', 'int_cloudinary');
     var ProductMgr = require('dw/catalog/ProductMgr');
     var prefs = require('*/cartridge/scripts/util/cloudinaryConstants');

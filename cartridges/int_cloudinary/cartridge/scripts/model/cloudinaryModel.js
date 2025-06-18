@@ -74,8 +74,8 @@ var getCloudinaryImages = function (productID, params) {
         if (cloudinaryConstants.CLD_ENABLED) {
             // initialize optional params
             if (!empty(params)) {
-                colorAttrValueID = params.variationAttrValueID ? params.variationAttrValueID : params.variationColorAttrID;
-                sizeAttrValueID = params.variationSizeAttrID ? params.variationSizeAttrID : null;
+                colorAttrValueID = params.variationColorAttrID;
+                sizeAttrValueID = params.variationSizeAttrID;
                 pageType = params.pageType;
             }
 

@@ -42,7 +42,7 @@ function show() {
             cloudinary.galleryEnabled = cloudinaryConstants.CLD_GALLERY_ENABLED;
             cloudinary.images = cloudinaryModel.getCloudinaryImages(product.object.ID, {
                 pageType: cloudinaryConstants.PAGE_TYPES.PDP,
-                variationAttrValueID: colorAttrValueID
+                variationColorAttrID: colorAttrValueID
             });
         
             var isVideoEnabled = cloudinaryHelper.isVideoEnabled(product.object);
@@ -103,7 +103,7 @@ function detail() {
             cloudinary.galleryEnabled = cloudinaryConstants.CLD_GALLERY_ENABLED;
             cloudinary.images = cloudinaryModel.getCloudinaryImages(product.object.ID, {
                 pageType: cloudinaryConstants.PAGE_TYPES.PDP,
-                variationAttrValueID: colorAttrValueID
+                variationColorAttrID: colorAttrValueID
             });
 
             cloudinary.productSetAndBundleImages = cloudinaryModel.searchProductSetAndBundleImagesByTags(product.object);
@@ -331,7 +331,7 @@ function variation() {
                     var colorAttrValueID = params.get('dwvar_' + params.pid.stringValue + '_color').stringValue;
                     var cldAssets = cloudinaryModel.getCloudinaryImages(product.object.ID, {
                         pageType: cloudinaryConstants.PAGE_TYPES.PDP,
-                        variationAttrValueID: colorAttrValueID
+                        variationColorAttrID: colorAttrValueID
                     });
 
                     cloudinary.isGalleryEnabled = cloudinaryConstants.CLD_GALLERY_ENABLED;
@@ -472,7 +472,7 @@ function getSetItem() {
             var colorAttrValueID = params.get('dwvar_' + params.pid.stringValue + '_color').stringValue;
             var cldAssets = cloudinaryModel.getCloudinaryImages(product.object.ID, {
                 pageType: cloudinaryConstants.PAGE_TYPES.PDP,
-                variationAttrValueID: colorAttrValueID
+                variationColorAttrID: colorAttrValueID
             });
 
             var cloudinaryPGWContainerSuffix = params.cloudinaryPGWContainerSuffix;

@@ -66,15 +66,9 @@ Template Notes:
                 ${Resource.msg('label.select', 'common', null)} ${attr.displayName}
             </option>
             <isloop items="${attr.values}" var="attrValue">
-                <isif condition="${cldPageTypeQueryParam}">
-                    <option value="${cldPageTypeQueryParam ? attrValue.url + cldPageTypeQueryParam : attrValue.url}" data-attr-value="${attrValue.value}" ${!attrValue.selectable ? 'disabled' : ''} ${attrValue.selected ? 'selected' : ''}>
-                        ${attrValue.displayValue}
-                    </option>
-                <iselse/>
-                    <option value="${attrValue.url}" data-attr-value="${attrValue.value}" ${!attrValue.selectable ? 'disabled' : ''} ${attrValue.selected ? 'selected' : ''}>
-                        ${attrValue.displayValue}
-                    </option>
-                </isif>
+                <option value="${cldPageTypeQueryParam ? attrValue.url + cldPageTypeQueryParam : attrValue.url}" data-attr-value="${attrValue.value}" ${!attrValue.selectable ? 'disabled' : ''} ${attrValue.selected ? 'selected' : ''}>
+                    ${attrValue.displayValue}
+                </option>
             </isloop>
         </select>
 

@@ -75,8 +75,7 @@ baseCloudinaryModel.getSetBundleImages = function (productID, params) {
     var assets = {};
     var assetPublicID;
     var cldTag = '';
-    var colorAttrValueID;
-//    var cldSpinTag = '';
+    var variationAttrValueID;
     var cldAssetURLs = [];
     var galleryOptions = {};
     var imageURL;
@@ -111,7 +110,7 @@ baseCloudinaryModel.getSetBundleImages = function (productID, params) {
                 prodID = subProduct.ID;
 
                 if (subProduct.variant) {
-                    colorAttrValueID = cloudinaryHelper.fetchVariationAttrValueId(subProduct.ID, cloudinaryConstants.COLOR_ATTR);
+                    variationAttrValueID = cloudinaryHelper.fetchVariationAttrValueId(subProduct.ID);
                     subProduct = subProduct.master;
                 }
 
@@ -121,16 +120,13 @@ baseCloudinaryModel.getSetBundleImages = function (productID, params) {
                     if (cloudinaryConstants.CLD_CARTRIDGE_OPERATION_MODE === cloudinaryConstants.CLD_GET_ASSETS_BY_TAG_NAME_MODE) {
                         cldTag = cloudinaryHelper.getCloudinaryTagName(subProduct);
 
-                        // cldSpinTag = cldTag + cloudinaryConstants.CLD_360_SPIN_SET_TAG_SUFFIX;
-
-                        if (!empty(colorAttrValueID)) {
-                            cldTag += cloudinaryConstants.HYPHEN + colorAttrValueID;
+                        if (!empty(variationAttrValueID)) {
+                            cldTag += cloudinaryConstants.HYPHEN + variationAttrValueID;
                         }
 
                         mediaAssets.push({ tag: cldTag, mediaType: cloudinaryConstants.CLD_IMAGE_RESOURCE_TYPE });
                         mediaAssets.push({ tag: cldTag, mediaType: cloudinaryConstants.CLD_VIDEO_RESOURCE_TYPE });
                         // TODO: remove this commented line after cld resolves issues for spin sets
-                        // mediaAssets.push({tag: cldSpinTag, mediaType: cloudinaryConstants.CLD_SPIN_SET_RESOURCE_TYPE});
                     } else if (cloudinaryConstants.CLD_CARTRIDGE_OPERATION_MODE === cloudinaryConstants.CLD_GET_ASSETS_BY_VIEW_TYPE_MODE) {
                         cldAssetURLs = cloudinaryAPI.getProductImagesByViewType(prodID, cloudinaryConstants.CLD_HIGH_RES_IMAGES_VIEW_TYPE, pageType);
                         for (var index = 0; index < cldAssetURLs.length; index++) {
@@ -158,7 +154,7 @@ baseCloudinaryModel.getSetBundleImages = function (productID, params) {
                     assets.imageURLs = cloudinaryAPI.getProductImagesByTagName(prodID, {
                         pageType: pageType,
                         isSwatch: isSwatch,
-                        variationAttrValueID: colorAttrValueID
+                        variationAttrValueID: variationAttrValueID
                     });
                 } else if (cloudinaryConstants.CLD_CARTRIDGE_OPERATION_MODE === cloudinaryConstants.CLD_GET_ASSETS_BY_VIEW_TYPE_MODE) {
                     assets.imageURLs = cloudinaryAPI.getProductImagesByViewType(prodID, cloudinaryConstants.CLD_HIGH_RES_IMAGES_VIEW_TYPE, pageType);

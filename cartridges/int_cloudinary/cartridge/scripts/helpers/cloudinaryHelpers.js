@@ -600,7 +600,7 @@ cloudinary.addTrackingQueryParam = function (url) {
  *
  * @returns {string} variation attr value ID
  */
-cloudinary.fetchVariationAttrValueId = function (variantProductID, colorVariationAttr, sizeAttr) {
+cloudinary.fetchVariationAttrValueId = function (variantProductID) {
     var logger = require('dw/system/Logger').getLogger('int_cloudinary', 'int_cloudinary');
     var ProductMgr = require('dw/catalog/ProductMgr');
     var prefs = require('*/cartridge/scripts/util/cloudinaryConstants');
@@ -715,7 +715,7 @@ cloudinary.generateTagsQuery = function (productsList) {
         var product = productsList[i];
         var variationAttrValueID = '';
         if (product.variant) {
-            variationAttrValueID = cloudinary.fetchVariationAttrValueId(product.ID, prefs.COLOR_ATTR);
+            variationAttrValueID = cloudinary.fetchVariationAttrValueId(product.ID);
         }
 
         if (product.variant || product.variationGroup) {

@@ -1488,7 +1488,7 @@ var getProductVideoByCustomMapping = function (productID, currentLocale) {
     var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
     var cloudinaryHelper = require('*/cartridge/scripts/helpers/cloudinaryHelpers');
 
-    var colorAttrID;
+    var variationAttrId;
     var finalURL;
     var product;
     var sizeAttrID;
@@ -1505,18 +1505,11 @@ var getProductVideoByCustomMapping = function (productID, currentLocale) {
                     !empty(product.name) ? product.name : cloudinaryConstants.EMPTY_STRING);
 
                 // replace color and size attribute value IDs
-                colorAttrID = cloudinaryHelper.fetchVariationAttrValueId(productID, cloudinaryConstants.COLOR_ATTR);
-                if (!empty(colorAttrID)) {
-                    tempUrl = tempUrl.replace(cloudinaryConstants.COLOR_CUSTOM_MAPPING_PACEHOLDER, colorAttrID);
+                variationAttrId = cloudinaryHelper.fetchVariationAttrValueId(productID);
+                if (!empty(variationAttrId)) {
+                    tempUrl = tempUrl.replace(cloudinaryConstants.COLOR_CUSTOM_MAPPING_PACEHOLDER, variationAttrId);
                 } else {
                     tempUrl = tempUrl.replace(cloudinaryConstants.COLOR_CUSTOM_MAPPING_PACEHOLDER + cloudinaryConstants.UNDER_SCORE, cloudinaryConstants.EMPTY_STRING);
-                }
-
-                sizeAttrID = cloudinaryHelper.fetchVariationAttrValueId(productID, cloudinaryConstants.SIZE_ATTR);
-                if (!empty(sizeAttrID)) {
-                    tempUrl = tempUrl.replace(cloudinaryConstants.SIZE_CUSTOM_MAPPING_PLACEHOLDER, sizeAttrID);
-                } else {
-                    tempUrl = tempUrl.replace(cloudinaryConstants.SIZE_CUSTOM_MAPPING_PLACEHOLDER + cloudinaryConstants.UNDER_SCORE, cloudinaryConstants.EMPTY_STRING);
                 }
 
                 finalURL = cloudinaryHelper.getCLDBasePath() + cloudinaryConstants.VIDEO_UPLOAD_URL_RESOURCE_TYPE + cloudinaryConstants.FORWARD_SLASH +

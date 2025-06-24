@@ -28,7 +28,7 @@ var buildTags = function (masterProduct, product, viewType) {
                 if (product.variant) {
                     tagName = cloudinaryHelper.getCloudinaryTagName(product.masterProduct);
                     if (!empty(tagName)) {
-                        productVariationAttrValueId = cloudinaryHelper.fetchVariationAttrValueId(product.ID, cloudinaryConstants.COLOR_ATTR, cloudinaryConstants.SIZE_ATTR);
+                        productVariationAttrValueId = cloudinaryHelper.fetchVariationAttrValueId(product.ID);
                         // concate color attribute value ID with tagName
                         if (!empty(productVariationAttrValueId)) {
                             if (cloudinaryConstants.CLD_SWATCH_IMAGES_VIEW_TYPE.equalsIgnoreCase(viewType)) {

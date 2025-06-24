@@ -476,7 +476,7 @@ var getProductPrimaryImage = function (productID, viewType, params) {
             if (cloudinaryConstants.CLD_CARTRIDGE_OPERATION_MODE === cloudinaryConstants.CLD_GET_ASSETS_BY_TAG_NAME_MODE) {
                 product = ProductMgr.getProduct(pid);
                 if (product.variant) {
-                    variationAttrValueID = cloudinaryHelper.fetchVariationAttrValueId(product.ID, cloudinaryConstants.COLOR_ATTR);
+                    variationAttrValueID = cloudinaryHelper.fetchVariationAttrValueId(product.ID);
                     pid = product.masterProduct.ID;
                 }
                 productPrimaryImg = cloudinaryAPI.getProductPrimaryImageURLUsingTagName(pid, {

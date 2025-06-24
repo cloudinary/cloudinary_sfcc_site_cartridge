@@ -99,7 +99,7 @@ baseCloudinaryModel.addCloudinaryImagesToSetAndBundles = function (product) {
 
     var subProducts = [];
     var subProductCldImgs;
-    var colorAttrValueID;
+    var variationAttrValueID;
     var productModel = product;
 
     try {
@@ -113,12 +113,12 @@ baseCloudinaryModel.addCloudinaryImagesToSetAndBundles = function (product) {
 
         subProducts.forEach(function (subProduct, index) {
             if (subProduct.raw && subProduct.raw.variant) {
-                colorAttrValueID = cloudinaryHelper.fetchVariationAttrValueId(subProduct.id, cloudinaryConstants.COLOR_ATTR);
+                variationAttrValueID = cloudinaryHelper.fetchVariationAttrValueId(subProduct.id);
             }
 
             subProductCldImgs = baseCloudinaryModel.getCloudinaryImages(subProduct.id, {
                 pageType: cloudinaryConstants.PAGE_TYPES.PDP,
-                variationColorAttrID: colorAttrValueID,
+                variationColorAttrID: variationAttrValueID,
                 setAndBundleImages: setAndBundleImages
             });
 
@@ -150,7 +150,7 @@ baseCloudinaryModel.addCloudinaryImagesToSetAndBundles = function (product) {
                 productModel.bundledProducts[index] = subProduct;
             }
 
-            colorAttrValueID = null;
+            variationAttrValueID = null;
         });
     } catch (ex) {
         logger.error('Error occurred while adding set/bundled product cloudinary images, product: {0}, message: {1} ', productModel.id, ex);

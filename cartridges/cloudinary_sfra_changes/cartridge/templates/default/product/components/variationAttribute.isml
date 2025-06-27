@@ -66,7 +66,7 @@ Template Notes:
                 ${Resource.msg('label.select', 'common', null)} ${attr.displayName}
             </option>
             <isloop items="${attr.values}" var="attrValue">
-                <option value="${cldPageTypeQueryParam ? attrValue.url + cldPageTypeQueryParam : attrValue.url}" data-attr-value="${attrValue.value}" ${!attrValue.selectable ? 'disabled' : ''} ${attrValue.selected ? 'selected' : ''}>
+                <option value="${attrValue.url}" data-attr-value="${attrValue.value}" ${!attrValue.selectable ? 'disabled' : ''} ${attrValue.selected ? 'selected' : ''}>
                     ${attrValue.displayValue}
                 </option>
             </isloop>

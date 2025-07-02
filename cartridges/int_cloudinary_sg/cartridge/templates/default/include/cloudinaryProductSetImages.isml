@@ -22,10 +22,10 @@
     var cloudinaryHelper = require('*/cartridge/scripts/helpers/cloudinaryHelpers');
     var variationAttrValueID;
     if (pdict.Product.variant) {
-        variationAttrValueID = cloudinaryHelper.fetchVariationAttrValueId(pdict.Product.ID, 'color');
+        variationAttrValueID = cloudinaryHelper.fetchVariationAttrValueId(pdict.Product.ID);
     }
     var cloudinarySetImages = cloudinaryModel.getCloudinaryImages(pdict.Product.ID, {
-        pageType: pdict.cloudinary.pageType, variationAttrValueID: variationAttrValueID, setAndBundleImages: pdict.cloudinary.productSetAndBundleImages});
+        pageType: pdict.cloudinary.pageType, variationColorAttrID: variationAttrValueID, setAndBundleImages: pdict.cloudinary.productSetAndBundleImages});
 </isscript>
 
 <isif condition="${!empty(cloudinarySetImages.imageURLs) && !empty(cloudinarySetImages.imageURLs[0]) && !empty(cloudinarySetImages.imageURLs[0].url)}">

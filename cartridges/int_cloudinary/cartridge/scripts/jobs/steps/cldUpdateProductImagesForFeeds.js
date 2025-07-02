@@ -53,7 +53,7 @@ function writeProductFileContent(cloudinaryUrlStreamWriter, productSearchHitsItr
     var product;
     var productID;
     var variantsID;
-    var colorAttrValueID;
+    var variationAttrValueID;
     var sfccAltText;
     var imgVariantsUnSorted;
     var imgVariantsSorted = {};
@@ -93,9 +93,9 @@ function writeProductFileContent(cloudinaryUrlStreamWriter, productSearchHitsItr
                     while (variants.hasNext()) {
                         var variant = variants.next();
                         variantsID = variant.ID;
-                        colorAttrValueID = cloudinaryHelper.fetchVariationAttrValueId(variantsID, cloudinaryConstants.COLOR_ATTR);
+                        variationAttrValueID = cloudinaryHelper.fetchVariationAttrValueId(variantsID);
 
-                        variantTag = productID + cloudinaryConstants.HYPHEN + colorAttrValueID;
+                        variantTag = productID + cloudinaryConstants.HYPHEN + variationAttrValueID;
 
                         if (clrAttrArray.includes(variantTag)) {
                             continue;
@@ -111,7 +111,7 @@ function writeProductFileContent(cloudinaryUrlStreamWriter, productSearchHitsItr
 
                         cloudinaryUrlStreamWriter.writeStartElement('variation');
                         cloudinaryUrlStreamWriter.writeAttribute('attribute-id', 'color');
-                        cloudinaryUrlStreamWriter.writeAttribute('value', colorAttrValueID);
+                        cloudinaryUrlStreamWriter.writeAttribute('value', variationAttrValueID);
                         cloudinaryUrlStreamWriter.writeEndElement();
 
                         for (let imgResources of imgVariantsSorted.resources) {

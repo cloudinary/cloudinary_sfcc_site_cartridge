@@ -3,10 +3,10 @@
     var cloudinaryHelper = require('*/cartridge/scripts/helpers/cloudinaryHelpers');
     var variationAttrValueID;
     if (pdict.Product.variant) {
-        variationAttrValueID = cloudinaryHelper.fetchVariationAttrValueId(pdict.Product.ID, 'color');
+        variationAttrValueID = cloudinaryHelper.fetchVariationAttrValueId(pdict.Product.ID);
     }
     var cloudinarySetImages = cloudinaryModel.getCloudinaryImages(pdict.Product.ID, {
-        pageType: pdict.cloudinary.pageType, variationAttrValueID: variationAttrValueID});
+        pageType: pdict.cloudinary.pageType, variationColorAttrID: variationAttrValueID});
     var productID = pdict.Product.variant ? pdict.Product.masterProduct.ID : pdict.Product.ID;
     var cloudinaryPGWContainerSuffix = empty(pdict.cloudinary.cloudinaryPGWContainerSuffix) ? (pdict.Product.variant ? (pdict.Product.masterProduct.ID + '-' + pdict.Product.ID) : pdict.Product.ID) : pdict.cloudinary.cloudinaryPGWContainerSuffix;
     if (cloudinarySetImages && cloudinarySetImages.galleryWidget && cloudinarySetImages.galleryWidget.options &&

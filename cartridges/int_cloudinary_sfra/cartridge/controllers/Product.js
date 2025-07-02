@@ -25,7 +25,7 @@ server.append('Show', cache.applyPromotionSensitiveCache, consentTracking.consen
     var cloudinaryHelper = require('*/cartridge/scripts/helpers/cloudinaryHelpers');
 
     var cloudinary = {};
-    var colorAttrValueID;
+    var variationAttrValueID;
     var viewData = res.getViewData();
     var product = viewData.product;
     var params = req.querystring;
@@ -37,7 +37,7 @@ server.append('Show', cache.applyPromotionSensitiveCache, consentTracking.consen
                 product = cloudinaryModel.addCloudinaryImagesToSetAndBundles(product);
 
                 if (product.raw && product.raw.variant) {
-                    colorAttrValueID = cloudinaryHelper.fetchVariationAttrValueId(product.id, cloudinaryConstants.COLOR_ATTR);
+                    variationAttrValueID = cloudinaryHelper.fetchVariationAttrValueId(product.id);
                 }
 
                 if (product.CLDVideoEnabled) {
@@ -46,14 +46,14 @@ server.append('Show', cache.applyPromotionSensitiveCache, consentTracking.consen
 
                 cloudinary.images = cloudinaryModel.getCloudinaryImages(product.id, {
                     pageType: cloudinaryConstants.PAGE_TYPES.PDP,
-                    variationAttrValueID: colorAttrValueID
+                    variationColorAttrID: variationAttrValueID
                 });
             } else {
                 // fetch color attr value ID
                 if (params && params.variables && params.variables.color && params.variables.color.value) {
-                    colorAttrValueID = params.variables.color.value;
+                    variationAttrValueID = params.variables.color.value;
                 } else {
-                    colorAttrValueID = cloudinaryHelper.fetchVariationAttrValueId(product.id, cloudinaryConstants.COLOR_ATTR);
+                    variationAttrValueID = cloudinaryHelper.fetchVariationAttrValueId(product.id);
                 }
 
                 if (product.CLDVideoEnabled) {
@@ -62,7 +62,7 @@ server.append('Show', cache.applyPromotionSensitiveCache, consentTracking.consen
 
                 cloudinary.images = cloudinaryModel.getCloudinaryImages(product.id, {
                     pageType: cloudinaryConstants.PAGE_TYPES.PDP,
-                    variationAttrValueID: colorAttrValueID
+                    variationColorAttrID: variationAttrValueID
                 });
             }
 
@@ -96,6 +96,7 @@ server.append('Variation', function (req, res, next) {
     var cloudinary = {};
     var cldAssets;
     var colorAttrValueID;
+    var sizeAttrValueID;
     var params = req.querystring;
     var viewData = res.getViewData();
     var product = viewData.product;
@@ -106,9 +107,14 @@ server.append('Variation', function (req, res, next) {
             colorAttrValueID = params.variables.color.value;
         }
 
+        if ((params && params.variables) && ((params.variables.accessorySize && params.variables.accessorySize.value) || (params.variables.size && params.variables.size.value))) {
+            sizeAttrValueID = params.variables.accessorySize.value || params.variables.size.value;
+        }
+
         cldAssets = cloudinaryModel.getCloudinaryImages(product.id, {
             pageType: cloudinaryConstants.PAGE_TYPES.PDP,
-            variationAttrValueID: colorAttrValueID
+            variationColorAttrID: colorAttrValueID,
+            variationSizeAttrID: sizeAttrValueID
         });
 
         if (!cloudinaryConstants.CLD_GALLERY_ENABLED) {

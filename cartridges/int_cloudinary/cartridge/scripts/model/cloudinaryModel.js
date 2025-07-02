@@ -58,6 +58,7 @@ var getCloudinaryImages = function (productID, params) {
     var assetPublicID;
     var cldTag = '';
     var colorAttrValueID;
+    var sizeAttrValueID;
     var cldAssetURLs = [];
     var galleryOptions = {};
     var imageURL;
@@ -73,7 +74,8 @@ var getCloudinaryImages = function (productID, params) {
         if (cloudinaryConstants.CLD_ENABLED) {
             // initialize optional params
             if (!empty(params)) {
-                colorAttrValueID = params.variationAttrValueID;
+                colorAttrValueID = params.variationColorAttrID;
+                sizeAttrValueID = params.variationSizeAttrID;
                 pageType = params.pageType;
             }
 
@@ -95,6 +97,10 @@ var getCloudinaryImages = function (productID, params) {
 
                     if (!empty(colorAttrValueID)) {
                         cldTag += cloudinaryConstants.HYPHEN + colorAttrValueID;
+                    }
+
+                    if (!empty(sizeAttrValueID)) {
+                        cldTag += cloudinaryConstants.HYPHEN + sizeAttrValueID;
                     }
                     mediaAssets.push({ tag: cldTag, mediaType: cloudinaryConstants.CLD_IMAGE_RESOURCE_TYPE });
                     mediaAssets.push({ tag: cldTag, mediaType: cloudinaryConstants.CLD_VIDEO_RESOURCE_TYPE });
@@ -470,7 +476,7 @@ var getProductPrimaryImage = function (productID, viewType, params) {
             if (cloudinaryConstants.CLD_CARTRIDGE_OPERATION_MODE === cloudinaryConstants.CLD_GET_ASSETS_BY_TAG_NAME_MODE) {
                 product = ProductMgr.getProduct(pid);
                 if (product.variant) {
-                    variationAttrValueID = cloudinaryHelper.fetchVariationAttrValueId(product.ID, cloudinaryConstants.COLOR_ATTR);
+                    variationAttrValueID = cloudinaryHelper.fetchVariationAttrValueId(product.ID);
                     pid = product.masterProduct.ID;
                 }
                 productPrimaryImg = cloudinaryAPI.getProductPrimaryImageURLUsingTagName(pid, {

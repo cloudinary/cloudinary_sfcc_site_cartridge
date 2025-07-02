@@ -127,7 +127,7 @@ var applyTransformationOnProductImageAbsoluteURL = function (productID, absURL, 
  *
  * @returns {Object} object holding transformed URL and srcset attributes
  */
-var applyTransformationOnProductImageRelativeURL = function (productID, relURL, pageType) {
+var applyTransformationOnProductImageRelativeURL = function (productID, relURL, pageType, asset) {
     var logger = require('dw/system/Logger').getLogger('int_cloudinary', 'int_cloudinary');
     var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
     var cloudinaryHelper = require('*/cartridge/scripts/helpers/cloudinaryHelpers');
@@ -152,6 +152,9 @@ var applyTransformationOnProductImageRelativeURL = function (productID, relURL, 
                     }
                 }
                 relativeURL = cloudinaryUtils.replaceSpecialChars(relativeURL);
+                if (relativeURL && cloudinaryConstants.CLD_3D_OBJECTS_ENABLED && asset && asset.format) {
+                    relativeURL += cloudinaryConstants.DOT + asset.format
+                }
                 var absURL = cloudinaryHelper.getCLDBasePath() + cloudinaryConstants.IMAGE_UPLOAD_URL_RESOURCE_TYPE + relativeURL;
                 urlObj = applyTransformationOnProductImageAbsoluteURL(productID, absURL, pageType);
             }
@@ -453,7 +456,7 @@ var getProductImagesByTagName = function (productID, params) {
                             }
 
                             if (!empty(asset3D.public_id)) {
-                                urlObj3D = applyTransformationOnProductImageRelativeURL(productID, asset3D.public_id, pageType);
+                                urlObj3D = applyTransformationOnProductImageRelativeURL(productID, asset3D.public_id, pageType, asset3D);
 
                                 if (!empty(altText3D)) {
                                     urlObj3D.alt = altText3D;

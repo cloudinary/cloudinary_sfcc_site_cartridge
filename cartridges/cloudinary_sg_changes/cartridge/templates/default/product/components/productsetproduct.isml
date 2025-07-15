@@ -105,6 +105,14 @@
 			<div id="update-images" style="display:none"
 				data-cld="${JSON.stringify(pdict.cloudinary)}">
 			</div>
+            <script>
+                if (typeof cldGallery !== 'undefined' && cldGallery) { // eslint-disable-line no-undef
+                    const el = document.getElementById('update-images');
+                    const dataCLD = el.getAttribute('data-cld');
+                    const dataGallery = JSON.parse(dataCLD).galleryWidgetOptions;
+                    cldGallery.update(dataGallery); // eslint-disable-line no-undef
+                }
+            </script>
 		</isif>
 		<iscomment>Custom End: Add cloudinary data attribute to be accessed from js</iscomment>
 	</isif>

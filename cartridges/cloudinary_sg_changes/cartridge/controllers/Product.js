@@ -341,6 +341,7 @@ function variation() {
                     }
                     cloudinary.images = {};
                     cloudinary.images.imageURLs = cldAssets.imageURLs;
+                    cloudinary.shouldUpdateGallery = true;
                 } else {
                     cloudinary = {};
                 }
@@ -487,6 +488,7 @@ function getSetItem() {
             }
 
             cloudinary.isGalleryEnabled = cloudinaryConstants.CLD_GALLERY_ENABLED;
+            cloudinary.shouldUpdateGallery = true;
         } else {
             cloudinary = {};
         }

@@ -275,14 +275,17 @@
 	</div><!--  end details block -->
 	<iscomment>This is ugly, but it works until we can get a better solution</iscomment>
 	<isif condition="${pdict.cloudinary.galleryEnabled || pdict.cloudinary.isGalleryEnabled}">
-	<div class="updated-cld-gallery-content" data-gallery="${JSON.stringify(pdict.cloudinary.galleryWidgetOptions)}"></div>
-    	<script>
-    	   if (typeof cldGallery !== 'undefined' && cldGallery) { // eslint-disable-line no-undef
-           	 const el = document.getElementsByClassName('updated-cld-gallery-content')[0];
-           	 const dataGallery = el.getAttribute('data-gallery');
-           	 cldGallery.update(JSON.parse(dataGallery)); // eslint-disable-line no-undef
-    	   }
-    	</script>
+	<div class="updated-cld-gallery-content" data-gallery-update="${pdict.cloudinary.shouldUpdateGallery}" data-gallery="${JSON.stringify(pdict.cloudinary.galleryWidgetOptions)}"></div>
+        <script>
+            if (typeof cldGallery !== 'undefined' && cldGallery) { // eslint-disable-line no-undef
+             const el = document.getElementsByClassName('updated-cld-gallery-content')[0];
+             const dataGallery = el.getAttribute('data-gallery');
+             const shouldUpdateGallery = el.getAttribute('data-gallery-update');
+             if(shouldUpdateGallery && shouldUpdateGallery !== "null"){
+                cldGallery.update(JSON.parse(dataGallery)); // eslint-disable-line no-undef
+              }
+            }
+        </script>
 	<iselseif condition="${pdict.GetImages}"/>
 		<iscomment>Custom Start: Add cloudinary data attribute to be accessed from js</iscomment>
 		<div id="update-images" style="display:none" data-cld="${JSON.stringify(pdict.cloudinary)}">

@@ -52,7 +52,7 @@
     <iscomment>Custom Start: Cloudinary Integration</iscomment>
     <a ${href} class="product-image main-image ${pdict.cloudinary && pdict.cloudinary.isEnabled ? ('main-image-' + pdict.Product.ID) : ''}" title="${imageTitle}">
         <img
-            class="primary-image primary-image-' + pdict.Product.ID ${pdict.cloudinary && pdict.cloudinary.isEnabled && imgObj && imgObj.isResponsive ? ('cld-responsive') : ''}"
+            class="primary-image primary-image-${pdict.Product.ID} ${pdict.cloudinary && pdict.cloudinary.isEnabled && imgObj && imgObj.isResponsive ? ('cld-responsive') : ''}"
             alt="${imageAlt}"
             itemprop="image"
             <isif condition="${imgObj && !imgObj.isResponsive}">

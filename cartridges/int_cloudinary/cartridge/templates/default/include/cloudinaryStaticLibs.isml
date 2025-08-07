@@ -1,5 +1,9 @@
 <isset name="preferences" value="${dw.system.Site.current.preferences.custom}" scope="page"/>
 <isif condition="${preferences.CLDEnabled}">
+    <isset name="cloudinaryConstants" value="${require('*/cartridge/scripts/util/cloudinaryConstants')}" scope="page" />
+    <isif condition="${cloudinaryConstants.CLD_DOMAIN}">
+        <link rel="preconnect" href="${'https://' + cloudinaryConstants.CLD_DOMAIN}" />
+    </isif>
     <iscomment>Placeholder to hold cloudinary data sent from controllers and being used in client side js
         to render cloudinary widgets.</iscomment>
     <isif condition="${pdict.cloudinary}">
@@ -9,6 +13,7 @@
     </isif>
     <script src="${URLUtils.staticURL('/js/cloudinaryWidgets.js')}"></script>
     <isif condition="${preferences.CLDVideoEnabled && preferences.CLDVideoPlayerEnabled}">
+        <link rel="preconnect" href="${preferences.CLDVideoPlayerJSURL}" />
         <link href="${preferences.CLDVideoPlayerCSSURL}" rel="stylesheet"/>
         <script src="${preferences.CLDVideoPlayerJSURL}"></script>
         <script>
@@ -17,6 +22,7 @@
     </isif>
     <isset name="CLDImagePageTypeSettings" value="${JSON.parse(preferences.CLDImagePageTypeSettings)}" scope="page"/>
     <isif condition="${(CLDImagePageTypeSettings.miniCart.enabled && CLDImagePageTypeSettings.miniCart.automateResponsivenessWithJS) || (CLDImagePageTypeSettings.searchSuggestions.enabled && CLDImagePageTypeSettings.searchSuggestions.automateResponsivenessWithJS)}">
+        <link rel="preconnect" href="${preferences.CLDCoreShrinkwrapJSURL}" />
         <isinclude template="include/cloudinaryShrinkwrap"/>
     </isif>
 </isif>

@@ -226,6 +226,27 @@ function replaceSpecialChars(originalPath) {
     return path;
 }
 
+/**
+ * Returns extract domain from full URL.
+ *
+ * @param {string} originalPath - original path
+ *
+ * @returns {string} changed path
+ */
+function extractTheDomain(originalPath) {
+    var cloudinaryConstants = require('~/cartridge/scripts/util/cloudinaryConstants');
+
+    var path = originalPath;
+    if (!empty(path)) {
+        path = path.match(/^(?:https?:\/\/)?([^\/]+)/);
+        if (path && path.length > 0) {
+            return path[1];
+        }
+    }
+
+    return path;
+}
+
 module.exports = {
     buildSignature: buildSignature,
     getImageFormats: getImageFormats,
@@ -237,5 +258,6 @@ module.exports = {
     buildUploadServicePrefs: buildUploadServicePrefs,
     getAssetType: getAssetType,
     replaceSpecialChars: replaceSpecialChars,
-    isIncludeSpecialChars: isIncludeSpecialChars
+    isIncludeSpecialChars: isIncludeSpecialChars,
+    extractTheDomain: extractTheDomain
 };

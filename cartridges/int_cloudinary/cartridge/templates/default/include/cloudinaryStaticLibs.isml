@@ -13,7 +13,9 @@
     </isif>
     <script src="${URLUtils.staticURL('/js/cloudinaryWidgets.js')}"></script>
     <isif condition="${preferences.CLDVideoEnabled && preferences.CLDVideoPlayerEnabled}">
-        <link rel="preconnect" href="${preferences.CLDVideoPlayerJSURL}" crossorigin />
+        <isif condition="${cloudinaryConstants.CLD_VIDEO_PLAYER_JS_URL_ORIGIN}">
+            <link rel="preconnect" href="${'http://' + cloudinaryConstants.CLD_VIDEO_PLAYER_JS_URL_ORIGIN}" />
+        </isif>
         <link href="${preferences.CLDVideoPlayerCSSURL}" rel="stylesheet"/>
         <script src="${preferences.CLDVideoPlayerJSURL}"></script>
         <script>
@@ -22,7 +24,9 @@
     </isif>
     <isset name="CLDImagePageTypeSettings" value="${JSON.parse(preferences.CLDImagePageTypeSettings)}" scope="page"/>
     <isif condition="${(CLDImagePageTypeSettings.miniCart.enabled && CLDImagePageTypeSettings.miniCart.automateResponsivenessWithJS) || (CLDImagePageTypeSettings.searchSuggestions.enabled && CLDImagePageTypeSettings.searchSuggestions.automateResponsivenessWithJS)}">
-        <link rel="preconnect" href="${preferences.CLDCoreShrinkwrapJSURL}" crossorigin />
+        <isif condition="${cloudinaryConstants.CLD_CORE_SHRINKWRAP_JS_URL_ORIGIN}">
+            <link rel="preconnect" href="${'https://' + cloudinaryConstants.CLD_CORE_SHRINKWRAP_JS_URL_ORIGIN}" />
+        </isif>
         <isinclude template="include/cloudinaryShrinkwrap"/>
     </isif>
 </isif>

@@ -234,8 +234,6 @@ function replaceSpecialChars(originalPath) {
  * @returns {string} changed path
  */
 function extractTheDomain(originalPath) {
-    var cloudinaryConstants = require('~/cartridge/scripts/util/cloudinaryConstants');
-
     var path = originalPath;
     if (!empty(path)) {
         path = path.match(/^(?:https?:\/\/)?([^\/]+)/);

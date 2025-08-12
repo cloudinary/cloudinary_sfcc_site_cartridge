@@ -8,7 +8,6 @@
 
     <isset name="cloudinaryConstants" value="${require('*/cartridge/scripts/util/cloudinaryConstants')}" scope="page" />
     <isif condition="${pdict.cloudinary && pdict.cloudinary.isEnabled && (pdict.cloudinary.galleryEnabled || pdict.cloudinary.isGalleryEnabled)}">
-        <link rel="preconnect" href="${'https://' + cloudinaryConstants.CLD_GALLERY_JS_URL_DOMAIN}" />
         <link rel="preload" href="${cloudinaryConstants.CLD_BASE_PATH + '/' + cloudinaryConstants.CLD_VIDEO_RESOURCE_TYPE + '/list/'+ pdict.product.id +'.json'}" as="fetch" crossorigin />
         <link rel="preload" href="${cloudinaryConstants.CLD_BASE_PATH + '/' + cloudinaryConstants.CLD_IMAGE_RESOURCE_TYPE + '/list/'+ pdict.product.id +'.json'}" as="fetch" crossorigin />
     </isif>

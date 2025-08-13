@@ -6,7 +6,7 @@
         <link rel="preconnect" href="${'https://' + cloudinaryConstants.CLD_DOMAIN}" />
     </isif>
     <isif condition="${preferences.CLDVideoEnabled && preferences.CLDVideoPlayerEnabled && cloudinaryConstants.CLD_VIDEO_PLAYER_JS_URL_ORIGIN}">
-        <link rel="preconnect" href="${'http://' + cloudinaryConstants.CLD_VIDEO_PLAYER_JS_URL_ORIGIN}" />
+        <link rel="preconnect" href="${'https://' + cloudinaryConstants.CLD_VIDEO_PLAYER_JS_URL_ORIGIN}" />
     </isif>
     <isif condition="${(CLDImagePageTypeSettings.miniCart.enabled && CLDImagePageTypeSettings.miniCart.automateResponsivenessWithJS) || (CLDImagePageTypeSettings.searchSuggestions.enabled && CLDImagePageTypeSettings.searchSuggestions.automateResponsivenessWithJS)}">
         <isif condition="${cloudinaryConstants.CLD_CORE_SHRINKWRAP_JS_URL_ORIGIN}">

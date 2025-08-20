@@ -15,6 +15,7 @@ var CloudinaryConstants = {};
 var Site = require('dw/system/Site');
 var System = require('dw/system/System');
 var sitePrefs = Site.getCurrent().getPreferences();
+var cloudinaryUtils = require('~/cartridge/scripts/util/cloudinaryUtils');
 
 CloudinaryConstants.CLD_APIKEY = sitePrefs.getCustom().CLDAPIkey;
 CloudinaryConstants.CLD_APISECRET = sitePrefs.getCustom().CLDSecretKey;
@@ -62,6 +63,10 @@ CloudinaryConstants.CLD_CONTENT_LIBRARY_JOB_LAST_EXECUTION_DATE = sitePrefs.getC
 CloudinaryConstants.CLD_CATALOG_CONTENT_JOB_LAST_EXECUTION_DATE = sitePrefs.getCustom().CLDCatalogContentJobLastExecutionDate;
 CloudinaryConstants.CLD_REPORTING_LOG_LEVEL = sitePrefs.getCustom().CLDReportingLogLevel.value;
 CloudinaryConstants.CLD_REST_SERVICE_CREDENTIALS = sitePrefs.getCustom().CLDRestServiceCredentialsID;
+CloudinaryConstants.CLD_DOMAIN = cloudinaryUtils.extractTheDomain(sitePrefs.getCustom().CLDBaseDeliveryPath);
+CloudinaryConstants.CLD_GALLERY_JS_URL_DOMAIN = cloudinaryUtils.extractTheDomain(sitePrefs.getCustom().CLDGalleryJSURL);
+CloudinaryConstants.CLD_VIDEO_PLAYER_JS_URL_ORIGIN = cloudinaryUtils.extractTheDomain(sitePrefs.getCustom().CLDVideoPlayerJSURL);
+CloudinaryConstants.CLD_CORE_SHRINKWRAP_JS_URL_ORIGIN = cloudinaryUtils.extractTheDomain(sitePrefs.getCustom().CLDCoreShrinkwrapJSURL);
 
 // Enable disable cloudinary on specific pages constants
 CloudinaryConstants.CLD_IMAGE_PAGE_TYPE_SETTINGS_OBJECT = JSON.parse(CloudinaryConstants.CLD_IMAGE_PAGE_TYPE_SETTINGS);

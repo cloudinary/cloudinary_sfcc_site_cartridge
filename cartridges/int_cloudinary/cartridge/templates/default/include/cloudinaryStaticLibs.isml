@@ -1,5 +1,21 @@
 <isset name="preferences" value="${dw.system.Site.current.preferences.custom}" scope="page"/>
 <isif condition="${preferences.CLDEnabled}">
+    <isset name="cloudinaryConstants" value="${require('*/cartridge/scripts/util/cloudinaryConstants')}" scope="page" />
+    <isset name="CLDImagePageTypeSettings" value="${JSON.parse(preferences.CLDImagePageTypeSettings)}" scope="page"/>
+    <isif condition="${cloudinaryConstants.CLD_DOMAIN}">
+        <link rel="preconnect" href="${'https://' + cloudinaryConstants.CLD_DOMAIN}" />
+    </isif>
+    <isif condition="${preferences.CLDVideoEnabled && preferences.CLDVideoPlayerEnabled && cloudinaryConstants.CLD_VIDEO_PLAYER_JS_URL_ORIGIN}">
+        <link rel="preconnect" href="${'https://' + cloudinaryConstants.CLD_VIDEO_PLAYER_JS_URL_ORIGIN}" />
+    </isif>
+    <isif condition="${(CLDImagePageTypeSettings.miniCart.enabled && CLDImagePageTypeSettings.miniCart.automateResponsivenessWithJS) || (CLDImagePageTypeSettings.searchSuggestions.enabled && CLDImagePageTypeSettings.searchSuggestions.automateResponsivenessWithJS)}">
+        <isif condition="${cloudinaryConstants.CLD_CORE_SHRINKWRAP_JS_URL_ORIGIN}">
+            <link rel="preconnect" href="${'https://' + cloudinaryConstants.CLD_CORE_SHRINKWRAP_JS_URL_ORIGIN}" />
+        </isif>
+    </isif>
+    <isif condition="${pdict.cloudinary && pdict.cloudinary.isEnabled && (pdict.cloudinary.galleryEnabled || pdict.cloudinary.isGalleryEnabled)}">
+        <link rel="preconnect" href="${'https://' + cloudinaryConstants.CLD_GALLERY_JS_URL_DOMAIN}" />
+    </isif>
     <iscomment>Placeholder to hold cloudinary data sent from controllers and being used in client side js
         to render cloudinary widgets.</iscomment>
     <isif condition="${pdict.cloudinary}">
@@ -15,7 +31,6 @@
             window.cldVideoPlayer = cloudinary.Cloudinary;
         </script>
     </isif>
-    <isset name="CLDImagePageTypeSettings" value="${JSON.parse(preferences.CLDImagePageTypeSettings)}" scope="page"/>
     <isif condition="${(CLDImagePageTypeSettings.miniCart.enabled && CLDImagePageTypeSettings.miniCart.automateResponsivenessWithJS) || (CLDImagePageTypeSettings.searchSuggestions.enabled && CLDImagePageTypeSettings.searchSuggestions.automateResponsivenessWithJS)}">
         <isinclude template="include/cloudinaryShrinkwrap"/>
     </isif>

@@ -18,7 +18,7 @@
 										alt="${category.displayName}"
 										class="${cldProductImage.isResponsive ? 'cld-responsive' : ''}"
 										<isif condition="${!(cldProductImage.isResponsive)}">
-											src="${category.image.httpURL}"
+											src="${category.image.url}"
 											<isif condition="${'srcset' in cldProductImage && cldProductImage.srcset}">
 												srcset="${cldProductImage.srcset}"
 											</isif>
@@ -30,10 +30,10 @@
 										</isif>
 									/>
 							<iselse/>
-								<img src="${category.image.httpURL}" alt="${category.displayName}" />
+								<img src="${category.image.url}" alt="${category.displayName}" />
 							</isif>
 						<iselse/>
-							<img src="${category.image.httpURL}" alt="${category.displayName}" />
+							<img src="${category.image.url}" alt="${category.displayName}" />
 						</isif>
 						<iscomment>Custom end: Add cloudinary product image</iscomment>
 						<h1><isprint value="${category.displayName}" encoding="off"/></h1>

@@ -18,7 +18,7 @@
 										alt="${category.displayName}"
 										class="${cldProductImage.isResponsive ? 'cld-responsive' : ''}"
 										<isif condition="${!(cldProductImage.isResponsive)}">
-											src="${category.image.url}"
+											src="${cldProductImage.url}"
 											<isif condition="${'srcset' in cldProductImage && cldProductImage.srcset}">
 												srcset="${cldProductImage.srcset}"
 											</isif>

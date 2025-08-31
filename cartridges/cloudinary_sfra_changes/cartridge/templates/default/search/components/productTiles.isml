@@ -15,17 +15,6 @@
     <div class="col-6 col-sm-4">
         <isobject object="${product.productSearchHit}" view="searchhit">
             <iscomment>Custom start: Add cloudinary page type</iscomment>
-            <isset name="cloudinaryConstants" value="${require('*/cartridge/scripts/util/cloudinaryConstants')}" scope="page" />
-            <isif condition="${CloudinaryConstants.CLD_GALLERY_ENABLED}">
-                <link rel="preload" href="${cloudinaryConstants.CLD_BASE_PATH + '/' + cloudinaryConstants.CLD_VIDEO_RESOURCE_TYPE + '/list/'+ product.productID +'.json'}" as="fetch" crossorigin />
-                <link rel="preload" href="${cloudinaryConstants.CLD_BASE_PATH + '/' + cloudinaryConstants.CLD_IMAGE_RESOURCE_TYPE + '/list/'+ product.productID +'.json'}" as="fetch" crossorigin />
-            </isif>
-            <isif condition="${CloudinaryConstants.CLD_360_SPINSETS_ENABLED}">
-                <link rel="preload" href="${cloudinaryConstants.CLD_BASE_PATH + '/' + cloudinaryConstants.CLD_SPIN_SET_RESOURCE_TYPE + '/list/'+ product.productID + CloudinaryConstants.CLD_360_SPIN_SET_TAG_SUFFIX +'.json'}" as="fetch" crossorigin />
-            </isif>
-            <isif condition="${CloudinaryConstants.CLD_3D_OBJECTS_ENABLED}">
-                <link rel="preload" href="${cloudinaryConstants.CLD_BASE_PATH + '/' + cloudinaryConstants.CLD_3D_OBJECT_TAG_SUFFIX + '/list/'+ product.productID + CloudinaryConstants.CLD_3D_OBJECT_TAG_SUFFIX_SLASH+'.json'}" as="fetch" crossorigin />
-            </isif>
             <isinclude url="${URLUtils.url('Tile-Show', 'pid', product.productID, 'swatches', true,
                 'ratings', true, 'pageType', 'plp', 'pageTypeSwatches', 'cldPlpSwatch')}" />
             <iscomment>Custom end: Add cloudinary page type</iscomment>

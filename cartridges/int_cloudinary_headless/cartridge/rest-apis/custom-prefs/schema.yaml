@@ -1,0 +1,48 @@
+openapi: 3.0.0
+info:
+  version: 1.0.1
+  title: Custom Preference API
+components:
+  securitySchemes:
+    ShopperToken:
+      type: http
+      scheme: bearer
+      flows:
+        authorizationCode:
+          authorizationUrl: https://${shortCode}.api.commercecloud.salesforce.com/shopper/auth/v1/organizations/${orgId}/oauth2/authorize
+          tokenUrl: https://${shortCode}.api.commercecloud.salesforce.com/shopper/auth/v1/organizations/${orgId}/oauth2/token
+          scopes:
+            c_customapi_rw: Read custom preference information
+paths:
+  /getcustompreferences:
+    get:
+      summary: Get custom prefeences
+      operationId: GetCustomPrefs
+      parameters:
+        - in: query
+          name: siteId
+          required: true
+          schema:
+            type: string
+            minLength: 1
+        - in: query
+          name: locale
+          required: false
+          schema:
+            type: string
+            minLength: 1
+        - in: query
+          name: c_prefs
+          required: true
+          schema:
+            type: string
+            minLength: 1
+      responses:
+        200:
+          description: OK
+        500:
+          description: Error
+        400:
+          description: Error
+security:
+  - ShopperToken: ["c_customapi_rw"]

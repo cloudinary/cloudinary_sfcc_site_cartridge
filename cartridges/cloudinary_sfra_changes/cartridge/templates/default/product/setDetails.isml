@@ -5,16 +5,16 @@
         assets.addJs('/js/productDetail.js');
         assets.addCss('/css/product/detail.css');
     </isscript>
-    <isset name="cloudinaryConstants" value="${require('*/cartridge/scripts/util/cloudinaryConstants')}" scope="page" />
     <isif condition="${pdict.cloudinary && pdict.cloudinary.isEnabled && (pdict.cloudinary.galleryEnabled || pdict.cloudinary.isGalleryEnabled)}">
+        <isset name="cloudinaryConstants" value="${require('*/cartridge/scripts/util/cloudinaryConstants')}" scope="page" />
         <link rel="preload" href="${cloudinaryConstants.CLD_BASE_PATH + '/' + cloudinaryConstants.CLD_VIDEO_RESOURCE_TYPE + '/list/'+ pdict.product.CLDTagName +'.json'}" as="fetch" crossorigin />
         <link rel="preload" href="${cloudinaryConstants.CLD_BASE_PATH + '/' + cloudinaryConstants.CLD_IMAGE_RESOURCE_TYPE + '/list/'+ pdict.product.CLDTagName +'.json'}" as="fetch" crossorigin />
-    </isif>
-    <isif condition="${CloudinaryConstants.CLD_360_SPINSETS_ENABLED}">
-        <link rel="preload" href="${cloudinaryConstants.CLD_BASE_PATH + '/' + cloudinaryConstants.CLD_SPIN_SET_RESOURCE_TYPE + '/list/'+ pdict.product.CLDTagName + CloudinaryConstants.CLD_360_SPIN_SET_TAG_SUFFIX +'.json'}" as="fetch" crossorigin />
-    </isif>
-    <isif condition="${CloudinaryConstants.CLD_3D_OBJECTS_ENABLED}">
-        <link rel="preload" href="${cloudinaryConstants.CLD_BASE_PATH + '/' + cloudinaryConstants.CLD_3D_OBJECT_TAG_SUFFIX + '/list/'+ pdict.product.CLDTagName + CloudinaryConstants.CLD_3D_OBJECT_TAG_SUFFIX_SLASH+'.json'}" as="fetch" crossorigin />
+        <isif condition="${CloudinaryConstants.CLD_360_SPINSETS_ENABLED}">
+            <link rel="preload" href="${cloudinaryConstants.CLD_BASE_PATH + '/' + cloudinaryConstants.CLD_SPIN_SET_RESOURCE_TYPE + '/list/'+ pdict.product.CLDTagName + CloudinaryConstants.CLD_360_SPIN_SET_TAG_SUFFIX +'.json'}" as="fetch" crossorigin />
+        </isif>
+        <isif condition="${CloudinaryConstants.CLD_3D_OBJECTS_ENABLED}">
+            <link rel="preload" href="${cloudinaryConstants.CLD_BASE_PATH + '/' + cloudinaryConstants.CLD_3D_OBJECT_TAG_SUFFIX + '/list/'+ pdict.product.CLDTagName + CloudinaryConstants.CLD_3D_OBJECT_TAG_SUFFIX_SLASH+'.json'}" as="fetch" crossorigin />
+        </isif>
     </isif>
     <iscomment> Custom Start: include cloudinary shrinkwrap. </iscomment>
     <isset name="CLDImagePageTypeSettings" value="${JSON.parse(dw.system.Site.current.preferences.custom.CLDImagePageTypeSettings)}" scope="page"/>

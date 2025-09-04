@@ -20,6 +20,7 @@
 	</isif>
 	<isif condition="${pdict.cloudinary && pdict.cloudinary.isEnabled && (pdict.cloudinary.galleryEnabled || pdict.cloudinary.isGalleryEnabled)}">
 	    <isinclude template="product/components/cloudinaryGallery" />
+        <script src="${dw.system.Site.current.preferences.custom.CLDGalleryJSURL.replace('/all.js', '/image.js')}" fetchpriority="high"></script>
         <script src="${dw.system.Site.current.preferences.custom.CLDGalleryJSURL}" onload="window.cldProductGallery = cloudinary; window.renderCloudinaryGalleryWidget();"> </script>
 	<iselse>
 	    <isinclude template="product/components/productimages"/>

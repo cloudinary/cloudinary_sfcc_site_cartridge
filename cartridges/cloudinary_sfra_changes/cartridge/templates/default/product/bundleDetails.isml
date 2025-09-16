@@ -74,9 +74,7 @@
         <hr>
 
         <isinclude template="product/components/bundleItems" />
-        <isif condition="${pdict.cloudinary && pdict.cloudinary.isEnabled && (pdict.cloudinary.galleryEnabled || pdict.cloudinary.isGalleryEnabled)}">
-            <script src="${dw.system.Site.current.preferences.custom.CLDGalleryJSURL}" onload="window.cldProductGallery = cloudinary; window.renderCloudinaryGalleryWidget(); window.renderCloudinarySetGalleryWidgets()"> </script>
-        </isif>
+        <isinclude template="include/cloudinaryGallery"/>
         <hr>
 
         <iscomment>Custom start: add cloudinary video player</iscomment>

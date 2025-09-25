@@ -187,8 +187,9 @@ cloudinary.getCloudinaryTagName = function (apiProduct) {
     var logger = require('dw/system/Logger').getLogger('int_cloudinary', 'int_cloudinary');
     var prefs = require('*/cartridge/scripts/util/cloudinaryConstants');
     var variationAttrValueID = null;
-    if(apiProduct.variant){
-       variationAttrValueID = this.fetchVariationAttrValueId(apiProduct.ID);
+    if(!empty(apiProduct) && (apiProduct.variant || apiProduct.variationGroup)){
+        variationAttrValueID = this.fetchVariationAttrValueId(apiProduct.ID);
+        apiProduct = apiProduct.getMasterProduct();
     }
     var tagName = '';
 

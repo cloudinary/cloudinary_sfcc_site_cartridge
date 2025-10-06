@@ -65,7 +65,7 @@ function multiTagResources(multiTagsQuery) {
             logger.error(cloudinaryConstants.CLD_GENERAL_ERROR + e.message);
         }
     } else {
-        logger.error('Missing tags search query, skipping call to cloudinary Search API to fetch resources.');
+        logger.error('Missing multi tags query, skipping call to cloudinary Multi tag API to fetch resources.');
     }
     return cldResources;
 }

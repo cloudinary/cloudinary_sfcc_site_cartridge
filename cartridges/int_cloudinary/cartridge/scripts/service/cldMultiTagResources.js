@@ -17,7 +17,7 @@ function multiTagResourcesFromCld(args) {
     var result = [];
 
     configArgs.method = 'POST';
-    configArgs.endPoint = args.resourceType + cloudinaryConstants.FORWARD_SLASH + args.multiTagsQuery + cloudinaryConstants.JSON_EXTENSION;
+    configArgs.endPoint = args.multiTagsQuery + cloudinaryConstants.JSON_EXTENSION;
 
     var service = cldWebService.getService(cloudinaryConstants.CLD_MULTI_TAGS_SVC, cldWebService.getServiceConfigs(configArgs));
     
@@ -47,18 +47,17 @@ function multiTagResourcesFromCld(args) {
 /**
  * This method calls internal service method to fetch resources based on tag names query
  * @param {string} multiTagsQuery - multi tags query
- * @param {string} resourceType - resource type either image or video
  *
  * @returns {Object} cldResources - object holding array of resources
  */
-function multiTagResources(multiTagsQuery, resourceType) {
+function multiTagResources(multiTagsQuery) {
     var logger = require('dw/system/Logger').getLogger('Cloudinary', 'UPLOAD');
     var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
 
     var cldResources;
     if (!empty(multiTagsQuery)) {
         try {
-            var cldResponse = multiTagResourcesFromCld({ multiTagsQuery: multiTagsQuery, resourceType: resourceType });
+            var cldResponse = multiTagResourcesFromCld({ multiTagsQuery: multiTagsQuery });
             if (cldResponse.ok) {
                 cldResources = cldResponse.result.resources;
             }

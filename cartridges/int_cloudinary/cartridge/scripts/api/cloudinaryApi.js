@@ -1733,13 +1733,12 @@ var getCatalogVideoAbsURLFromRelURL = function (relURL, categoryId) {
 /**
  * This method is used to fetch resources based on tag names query
  * @param {string} multiTagsQuery - multi tags query
- * @param {string} resourceType - resource type either image or video
  *
  * @returns {Object} assets - object holding array of resources
  */
-var fetchCLDResourcesByMultiTags = function (multiTagsQuery, resourceType) {
+var fetchCLDResourcesByMultiTags = function (multiTagsQuery) {
     var cldMultiTagResources = require('*/cartridge/scripts/service/cldMultiTagResources');
-    var assets = cldMultiTagResources.multiTagResources(multiTagsQuery, resourceType);
+    var assets = cldMultiTagResources.multiTagResources(multiTagsQuery);
     return assets;
 };
 

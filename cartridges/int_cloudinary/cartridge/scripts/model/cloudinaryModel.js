@@ -552,7 +552,7 @@ var searchProductSetAndBundleImagesByTags = function (product) {
         }
         var tagsSearchQuery = cloudinaryHelper.generateMultiTagsQuery(subProducts);
 
-        images = cloudinaryAPI.fetchCLDResourcesByMultiTags(tagsSearchQuery, cloudinaryConstants.CLD_IMAGE_RESOURCE_TYPE);
+        images = cloudinaryAPI.fetchCLDResourcesByMultiTags(tagsSearchQuery);
     }
 
     return images;

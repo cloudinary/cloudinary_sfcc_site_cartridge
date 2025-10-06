@@ -186,7 +186,11 @@ cloudinary.getCloudinaryGalleryStyles = function (apiProduct) {
 cloudinary.getCloudinaryTagName = function (apiProduct) {
     var logger = require('dw/system/Logger').getLogger('int_cloudinary', 'int_cloudinary');
     var prefs = require('*/cartridge/scripts/util/cloudinaryConstants');
-
+    var variationAttrValueID = null;
+    if(!empty(apiProduct) && (apiProduct.variant || apiProduct.variationGroup)){
+        variationAttrValueID = this.fetchVariationAttrValueId(apiProduct.ID);
+        apiProduct = apiProduct.getMasterProduct();
+    }
     var tagName = '';
 
     try {
@@ -200,6 +204,11 @@ cloudinary.getCloudinaryTagName = function (apiProduct) {
                 tagName = apiProduct.custom[productAttributeName];
             }
         }
+
+        if (!empty(variationAttrValueID)) {
+            tagName += prefs.HYPHEN + variationAttrValueID;
+        }
+
     } catch (ex) {
         logger.error('Error occurred while retreiving cloudinary gallery tag name : ' + ex);
     }

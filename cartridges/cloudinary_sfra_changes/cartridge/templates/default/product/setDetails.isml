@@ -5,7 +5,7 @@
         assets.addJs('/js/productDetail.js');
         assets.addCss('/css/product/detail.css');
     </isscript>
-
+    <isinclude template="include/cloudinaryProductScripts" />
     <iscomment> Custom Start: include cloudinary shrinkwrap. </iscomment>
     <isset name="CLDImagePageTypeSettings" value="${JSON.parse(dw.system.Site.current.preferences.custom.CLDImagePageTypeSettings)}" scope="page"/>
     <isif condition="${(CLDImagePageTypeSettings.pdp.enabled && CLDImagePageTypeSettings.pdp.automateResponsivenessWithJS) || (CLDImagePageTypeSettings.cldPdpSwatch.enabled && CLDImagePageTypeSettings.cldPdpSwatch.automateResponsivenessWithJS)}">
@@ -53,9 +53,7 @@
         </div>
         <isinclude template="product/components/setItems" />
     
-        <isif condition="${dw.system.Site.current.preferences.custom.CLDGalleryEnabled}">
-            <script src="${dw.system.Site.current.preferences.custom.CLDGalleryJSURL}" onload="window.cldProductGallery = cloudinary; window.renderCloudinarySetGalleryWidgets();"></script>
-        </isif>
+        <isinclude template="include/cloudinaryGallery"/>
         <hr>
         <iscomment>Custom start: Add cloudinary video player</iscomment>
         <isif condition="${pdict.cloudinary && pdict.cloudinary.isEnabled && pdict.cloudinary.videoEnabled}">

@@ -1732,14 +1732,13 @@ var getCatalogVideoAbsURLFromRelURL = function (relURL, categoryId) {
 
 /**
  * This method is used to fetch resources based on tag names query
- * @param {string} tagsSearchQuery - tags search query
- * @param {List} withFields - fields which will be returned with assets
+ * @param {string} multiTagsQuery - multi tags query
  *
  * @returns {Object} assets - object holding array of resources
  */
-var searchCLDResourcesByTags = function (tagsSearchQuery, withFields) {
-    var cldSearchResources = require('*/cartridge/scripts/service/cldSearchResources');
-    var assets = cldSearchResources.searchResources(tagsSearchQuery, withFields);
+var fetchCLDResourcesByMultiTags = function (multiTagsQuery) {
+    var cldMultiTagResources = require('*/cartridge/scripts/service/cldMultiTagResources');
+    var assets = cldMultiTagResources.multiTagResources(multiTagsQuery);
     return assets;
 };
 
@@ -1764,6 +1763,6 @@ module.exports = {
     getCatalogImageAbsURLFromRelURL: getCatalogImageAbsURLFromRelURL,
     getCatalogVideoAbsURLFromRelURL: getCatalogVideoAbsURLFromRelURL,
     getProductVideoByCustomMapping: getProductVideoByCustomMapping,
-    searchCLDResourcesByTags: searchCLDResourcesByTags,
+    fetchCLDResourcesByMultiTags: fetchCLDResourcesByMultiTags,
     filterAssetsByTagName: filterAssetsByTagName
 };

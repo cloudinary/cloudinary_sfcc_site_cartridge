@@ -716,33 +716,36 @@ cloudinary.removeLeadingAndTrailingSlashes = function (url) {
     return assetURL;
 };
 
-cloudinary.generateTagsQuery = function (productsList) {
-    var prefs = require('*/cartridge/scripts/util/cloudinaryConstants');
+cloudinary.generateMultiTagsQuery = function (productsList) {
+  var prefs = require("*/cartridge/scripts/util/cloudinaryConstants");
 
-    var query = '';
-    for (var i = 0; i < productsList.length; i++) {
-        var product = productsList[i];
-        var variationAttrValueID = '';
-        if (product.variant) {
-            variationAttrValueID = cloudinary.fetchVariationAttrValueId(product.ID);
-        }
+  var encodedTags = [];
 
-        if (product.variant || product.variationGroup) {
-            product = product.getMasterProduct();
-        }
+  for (var i = 0; i < productsList.length; i++) {
+    var product = productsList[i];
+    var variationAttrValueID = '';
 
-        var tagName = cloudinary.getCloudinaryTagName(product);
-
-        tagName = !empty(variationAttrValueID)
-            ? (tagName + prefs.HYPHEN + variationAttrValueID)
-            : tagName;
-
-        if (i !== 0) {
-            query += ' OR ';
-        }
-        query = query + 'tags=' + tagName;
+    if (product.variant) {
+      variationAttrValueID = cloudinary.fetchVariationAttrValueId(product.ID);
     }
-    return query;
+
+    if (product.variant || product.variationGroup) {
+      product = product.getMasterProduct();
+    }
+
+    var tagName = cloudinary.getCloudinaryTagName(product);
+
+    tagName = !empty(variationAttrValueID)
+      ? tagName + prefs.HYPHEN + variationAttrValueID
+      : tagName;
+
+    var encodedTag = encodeURIComponent(tagName);
+    encodedTags.push(encodedTag);
+  }
+
+  var query = encodedTags.join(",");
+
+  return query;
 };
 
 module.exports = cloudinary;

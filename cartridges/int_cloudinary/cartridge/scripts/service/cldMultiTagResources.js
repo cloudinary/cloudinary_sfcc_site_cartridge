@@ -7,7 +7,7 @@
  *
  * @returns {string} result - The API service response (JSON)
  */
-function searchResourcesFromCld(args) {
+function multiTagResourcesFromCld(args) {
     var cldWebService = require('*/cartridge/scripts/service/cldWebService');
     var logger = require('dw/system/Logger').getLogger('Cloudinary', 'UPLOAD');
     var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
@@ -15,18 +15,14 @@ function searchResourcesFromCld(args) {
     var cldResponse = { ok: true, message: '', result: {} };
     var configArgs = {};
     var result = [];
-    var withField = !empty(args.withFields) ? args.withFields : ['tags', 'metadata'];
-    var requestObj = {
-        expression: args.tagsSearchQuery,
-        with_field: withField
-    };
 
     configArgs.method = 'POST';
+    configArgs.endPoint = args.resourceType + cloudinaryConstants.FORWARD_SLASH + args.multiTagsQuery + cloudinaryConstants.JSON_EXTENSION;
 
-    var service = cldWebService.getService(cloudinaryConstants.CLD_SEARCH_SVC, cldWebService.getServiceConfigs(configArgs));
-
+    var service = cldWebService.getService(cloudinaryConstants.CLD_MULTI_TAGS_SVC, cldWebService.getServiceConfigs(configArgs));
+    
     try {
-        result = service.call(requestObj);
+        result = service.call();
         if (result.ok && result.error === 0) {
             cldResponse.ok = true;
             cldResponse.message = 'cloudinary resources retrieved successfully.';
@@ -50,19 +46,19 @@ function searchResourcesFromCld(args) {
 
 /**
  * This method calls internal service method to fetch resources based on tag names query
- * @param {string} tagsSearchQuery - tags search query
- * @param {List} withFields - fields which will be returned with assets
+ * @param {string} multiTagsQuery - multi tags query
+ * @param {string} resourceType - resource type either image or video
  *
  * @returns {Object} cldResources - object holding array of resources
  */
-function searchResources(tagsSearchQuery, withFields) {
+function multiTagResources(multiTagsQuery, resourceType) {
     var logger = require('dw/system/Logger').getLogger('Cloudinary', 'UPLOAD');
     var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
 
     var cldResources;
-    if (!empty(tagsSearchQuery)) {
+    if (!empty(multiTagsQuery)) {
         try {
-            var cldResponse = searchResourcesFromCld({ tagsSearchQuery: tagsSearchQuery, withFields: withFields });
+            var cldResponse = multiTagResourcesFromCld({ multiTagsQuery: multiTagsQuery, resourceType: resourceType });
             if (cldResponse.ok) {
                 cldResources = cldResponse.result.resources;
             }
@@ -79,5 +75,5 @@ function searchResources(tagsSearchQuery, withFields) {
 * Module exposed methods
 */
 module.exports = {
-    searchResources: searchResources
+    multiTagResources: multiTagResources
 };

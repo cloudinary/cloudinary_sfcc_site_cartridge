@@ -532,11 +532,10 @@ var getPLPCustomImage = function (productID, position) {
 /**
  * This method used to fetch resources based on tag names of individual products
  * @param {Object} product - the product object
- * @param {List} withFields - fields which will be returned with assets
  *
  * @returns {Object} images - object holding array of resources
  */
-var searchProductSetAndBundleImagesByTags = function (product, withFields) {
+var searchProductSetAndBundleImagesByTags = function (product) {
     var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
     var cloudinaryHelper = require('*/cartridge/scripts/helpers/cloudinaryHelpers');
     var cloudinaryAPI = require('*/cartridge/scripts/api/cloudinaryApi');
@@ -551,9 +550,9 @@ var searchProductSetAndBundleImagesByTags = function (product, withFields) {
         } else if (product.bundle) {
             subProducts = product.bundledProducts;
         }
-        var tagsSearchQuery = cloudinaryHelper.generateTagsQuery(subProducts);
+        var tagsSearchQuery = cloudinaryHelper.generateMultiTagsQuery(subProducts);
 
-        images = cloudinaryAPI.searchCLDResourcesByTags(tagsSearchQuery, withFields);
+        images = cloudinaryAPI.fetchCLDResourcesByMultiTags(tagsSearchQuery);
     }
 
     return images;

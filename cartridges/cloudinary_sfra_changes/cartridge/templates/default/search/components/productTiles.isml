@@ -7,7 +7,7 @@
 </isif>
 
 <iscomment> Custom End: include cloudinary shrinkwrap. </iscomment>
-<isinclude template="include/cloudinaryGallery"/>
+<isinclude template="include/cloudinaryGalleryJs"/>
 
 <isloop items="${pdict.productSearch.productIds}" var="product">
     <div class="col-6 col-sm-4">

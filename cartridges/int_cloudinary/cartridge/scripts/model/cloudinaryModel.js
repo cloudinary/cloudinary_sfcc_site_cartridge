@@ -365,9 +365,12 @@ var geContentVideoByName = function (videoName) {
                             posterTransformation.push({
                                 raw_transformation: videoPosterTransforamtion
                             })
-                            widgetOptions.posterOptions = { transformation: posterTrans };
+                            widgetOptions.posterOptions = { transformation: posterTransformation };
                         }
                     }
+                    // if autoplay and muted are not present in widget options add them programatically
+                    widgetOptions.hasOwnProperty("autoplay") || (widgetOptions.autoplay = true);
+                    widgetOptions.hasOwnProperty("muted") || (widgetOptions.muted = true);
                     videos.widgetOptions = widgetOptions;
                 } else {
                     videos.videoPoster = video.videoPoster;

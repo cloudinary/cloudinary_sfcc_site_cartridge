@@ -10,14 +10,5 @@
         <isif condition="${cloudinaryConstants.CLD_3D_OBJECTS_ENABLED}">
             <link rel="preload" href="${cloudinaryConstants.CLD_BASE_PATH + '/' + cloudinaryConstants.CLD_IMAGE_RESOURCE_TYPE + '/list/'+ pdict.product.CLDTagName + cloudinaryConstants.CLD_3D_OBJECT_TAG_SUFFIX_SLASH+'.json'}" crossorigin as="fetch" />
         </isif>
-    <iselse/>
-        <link href="${cloudinaryConstants.CLD_BASE_PATH + '/' + cloudinaryConstants.CLD_VIDEO_RESOURCE_TYPE + '/list/'+ pdict.product.CLDTagName +'.json'}" crossorigin as="fetch" />
-        <link href="${cloudinaryConstants.CLD_BASE_PATH + '/' + cloudinaryConstants.CLD_IMAGE_RESOURCE_TYPE + '/list/'+ pdict.product.CLDTagName +'.json'}" crossorigin as="fetch" />
-        <isif condition="${cloudinaryConstants.CLD_360_SPINSETS_ENABLED}">
-            <link href="${cloudinaryConstants.CLD_BASE_PATH + '/' + cloudinaryConstants.CLD_IMAGE_RESOURCE_TYPE + '/list/'+ pdict.product.CLDTagName + cloudinaryConstants.CLD_360_SPIN_SET_TAG_SUFFIX +'.json'}" crossorigin as="fetch" />
-        </isif>
-        <isif condition="${cloudinaryConstants.CLD_3D_OBJECTS_ENABLED}">
-            <link href="${cloudinaryConstants.CLD_BASE_PATH + '/' + cloudinaryConstants.CLD_IMAGE_RESOURCE_TYPE + '/list/'+ pdict.product.CLDTagName + cloudinaryConstants.CLD_3D_OBJECT_TAG_SUFFIX_SLASH+'.json'}" crossorigin as="fetch" />
-        </isif>
     </isif>
 </isif>

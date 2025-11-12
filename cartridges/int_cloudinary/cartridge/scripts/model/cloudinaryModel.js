@@ -362,7 +362,7 @@ var geContentVideoByName = function (videoName, configs) {
                             widgetOptions = JSON.parse(configs);
                         } catch (ex) {
                             logger.error('Error occurred while parsing the video player configs from content asset: error: {0}, fileName: {1}, lineNumber: {2}', ex, ex.fileName, ex.lineNumber);
-                            return null;
+                            return widgetOptions;
                         }
                     } else {
                         widgetOptions = cloudinaryHelper.getContentVideoPlayerOptions();

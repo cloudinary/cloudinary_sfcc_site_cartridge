@@ -55,9 +55,14 @@ Cloudinary.GetContentVideo = function () {
 
     var cloudinaryStaticContent = {};
     var videoURL = params.url.stringValue;
+    var configs = params.config;
+
+    if(!empty(configs)) {
+        configs = configs.value.replace(';', ',');
+    }
 
     if (cloudinaryConstants.CLD_ENABLED) {
-        cloudinaryStaticContent.video = cloudinaryModel.geContentVideoByName(videoURL);
+        cloudinaryStaticContent.video = cloudinaryModel.geContentVideoByName(videoURL, configs);
     } else {
         var URLUtils = require('dw/web/URLUtils');
         cloudinaryStaticContent.video = {

@@ -55,10 +55,10 @@ Cloudinary.GetContentVideo = function () {
 
     var cloudinaryStaticContent = {};
     var videoURL = params.url.stringValue;
-    var configs = params.config;
+    var configs = null;
 
-    if(!empty(configs) && !empty(configs.value)) {
-        configs = configs.value.replace(';', ',');
+    if(!empty(params.config) && !empty(params.config.value)) {
+        configs = params.config.value.replace(/;/g, ",");
     }
 
     if (cloudinaryConstants.CLD_ENABLED) {

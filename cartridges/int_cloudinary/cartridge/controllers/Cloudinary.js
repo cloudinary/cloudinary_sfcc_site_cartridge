@@ -57,7 +57,7 @@ Cloudinary.GetContentVideo = function () {
     var videoURL = params.url.stringValue;
     var configs = params.config;
 
-    if(!empty(configs)) {
+    if(!empty(configs) && !empty(configs.value)) {
         configs = configs.value.replace(';', ',');
     }
 

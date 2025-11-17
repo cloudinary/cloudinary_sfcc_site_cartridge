@@ -73,7 +73,7 @@
         <hr>
 
         <isinclude template="product/components/bundleItems" />
-        <isinclude template="include/cloudinaryGallery"/>
+        <isinclude template="include/cloudinaryGalleryJs"/>
         <hr>
 
         <iscomment>Custom start: add cloudinary video player</iscomment>

@@ -328,10 +328,11 @@ var geContentImageURLByURL = function (url, pageType) {
  * Get cloudinary video URL and video player options based on preferences for static library content.
  *
  * @param {string} videoName - video name
+ * @param {string} configs - video player configs JSON string
  *
  * @returns {Object} object holding video URL and player options
  */
-var geContentVideoByName = function (videoName) {
+var geContentVideoByName = function (videoName, configs) {
     var logger = require('dw/system/Logger').getLogger('int_cloudinary', 'int_cloudinary');
 
     var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
@@ -355,7 +356,17 @@ var geContentVideoByName = function (videoName) {
 
                 var isvideoPlayerEnabled = cloudinaryHelper.isVideoPlayerEnabledForContentLibrary();
                 if (isvideoPlayerEnabled) {
-                    var widgetOptions = cloudinaryHelper.getContentVideoPlayerOptions();
+                    var widgetOptions = null;
+                    if(!empty(configs)) {
+                        try {
+                            widgetOptions = JSON.parse(configs);
+                        } catch (ex) {
+                            logger.error('Error occurred while parsing the video player configs from content asset: error: {0}, fileName: {1}, lineNumber: {2}', ex, ex.fileName, ex.lineNumber);
+                            return widgetOptions;
+                        }
+                    } else {
+                        widgetOptions = cloudinaryHelper.getContentVideoPlayerOptions();
+                    }
                     const transformation = getCloudinaryVideoTransformation(libraryTransformations);
 
                     if (!empty(widgetOptions)) {
@@ -365,8 +376,12 @@ var geContentVideoByName = function (videoName) {
                             posterTransformation.push({
                                 raw_transformation: videoPosterTransforamtion
                             })
-                            widgetOptions.posterOptions = { transformation: posterTrans };
+                            widgetOptions.posterOptions = { transformation: posterTransformation };
                         }
+                    }
+                    if (!widgetOptions.hasOwnProperty("autoplay")) {
+                        widgetOptions.autoplay = true;
+                        widgetOptions.muted = true;
                     }
                     videos.widgetOptions = widgetOptions;
                 } else {

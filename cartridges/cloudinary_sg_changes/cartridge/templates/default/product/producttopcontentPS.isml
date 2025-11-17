@@ -227,4 +227,4 @@
 
 </div>
 <isset name="Product" value="${OrigProduct}" scope="pdict" />
-<isinclude template="include/cloudinaryGallery"/>
+<isinclude template="include/cloudinaryGalleryJs"/>

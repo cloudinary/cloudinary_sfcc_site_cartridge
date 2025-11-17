@@ -20,7 +20,7 @@
 	</isif>
 	<isif condition="${pdict.cloudinary && pdict.cloudinary.isEnabled && (pdict.cloudinary.galleryEnabled || pdict.cloudinary.isGalleryEnabled)}">
 	    <isinclude template="product/components/cloudinaryGallery" />
-        <isinclude template="include/cloudinaryGallery"/>
+        <isinclude template="include/cloudinaryGalleryJs"/>
 	<iselse>
 	    <isinclude template="product/components/productimages"/>
 	</isif>

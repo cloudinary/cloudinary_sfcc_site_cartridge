@@ -53,7 +53,7 @@
         </div>
         <isinclude template="product/components/setItems" />
     
-        <isinclude template="include/cloudinaryGallery"/>
+        <isinclude template="include/cloudinaryGalleryJs"/>
         <hr>
         <iscomment>Custom start: Add cloudinary video player</iscomment>
         <isif condition="${pdict.cloudinary && pdict.cloudinary.isEnabled && pdict.cloudinary.videoEnabled}">

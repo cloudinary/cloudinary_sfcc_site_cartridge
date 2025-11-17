@@ -27,7 +27,7 @@ function getServiceConfigs(args) {
     var serviceConfig = {
         createRequest: function (svc, requestPayload) {
             var credential = svc.getConfiguration().getCredential();
-            var cldTrackingParam = cloudinaryConstants.API_TRACKING_PARAM.replace(cloudinaryConstants.CLD_TRACKING_PARAM_PLATFORM_PLACEHOLDER, cloudinaryConstants.CLD_SFCC_PLATFORM_ARCHITECTURE);
+            var cldTrackingParam = cloudinaryConstants.API_TRACKING_PARAM.replace(cloudinaryConstants.CLD_TRACKING_PARAM_PLATFORM_PLACEHOLDER, cloudinaryConstants.CLD_SFCC_PLATFORM_ARCHITECTURE).replace(cloudinaryConstants.CLD_COMMIT_HASH_PLACEHOLDER, cloudinaryConstants.CLD_COMMIT_HASH);
             var url = credential.getURL();
 
             if (url.lastIndexOf(cloudinaryConstants.FORWARD_SLASH) !== (url.length - 1)) {

@@ -87,12 +87,12 @@ document.addEventListener('DOMContentLoaded', () => {
     window.renderCloudinaryVideoPlayer();
     window.makeCloudinaryImagesResponsive();
 
-    const iconNextPrev = document.querySelector('.icon-next, .icon-prev');
-    if (iconNextPrev) {
-        iconNextPrev.addEventListener('click', () => {
-            setTimeout(() => {
+    const iconNextPrev = document.querySelectorAll('.icon-next, .icon-prev');
+    if (iconNextPrev && iconNextPrev.length > 0) {
+        iconNextPrev.forEach(el => {
+            el.addEventListener('click', () => {
                 window.makeCloudinaryImagesResponsive();
-            }, 0);
+            });
         });
     }
 });

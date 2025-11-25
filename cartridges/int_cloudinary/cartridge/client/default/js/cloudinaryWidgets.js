@@ -91,7 +91,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (iconNextPrev && iconNextPrev.length > 0) {
         iconNextPrev.forEach(el => {
             el.addEventListener('click', () => {
-                window.makeCloudinaryImagesResponsive();
+                setTimeout(() => {
+                    window.makeCloudinaryImagesResponsive();
+                }, 0);
             });
         });
     }

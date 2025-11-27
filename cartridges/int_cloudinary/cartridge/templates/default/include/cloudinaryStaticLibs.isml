@@ -2,7 +2,7 @@
 <isif condition="${preferences.CLDEnabled}">
     <isset name="cloudinaryConstants" value="${require('*/cartridge/scripts/util/cloudinaryConstants')}" scope="page" />
     <isset name="CLDImagePageTypeSettings" value="${JSON.parse(preferences.CLDImagePageTypeSettings)}" scope="page"/>
-    <isif condition="${cloudinaryConstants.CLD_DOMAIN && (pdict.cloudinary.galleryEnabled || pdict.cloudinary.isGalleryEnabled)}">
+    <isif condition="${cloudinaryConstants.CLD_DOMAIN && (pdict.cloudinary.galleryEnabled || pdict.cloudinary.isGalleryEnabled) && cloudinaryConstants.CLD_CARTRIDGE_OPERATION_MODE == cloudinaryConstants.CLD_GET_ASSETS_BY_TAG_NAME_MODE}">
         <link rel="preconnect" href="${'https://' + cloudinaryConstants.CLD_DOMAIN}" crossorigin />
     </isif>
     <isif condition="${preferences.CLDVideoEnabled && preferences.CLDVideoPlayerEnabled && cloudinaryConstants.CLD_VIDEO_PLAYER_JS_URL_ORIGIN}">
@@ -15,6 +15,7 @@
     </isif>
     <isif condition="${pdict.cloudinary && pdict.cloudinary.isEnabled && (pdict.cloudinary.galleryEnabled || pdict.cloudinary.isGalleryEnabled)}">
         <link rel="preconnect" href="${'https://' + cloudinaryConstants.CLD_GALLERY_JS_URL_DOMAIN}" />
+        <link href="${'https://' + cloudinaryConstants.CLD_DOMAIN}" />
     </isif>
     <script src="${URLUtils.staticURL('/js/cloudinaryWidgets.js')}"></script>
     <isif condition="${preferences.CLDVideoEnabled && preferences.CLDVideoPlayerEnabled}">

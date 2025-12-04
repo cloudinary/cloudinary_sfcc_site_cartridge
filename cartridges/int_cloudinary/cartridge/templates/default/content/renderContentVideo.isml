@@ -4,11 +4,8 @@
 </iscomment>
 <isset name="preferences" value="${dw.system.Site.current.preferences.custom}" scope="page"/>
 <isif condition="${preferences.CLDEnabled && preferences.CLDVideoEnabled && preferences.CLDVideoPlayerEnabled}">
-    <link href="${preferences.CLDVideoPlayerCSSURL}" rel="stylesheet"/>
-    <script src="${preferences.CLDVideoPlayerJSURL}"></script>
-    <script>
-        window.cldVideoPlayer = cloudinary.Cloudinary;
-    </script>
+    <link href="${dw.system.Site.current.preferences.custom.CLDVideoPlayerCSSURL}" rel="stylesheet"/>
+    <script defer="defer" src="${dw.system.Site.current.preferences.custom.CLDVideoPlayerJSURL}" onload="window.cldVideoPlayer = cloudinary.Cloudinary;"></script>
 </isif>
 <isset name="cloudinaryStaticContent" value="${pdict.cloudinaryStaticContent}" scope="page"/>
 <isif condition="${cloudinaryStaticContent.isEnabled && cloudinaryStaticContent.video.videoURL && cloudinaryStaticContent.video.videoURL !== '' && cloudinaryStaticContent.video.videoURL !== 'null'}">

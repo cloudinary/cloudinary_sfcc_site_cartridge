@@ -251,7 +251,7 @@ var getCloudinaryVideo = function (productID, currentLocale) {
                             posterTransformation.push({
                                 raw_transformation: videoPosterTransforamtion
                             })
-                            widgetOptions.posterOptions = { transformation: posterTrans };
+                            widgetOptions.posterOptions = { transformation: posterTransformation };
                         }
                     }
 

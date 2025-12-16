@@ -13,7 +13,7 @@
             <link rel="preconnect" href="${'https://' + cloudinaryConstants.CLD_CORE_SHRINKWRAP_JS_URL_ORIGIN}"/>
         </isif>
     </isif>
-    <isif condition="${pdict.cloudinary && pdict.cloudinary.isEnabled && (pdict.cloudinary.galleryEnabled || pdict.cloudinary.isGalleryEnabled)}">
+    <isif condition="${preferences.CLDEnabled && preferences.CLDGalleryEnabled}">
         <link rel="preconnect" href="${'https://' + cloudinaryConstants.CLD_GALLERY_JS_URL_DOMAIN}"/>
         <isif condition="${cloudinaryConstants.CLD_CARTRIDGE_OPERATION_MODE == cloudinaryConstants.CLD_GET_ASSETS_BY_TAG_NAME_MODE}">
             <link rel="preconnect" href="${'https://' + (cloudinaryConstants.CLD_DOMAIN || 'res.cloudinary.com')}" crossorigin/>

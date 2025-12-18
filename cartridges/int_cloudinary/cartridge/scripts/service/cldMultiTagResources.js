@@ -16,8 +16,13 @@ function multiTagResourcesFromCld(args) {
     var configArgs = {};
     var result = [];
 
-    configArgs.method = 'POST';
-    configArgs.endPoint = args.multiTagsQuery + cloudinaryConstants.JSON_EXTENSION;
+    configArgs.method = 'GET';
+    configArgs.endPoint =
+      args.multiTagSignature +
+      cloudinaryConstants.FORWARD_SLASH +
+      cloudinaryConstants.CLD_MULTI_TAG_TTL +
+      cloudinaryConstants.FORWARD_SLASH +
+      args.encodedSearchParam;
 
     var service = cldWebService.getService(cloudinaryConstants.CLD_MULTI_TAGS_SVC, cldWebService.getServiceConfigs(configArgs));
     
@@ -53,11 +58,14 @@ function multiTagResourcesFromCld(args) {
 function multiTagResources(multiTagsQuery) {
     var logger = require('dw/system/Logger').getLogger('Cloudinary', 'UPLOAD');
     var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
+    var cloudinaryUtils = require('*/cartridge/scripts/util/cloudinaryUtils');
 
     var cldResources;
     if (!empty(multiTagsQuery)) {
         try {
-            var cldResponse = multiTagResourcesFromCld({ multiTagsQuery: multiTagsQuery });
+            const encodedSearchParam = cloudinaryUtils.encodeMultiTagSearchParam(multiTagsQuery);
+            const multiTagSignature = cloudinaryUtils.buildMultiTagSignature(encodedSearchParam, cloudinaryConstants.CLD_APISECRET);
+            var cldResponse = multiTagResourcesFromCld({ encodedSearchParam, multiTagSignature });
             if (cldResponse.ok) {
                 cldResources = cldResponse.result.resources;
             }

@@ -109,7 +109,9 @@ function detail() {
             cloudinary.productSetAndBundleImages = cloudinaryModel.searchProductSetAndBundleImagesByTags(product.object);
 
             var isVideoEnabled = cloudinaryHelper.isVideoEnabled(product.object);
-            var isVideoPlayerEnabled = cloudinaryHelper.isVideoPlayerEnabled(product.object)
+            var isVideoPlayerEnabled = cloudinaryHelper.isVideoPlayerEnabled(product.object);
+            var CLDTagName = cloudinaryHelper.getCloudinaryTagName(product.object);
+            product.CLDTagName = CLDTagName;
 
             cloudinary.videoEnabled = isVideoEnabled;
             cloudinary.videoPlayerEnabled = isVideoPlayerEnabled;

@@ -180,16 +180,19 @@ cloudinary.getCloudinaryGalleryStyles = function (apiProduct) {
  * it returns tag name stored in site preference
  *
  * @param {Product} apiProduct - the DW Product object
+ * @param {Object} options - product options
  *
  * @returns {string} tagName - Cloudinary gallery tag name
  */
-cloudinary.getCloudinaryTagName = function (apiProduct) {
+cloudinary.getCloudinaryTagName = function (apiProduct, options) {
     var logger = require('dw/system/Logger').getLogger('int_cloudinary', 'int_cloudinary');
     var prefs = require('*/cartridge/scripts/util/cloudinaryConstants');
     var variationAttrValueID = null;
     if(!empty(apiProduct) && (apiProduct.variant || apiProduct.variationGroup)){
         variationAttrValueID = this.fetchVariationAttrValueId(apiProduct.ID);
         apiProduct = apiProduct.getMasterProduct();
+    } else if(apiProduct.master && options && options.variables && options.variables.color && options.variables.color.value) {
+        variationAttrValueID = options.variables.color.value;
     }
     var tagName = '';
 

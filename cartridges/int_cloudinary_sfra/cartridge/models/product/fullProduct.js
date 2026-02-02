@@ -23,7 +23,7 @@ module.exports = function fullProduct(product, apiProduct, options) {
     var prefs = require('*/cartridge/scripts/util/cloudinaryConstants');
 
     if (prefs.CLD_ENABLED) {
-        decorators.cloudinary(product, apiProduct);
+        decorators.cloudinary(product, apiProduct, options);
     }
 
     return product;

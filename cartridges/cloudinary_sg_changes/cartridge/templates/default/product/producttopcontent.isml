@@ -1,3 +1,4 @@
+<isinclude template="include/cloudinaryProductScripts" />
 <iscontent type="text/html" charset="UTF-8" compact="true"/>
 <iscomment>In the product pipeline, if a product was not found for the selected attributes, we need to refresh the ProductVariationModel using the default selected variant</iscomment>
 

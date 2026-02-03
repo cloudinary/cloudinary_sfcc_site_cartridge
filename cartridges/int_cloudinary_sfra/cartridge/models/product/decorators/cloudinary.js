@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function (object, product) {
+module.exports = function (object, product, options) {
     var cloudinaryHelper = require('*/cartridge/scripts/helpers/cloudinaryHelpers');
     var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
 
@@ -18,7 +18,7 @@ module.exports = function (object, product) {
     });
     Object.defineProperty(object, 'CLDTagName', {
         enumerable: true,
-        value: cloudinaryHelper.getCloudinaryTagName(product)
+        value: cloudinaryHelper.getCloudinaryTagName(product, options)
     });
     Object.defineProperty(object, 'CLDImageTransformations', {
         enumerable: true,

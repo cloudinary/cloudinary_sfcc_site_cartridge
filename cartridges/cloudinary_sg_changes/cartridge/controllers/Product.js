@@ -109,8 +109,12 @@ function detail() {
             cloudinary.productSetAndBundleImages = cloudinaryModel.searchProductSetAndBundleImagesByTags(product.object);
 
             var isVideoEnabled = cloudinaryHelper.isVideoEnabled(product.object);
-            var isVideoPlayerEnabled = cloudinaryHelper.isVideoPlayerEnabled(product.object)
-
+            var isVideoPlayerEnabled = cloudinaryHelper.isVideoPlayerEnabled(product.object);
+            var CLDTagName = cloudinaryHelper.getCloudinaryTagName(product.object);
+            product.CLDTagName = CLDTagName;
+            if (product.object.master && !empty(colorAttrValueID)) {
+                product.CLDTagName = product.CLDTagName + cloudinaryConstants.HYPHEN + colorAttrValueID;
+            }
             cloudinary.videoEnabled = isVideoEnabled;
             cloudinary.videoPlayerEnabled = isVideoPlayerEnabled;
             cloudinary.cloudName = cloudinaryConstants.CLD_CLOUDNAME;

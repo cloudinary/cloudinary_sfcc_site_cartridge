@@ -250,13 +250,13 @@ function extractTheDomain(originalPath) {
  * @param {string} encodedTags - multi tags encoded object
  * @param {string} apiSecret -api secret
  *
- * @returns {string} result - The API service response (JSON)
+ * @returns {Bytes} result - The API service response (JSON)
  */
 function buildMultiTagSignature(encodedTags, apiSecret) {
     var MessageDigest = require('dw/crypto/MessageDigest');
 
     if (empty(apiSecret)) {
-        return false;
+        return null;
     }
     var hasher = new MessageDigest(MessageDigest.DIGEST_SHA_256);
     var unhashed;

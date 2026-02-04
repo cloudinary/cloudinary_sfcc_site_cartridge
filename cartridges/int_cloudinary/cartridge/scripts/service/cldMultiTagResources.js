@@ -63,9 +63,9 @@ function multiTagResources(multiTagsQuery) {
     var cldResources;
     if (!empty(multiTagsQuery)) {
         try {
-            const encodedSearchParam = cloudinaryUtils.encodeMultiTagSearchParam(multiTagsQuery);
-            const multiTagSignature = cloudinaryUtils.buildMultiTagSignature(encodedSearchParam, cloudinaryConstants.CLD_APISECRET);
-            var cldResponse = multiTagResourcesFromCld({ encodedSearchParam, multiTagSignature });
+            var encodedSearchParam = cloudinaryUtils.encodeMultiTagSearchParam(multiTagsQuery);
+            var multiTagSignature = cloudinaryUtils.buildMultiTagSignature(encodedSearchParam, cloudinaryConstants.CLD_APISECRET);
+            var cldResponse = multiTagResourcesFromCld({ encodedSearchParam: encodedSearchParam, multiTagSignature: multiTagSignature });
             if (cldResponse.ok) {
                 cldResources = cldResponse.result.resources;
             }

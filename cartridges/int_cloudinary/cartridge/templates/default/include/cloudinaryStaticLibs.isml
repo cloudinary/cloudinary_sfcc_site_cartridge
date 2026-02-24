@@ -1,20 +1,23 @@
 <isset name="preferences" value="${dw.system.Site.current.preferences.custom}" scope="page"/>
 <isif condition="${preferences.CLDEnabled}">
-    <isset name="cloudinaryConstants" value="${require('*/cartridge/scripts/util/cloudinaryConstants')}" scope="page" />
+    <isset name="cloudinaryConstants" value="${require('*/cartridge/scripts/util/cloudinaryConstants')}" scope="page"/>
     <isset name="CLDImagePageTypeSettings" value="${JSON.parse(preferences.CLDImagePageTypeSettings)}" scope="page"/>
     <isif condition="${cloudinaryConstants.CLD_DOMAIN}">
-        <link rel="preconnect" href="${'https://' + cloudinaryConstants.CLD_DOMAIN}" />
+        <link rel="preconnect" href="${'https://' + cloudinaryConstants.CLD_DOMAIN}"/>
     </isif>
     <isif condition="${preferences.CLDVideoEnabled && preferences.CLDVideoPlayerEnabled && cloudinaryConstants.CLD_VIDEO_PLAYER_JS_URL_ORIGIN}">
-        <link rel="preconnect" href="${'https://' + cloudinaryConstants.CLD_VIDEO_PLAYER_JS_URL_ORIGIN}" />
+        <link rel="preconnect" href="${'https://' + cloudinaryConstants.CLD_VIDEO_PLAYER_JS_URL_ORIGIN}"/>
     </isif>
     <isif condition="${(CLDImagePageTypeSettings.miniCart.enabled && CLDImagePageTypeSettings.miniCart.automateResponsivenessWithJS) || (CLDImagePageTypeSettings.searchSuggestions.enabled && CLDImagePageTypeSettings.searchSuggestions.automateResponsivenessWithJS)}">
         <isif condition="${cloudinaryConstants.CLD_CORE_SHRINKWRAP_JS_URL_ORIGIN}">
-            <link rel="preconnect" href="${'https://' + cloudinaryConstants.CLD_CORE_SHRINKWRAP_JS_URL_ORIGIN}" />
+            <link rel="preconnect" href="${'https://' + cloudinaryConstants.CLD_CORE_SHRINKWRAP_JS_URL_ORIGIN}"/>
         </isif>
     </isif>
-    <isif condition="${pdict.cloudinary && pdict.cloudinary.isEnabled && (pdict.cloudinary.galleryEnabled || pdict.cloudinary.isGalleryEnabled)}">
-        <link rel="preconnect" href="${'https://' + cloudinaryConstants.CLD_GALLERY_JS_URL_DOMAIN}" />
+    <isif condition="${preferences.CLDEnabled && preferences.CLDGalleryEnabled}">
+        <link rel="preconnect" href="${'https://' + cloudinaryConstants.CLD_GALLERY_JS_URL_DOMAIN}"/>
+        <isif condition="${cloudinaryConstants.CLD_CARTRIDGE_OPERATION_MODE == cloudinaryConstants.CLD_GET_ASSETS_BY_TAG_NAME_MODE}">
+            <link rel="preconnect" href="${'https://' + (cloudinaryConstants.CLD_DOMAIN || 'res.cloudinary.com')}" crossorigin/>
+        </isif>
     </isif>
     <script src="${URLUtils.staticURL('/js/cloudinaryWidgets.js')}"></script>
     <isif condition="${(CLDImagePageTypeSettings.miniCart.enabled && CLDImagePageTypeSettings.miniCart.automateResponsivenessWithJS) || (CLDImagePageTypeSettings.searchSuggestions.enabled && CLDImagePageTypeSettings.searchSuggestions.automateResponsivenessWithJS)}">

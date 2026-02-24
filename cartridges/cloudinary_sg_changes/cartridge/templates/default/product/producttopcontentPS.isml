@@ -1,3 +1,4 @@
+<isinclude template="include/cloudinaryProductScripts" />
 <iscontent type="text/html" charset="UTF-8" compact="true"/>
 <isset name="isQuickView" value="${pdict.CurrentHttpParameterMap.source.stringValue == 'quickview' || pdict.CurrentHttpParameterMap.source.stringValue == 'cart' || pdict.CurrentHttpParameterMap.source.stringValue == 'giftregistry' || pdict.CurrentHttpParameterMap.source.stringValue == 'wishlist'}" scope="page"/>
 

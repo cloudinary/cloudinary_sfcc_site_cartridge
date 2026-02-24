@@ -73,9 +73,9 @@ window.renderCloudinaryVideoPlayer = function () {
 window.makeCloudinaryImagesResponsive = function () {
     const cldResponsiveImgTags = document.querySelectorAll('.cld-responsive');
     const cldEl = document.getElementsByClassName('cloudinary-data-container');
-    const cloudinaryObj = cldEl[0].dataset.cloudinary;
+    const cloudinaryObj = cldEl && cldEl[0] ? cldEl[0].dataset.cloudinary : null;
 
-    if (cldResponsiveImgTags.length > 0) {
+    if (cldResponsiveImgTags.length > 0 && cloudinaryObj) {
         if (window.cldObj === undefined && window.cloudinary && window.cloudinary.default) {
             window.cldObj = window.cloudinary.default.Cloudinary.new({ cloud_name: cloudinaryObj.cloudName || cloudinaryObj });
         }

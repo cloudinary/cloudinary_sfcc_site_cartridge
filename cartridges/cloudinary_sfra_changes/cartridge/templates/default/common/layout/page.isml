@@ -20,9 +20,12 @@
 
         <div class="page" data-action="${pdict.action}" data-querystring="${pdict.queryString}" >
             <isinclude template="/components/header/pageHeader" />
-            <iscomment> Custom Start: include cloudinary placeholder. </iscomment>
+            <iscomment> Custom Start: include cloudinary templates. </iscomment>
             <isinclude template="include/cloudinaryPlaceholder" />
-            <iscomment> Custom End: include cloudinary placeholder. </iscomment>
+            <isif condition="${(CLDImagePageTypeSettings.miniCart.enabled && CLDImagePageTypeSettings.miniCart.automateResponsivenessWithJS) || (CLDImagePageTypeSettings.searchSuggestions.enabled && CLDImagePageTypeSettings.searchSuggestions.automateResponsivenessWithJS)}">
+                <isinclude template="include/cloudinaryShrinkwrap"/>
+            </isif>
+            <iscomment> Custom End: include cloudinary templates. </iscomment>
             <div role="main" id="maincontent">
                 <isreplace/>
             </div>

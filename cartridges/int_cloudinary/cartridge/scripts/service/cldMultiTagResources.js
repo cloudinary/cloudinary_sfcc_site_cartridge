@@ -5,7 +5,7 @@
  *
  * @param {Object} args - any arguments passed
  *
- * @returns {string} result - The API service response (JSON)
+ * @returns {Object} result - The API service response object
  */
 function multiTagResourcesFromCld(args) {
     var cldWebService = require('*/cartridge/scripts/service/cldWebService');

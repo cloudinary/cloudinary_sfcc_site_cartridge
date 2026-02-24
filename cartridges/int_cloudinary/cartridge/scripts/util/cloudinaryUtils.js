@@ -260,14 +260,13 @@ function buildMultiTagSignature(encodedTags, apiSecret) {
         return null;
     }
     var hasher = new MessageDigest(MessageDigest.DIGEST_SHA_256);
-    
     var unhashed = cloudinaryConstants.CLD_MULTI_TAG_TTL.toString() + encodedTags + apiSecret;
     var signature = hasher.digest(unhashed);
     return signature;
 }
 
 /**
- * This method to encode the multi tag search parameter query
+ * This method encodes the multi-tag search query
  * @param {string} multiTagsQuery - multi tags query string
  * @returns {string} Base64-encoded JSON string
  */

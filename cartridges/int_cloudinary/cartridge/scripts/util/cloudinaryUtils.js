@@ -245,6 +245,41 @@ function extractTheDomain(originalPath) {
     return path;
 }
 
+/**
+ * This method creates the request object signature for mutli tag set/bundle API call.
+ * @param {string} encodedTags - multi tags encoded object
+ * @param {string} apiSecret -api secret
+ *
+ * @returns {Bytes} result - the hashed signature
+ */
+function buildMultiTagSignature(encodedTags, apiSecret) {
+    var MessageDigest = require('dw/crypto/MessageDigest');
+    var cloudinaryConstants = require('~/cartridge/scripts/util/cloudinaryConstants');
+
+    if (empty(apiSecret)) {
+        return null;
+    }
+    var hasher = new MessageDigest(MessageDigest.DIGEST_SHA_256);
+    var unhashed = cloudinaryConstants.CLD_MULTI_TAG_TTL.toString() + encodedTags + apiSecret;
+    var signature = hasher.digest(unhashed);
+    return signature;
+}
+
+/**
+ * This method encodes the multi-tag search query
+ * @param {string} multiTagsQuery - multi tags query string
+ * @returns {string} Base64-encoded JSON string
+ */
+function encodeMultiTagSearchParam(multiTagsQuery) {
+    var StringUtils = require('dw/util/StringUtils');
+    var cloudinaryConstants = require('~/cartridge/scripts/util/cloudinaryConstants');
+    var searchParam = {
+        'expression': 'tags('+multiTagsQuery+')',
+        'max_results': cloudinaryConstants.CLD_MULTI_TAG_MAX_RESULTS
+    }
+    return StringUtils.encodeBase64(JSON.stringify(searchParam));
+}
+
 module.exports = {
     buildSignature: buildSignature,
     getImageFormats: getImageFormats,
@@ -257,5 +292,7 @@ module.exports = {
     getAssetType: getAssetType,
     replaceSpecialChars: replaceSpecialChars,
     isIncludeSpecialChars: isIncludeSpecialChars,
-    extractTheDomain: extractTheDomain
+    extractTheDomain: extractTheDomain,
+    encodeMultiTagSearchParam: encodeMultiTagSearchParam,
+    buildMultiTagSignature: buildMultiTagSignature
 };

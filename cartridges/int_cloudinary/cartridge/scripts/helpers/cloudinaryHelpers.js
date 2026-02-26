@@ -746,7 +746,7 @@ cloudinary.generateMultiTagsQuery = function (productsList) {
     encodedTags.push(encodedTag);
   }
 
-  var query = encodedTags.join(",");
+  var query = encodedTags.join(" ");
 
   return query;
 };

@@ -151,7 +151,8 @@ CloudinaryConstants.CLD_SFCC_INTEGRATION = 'cloudinary_sfcc_integration';
 CloudinaryConstants.CLD_SFCC_PLATFORM = 'sfcc_' + System.compatibilityMode;
 CloudinaryConstants.CLD_SFCC_VERSION = '24.2.12';
 CloudinaryConstants.CLD_SFCC_ENVIRONMENT = System.instanceType === System.PRODUCTION_SYSTEM || System.instanceType === System.STAGING_SYSTEM ? 'production' : 'development';
-
+CloudinaryConstants.CLD_MULTI_TAG_MAX_RESULTS = 500,
+CloudinaryConstants.CLD_MULTI_TAG_TTL = 600
 // Cloudinary cartridge modes
 CloudinaryConstants.CLD_GET_ASSETS_BY_TAG_NAME_MODE = '1';
 CloudinaryConstants.CLD_GET_ASSETS_BY_VIEW_TYPE_MODE = '2';

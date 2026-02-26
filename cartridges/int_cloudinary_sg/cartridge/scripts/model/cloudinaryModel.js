@@ -123,9 +123,12 @@ baseCloudinaryModel.getSetBundleImages = function (productID, params) {
                         if (!empty(variationAttrValueID)) {
                             cldTag += cloudinaryConstants.HYPHEN + variationAttrValueID;
                         }
-
-                        mediaAssets.push({ tag: cldTag, mediaType: cloudinaryConstants.CLD_IMAGE_RESOURCE_TYPE });
-                        mediaAssets.push({ tag: cldTag, mediaType: cloudinaryConstants.CLD_VIDEO_RESOURCE_TYPE });
+                        if (cloudinaryConstants.CLD_PGW_IMAGE_ENABLED) {
+                            mediaAssets.push({ tag: cldTag, mediaType: cloudinaryConstants.CLD_IMAGE_RESOURCE_TYPE });
+                        }
+                        if (cloudinaryConstants.CLD_PGW_VIDEO_ENABLED) {
+                            mediaAssets.push({ tag: cldTag, mediaType: cloudinaryConstants.CLD_VIDEO_RESOURCE_TYPE });
+                        }
                         // TODO: remove this commented line after cld resolves issues for spin sets
                     } else if (cloudinaryConstants.CLD_CARTRIDGE_OPERATION_MODE === cloudinaryConstants.CLD_GET_ASSETS_BY_VIEW_TYPE_MODE) {
                         cldAssetURLs = cloudinaryAPI.getProductImagesByViewType(prodID, cloudinaryConstants.CLD_HIGH_RES_IMAGES_VIEW_TYPE, pageType);

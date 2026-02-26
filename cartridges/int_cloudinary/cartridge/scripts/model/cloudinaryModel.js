@@ -102,9 +102,12 @@ var getCloudinaryImages = function (productID, params) {
                     if (!empty(sizeAttrValueID)) {
                         cldTag += cloudinaryConstants.HYPHEN + sizeAttrValueID;
                     }
-                    mediaAssets.push({ tag: cldTag, mediaType: cloudinaryConstants.CLD_IMAGE_RESOURCE_TYPE });
-                    mediaAssets.push({ tag: cldTag, mediaType: cloudinaryConstants.CLD_VIDEO_RESOURCE_TYPE });
-
+                    if (cloudinaryConstants.CLD_PGW_IMAGE_ENABLED) {
+                        mediaAssets.push({ tag: cldTag, mediaType: cloudinaryConstants.CLD_IMAGE_RESOURCE_TYPE });
+                    }
+                    if (cloudinaryConstants.CLD_PGW_VIDEO_ENABLED) {
+                        mediaAssets.push({ tag: cldTag, mediaType: cloudinaryConstants.CLD_VIDEO_RESOURCE_TYPE });
+                    }
                     if (cloudinaryConstants.CLD_360_SPINSETS_ENABLED) {
                         mediaAssets.push({ tag: cldTag + cloudinaryConstants.CLD_360_SPIN_SET_TAG_SUFFIX, mediaType: cloudinaryConstants.CLD_SPIN_SET_RESOURCE_TYPE });
                     }

@@ -119,16 +119,49 @@ baseCloudinaryModel.getSetBundleImages = function (productID, params) {
 
                     if (cloudinaryConstants.CLD_CARTRIDGE_OPERATION_MODE === cloudinaryConstants.CLD_GET_ASSETS_BY_TAG_NAME_MODE) {
                         cldTag = cloudinaryHelper.getCloudinaryTagName(subProduct);
+                        var settingsExcludedKeys = ['publicId', 'tag', 'mediaType', 'altText'];
 
                         if (!empty(variationAttrValueID)) {
                             cldTag += cloudinaryConstants.HYPHEN + variationAttrValueID;
                         }
                         if (cloudinaryConstants.CLD_PGW_IMAGE_ENABLED) {
-                            mediaAssets.push({ tag: cldTag, mediaType: cloudinaryConstants.CLD_IMAGE_RESOURCE_TYPE });
+                        var cldPGWImageSettings = {};
+                        try {
+                            cldPGWImageSettings = JSON.parse(cloudinaryConstants.CLD_PGW_IMAGE_SETTINGS)
+                        } catch (ex) {
+                            logger.error('Error occurred while parsing the CLD_PGW_IMAGE_SETTINGS: {0}', ex);
                         }
-                        if (cloudinaryConstants.CLD_PGW_VIDEO_ENABLED) {
-                            mediaAssets.push({ tag: cldTag, mediaType: cloudinaryConstants.CLD_VIDEO_RESOURCE_TYPE });
+                        var filteredImageSettings = {};
+                        Object.keys(cldPGWImageSettings).forEach(function(key) {
+                            if (settingsExcludedKeys.indexOf(key) === -1) {
+                                filteredImageSettings[key] = cldPGWImageSettings[key];
+                            }
+                        });
+                        var imageAsset = Object.assign({}, filteredImageSettings, {
+                            tag: cldTag,
+                            mediaType: cloudinaryConstants.CLD_IMAGE_RESOURCE_TYPE
+                        });
+                        mediaAssets.push(imageAsset);
+                    }
+                    if (cloudinaryConstants.CLD_PGW_VIDEO_ENABLED) {
+                         var cldPGWVideoSettings = {};
+                        try {
+                            cldPGWVideoSettings = JSON.parse(cloudinaryConstants.CLD_PGW_VIDEO_SETTINGS)
+                        } catch (ex) {
+                            logger.error('Error occurred while parsing the CLD_PGW_Video_SETTINGS: {0}', ex);
                         }
+                        var filteredVideoSettings = {};
+                        Object.keys(cldPGWVideoSettings).forEach(function(key) {
+                            if (settingsExcludedKeys.indexOf(key) === -1) {
+                                filteredVideoSettings[key] = cldPGWVideoSettings[key];
+                            }
+                        });
+                        var videoAsset = Object.assign({}, filteredVideoSettings, {
+                            tag: cldTag,
+                            mediaType: cloudinaryConstants.CLD_VIDEO_RESOURCE_TYPE
+                        });
+                        mediaAssets.push(videoAsset);
+                    }
                         // TODO: remove this commented line after cld resolves issues for spin sets
                     } else if (cloudinaryConstants.CLD_CARTRIDGE_OPERATION_MODE === cloudinaryConstants.CLD_GET_ASSETS_BY_VIEW_TYPE_MODE) {
                         cldAssetURLs = cloudinaryAPI.getProductImagesByViewType(prodID, cloudinaryConstants.CLD_HIGH_RES_IMAGES_VIEW_TYPE, pageType);

@@ -2,9 +2,7 @@
 <isif condition="${preferences.CLDEnabled}">
     <isset name="cloudinaryConstants" value="${require('*/cartridge/scripts/util/cloudinaryConstants')}" scope="page"/>
     <isset name="CLDImagePageTypeSettings" value="${JSON.parse(preferences.CLDImagePageTypeSettings)}" scope="page"/>
-    <isif condition="${cloudinaryConstants.CLD_DOMAIN}">
-        <link rel="preconnect" href="${'https://' + cloudinaryConstants.CLD_DOMAIN}"/>
-    </isif>
+    <link rel="preconnect" href="${'https://' + (cloudinaryConstants.CLD_DOMAIN || 'res.cloudinary.com')}" />
     <isif condition="${preferences.CLDVideoEnabled && preferences.CLDVideoPlayerEnabled && cloudinaryConstants.CLD_VIDEO_PLAYER_JS_URL_ORIGIN}">
         <link rel="preconnect" href="${'https://' + cloudinaryConstants.CLD_VIDEO_PLAYER_JS_URL_ORIGIN}"/>
     </isif>

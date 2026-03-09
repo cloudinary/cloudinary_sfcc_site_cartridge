@@ -761,7 +761,7 @@ cloudinary.filterPGWMediaSettings = function (pgwSettings) {
     var settingsExcludedKeys = ['publicId', 'tag', 'mediaType', 'altText'];
     var filteredMediaSettings = {};
     Object.keys(pgwSettings).forEach(function(key) {
-        if (settingsExcludedKeys.indexOf(key) === -1) {
+        if (!settingsExcludedKeys.includes(key)) {
             filteredMediaSettings[key] = pgwSettings[key];
         }
     });

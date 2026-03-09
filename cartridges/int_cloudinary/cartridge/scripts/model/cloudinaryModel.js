@@ -94,7 +94,6 @@ var getCloudinaryImages = function (productID, params) {
 
                 if (cloudinaryConstants.CLD_CARTRIDGE_OPERATION_MODE === cloudinaryConstants.CLD_GET_ASSETS_BY_TAG_NAME_MODE) {
                     cldTag = cloudinaryHelper.getCloudinaryTagName(product);
-                    var settingsExcludedKeys = ['publicId', 'tag', 'mediaType', 'altText'];
                     if (!empty(colorAttrValueID)) {
                         cldTag += cloudinaryConstants.HYPHEN + colorAttrValueID;
                     }
@@ -109,12 +108,7 @@ var getCloudinaryImages = function (productID, params) {
                         } catch (ex) {
                             logger.error('Error occurred while parsing the CLD_PGW_IMAGE_SETTINGS: {0}', ex);
                         }
-                        var filteredImageSettings = {};
-                        Object.keys(cldPGWImageSettings).forEach(function(key) {
-                            if (settingsExcludedKeys.indexOf(key) === -1) {
-                                filteredImageSettings[key] = cldPGWImageSettings[key];
-                            }
-                        });
+                        var filteredImageSettings = cloudinaryHelper.filterPGWMediaSettings(cldPGWImageSettings);
                         var imageAsset = Object.assign({}, filteredImageSettings, {
                             tag: cldTag,
                             mediaType: cloudinaryConstants.CLD_IMAGE_RESOURCE_TYPE
@@ -128,12 +122,7 @@ var getCloudinaryImages = function (productID, params) {
                         } catch (ex) {
                             logger.error('Error occurred while parsing the CLD_PGW_Video_SETTINGS: {0}', ex);
                         }
-                        var filteredVideoSettings = {};
-                        Object.keys(cldPGWVideoSettings).forEach(function(key) {
-                            if (settingsExcludedKeys.indexOf(key) === -1) {
-                                filteredVideoSettings[key] = cldPGWVideoSettings[key];
-                            }
-                        });
+                        var filteredVideoSettings = cloudinaryHelper.filterPGWMediaSettings(cldPGWVideoSettings);
                         var videoAsset = Object.assign({}, filteredVideoSettings, {
                             tag: cldTag,
                             mediaType: cloudinaryConstants.CLD_VIDEO_RESOURCE_TYPE
@@ -147,12 +136,7 @@ var getCloudinaryImages = function (productID, params) {
                         } catch (ex) {
                             logger.error('Error occurred while parsing the CLD_PGW_360_SPIN_SET_SETTINGS: {0}', ex);
                         }
-                        var filtered360SpinSettings = {};
-                        Object.keys(cldPGW360SpinSetSettings).forEach(function(key) {
-                            if (settingsExcludedKeys.indexOf(key) === -1) {
-                                filtered360SpinSettings[key] = cldPGW360SpinSetSettings[key];
-                            }
-                        });
+                        var filtered360SpinSettings = cloudinaryHelper.filterPGWMediaSettings(cldPGW360SpinSetSettings);
                         var spinAsset = Object.assign({}, filtered360SpinSettings, {
                             tag: cldTag + cloudinaryConstants.CLD_360_SPIN_SET_TAG_SUFFIX,
                             mediaType: cloudinaryConstants.CLD_SPIN_SET_RESOURCE_TYPE
@@ -166,12 +150,7 @@ var getCloudinaryImages = function (productID, params) {
                         } catch (ex) {
                             logger.error('Error occurred while parsing the CLD_PGW_3D_OBJECT_SETTINGS: {0}', ex);
                         }
-                        var filtered3DObjectSettings = {};
-                        Object.keys(cldPGW3DObjectSettings).forEach(function(key) {
-                            if (settingsExcludedKeys.indexOf(key) === -1) {
-                                filtered3DObjectSettings[key] = cldPGW3DObjectSettings[key];
-                            }
-                        });
+                        var filtered3DObjectSettings = cloudinaryHelper.filterPGWMediaSettings(cldPGW3DObjectSettings);
                         var dObjectAsset = Object.assign({}, filtered3DObjectSettings, {
                             tag: cldTag + cloudinaryConstants.CLD_3D_OBJECT_TAG_SUFFIX_SLASH,
                             mediaType: cloudinaryConstants.CLD_3D_OBJECT_TAG_SUFFIX

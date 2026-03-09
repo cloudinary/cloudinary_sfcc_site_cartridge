@@ -119,8 +119,6 @@ baseCloudinaryModel.getSetBundleImages = function (productID, params) {
 
                     if (cloudinaryConstants.CLD_CARTRIDGE_OPERATION_MODE === cloudinaryConstants.CLD_GET_ASSETS_BY_TAG_NAME_MODE) {
                         cldTag = cloudinaryHelper.getCloudinaryTagName(subProduct);
-                        var settingsExcludedKeys = ['publicId', 'tag', 'mediaType', 'altText'];
-
                         if (!empty(variationAttrValueID)) {
                             cldTag += cloudinaryConstants.HYPHEN + variationAttrValueID;
                         }
@@ -131,12 +129,7 @@ baseCloudinaryModel.getSetBundleImages = function (productID, params) {
                         } catch (ex) {
                             logger.error('Error occurred while parsing the CLD_PGW_IMAGE_SETTINGS: {0}', ex);
                         }
-                        var filteredImageSettings = {};
-                        Object.keys(cldPGWImageSettings).forEach(function(key) {
-                            if (settingsExcludedKeys.indexOf(key) === -1) {
-                                filteredImageSettings[key] = cldPGWImageSettings[key];
-                            }
-                        });
+                        var filteredImageSettings = cloudinaryHelper.filterPGWMediaSettings(cldPGWImageSettings);
                         var imageAsset = Object.assign({}, filteredImageSettings, {
                             tag: cldTag,
                             mediaType: cloudinaryConstants.CLD_IMAGE_RESOURCE_TYPE
@@ -150,12 +143,7 @@ baseCloudinaryModel.getSetBundleImages = function (productID, params) {
                         } catch (ex) {
                             logger.error('Error occurred while parsing the CLD_PGW_Video_SETTINGS: {0}', ex);
                         }
-                        var filteredVideoSettings = {};
-                        Object.keys(cldPGWVideoSettings).forEach(function(key) {
-                            if (settingsExcludedKeys.indexOf(key) === -1) {
-                                filteredVideoSettings[key] = cldPGWVideoSettings[key];
-                            }
-                        });
+                        var filteredVideoSettings = cloudinaryHelper.filterPGWMediaSettings(cldPGWVideoSettings);
                         var videoAsset = Object.assign({}, filteredVideoSettings, {
                             tag: cldTag,
                             mediaType: cloudinaryConstants.CLD_VIDEO_RESOURCE_TYPE

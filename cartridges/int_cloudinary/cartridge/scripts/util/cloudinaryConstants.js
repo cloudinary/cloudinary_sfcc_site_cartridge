@@ -67,7 +67,12 @@ CloudinaryConstants.CLD_DOMAIN = cloudinaryUtils.extractTheDomain(sitePrefs.getC
 CloudinaryConstants.CLD_GALLERY_JS_URL_DOMAIN = cloudinaryUtils.extractTheDomain(sitePrefs.getCustom().CLDGalleryJSURL);
 CloudinaryConstants.CLD_VIDEO_PLAYER_JS_URL_ORIGIN = cloudinaryUtils.extractTheDomain(sitePrefs.getCustom().CLDVideoPlayerJSURL);
 CloudinaryConstants.CLD_CORE_SHRINKWRAP_JS_URL_ORIGIN = cloudinaryUtils.extractTheDomain(sitePrefs.getCustom().CLDCoreShrinkwrapJSURL);
-
+CloudinaryConstants.CLD_PGW_IMAGE_ENABLED = sitePrefs.getCustom().CLDEnablePGWImage;
+CloudinaryConstants.CLD_PGW_VIDEO_ENABLED = sitePrefs.getCustom().CLDEnablePGWVideo;
+CloudinaryConstants.CLD_360_SPIN_SETTINGS= sitePrefs.getCustom().CLD360SpinSetsSettings;
+CloudinaryConstants.CLD_PGW_VIDEO_SETTINGS = sitePrefs.getCustom().CLDPGWVideoSettings;
+CloudinaryConstants.CLD_PGW_IMAGE_SETTINGS = sitePrefs.getCustom().CLDPGWImageSettings;
+CloudinaryConstants.CLD_3D_OBJECTS_SETTINGS = sitePrefs.getCustom().CLD3DObjectsSettings;
 // Enable disable cloudinary on specific pages constants
 CloudinaryConstants.CLD_IMAGE_PAGE_TYPE_SETTINGS_OBJECT = JSON.parse(CloudinaryConstants.CLD_IMAGE_PAGE_TYPE_SETTINGS);
 

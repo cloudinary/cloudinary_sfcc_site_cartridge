@@ -750,5 +750,25 @@ cloudinary.generateMultiTagsQuery = function (productsList) {
 
   return query;
 };
+/**
+ * Filter PGW Media config attributes
+ *
+ * @param {Object} pgwSettings - pgwSettings
+ *
+ * @returns {Object} filteredMediaSettings
+ */
+cloudinary.filterPGWMediaSettings = function (pgwSettings) {
+    var settingsExcludedKeys = ['publicId', 'tag', 'mediaType', 'altText'];
+    var filteredMediaSettings = {};
+    if(!pgwSettings) {
+        return filteredMediaSettings;
+    }
+    Object.keys(pgwSettings).forEach(function(key) {
+        if (!settingsExcludedKeys.includes(key)) {
+            filteredMediaSettings[key] = pgwSettings[key];
+        }
+    });
+    return filteredMediaSettings;
+};
 
 module.exports = cloudinary;

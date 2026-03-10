@@ -760,6 +760,9 @@ cloudinary.generateMultiTagsQuery = function (productsList) {
 cloudinary.filterPGWMediaSettings = function (pgwSettings) {
     var settingsExcludedKeys = ['publicId', 'tag', 'mediaType', 'altText'];
     var filteredMediaSettings = {};
+    if(!pgwSettings) {
+        return filteredMediaSettings;
+    }
     Object.keys(pgwSettings).forEach(function(key) {
         if (!settingsExcludedKeys.includes(key)) {
             filteredMediaSettings[key] = pgwSettings[key];

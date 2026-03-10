@@ -119,13 +119,37 @@ baseCloudinaryModel.getSetBundleImages = function (productID, params) {
 
                     if (cloudinaryConstants.CLD_CARTRIDGE_OPERATION_MODE === cloudinaryConstants.CLD_GET_ASSETS_BY_TAG_NAME_MODE) {
                         cldTag = cloudinaryHelper.getCloudinaryTagName(subProduct);
-
                         if (!empty(variationAttrValueID)) {
                             cldTag += cloudinaryConstants.HYPHEN + variationAttrValueID;
                         }
-
-                        mediaAssets.push({ tag: cldTag, mediaType: cloudinaryConstants.CLD_IMAGE_RESOURCE_TYPE });
-                        mediaAssets.push({ tag: cldTag, mediaType: cloudinaryConstants.CLD_VIDEO_RESOURCE_TYPE });
+                        if (cloudinaryConstants.CLD_PGW_IMAGE_ENABLED) {
+                        var cldPGWImageSettings = {};
+                        try {
+                            cldPGWImageSettings = JSON.parse(cloudinaryConstants.CLD_PGW_IMAGE_SETTINGS)
+                        } catch (ex) {
+                            logger.error('Error occurred while parsing the CLD_PGW_IMAGE_SETTINGS: {0}', ex);
+                        }
+                        var filteredImageSettings = cloudinaryHelper.filterPGWMediaSettings(cldPGWImageSettings);
+                        var imageAsset = Object.assign({}, filteredImageSettings, {
+                            tag: cldTag,
+                            mediaType: cloudinaryConstants.CLD_IMAGE_RESOURCE_TYPE
+                        });
+                        mediaAssets.push(imageAsset);
+                    }
+                    if (cloudinaryConstants.CLD_PGW_VIDEO_ENABLED) {
+                         var cldPGWVideoSettings = {};
+                        try {
+                            cldPGWVideoSettings = JSON.parse(cloudinaryConstants.CLD_PGW_VIDEO_SETTINGS)
+                        } catch (ex) {
+                            logger.error('Error occurred while parsing the CLD_PGW_Video_SETTINGS: {0}', ex);
+                        }
+                        var filteredVideoSettings = cloudinaryHelper.filterPGWMediaSettings(cldPGWVideoSettings);
+                        var videoAsset = Object.assign({}, filteredVideoSettings, {
+                            tag: cldTag,
+                            mediaType: cloudinaryConstants.CLD_VIDEO_RESOURCE_TYPE
+                        });
+                        mediaAssets.push(videoAsset);
+                    }
                         // TODO: remove this commented line after cld resolves issues for spin sets
                     } else if (cloudinaryConstants.CLD_CARTRIDGE_OPERATION_MODE === cloudinaryConstants.CLD_GET_ASSETS_BY_VIEW_TYPE_MODE) {
                         cldAssetURLs = cloudinaryAPI.getProductImagesByViewType(prodID, cloudinaryConstants.CLD_HIGH_RES_IMAGES_VIEW_TYPE, pageType);

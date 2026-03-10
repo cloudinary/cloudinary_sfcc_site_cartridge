@@ -94,7 +94,6 @@ var getCloudinaryImages = function (productID, params) {
 
                 if (cloudinaryConstants.CLD_CARTRIDGE_OPERATION_MODE === cloudinaryConstants.CLD_GET_ASSETS_BY_TAG_NAME_MODE) {
                     cldTag = cloudinaryHelper.getCloudinaryTagName(product);
-
                     if (!empty(colorAttrValueID)) {
                         cldTag += cloudinaryConstants.HYPHEN + colorAttrValueID;
                     }
@@ -102,15 +101,61 @@ var getCloudinaryImages = function (productID, params) {
                     if (!empty(sizeAttrValueID)) {
                         cldTag += cloudinaryConstants.HYPHEN + sizeAttrValueID;
                     }
-                    mediaAssets.push({ tag: cldTag, mediaType: cloudinaryConstants.CLD_IMAGE_RESOURCE_TYPE });
-                    mediaAssets.push({ tag: cldTag, mediaType: cloudinaryConstants.CLD_VIDEO_RESOURCE_TYPE });
-
-                    if (cloudinaryConstants.CLD_360_SPINSETS_ENABLED) {
-                        mediaAssets.push({ tag: cldTag + cloudinaryConstants.CLD_360_SPIN_SET_TAG_SUFFIX, mediaType: cloudinaryConstants.CLD_SPIN_SET_RESOURCE_TYPE });
+                    if (cloudinaryConstants.CLD_PGW_IMAGE_ENABLED) {
+                        var cldPGWImageSettings = {};
+                        try {
+                            cldPGWImageSettings = JSON.parse(cloudinaryConstants.CLD_PGW_IMAGE_SETTINGS);
+                        } catch (ex) {
+                            logger.error('Error occurred while parsing the CLD_PGW_IMAGE_SETTINGS: {0}', ex);
+                        }
+                        var filteredImageSettings = cloudinaryHelper.filterPGWMediaSettings(cldPGWImageSettings);
+                        var imageAsset = Object.assign({}, filteredImageSettings, {
+                            tag: cldTag,
+                            mediaType: cloudinaryConstants.CLD_IMAGE_RESOURCE_TYPE
+                        });
+                        mediaAssets.push(imageAsset);
                     }
-
+                    if (cloudinaryConstants.CLD_PGW_VIDEO_ENABLED) {
+                         var cldPGWVideoSettings = {};
+                        try {
+                            cldPGWVideoSettings = JSON.parse(cloudinaryConstants.CLD_PGW_VIDEO_SETTINGS)
+                        } catch (ex) {
+                            logger.error('Error occurred while parsing the CLD_PGW_Video_SETTINGS: {0}', ex);
+                        }
+                        var filteredVideoSettings = cloudinaryHelper.filterPGWMediaSettings(cldPGWVideoSettings);
+                        var videoAsset = Object.assign({}, filteredVideoSettings, {
+                            tag: cldTag,
+                            mediaType: cloudinaryConstants.CLD_VIDEO_RESOURCE_TYPE
+                        });
+                        mediaAssets.push(videoAsset);
+                    }
+                    if (cloudinaryConstants.CLD_360_SPINSETS_ENABLED) {
+                        var cldPGW360SpinSetSettings = {};
+                        try {
+                            cldPGW360SpinSetSettings = JSON.parse(cloudinaryConstants.CLD_PGW_360_SPIN_SETTINGS)
+                        } catch (ex) {
+                            logger.error('Error occurred while parsing the CLD_PGW_360_SPIN_SET_SETTINGS: {0}', ex);
+                        }
+                        var filtered360SpinSettings = cloudinaryHelper.filterPGWMediaSettings(cldPGW360SpinSetSettings);
+                        var spinAsset = Object.assign({}, filtered360SpinSettings, {
+                            tag: cldTag + cloudinaryConstants.CLD_360_SPIN_SET_TAG_SUFFIX,
+                            mediaType: cloudinaryConstants.CLD_SPIN_SET_RESOURCE_TYPE
+                        });
+                        mediaAssets.push(spinAsset);
+                    }
                     if (cloudinaryConstants.CLD_3D_OBJECTS_ENABLED) {
-                        mediaAssets.push({ tag: cldTag + cloudinaryConstants.CLD_3D_OBJECT_TAG_SUFFIX_SLASH, mediaType: cloudinaryConstants.CLD_3D_OBJECT_TAG_SUFFIX });
+                        var cldPGW3DObjectSettings = {};
+                        try {
+                            cldPGW3DObjectSettings = JSON.parse(cloudinaryConstants.CLD_3D_OBJECTS_SETTINGS)
+                        } catch (ex) {
+                            logger.error('Error occurred while parsing the CLD_PGW_3D_OBJECT_SETTINGS: {0}', ex);
+                        }
+                        var filtered3DObjectSettings = cloudinaryHelper.filterPGWMediaSettings(cldPGW3DObjectSettings);
+                        var dObjectAsset = Object.assign({}, filtered3DObjectSettings, {
+                            tag: cldTag + cloudinaryConstants.CLD_3D_OBJECT_TAG_SUFFIX_SLASH,
+                            mediaType: cloudinaryConstants.CLD_3D_OBJECT_TAG_SUFFIX
+                        });
+                        mediaAssets.push(dObjectAsset);
                     }
                 } else if (cloudinaryConstants.CLD_CARTRIDGE_OPERATION_MODE === cloudinaryConstants.CLD_GET_ASSETS_BY_VIEW_TYPE_MODE) {
                     if (!empty(colorAttrValueID)) {

@@ -281,6 +281,7 @@ var getCloudinaryVideo = function (productID, currentLocale) {
 
                 if (!empty(video)) {
                     videos.videoURL = video.videoURL;
+                    videos.videoPoster = video.videoPoster;
                 }
 
                 isVideoPlayerEnabled = cloudinaryHelper.isVideoPlayerEnabled(product);
@@ -398,6 +399,7 @@ var geContentVideoByName = function (videoName, configs) {
 
                 var video = cloudinaryAPI.applyTransformationOnContentVideoRelativeURL(videoName);
                 videos.videoURL = video.videoURL;
+                videos.videoPoster = video.videoPoster;
 
                 var isvideoPlayerEnabled = cloudinaryHelper.isVideoPlayerEnabledForContentLibrary();
                 if (isvideoPlayerEnabled) {
@@ -429,8 +431,6 @@ var geContentVideoByName = function (videoName, configs) {
                         widgetOptions.muted = true;
                     }
                     videos.widgetOptions = widgetOptions;
-                } else {
-                    videos.videoPoster = video.videoPoster;
                 }
             } else {
                 logger.debug(cloudinaryConstants.CLD_VIDEO_DISABLED);
@@ -472,6 +472,7 @@ var geContentVideoByURL = function (url) {
 
                 var video = cloudinaryAPI.applyTransformationOnContentVideoAbsoluteURL(url);
                 videos.videoURL = video.videoURL;
+                videos.videoPoster = video.videoPoster;
 
                 var isvideoPlayerEnabled = cloudinaryHelper.isVideoPlayerEnabledForContentLibrary();
                 if (isvideoPlayerEnabled) {
@@ -481,8 +482,6 @@ var geContentVideoByURL = function (url) {
                         widgetOptions.posterOptions = { publicId: video.videoPoster };
                     }
                     videos.widgetOptions = widgetOptions;
-                } else {
-                    videos.videoPoster = video.videoPoster;
                 }
             } else {
                 logger.debug(cloudinaryConstants.CLD_VIDEO_DISABLED);

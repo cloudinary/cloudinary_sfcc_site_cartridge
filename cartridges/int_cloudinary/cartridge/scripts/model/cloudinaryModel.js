@@ -38,6 +38,18 @@ function getCloudinaryVideoTransformation(productCatalogTransformations) {
     return transformation;
 }
 
+function getPlayerPosterURL(publicId) {
+    var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
+    var cloudinaryHelper = require('*/cartridge/scripts/helpers/cloudinaryHelpers');
+
+    var path = publicId.replace(/^\/+/, '').replace(/\.[^\/.]+$/, '').replace(/ /g, '%20');
+    var posterTrans = cloudinaryConstants.CLD_GLOBAL_VIDEO_POSTER_TRANSFORMATIONS;
+    var posterURL = cloudinaryHelper.getCLDBasePath() + cloudinaryConstants.VIDEO_UPLOAD_URL_RESOURCE_TYPE + cloudinaryConstants.FORWARD_SLASH +
+        (!empty(posterTrans) ? posterTrans + cloudinaryConstants.FORWARD_SLASH : '') + path + cloudinaryConstants.VIDEO_POSTER_IMAGE_TYPE;
+
+    return cloudinaryHelper.addTrackingQueryParam(posterURL);
+}
+
 /**
  * Get cloudinary images and Product Gallery Widget options based on preferences.
  *
@@ -281,7 +293,7 @@ var getCloudinaryVideo = function (productID, currentLocale) {
 
                 if (!empty(video)) {
                     videos.videoURL = video.videoURL;
-                    videos.videoPoster = video.videoPoster;
+                    videos.videoPoster = video.videoURL && video.videoURL.publicId ? getPlayerPosterURL(video.videoURL.publicId) : video.videoPoster;
                 }
 
                 isVideoPlayerEnabled = cloudinaryHelper.isVideoPlayerEnabled(product);
@@ -399,7 +411,7 @@ var geContentVideoByName = function (videoName, configs) {
 
                 var video = cloudinaryAPI.applyTransformationOnContentVideoRelativeURL(videoName);
                 videos.videoURL = video.videoURL;
-                videos.videoPoster = video.videoPoster;
+                videos.videoPoster = video.videoURL && video.videoURL.publicId ? getPlayerPosterURL(video.videoURL.publicId) : video.videoPoster;
 
                 var isvideoPlayerEnabled = cloudinaryHelper.isVideoPlayerEnabledForContentLibrary();
                 if (isvideoPlayerEnabled) {

@@ -3,10 +3,11 @@
     pdict.cloudinary.video.videoURL !== ''}">
     <isset name="cloudinaryConstants" value="${require('*/cartridge/scripts/util/cloudinaryConstants')}" scope="page" />
     <link href="${dw.system.Site.current.preferences.custom.CLDVideoPlayerCSSURL}" rel="stylesheet"/>
+    <isinclude template="include/cloudinaryVideoStyles" />
     <script defer="defer" src="${dw.system.Site.current.preferences.custom.CLDVideoPlayerJSURL}" onload="window.cldVideoPlayer = cloudinary.Cloudinary;"></script>
     <div class="primary-videos col-12 col-sm-6">
         <div id='pdp-video-<isprint value="${cldProductID}">'>
-            <video id="cld-video-player" class="cld-video-player" data-cloudinary="${JSON.stringify(pdict.cloudinary.video.widgetOptions)}"></video>
+            <video id="cld-video-player" class="cld-video-player" data-cloudinary="${JSON.stringify(pdict.cloudinary.video.widgetOptions)}"<isif condition="${pdict.cloudinary.video.videoPoster}"> poster="${pdict.cloudinary.video.videoPoster}"</isif>></video>
         </div>
     </div>
 </isif>

@@ -1,0 +1,6 @@
+<style>
+    video.cld-video-player {
+        width: 100%;
+        height: auto;
+    }
+</style>

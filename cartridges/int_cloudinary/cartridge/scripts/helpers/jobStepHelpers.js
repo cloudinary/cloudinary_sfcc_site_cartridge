@@ -357,57 +357,71 @@ var startUploadTracking = function (svcArgs) {
 };
 
 /**
+ * Creates the tracker holding the products, folders and assets uploaded during the whole job run.
+ *
+ * @returns {Object} stale asset tracker
+ */
+var createStaleAssetTracker = function () {
+    return {
+        products: {},
+        failedProducts: {},
+        keptPublicIds: {},
+        folders: {}
+    };
+};
+
+/**
  * Records the assets uploaded for a product so that its stale assets can be removed at the end of the run.
- * Products with a failed upload are not recorded, but their uploaded assets are always kept.
+ * Products with a failed upload are not cleaned up, but their uploaded assets are always kept.
  *
  * @param {Object} svcArgs - data related to service
+ * @param {Object} tracker - stale asset tracker of the job run
  * @param {string} productIdentifier - value of the sfcc-product-identifier metadata
  */
-var trackProductUploads = function (svcArgs, productIdentifier) {
+var trackProductUploads = function (svcArgs, tracker, productIdentifier) {
     var jobLogger = require('dw/system').Logger.getLogger('Cloudinary', 'UPLOAD');
 
     var uploadedPublicIds = svcArgs.uploadedPublicIds || [];
     var uploadFailed = svcArgs.uploadFailed;
 
     startUploadTracking(svcArgs);
-    svcArgs.cleanupProducts = svcArgs.cleanupProducts || [];
-    svcArgs.keptPublicIds = svcArgs.keptPublicIds || {};
 
     uploadedPublicIds.forEach(function (publicId) {
-        svcArgs.keptPublicIds[publicId] = true;
+        tracker.keptPublicIds[publicId] = true;
+        tracker.folders[publicId.substring(0, publicId.lastIndexOf('/'))] = true;
     });
+
+    if (empty(productIdentifier)) {
+        return;
+    }
 
     if (uploadFailed) {
         jobLogger.warn('Skipping stale asset cleanup for product {0}, some of its uploads failed', productIdentifier);
+        tracker.failedProducts[productIdentifier] = true;
         return;
     }
 
-    if (uploadedPublicIds.length === 0 || empty(productIdentifier)) {
-        return;
-    }
-
-    svcArgs.cleanupProducts.push({ productIdentifier: productIdentifier, uploadedPublicIds: uploadedPublicIds });
+    tracker.products[productIdentifier] = true;
 };
 
 /**
  * Deletes from Cloudinary the assets of the recorded products that were not uploaded in the current run.
- * Only assets living in the folders where a product uploaded are considered, and assets uploaded for any product are kept.
+ * Only assets living in the folders where the run uploaded are considered, and assets uploaded for any product are kept.
  *
  * @param {Object} svcArgs - data related to service
+ * @param {Object} tracker - stale asset tracker of the job run
  * @param {string} viewType - value of the sfcc-view-type metadata
  */
-var removeStaleAssets = function (svcArgs, viewType) {
+var removeStaleAssets = function (svcArgs, tracker, viewType) {
     var cleanupSvc = require('~/cartridge/scripts/service/cldAssetCleanup');
 
-    var cleanupProducts = svcArgs.cleanupProducts || [];
-    var keptPublicIds = svcArgs.keptPublicIds || {};
-    var assetsByFolder = {};
+    var batchSize = 50;
     var staleAssets = [];
+    var productIdentifiers = Object.keys(tracker.products).filter(function (productIdentifier) {
+        return !tracker.failedProducts[productIdentifier];
+    });
 
-    svcArgs.cleanupProducts = [];
-    svcArgs.keptPublicIds = {};
-
-    if (cleanupProducts.length === 0 || empty(viewType)) {
+    if (productIdentifiers.length === 0 || Object.keys(tracker.folders).length === 0 || empty(viewType)) {
         return;
     }
 
@@ -415,34 +429,23 @@ var removeStaleAssets = function (svcArgs, viewType) {
     args.servicePrefs = svcArgs.servicePrefs;
     args.cldUploadSvc = svcArgs.cldUploadSvc;
 
-    cleanupProducts.forEach(function (cleanupProduct) {
-        var productFolders = {};
-        cleanupProduct.uploadedPublicIds.forEach(function (publicId) {
-            productFolders[publicId.substring(0, publicId.lastIndexOf('/'))] = true;
-        });
+    for (var start = 0; start < productIdentifiers.length; start += batchSize) {
+        var batch = productIdentifiers.slice(start, start + batchSize);
+        var assetsByProduct = cleanupSvc.searchAssetsByProducts(args, batch, viewType);
+        if (!assetsByProduct) {
+            continue;
+        }
 
-        Object.keys(productFolders).forEach(function (folder) {
-            if (empty(folder)) {
-                return;
-            }
-
-            if (!(folder in assetsByFolder)) {
-                assetsByFolder[folder] = cleanupSvc.searchAssetsByFolder(args, folder, viewType);
-            }
-
-            var folderAssets = assetsByFolder[folder];
-            if (!folderAssets || !folderAssets[cleanupProduct.productIdentifier]) {
-                return;
-            }
-
-            folderAssets[cleanupProduct.productIdentifier].forEach(function (asset) {
-                if (!keptPublicIds[asset.publicId]) {
-                    keptPublicIds[asset.publicId] = true;
+        batch.forEach(function (productIdentifier) {
+            (assetsByProduct[productIdentifier] || []).forEach(function (asset) {
+                var folder = asset.publicId.substring(0, asset.publicId.lastIndexOf('/'));
+                if (tracker.folders[folder] && !tracker.keptPublicIds[asset.publicId]) {
+                    tracker.keptPublicIds[asset.publicId] = true;
                     staleAssets.push(asset);
                 }
             });
         });
-    });
+    }
 
     if (staleAssets.length > 0) {
         cleanupSvc.deleteAssets(args, staleAssets);
@@ -594,6 +597,7 @@ module.exports = {
     buildLibraryAssetURL: buildLibraryAssetURL,
     buildCatalogAssetURL: buildCatalogAssetURL,
     uploadFile: uploadFile,
+    createStaleAssetTracker: createStaleAssetTracker,
     startUploadTracking: startUploadTracking,
     trackProductUploads: trackProductUploads,
     removeStaleAssets: removeStaleAssets,

@@ -1,15 +1,26 @@
 'use strict';
 
 /**
- * Searches Cloudinary for the assets of a folder and view type, grouped by the sfcc-product-identifier metadata.
+ * Escapes a value to be used inside double quotes of a Cloudinary search expression.
+ *
+ * @param {string} value - value to escape
+ *
+ * @returns {string} escaped value
+ */
+function escapeSearchValue(value) {
+    return String(value).replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/\*/g, '\\*');
+}
+
+/**
+ * Searches Cloudinary for the assets of the given products and view type, grouped by the sfcc-product-identifier metadata.
  *
  * @param {Object} args - service arguments
- * @param {string} folder - Cloudinary folder
+ * @param {Array} productIdentifiers - values of the sfcc-product-identifier metadata
  * @param {string} viewType - value of the sfcc-view-type metadata
  *
  * @returns {Object|null} assets found keyed by product identifier, or null if the search failed
  */
-function searchAssetsByFolder(args, folder, viewType) {
+function searchAssetsByProducts(args, productIdentifiers, viewType) {
     var logger = require('dw/system/Logger').getLogger('Cloudinary', 'UPLOAD');
     var cloudinaryConstants = require('~/cartridge/scripts/util/cloudinaryConstants');
 
@@ -17,9 +28,11 @@ function searchAssetsByFolder(args, folder, viewType) {
     var service = args.cldUploadSvc;
     var assetsByProduct = {};
     var nextCursor = null;
-    var escapedFolder = String(folder).replace(/\\/g, '\\\\').replace(/"/g, '\\"');
-    var escapedViewType = String(viewType).replace(/\\/g, '\\\\').replace(/"/g, '\\"');
-    var expression = 'folder="' + escapedFolder + '" AND metadata.' + cloudinaryConstants.SFCC_VIEW_TYPE + '="' + escapedViewType + '"';
+    var products = productIdentifiers.join(', ');
+    var productsExpression = productIdentifiers.map(function (productIdentifier) {
+        return 'metadata.' + cloudinaryConstants.SFCC_PRODUCT_IDENTIFIER + '="' + escapeSearchValue(productIdentifier) + '"';
+    }).join(' OR ');
+    var expression = 'metadata.' + cloudinaryConstants.SFCC_VIEW_TYPE + '="' + escapeSearchValue(viewType) + '" AND (' + productsExpression + ')';
 
     try {
         do {
@@ -33,7 +46,7 @@ function searchAssetsByFolder(args, folder, viewType) {
 
             var result = service.call(payload);
             if (!result.ok || result.error !== 0) {
-                logger.error('Error searching assets of folder {0}, message: {1}', folder, result.errorMessage);
+                logger.error('Error searching assets of products {0}, message: {1}', products, result.errorMessage);
                 return null;
             }
 
@@ -41,7 +54,7 @@ function searchAssetsByFolder(args, folder, viewType) {
             for (var idx = 0; idx < resources.length; idx++) {
                 var resource = resources[idx];
                 if (empty(resource.metadata)) {
-                    logger.error('Structured metadata is not returned by the Cloudinary search of folder {0}, skipping stale asset cleanup', folder);
+                    logger.error('Structured metadata is not returned by the Cloudinary search of products {0}, skipping stale asset cleanup', products);
                     return null;
                 }
 
@@ -54,7 +67,7 @@ function searchAssetsByFolder(args, folder, viewType) {
             nextCursor = result.object.next_cursor;
         } while (nextCursor);
     } catch (e) {
-        logger.error('Error searching assets of folder {0}, message: {1}', folder, e.message);
+        logger.error('Error searching assets of products {0}, message: {1}', products, e.message);
         return null;
     }
 
@@ -106,6 +119,6 @@ function deleteAssets(args, assets) {
 }
 
 module.exports = {
-    searchAssetsByFolder: searchAssetsByFolder,
+    searchAssetsByProducts: searchAssetsByProducts,
     deleteAssets: deleteAssets
 };

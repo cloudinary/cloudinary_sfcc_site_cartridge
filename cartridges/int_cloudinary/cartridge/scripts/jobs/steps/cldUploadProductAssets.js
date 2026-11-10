@@ -1,6 +1,8 @@
 'use strict';
 
 var changedFilesCount = 0;
+var hasProcessingError = false;
+var staleAssetTracker = null;
 
 /**
  * Build tags for asset based on product attributes.
@@ -290,6 +292,7 @@ var processVariants = function (masterProduct, masterProdImages, metadataFields,
                             }
                         } catch (e) {
                             jobLogger.error('Error occurred while processing variant image, URL: {0}, variant ID: {1}, message: {2}', imageAbsURL, variantProduct.ID, e.message);
+                            hasProcessingError = true;
                             continue;
                         }
                     }
@@ -298,11 +301,13 @@ var processVariants = function (masterProduct, masterProdImages, metadataFields,
                 }
             } catch (e) {
                 jobLogger.error('Error occurred while processing variant with ID : {0}, message: {1}', variantProduct.ID, e.message);
+                hasProcessingError = true;
                 continue;
             }
         }
     } catch (e) {
         jobLogger.error('Error occurred while processing variants for master product with ID : {0}, message: {1}', masterProduct.ID, e.message);
+        hasProcessingError = true;
     }
 
     return imagesWithMetadata;
@@ -344,6 +349,7 @@ var doProducts = function (args, products, metadataFields, isSearchHits, syncMod
     var productTagName = '';
 
     var svcArgs = jobStepHelpers.getCldUploadSvcArgs();
+    var productIdentifier;
 
     while (products.hasNext()) {
         product = isSearchHits ? products.next().product : products.next();
@@ -357,7 +363,10 @@ var doProducts = function (args, products, metadataFields, isSearchHits, syncMod
             continue;
         } else if (product.master) {
             jobLogger.debug('Going to process variants for master product with ID: {0}', product.ID);
+            hasProcessingError = false;
             productImages = processVariants(product, productImages, metadataFields, args, assetsLimitCount);
+            jobStepHelpers.startUploadTracking(svcArgs);
+            svcArgs.uploadFailed = hasProcessingError;
 
             if (productImages) {
                 productImages = productImages.entrySet().iterator();
@@ -396,9 +405,15 @@ var doProducts = function (args, products, metadataFields, isSearchHits, syncMod
                     }
                 }
             }
+
+            if (staleAssetTracker) {
+                productIdentifier = cloudinaryHelper.getCloudinaryTagName(product);
+                jobStepHelpers.trackProductUploads(svcArgs, staleAssetTracker, !empty(productIdentifier) ? productIdentifier : product.ID);
+            }
         } else if (!empty(productImages) && productImages.length > 0) {
             productTagName = cloudinaryHelper.getCloudinaryTagName(product);
             jobLogger.debug('Total catalog images: {0}', productImages.length);
+            jobStepHelpers.startUploadTracking(svcArgs);
 
             for (var idx = 0; idx < productImages.length; idx++) {
                 try {
@@ -438,6 +453,7 @@ var doProducts = function (args, products, metadataFields, isSearchHits, syncMod
                     /*eslint-disable*/
                     // In an error condition we don't halt but log and continue.
                     jobLogger.error('Error on file: {0}. Message: {1}', curFileName, err);
+                    svcArgs.uploadFailed = true;
                     productTags = [];
                     isAssetUploaded = false;
                     isFileChanged = false;
@@ -449,6 +465,14 @@ var doProducts = function (args, products, metadataFields, isSearchHits, syncMod
                     assetsLimitCount++;
                 }
             }
+
+            if (staleAssetTracker) {
+                jobStepHelpers.trackProductUploads(svcArgs, staleAssetTracker, !empty(productTagName) ? productTagName : product.ID);
+            }
+        } else if (staleAssetTracker) {
+            productTagName = cloudinaryHelper.getCloudinaryTagName(product);
+            jobStepHelpers.startUploadTracking(svcArgs);
+            jobStepHelpers.trackProductUploads(svcArgs, staleAssetTracker, !empty(productTagName) ? productTagName : product.ID);
         }
 
         if (args.CLDJobExecutionMode === cloudinaryConstants.DEBUG_EXECUTION_MODE && assetsLimitCount === assetsLimit) {
@@ -561,6 +585,12 @@ module.exports.Start = function (args) {
             return new Status(Status.ERROR);
         }
 
+        staleAssetTracker = ['true', true].indexOf(args.CLDRemoveStaleAssets) > -1
+            && executionMode !== cloudinaryConstants.DEBUG_EXECUTION_MODE
+            && executionMode !== cloudinaryConstants.PROD_BACK_FILE_EXECUTION_MODE
+            && syncMode !== cloudinaryConstants.SYNC_MODE_DELTA
+            ? jobStepHelpers.createStaleAssetTracker() : null;
+
         if (!empty(catalogsToProcess)) {
             var ProductMgr = require('dw/catalog/ProductMgr');
             var CatalogMgr = require('dw/catalog/CatalogMgr');
@@ -581,6 +611,14 @@ module.exports.Start = function (args) {
             productSearchModel.search();
             productSearchHitsItr = productSearchModel.getProductSearchHits();
             doProducts(args, productSearchHitsItr, metadataFields, isSearchHits, syncMode, lastJobExecution);
+        }
+
+        if (staleAssetTracker) {
+            try {
+                jobStepHelpers.removeStaleAssets(jobStepHelpers.getCldUploadSvcArgs(), staleAssetTracker, viewType);
+            } catch (e) {
+                jobLogger.error('Error occurred while removing stale assets, message: {0}', e.message);
+            }
         }
 
         // send email if any file changed

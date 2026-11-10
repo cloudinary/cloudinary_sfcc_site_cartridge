@@ -67,6 +67,13 @@
                         "@trim": "true"
                     },
                     {
+                        "@name": "CLDRemoveStaleAssets",
+                        "description": "Delete assets of a product from Cloudinary that are no longer assigned to it in SFCC. Only applied in Prod execution mode with FULL sync mode.",
+                        "@type": "boolean",
+                        "@required": false,
+                        "default-value": false
+                    },
+                    {
                         "@name": "Disabled",
                         "description": "Mark the step as disabled. This will skip the step and returns a OK status",
                         "@type": "boolean",

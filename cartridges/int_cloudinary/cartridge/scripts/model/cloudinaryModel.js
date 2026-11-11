@@ -544,7 +544,9 @@ var getProductPrimaryImage = function (productID, viewType, params) {
                     isSwatch: isSwatch,
                     variationAttrValueID: variationAttrValueID
                 });
-                if (!empty(product.custom.CLDAltTextForImages)) {
+                if (!empty(product.custom.CLDLocalizedAltText)) {
+                    productPrimaryImg.altText = product.custom.CLDLocalizedAltText;
+                } else if (!empty(product.custom.CLDAltTextForImages)) {
                     productPrimaryImg.altText = product.custom.CLDAltTextForImages;
                 }
             } else if (cloudinaryConstants.CLD_CARTRIDGE_OPERATION_MODE === cloudinaryConstants.CLD_GET_ASSETS_BY_VIEW_TYPE_MODE) {

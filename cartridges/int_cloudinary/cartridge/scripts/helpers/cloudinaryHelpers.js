@@ -771,4 +771,32 @@ cloudinary.filterPGWMediaSettings = function (pgwSettings) {
     return filteredMediaSettings;
 };
 
+cloudinary.getAltTextLocales = function () {
+    var Site = require('dw/system/Site');
+    var logger = require('dw/system/Logger').getLogger('Cloudinary', 'UPLOAD');
+    var prefs = require('*/cartridge/scripts/util/cloudinaryConstants');
+
+    var altTextLocales = [];
+    var configuredLocales = prefs.CLD_ALT_TEXT_LOCALES;
+    if (empty(configuredLocales)) {
+        return altTextLocales;
+    }
+
+    var allowedLocales = Site.getCurrent().getAllowedLocales();
+    for (var i = 0; i < configuredLocales.length; i++) {
+        var locale = configuredLocales[i];
+        if (locale !== 'default' && allowedLocales.contains(locale)) {
+            altTextLocales.push(locale);
+        } else {
+            logger.warn('Alt text locale {0} is not allowed for the current site, skipping it.', locale);
+        }
+    }
+    return altTextLocales;
+};
+
+cloudinary.getAltTextSMDExternalId = function (locale) {
+    var prefs = require('*/cartridge/scripts/util/cloudinaryConstants');
+    return prefs.SFCC_ALTTEXT_EXTERNAL_ID + '_' + locale.toLowerCase().replace(/_/g, '-');
+};
+
 module.exports = cloudinary;

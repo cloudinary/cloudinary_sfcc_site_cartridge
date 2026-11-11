@@ -3,6 +3,7 @@
 module.exports.Start = function (args) {
     var cloudinaryConstants = require('*/cartridge/scripts/util/cloudinaryConstants');
     var cloudinaryMetadataSvc = require('*/cartridge/scripts/service/cldMetadata');
+    var cloudinaryHelper = require('*/cartridge/scripts/helpers/cloudinaryHelpers');
     var jobStepHelpers = require('*/cartridge/scripts/helpers/jobStepHelpers');
     var jobLogger = require('dw/system').Logger.getLogger('Cloudinary', 'CREATE');
     var Status = require('dw/system/Status');
@@ -24,6 +25,11 @@ module.exports.Start = function (args) {
         { "label": "sfcc-gallery-position", "external_id": "sfcc-gallery-position", "type": "integer" },
         { "label": "sfcc-alt-text", "external_id": "sfcc-alt-text", "type": "string" }
     ];
+
+    cloudinaryHelper.getAltTextLocales().forEach(function (locale) {
+        var altTextExternalId = cloudinaryHelper.getAltTextSMDExternalId(locale);
+        schema.push({ "label": altTextExternalId, "external_id": altTextExternalId, "type": "string" });
+    });
 
     try {
         cloudinaryMetadataSvc.createMetadataSchemeCld(schema);

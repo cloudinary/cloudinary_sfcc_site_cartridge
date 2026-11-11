@@ -50,6 +50,7 @@ CloudinaryConstants.CLD_SMD_ENDPOINT = sitePrefs.getCustom().CLDMetadataFilterin
 CloudinaryConstants.CLD_SMD_ENDPOINT_GALLERY_POSITION = sitePrefs.getCustom().CLDMetadataEndpointByGalleryPosition;
 CloudinaryConstants.CLD_SMD_KEY = sitePrefs.getCustom().CLDSMDKey;
 CloudinaryConstants.CLD_SMD_VALUE = sitePrefs.getCustom().CLDSMDValue;
+CloudinaryConstants.CLD_ALT_TEXT_LOCALES = sitePrefs.getCustom().CLDAltTextLocales;
 CloudinaryConstants.CLD_INCLUDE_VIDEOS_IN_PGW = sitePrefs.getCustom().CLDIncludeVideosInPGW;
 CloudinaryConstants.IMAGES_BASE_PATH = sitePrefs.getCustom().CLDImagesBasePath;
 CloudinaryConstants.CLD_SWATCH_IMAGES_VIEW_TYPE = sitePrefs.getCustom().CLDSwatchImageViewType;

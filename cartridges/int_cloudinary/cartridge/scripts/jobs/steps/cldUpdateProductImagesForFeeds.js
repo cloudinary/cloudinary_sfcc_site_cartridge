@@ -55,6 +55,8 @@ function writeProductFileContent(cloudinaryUrlStreamWriter, productSearchHitsItr
     var variantsID;
     var variationAttrValueID;
     var sfccAltText;
+    var mainImgsMetadata;
+    var altTextLocales = params.enableAltText ? cloudinaryHelper.getAltTextLocales() : [];
     var imgVariantsUnSorted;
     var imgVariantsSorted = {};
     var variantTag;
@@ -134,6 +136,7 @@ function writeProductFileContent(cloudinaryUrlStreamWriter, productSearchHitsItr
 
                     try {
                         sfccAltText = null;
+                        mainImgsMetadata = [];
                         var imgAssetsContainer = imgAssetsSorted.resources;
 
                         for (let imgContainer of imgAssetsContainer) {
@@ -145,9 +148,15 @@ function writeProductFileContent(cloudinaryUrlStreamWriter, productSearchHitsItr
                                 return data.external_id === cloudinaryConstants.SFCC_IS_MAIN && data.value.value === cloudinaryConstants.TRUE;
                             });
 
-                            if (!empty(altText) && altText[0].value && !empty(isAltText) && isAltText[0].value) {
+                            if (!empty(isAltText) && isAltText[0].value) {
+                                mainImgsMetadata.push(imgContainer.metadata);
+                            }
+
+                            if (empty(sfccAltText) && !empty(altText) && altText[0].value && !empty(isAltText) && isAltText[0].value) {
                                 sfccAltText = altText[0].value;
-                                break;
+                                if (altTextLocales.length === 0) {
+                                    break;
+                                }
                             }
                         }
                     } catch (ex) {
@@ -158,6 +167,28 @@ function writeProductFileContent(cloudinaryUrlStreamWriter, productSearchHitsItr
                     }
                     cloudinaryUrlStreamWriter.writeEndElement();
                     cloudinaryUrlStreamWriter.writeCharacters('\n');
+
+                    for (let altTextLocale of altTextLocales) {
+                        var localizedAltText = null;
+                        var altTextExternalId = cloudinaryHelper.getAltTextSMDExternalId(altTextLocale);
+                        for (let mainImgMetadata of mainImgsMetadata) {
+                            var localizedAltTextData = mainImgMetadata.filter(function (data) {
+                                return data.external_id === altTextExternalId;
+                            });
+                            if (!empty(localizedAltTextData) && localizedAltTextData[0].value) {
+                                localizedAltText = localizedAltTextData[0].value;
+                                break;
+                            }
+                        }
+                        cloudinaryUrlStreamWriter.writeStartElement('custom-attribute');
+                        cloudinaryUrlStreamWriter.writeAttribute('attribute-id', 'CLDLocalizedAltText');
+                        cloudinaryUrlStreamWriter.writeAttribute('xml:lang', altTextLocale.replace(/_/g, '-'));
+                        if (!empty(localizedAltText)) {
+                            cloudinaryUrlStreamWriter.writeCharacters(localizedAltText);
+                        }
+                        cloudinaryUrlStreamWriter.writeEndElement();
+                        cloudinaryUrlStreamWriter.writeCharacters('\n');
+                    }
                     cloudinaryUrlStreamWriter.writeEndElement();
                     cloudinaryUrlStreamWriter.writeCharacters('\n');
                 }
